@@ -15,6 +15,8 @@
 		16C285F92656EB030068AB95 /* Quizorize.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */; };
 		16C286042656EB040068AB95 /* QuizorizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C286032656EB040068AB95 /* QuizorizeTests.swift */; };
 		16C2860F2656EB040068AB95 /* QuizorizeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2860E2656EB040068AB95 /* QuizorizeUITests.swift */; };
+		16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2861C2656EC6C0068AB95 /* LoginView.swift */; };
+		16C2861F2656EC7A0068AB95 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2861E2656EC7A0068AB95 /* RegisterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		16C2860A2656EB040068AB95 /* QuizorizeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuizorizeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C2860E2656EB040068AB95 /* QuizorizeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeUITests.swift; sourceTree = "<group>"; };
 		16C286102656EB040068AB95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		16C2861C2656EC6C0068AB95 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		16C2861E2656EC7A0068AB95 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				16C285FA2656EB030068AB95 /* Info.plist */,
 				16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */,
 				16C285F22656EB030068AB95 /* Preview Content */,
+				16C2861C2656EC6C0068AB95 /* LoginView.swift */,
+				16C2861E2656EC7A0068AB95 /* RegisterView.swift */,
 			);
 			path = Quizorize;
 			sourceTree = "<group>";
@@ -268,6 +274,8 @@
 				16C285F92656EB030068AB95 /* Quizorize.xcdatamodeld in Sources */,
 				16C285F62656EB030068AB95 /* Persistence.swift in Sources */,
 				16C285EF2656EB020068AB95 /* ContentView.swift in Sources */,
+				16C2861F2656EC7A0068AB95 /* RegisterView.swift in Sources */,
+				16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */,
 				16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
