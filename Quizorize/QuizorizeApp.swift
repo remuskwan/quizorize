@@ -19,6 +19,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct QuizorizeApp: App {
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     init() {
         FirebaseApp.configure()
     }
