@@ -3,13 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		16285C752659242F003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C742659242F003EE017 /* GoogleService-Info.plist */; };
-		16285C762659242F003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C742659242F003EE017 /* GoogleService-Info.plist */; };
-		16285C772659242F003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C742659242F003EE017 /* GoogleService-Info.plist */; };
+		16285C7A26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
+		16285C7B26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
+		16285C7C26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285EC2656EB020068AB95 /* QuizorizeApp.swift */; };
 		16C285EF2656EB020068AB95 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285EE2656EB020068AB95 /* ContentView.swift */; };
 		16C285F12656EB030068AB95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16C285F02656EB030068AB95 /* Assets.xcassets */; };
@@ -20,6 +20,9 @@
 		16C2860F2656EB040068AB95 /* QuizorizeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2860E2656EB040068AB95 /* QuizorizeUITests.swift */; };
 		16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2861C2656EC6C0068AB95 /* LoginView.swift */; };
 		16C2861F2656EC7A0068AB95 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2861E2656EC7A0068AB95 /* RegisterView.swift */; };
+		55EDED5D956B8021A55A875F /* Pods_Quizorize_QuizorizeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */; };
+		571D50E1BB6F534A6DDF9D4D /* Pods_Quizorize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */; };
+		65AC49052D83463592C8D004 /* Pods_QuizorizeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		16285C742659242F003EE017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0CEB516FEF49F52E189064FF /* Pods-QuizorizeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizorizeTests.debug.xcconfig"; path = "Target Support Files/Pods-QuizorizeTests/Pods-QuizorizeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		16285C7926593426003EE017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		16C285E92656EB020068AB95 /* Quizorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C285EC2656EB020068AB95 /* QuizorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeApp.swift; sourceTree = "<group>"; };
 		16C285EE2656EB020068AB95 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +61,14 @@
 		16C286102656EB040068AB95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16C2861C2656EC6C0068AB95 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		16C2861E2656EC7A0068AB95 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		2429516D6B803B85C95E7062 /* Pods-Quizorize.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize/Pods-Quizorize.debug.xcconfig"; sourceTree = "<group>"; };
+		3C9B0A5876205BE63BDBE4EE /* Pods-Quizorize-QuizorizeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.release.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.release.xcconfig"; sourceTree = "<group>"; };
+		43143D971498F4F2769EF37A /* Pods-QuizorizeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizorizeTests.release.xcconfig"; path = "Target Support Files/Pods-QuizorizeTests/Pods-QuizorizeTests.release.xcconfig"; sourceTree = "<group>"; };
+		5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quizorize_QuizorizeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuizorizeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2DBC4DD8033848512376284 /* Pods-Quizorize.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize.release.xcconfig"; path = "Target Support Files/Pods-Quizorize/Pods-Quizorize.release.xcconfig"; sourceTree = "<group>"; };
+		EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quizorize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				571D50E1BB6F534A6DDF9D4D /* Pods_Quizorize.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65AC49052D83463592C8D004 /* Pods_QuizorizeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,12 +92,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55EDED5D956B8021A55A875F /* Pods_Quizorize_QuizorizeUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		16285C7826593193003EE017 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				16C285EE2656EB020068AB95 /* ContentView.swift */,
+				16C2861C2656EC6C0068AB95 /* LoginView.swift */,
+				16C2861E2656EC7A0068AB95 /* RegisterView.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		16C285E02656EB020068AB95 = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +116,8 @@
 				16C286022656EB040068AB95 /* QuizorizeTests */,
 				16C2860D2656EB040068AB95 /* QuizorizeUITests */,
 				16C285EA2656EB020068AB95 /* Products */,
+				AE61C6CA4550C0CAD8DA44B6 /* Pods */,
+				96FE5971BEA6BB1A38867E24 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,16 +134,14 @@
 		16C285EB2656EB020068AB95 /* Quizorize */ = {
 			isa = PBXGroup;
 			children = (
-				16285C742659242F003EE017 /* GoogleService-Info.plist */,
+				16285C7826593193003EE017 /* ViewModels */,
 				16C285EC2656EB020068AB95 /* QuizorizeApp.swift */,
-				16C285EE2656EB020068AB95 /* ContentView.swift */,
 				16C285F02656EB030068AB95 /* Assets.xcassets */,
 				16C285F52656EB030068AB95 /* Persistence.swift */,
 				16C285FA2656EB030068AB95 /* Info.plist */,
 				16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */,
+				16285C7926593426003EE017 /* GoogleService-Info.plist */,
 				16C285F22656EB030068AB95 /* Preview Content */,
-				16C2861C2656EC6C0068AB95 /* LoginView.swift */,
-				16C2861E2656EC7A0068AB95 /* RegisterView.swift */,
 			);
 			path = Quizorize;
 			sourceTree = "<group>";
@@ -147,6 +172,29 @@
 			path = QuizorizeUITests;
 			sourceTree = "<group>";
 		};
+		96FE5971BEA6BB1A38867E24 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */,
+				5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */,
+				7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AE61C6CA4550C0CAD8DA44B6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2429516D6B803B85C95E7062 /* Pods-Quizorize.debug.xcconfig */,
+				D2DBC4DD8033848512376284 /* Pods-Quizorize.release.xcconfig */,
+				7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */,
+				3C9B0A5876205BE63BDBE4EE /* Pods-Quizorize-QuizorizeUITests.release.xcconfig */,
+				0CEB516FEF49F52E189064FF /* Pods-QuizorizeTests.debug.xcconfig */,
+				43143D971498F4F2769EF37A /* Pods-QuizorizeTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -154,9 +202,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 16C286132656EB040068AB95 /* Build configuration list for PBXNativeTarget "Quizorize" */;
 			buildPhases = (
+				26E8E149317F3765E7DC444F /* [CP] Check Pods Manifest.lock */,
 				16C285E52656EB020068AB95 /* Sources */,
 				16C285E62656EB020068AB95 /* Frameworks */,
 				16C285E72656EB020068AB95 /* Resources */,
+				BB0611463EA25A41C92C4CD9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -171,6 +221,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 16C286162656EB040068AB95 /* Build configuration list for PBXNativeTarget "QuizorizeTests" */;
 			buildPhases = (
+				41F109DC483657563D5C4487 /* [CP] Check Pods Manifest.lock */,
 				16C285FB2656EB040068AB95 /* Sources */,
 				16C285FC2656EB040068AB95 /* Frameworks */,
 				16C285FD2656EB040068AB95 /* Resources */,
@@ -189,9 +240,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 16C286192656EB040068AB95 /* Build configuration list for PBXNativeTarget "QuizorizeUITests" */;
 			buildPhases = (
+				369C6EF3B75DF214E3B15C69 /* [CP] Check Pods Manifest.lock */,
 				16C286062656EB040068AB95 /* Sources */,
 				16C286072656EB040068AB95 /* Frameworks */,
 				16C286082656EB040068AB95 /* Resources */,
+				87AC8C7B1AFA01DAC25164F9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -252,7 +305,7 @@
 			files = (
 				16C285F42656EB030068AB95 /* Preview Assets.xcassets in Resources */,
 				16C285F12656EB030068AB95 /* Assets.xcassets in Resources */,
-				16285C752659242F003EE017 /* GoogleService-Info.plist in Resources */,
+				16285C7A26593426003EE017 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,7 +313,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16285C762659242F003EE017 /* GoogleService-Info.plist in Resources */,
+				16285C7B26593426003EE017 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,11 +321,114 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16285C772659242F003EE017 /* GoogleService-Info.plist in Resources */,
+				16285C7C26593426003EE017 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		26E8E149317F3765E7DC444F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Quizorize-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		369C6EF3B75DF214E3B15C69 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Quizorize-QuizorizeUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		41F109DC483657563D5C4487 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QuizorizeTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		87AC8C7B1AFA01DAC25164F9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BB0611463EA25A41C92C4CD9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize/Pods-Quizorize-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize/Pods-Quizorize-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Quizorize/Pods-Quizorize-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		16C285E52656EB020068AB95 /* Sources */ = {
@@ -438,6 +594,7 @@
 		};
 		16C286142656EB040068AB95 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2429516D6B803B85C95E7062 /* Pods-Quizorize.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -460,6 +617,7 @@
 		};
 		16C286152656EB040068AB95 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D2DBC4DD8033848512376284 /* Pods-Quizorize.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -482,6 +640,7 @@
 		};
 		16C286172656EB040068AB95 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0CEB516FEF49F52E189064FF /* Pods-QuizorizeTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -503,6 +662,7 @@
 		};
 		16C286182656EB040068AB95 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43143D971498F4F2769EF37A /* Pods-QuizorizeTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -524,6 +684,7 @@
 		};
 		16C2861A2656EB040068AB95 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -543,6 +704,7 @@
 		};
 		16C2861B2656EB040068AB95 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C9B0A5876205BE63BDBE4EE /* Pods-Quizorize-QuizorizeUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
