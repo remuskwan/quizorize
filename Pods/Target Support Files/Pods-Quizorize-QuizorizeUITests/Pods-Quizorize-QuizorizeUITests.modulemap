@@ -1,0 +1,6 @@
+framework module Pods_Quizorize_QuizorizeUITests {
+  umbrella header "Pods-Quizorize-QuizorizeUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
