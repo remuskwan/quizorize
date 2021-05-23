@@ -23,6 +23,8 @@
 		55EDED5D956B8021A55A875F /* Pods_Quizorize_QuizorizeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */; };
 		571D50E1BB6F534A6DDF9D4D /* Pods_Quizorize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */; };
 		65AC49052D83463592C8D004 /* Pods_QuizorizeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */; };
+		77C5E126265A69F0002D5378 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C5E125265A69F0002D5378 /* UserDetails.swift */; };
+		77C5E12C265AAB9D002D5378 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C5E12B265AAB9D002D5378 /* Helper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,8 @@
 		3C9B0A5876205BE63BDBE4EE /* Pods-Quizorize-QuizorizeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.release.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		43143D971498F4F2769EF37A /* Pods-QuizorizeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizorizeTests.release.xcconfig"; path = "Target Support Files/Pods-QuizorizeTests/Pods-QuizorizeTests.release.xcconfig"; sourceTree = "<group>"; };
 		5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quizorize_QuizorizeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		77C5E125265A69F0002D5378 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
+		77C5E12B265AAB9D002D5378 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuizorizeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2DBC4DD8033848512376284 /* Pods-Quizorize.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize.release.xcconfig"; path = "Target Support Files/Pods-Quizorize/Pods-Quizorize.release.xcconfig"; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 		16C285EB2656EB020068AB95 /* Quizorize */ = {
 			isa = PBXGroup;
 			children = (
+				77C5E122265A6966002D5378 /* Structs */,
 				16285C7826593193003EE017 /* ViewModels */,
 				16C285EC2656EB020068AB95 /* QuizorizeApp.swift */,
 				16C285F02656EB030068AB95 /* Assets.xcassets */,
@@ -142,6 +147,7 @@
 				16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */,
 				16285C7926593426003EE017 /* GoogleService-Info.plist */,
 				16C285F22656EB030068AB95 /* Preview Content */,
+				77C5E12B265AAB9D002D5378 /* Helper.swift */,
 			);
 			path = Quizorize;
 			sourceTree = "<group>";
@@ -170,6 +176,14 @@
 				16C286102656EB040068AB95 /* Info.plist */,
 			);
 			path = QuizorizeUITests;
+			sourceTree = "<group>";
+		};
+		77C5E122265A6966002D5378 /* Structs */ = {
+			isa = PBXGroup;
+			children = (
+				77C5E125265A69F0002D5378 /* UserDetails.swift */,
+			);
+			path = Structs;
 			sourceTree = "<group>";
 		};
 		96FE5971BEA6BB1A38867E24 /* Frameworks */ = {
@@ -439,8 +453,10 @@
 				16C285F62656EB030068AB95 /* Persistence.swift in Sources */,
 				16C285EF2656EB020068AB95 /* ContentView.swift in Sources */,
 				16C2861F2656EC7A0068AB95 /* RegisterView.swift in Sources */,
+				77C5E126265A69F0002D5378 /* UserDetails.swift in Sources */,
 				16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */,
 				16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */,
+				77C5E12C265AAB9D002D5378 /* Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

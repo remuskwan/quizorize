@@ -64,10 +64,13 @@ struct LoginView: View {
                     
                     Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                         Text("Sign In")
+                            .font(.headline)
                             .cornerRadius(8)
                             .foregroundColor(.white)
-                            .frame(width: 200, height: 50)
+                            .frame(width: 250, height: 50)
                             .background(Color.purple)
+                            .addBorder(Color.purple, width: 1, cornerRadius: 20)
+                            .shadow(radius: 1.5)
                     })
                     .padding(4)
                     
@@ -75,16 +78,18 @@ struct LoginView: View {
                         destination: RegisterView(),
                         label: {
                             Text("Register For An Account")
-                                .cornerRadius(8)
+                                .font(.headline)
                                 .foregroundColor(.purple)
-                                .frame(width: 200, height: 50)
+                                .frame(width: 250, height: 50)
                                 .background(Color.white)
-                                .border(Color.gray)
+                                .addBorder(Color.purple, width: 1, cornerRadius: 20)
+                                .shadow(radius: 1.5)
                         })
                 }
                 .padding()
-            }
+                
                 Spacer()
+            }
         }
     }
     
