@@ -15,9 +15,8 @@ struct LoginView: View {
             if viewModel.signedIn {
                 Text("You are signed in")
             } else {
-                
+                Login()
             }
-            Login()
         }
         .onAppear {
             viewModel.signedIn = viewModel.isSignedIn
