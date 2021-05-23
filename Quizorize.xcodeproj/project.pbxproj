@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792E7265A61DA0073718F /* AuthViewModel.swift */; };
+		162792E9265A61DA0073718F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792E7265A61DA0073718F /* AuthViewModel.swift */; };
+		162792EA265A61DA0073718F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792E7265A61DA0073718F /* AuthViewModel.swift */; };
 		16285C7A26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7B26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7C26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
@@ -44,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		0CEB516FEF49F52E189064FF /* Pods-QuizorizeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizorizeTests.debug.xcconfig"; path = "Target Support Files/Pods-QuizorizeTests/Pods-QuizorizeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		162792E7265A61DA0073718F /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		16285C7926593426003EE017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		16C285E92656EB020068AB95 /* Quizorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C285EC2656EB020068AB95 /* QuizorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeApp.swift; sourceTree = "<group>"; };
@@ -99,12 +103,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		16285C7826593193003EE017 /* ViewModels */ = {
+		162792E2265A61770073718F /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				16C285EE2656EB020068AB95 /* ContentView.swift */,
 				16C2861C2656EC6C0068AB95 /* LoginView.swift */,
 				16C2861E2656EC7A0068AB95 /* RegisterView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		16285C7826593193003EE017 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				162792E7265A61DA0073718F /* AuthViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -134,6 +146,7 @@
 		16C285EB2656EB020068AB95 /* Quizorize */ = {
 			isa = PBXGroup;
 			children = (
+				162792E2265A61770073718F /* Views */,
 				16285C7826593193003EE017 /* ViewModels */,
 				16C285EC2656EB020068AB95 /* QuizorizeApp.swift */,
 				16C285F02656EB030068AB95 /* Assets.xcassets */,
@@ -438,6 +451,7 @@
 				16C285F92656EB030068AB95 /* Quizorize.xcdatamodeld in Sources */,
 				16C285F62656EB030068AB95 /* Persistence.swift in Sources */,
 				16C285EF2656EB020068AB95 /* ContentView.swift in Sources */,
+				162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				16C2861F2656EC7A0068AB95 /* RegisterView.swift in Sources */,
 				16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */,
 				16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */,
@@ -448,6 +462,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				162792E9265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				16C286042656EB040068AB95 /* QuizorizeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,6 +471,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				162792EA265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				16C2860F2656EB040068AB95 /* QuizorizeUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
