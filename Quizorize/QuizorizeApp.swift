@@ -19,20 +19,19 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct QuizorizeApp: App {
     
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
     init() {
         FirebaseApp.configure()
     }
-    
+
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
+            /*
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            */
             LoginView()
-            RegisterView()
         }
     }
 }
