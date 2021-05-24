@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 extension View {
+    //MARK: A function that allows us to add Rounded Borders around a view easily
     public func addBorder<S>(_ content: S, width: CGFloat = 1, cornerRadius: CGFloat) -> some View where S : ShapeStyle {
         let roundedRect = RoundedRectangle(cornerRadius: cornerRadius)
         return clipShape(roundedRect)
@@ -17,6 +18,7 @@ extension View {
 }
 
 extension Color {
+    //MARK: adding option of using hex color format for Color
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0
@@ -42,3 +44,7 @@ extension Color {
         )
     }
 }
+
+
+
+

@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+
 struct RegisterView: View {
     @State var name: String = ""
     @State var email: String = ""
@@ -16,84 +18,72 @@ struct RegisterView: View {
     @State var color = Color.black.opacity(0.7)
     @State var visible: Bool = false
     
+
     var body: some View {
-        VStack() {
-            Spacer()
-            
-            TextField("Enter your name", text: $name)
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
-                .padding()
-                .background(Color(.secondarySystemBackground))
-            
-            TextField("Enter your email", text: $email)
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
-                .padding()
-                .background(Color(.secondarySystemBackground))
-            
-            HStack(spacing: 15) {
+        NavigationView {
+            Form {
+                Spacer()
+                    .listRowBackground(Color.clear)
                 
-                VStack {
-                    if self.visible {
-                        TextField("Password", text: self.$password)
-                    } else {
-                        SecureField("Password", text: $password)
-                    }
+                Section(header: Text("NAME")) {
+                    InfoFieldView(isSensitive: false, queryCommand: "Enter your name")
+                }
+                .listRowBackground(Color.clear)
+                
+                Section(header: Text("EMAIL")) {
+                    InfoFieldView(isSensitive: false, queryCommand: "Enter your email")
+                }
+                .listRowBackground(Color.clear)
+                .alignmentGuide(.top) { dimension in
+                    dimension[.top]
                 }
                 
-                Button(action: {
-                    self.visible.toggle()
+                Section(header: Text("PASSWORD")) {
+                    InfoFieldView(isSensitive: true, queryCommand: "Enter your password")
                 }
-                , label: {
-                    Image(systemName: self.visible ? "eye.slash.fill" : "eye.fill")
-                        .foregroundColor(self.color)
-                })
+                .listRowBackground(Color.clear)
+                
+                Section(header: Text("CONFIRM PASSWORD")) {
+                    InfoFieldView(isSensitive: true, queryCommand: "Confirm your password")
+                }
+                .listRowBackground(Color.clear)
+                
+                Spacer()
+                    .listRowBackground(Color.clear)
+                
+                /*
+                HStack {
+                    Spacer()
+                    Button(action: {}, label: {
+                        Text("Create Your Account")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(width: 250, height: 50)
+                            .background(Color.purple)
+                            .addBorder(Color.purple, width: 1, cornerRadius: 20)
+                    })
+                        .listRowBackground(Color.clear)
+                    Spacer()
+                }
+                .listRowBackground(Color.clear)
+                */
+
+                
             }
-            .disableAutocorrection(true)
-            .autocapitalization(.none)
-            .padding()
-            .background(Color(.secondarySystemBackground))
-            
-            HStack(spacing: 15) {
-                
-                VStack {
-                    if self.visible {
-                        TextField("Confirm Password", text: self.$confirmPassword)
-                    } else {
-                        SecureField("Confirm Password", text: $confirmPassword)
-                    }
-                }
-                
-                Button(action: {
-                    self.visible.toggle()
-                }
-                , label: {
-                    Image(systemName: self.visible ? "eye.slash.fill" : "eye.fill")
-                        .foregroundColor(self.color)
-                })
+            .onAppear {
+                UITableViewCell.appearance().backgroundColor = UIColor.clear
+                UITableView.appearance().backgroundColor = UIColor.clear
             }
-            .disableAutocorrection(true)
-            .autocapitalization(.none)
-            .padding()
-            .background(Color(.secondarySystemBackground))
-            
-            Spacer()
-            
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                Text("Create Your Account")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(width: 250, height: 50)
-                    .background(Color.purple)
-                    .addBorder(Color.purple, width: 1, cornerRadius: 20)
-                    .shadow(radius: 1.5)
-            })
+            .background(Color.white)
             
         }
         .navigationTitle("Create Your Account")
         .navigationBarTitleDisplayMode(.inline)
-        .padding()
+        .toolbar {
+            Button("Create") {
+                print("Hello World")
+            }
+        }
     }
 }
 
@@ -102,3 +92,4 @@ struct RegisterView_Previews: PreviewProvider {
         RegisterView()
     }
 }
+
