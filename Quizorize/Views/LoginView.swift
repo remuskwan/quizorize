@@ -5,6 +5,10 @@
 //  Created by Remus Kwan on 21/5/21.
 //
 
+/**
+ Quizorize's Login View (First View)
+ */
+
 import SwiftUI
 import AlertKit
 import CryptoKit
@@ -12,9 +16,8 @@ import FirebaseAuth
 import GoogleSignIn
 import AuthenticationServices
 
-struct LoginView: View {
-    @EnvironmentObject var viewModel: AuthViewModel
-    
+class AppViewModel : ObservableObject {
+    let auth = Auth.auth()
     var body: some View {
         NavigationView {
             if viewModel.signedIn {
@@ -23,9 +26,6 @@ struct LoginView: View {
                 Login()
                     .navigationTitle("Login")
             }
-        }
-        .onAppear {
-            viewModel.signedIn = viewModel.isSignedIn
         }
     }
 }
@@ -263,6 +263,7 @@ struct SignInWithGoogle: View {
         .background(RoundedRectangle(cornerRadius: 5)
                         .strokeBorder(Color.primary, lineWidth: 1))
         
+
     }
 }
 
@@ -271,3 +272,4 @@ struct LoginView_Previews: PreviewProvider {
         LoginView()
     }
 }
+
