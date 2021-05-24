@@ -5,92 +5,74 @@
 //  Created by Remus Kwan on 21/5/21.
 //
 
-import SwiftUI
+/**
+ Quizorize's Login View (First View)
+ */
 
-struct LoginView: View {
-    @EnvironmentObject var viewModel: AuthViewModel
+import SwiftUI
+import FirebaseAuth
+import AuthenticationServices
+
+class AppViewModel : ObservableObject {
+    let auth = Auth.auth()
     
-    var body: some View {
-        NavigationView {
-            if viewModel.signedIn {
-                Text("You are signed in")
-            } else {
-                Login()
+    var isSignedIn: Bool {
+        return auth.currentUser != nil
+    }
+    
+    func signIn(email: String, password: String) {
+        auth.signIn(withEmail: email, password: password) { result, error in
+            guard result != nil, error != nil else {
+                return
             }
-        }
-        .onAppear {
-            viewModel.signedIn = viewModel.isSignedIn
         }
     }
 }
 
-struct Login : View {
+struct LoginView: View {
+    
+    // MARK: Constant Parameters for Login View to be used in DefaultLoginView and OtherLoginViews
+    let frameWidth: CGFloat = 350
+    let frameHeight: CGFloat = 50
+    let borderWidth: CGFloat = 1.5
+    let borderCornerRadius: CGFloat = 20
+    let shadowRadius: CGFloat = 1.5
+    
     @State var email: String = ""
     @State var password: String = ""
     
-    @EnvironmentObject var viewModel: AuthViewModel
-    
     var body: some View {
-        VStack {
-            Image("flashcard")
-                .resizable()
-                .scaledToFit()
-            
-            Text("Study Hard, Study Smart.")
-                .font(.title3)
-            
-            HStack {
-                Image("apple")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100, alignment: .center)
-                Image("google")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100, alignment: .center)
-                Image("microsoft")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100, alignment: .center)
-            }
-            
+        NavigationView {
             VStack {
-                TextField("Email Address", text: $email)
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
+                HStack {
+                    
+                    Image("flashcard")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100, alignment: .topLeading)
+                    
+                    Text("Quizorize")
+                        .font(.title3)
+                    
+                }
                 
-                SecureField("Password", text: $password)
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
+                Text("Study Hard, Study Smart.")
+                    .font(.title3)
+
                 
-                Button(action: {
-                    guard !email.isEmpty, !password.isEmpty else {
-                        return
-                    }
-                    viewModel.signIn(email: email, password: password)
-                }, label: {
-                    Text("Sign In")
-                        .cornerRadius(8)
-                        .foregroundColor(.white)
-                        .frame(width: 200, height: 50)
-                        .background(Color.purple)
-                })
-                .padding(4)
+                DefaultLoginView(frameWidth: self.frameWidth, frameHeight: self.frameHeight, borderWidth: self.borderWidth, borderCornerRadius: self.borderCornerRadius, shadowRadius: self.shadowRadius)
                 
-                NavigationLink(
-                    destination: RegisterView(),
-                    label: {
-                        Text("Register For An Account")
-                            .cornerRadius(8)
-                            .foregroundColor(.purple)
-                            .frame(width: 200, height: 50)
-                            .background(Color.white)
-                            .border(Color.gray)
-                    })
+                Text("OR")
+                
+                OtherLoginViews(frameWidth: self.frameWidth, frameHeight: self.frameHeight, borderWidth: self.borderWidth, borderCornerRadius: self.borderCornerRadius, shadowRadius: self.shadowRadius)
+                
+                Spacer()
             }
-            .padding()
         }
-        Spacer()
+    }
+    
+    
+    func signUp(email: String, password: String) {
     }
 }
 
@@ -99,3 +81,4 @@ struct LoginView_Previews: PreviewProvider {
         LoginView()
     }
 }
+
