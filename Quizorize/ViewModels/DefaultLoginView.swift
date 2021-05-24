@@ -11,12 +11,14 @@ struct DefaultLoginView: View {
     @State var email: String = ""
     @State var password: String = ""
     
-    let frameWidth: CGFloat = 250
-    let frameHeight: CGFloat = 50
-    let borderWidth: CGFloat = 1.5
-
-    let borderCornerRadius: CGFloat = 20
-    let shadowRadius: CGFloat = 1.5
+    @State var color = Color.black.opacity(0.7)
+    @State var visible = false
+    
+    let frameWidth: CGFloat
+    let frameHeight: CGFloat
+    let borderWidth: CGFloat
+    let borderCornerRadius: CGFloat
+    let shadowRadius: CGFloat
     
     var body: some View {
         VStack {
@@ -27,11 +29,28 @@ struct DefaultLoginView: View {
                     .padding()
                     .background(Color(.secondarySystemBackground))
                 
-                SecureField("Password", text: $password)
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
+                HStack(spacing: 15) {
+                    
+                    VStack {
+                        if self.visible {
+                            TextField("Password", text: self.$password)
+                        } else {
+                            SecureField("Password", text: $password)
+                        }
+                    }
+                    
+                    Button(action: {
+                        self.visible.toggle()
+                    }
+                    , label: {
+                        Image(systemName: self.visible ? "eye.slash.fill" : "eye.fill")
+                            .foregroundColor(self.color)
+                    })
+                }
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+                .padding()
+                .background(Color(.secondarySystemBackground))
                 
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                     Text("Sign In")
@@ -59,17 +78,12 @@ struct DefaultLoginView: View {
             }
             .padding()
             
-            Text("OR")
-            
-            OtherLoginViews(frameWidth: self.frameWidth, frameHeight: self.frameHeight, borderWidth: self.borderWidth, borderCornerRadius: self.borderCornerRadius, shadowRadius: self.shadowRadius)
-            
-            
         }
     }
 }
 
 struct DefaultLoginView_Previews: PreviewProvider {
     static var previews: some View {
-        DefaultLoginView()
+        DefaultLoginView(frameWidth: 250, frameHeight: 100, borderWidth: 1, borderCornerRadius: 20, shadowRadius: 1.5)
     }
 }
