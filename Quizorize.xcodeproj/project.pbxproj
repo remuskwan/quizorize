@@ -1,0 +1,903 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792E7265A61DA0073718F /* AuthViewModel.swift */; };
+		162792E9265A61DA0073718F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792E7265A61DA0073718F /* AuthViewModel.swift */; };
+		162792EA265A61DA0073718F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792E7265A61DA0073718F /* AuthViewModel.swift */; };
+		162792EC265AD1240073718F /* DecksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792EB265AD1240073718F /* DecksView.swift */; };
+		162792ED265AD1240073718F /* DecksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792EB265AD1240073718F /* DecksView.swift */; };
+		162792EE265AD1240073718F /* DecksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792EB265AD1240073718F /* DecksView.swift */; };
+		162792F1265ADDC90073718F /* TextFieldClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F0265ADDC90073718F /* TextFieldClearButton.swift */; };
+		162792F2265ADDC90073718F /* TextFieldClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F0265ADDC90073718F /* TextFieldClearButton.swift */; };
+		162792F3265ADDC90073718F /* TextFieldClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F0265ADDC90073718F /* TextFieldClearButton.swift */; };
+		162792F7265BB9690073718F /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 162792F6265BB9690073718F /* AlertKit */; };
+		162792F9265BE7860073718F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F8265BE7860073718F /* Extensions.swift */; };
+		162792FA265BE7860073718F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F8265BE7860073718F /* Extensions.swift */; };
+		162792FB265BE7870073718F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F8265BE7860073718F /* Extensions.swift */; };
+		16279301265BFF7B0073718F /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279300265BFF7B0073718F /* LaunchView.swift */; };
+		16279302265BFF7B0073718F /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279300265BFF7B0073718F /* LaunchView.swift */; };
+		16279303265BFF7B0073718F /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279300265BFF7B0073718F /* LaunchView.swift */; };
+		16285C7A26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
+		16285C7B26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
+		16285C7C26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
+		16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285EC2656EB020068AB95 /* QuizorizeApp.swift */; };
+		16C285EF2656EB020068AB95 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285EE2656EB020068AB95 /* ContentView.swift */; };
+		16C285F12656EB030068AB95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16C285F02656EB030068AB95 /* Assets.xcassets */; };
+		16C285F42656EB030068AB95 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16C285F32656EB030068AB95 /* Preview Assets.xcassets */; };
+		16C285F62656EB030068AB95 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285F52656EB030068AB95 /* Persistence.swift */; };
+		16C285F92656EB030068AB95 /* Quizorize.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */; };
+		16C286042656EB040068AB95 /* QuizorizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C286032656EB040068AB95 /* QuizorizeTests.swift */; };
+		16C2860F2656EB040068AB95 /* QuizorizeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2860E2656EB040068AB95 /* QuizorizeUITests.swift */; };
+		16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2861C2656EC6C0068AB95 /* LoginView.swift */; };
+		16C2861F2656EC7A0068AB95 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2861E2656EC7A0068AB95 /* RegisterView.swift */; };
+		55EDED5D956B8021A55A875F /* Pods_Quizorize_QuizorizeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */; };
+		571D50E1BB6F534A6DDF9D4D /* Pods_Quizorize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */; };
+		65AC49052D83463592C8D004 /* Pods_QuizorizeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		16C286002656EB040068AB95 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 16C285E12656EB020068AB95 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 16C285E82656EB020068AB95;
+			remoteInfo = Quizorize;
+		};
+		16C2860B2656EB040068AB95 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 16C285E12656EB020068AB95 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 16C285E82656EB020068AB95;
+			remoteInfo = Quizorize;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0CEB516FEF49F52E189064FF /* Pods-QuizorizeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizorizeTests.debug.xcconfig"; path = "Target Support Files/Pods-QuizorizeTests/Pods-QuizorizeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		162792E7265A61DA0073718F /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		162792EB265AD1240073718F /* DecksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecksView.swift; sourceTree = "<group>"; };
+		162792F0265ADDC90073718F /* TextFieldClearButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldClearButton.swift; sourceTree = "<group>"; };
+		162792F4265AF12C0073718F /* Quizorize.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Quizorize.entitlements; sourceTree = "<group>"; };
+		162792F8265BE7860073718F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		16279300265BFF7B0073718F /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
+		16285C7926593426003EE017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		16C285E92656EB020068AB95 /* Quizorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		16C285EC2656EB020068AB95 /* QuizorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeApp.swift; sourceTree = "<group>"; };
+		16C285EE2656EB020068AB95 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		16C285F02656EB030068AB95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		16C285F32656EB030068AB95 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		16C285F52656EB030068AB95 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		16C285F82656EB030068AB95 /* Quizorize.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Quizorize.xcdatamodel; sourceTree = "<group>"; };
+		16C285FA2656EB030068AB95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		16C285FF2656EB040068AB95 /* QuizorizeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuizorizeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		16C286032656EB040068AB95 /* QuizorizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeTests.swift; sourceTree = "<group>"; };
+		16C286052656EB040068AB95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		16C2860A2656EB040068AB95 /* QuizorizeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuizorizeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		16C2860E2656EB040068AB95 /* QuizorizeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeUITests.swift; sourceTree = "<group>"; };
+		16C286102656EB040068AB95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		16C2861C2656EC6C0068AB95 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		16C2861E2656EC7A0068AB95 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		2429516D6B803B85C95E7062 /* Pods-Quizorize.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize/Pods-Quizorize.debug.xcconfig"; sourceTree = "<group>"; };
+		3C9B0A5876205BE63BDBE4EE /* Pods-Quizorize-QuizorizeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.release.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.release.xcconfig"; sourceTree = "<group>"; };
+		43143D971498F4F2769EF37A /* Pods-QuizorizeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizorizeTests.release.xcconfig"; path = "Target Support Files/Pods-QuizorizeTests/Pods-QuizorizeTests.release.xcconfig"; sourceTree = "<group>"; };
+		5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quizorize_QuizorizeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuizorizeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2DBC4DD8033848512376284 /* Pods-Quizorize.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize.release.xcconfig"; path = "Target Support Files/Pods-Quizorize/Pods-Quizorize.release.xcconfig"; sourceTree = "<group>"; };
+		EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quizorize.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		16C285E62656EB020068AB95 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				162792F7265BB9690073718F /* AlertKit in Frameworks */,
+				571D50E1BB6F534A6DDF9D4D /* Pods_Quizorize.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16C285FC2656EB040068AB95 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65AC49052D83463592C8D004 /* Pods_QuizorizeTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16C286072656EB040068AB95 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55EDED5D956B8021A55A875F /* Pods_Quizorize_QuizorizeUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		162792E2265A61770073718F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				16C285EE2656EB020068AB95 /* ContentView.swift */,
+				16C2861C2656EC6C0068AB95 /* LoginView.swift */,
+				16C2861E2656EC7A0068AB95 /* RegisterView.swift */,
+				162792EB265AD1240073718F /* DecksView.swift */,
+				16279300265BFF7B0073718F /* LaunchView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		162792EF265ADD970073718F /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				162792F0265ADDC90073718F /* TextFieldClearButton.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
+		16285C7826593193003EE017 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				162792E7265A61DA0073718F /* AuthViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		16C285E02656EB020068AB95 = {
+			isa = PBXGroup;
+			children = (
+				16C285EB2656EB020068AB95 /* Quizorize */,
+				16C286022656EB040068AB95 /* QuizorizeTests */,
+				16C2860D2656EB040068AB95 /* QuizorizeUITests */,
+				16C285EA2656EB020068AB95 /* Products */,
+				AE61C6CA4550C0CAD8DA44B6 /* Pods */,
+				96FE5971BEA6BB1A38867E24 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		16C285EA2656EB020068AB95 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				16C285E92656EB020068AB95 /* Quizorize.app */,
+				16C285FF2656EB040068AB95 /* QuizorizeTests.xctest */,
+				16C2860A2656EB040068AB95 /* QuizorizeUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		16C285EB2656EB020068AB95 /* Quizorize */ = {
+			isa = PBXGroup;
+			children = (
+				162792F4265AF12C0073718F /* Quizorize.entitlements */,
+				162792EF265ADD970073718F /* ViewModifiers */,
+				162792E2265A61770073718F /* Views */,
+				16285C7826593193003EE017 /* ViewModels */,
+				16C285EC2656EB020068AB95 /* QuizorizeApp.swift */,
+				16C285F02656EB030068AB95 /* Assets.xcassets */,
+				16C285F52656EB030068AB95 /* Persistence.swift */,
+				16C285FA2656EB030068AB95 /* Info.plist */,
+				16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */,
+				16285C7926593426003EE017 /* GoogleService-Info.plist */,
+				16C285F22656EB030068AB95 /* Preview Content */,
+				162792F8265BE7860073718F /* Extensions.swift */,
+			);
+			path = Quizorize;
+			sourceTree = "<group>";
+		};
+		16C285F22656EB030068AB95 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				16C285F32656EB030068AB95 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		16C286022656EB040068AB95 /* QuizorizeTests */ = {
+			isa = PBXGroup;
+			children = (
+				16C286032656EB040068AB95 /* QuizorizeTests.swift */,
+				16C286052656EB040068AB95 /* Info.plist */,
+			);
+			path = QuizorizeTests;
+			sourceTree = "<group>";
+		};
+		16C2860D2656EB040068AB95 /* QuizorizeUITests */ = {
+			isa = PBXGroup;
+			children = (
+				16C2860E2656EB040068AB95 /* QuizorizeUITests.swift */,
+				16C286102656EB040068AB95 /* Info.plist */,
+			);
+			path = QuizorizeUITests;
+			sourceTree = "<group>";
+		};
+		96FE5971BEA6BB1A38867E24 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */,
+				5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */,
+				7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AE61C6CA4550C0CAD8DA44B6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2429516D6B803B85C95E7062 /* Pods-Quizorize.debug.xcconfig */,
+				D2DBC4DD8033848512376284 /* Pods-Quizorize.release.xcconfig */,
+				7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */,
+				3C9B0A5876205BE63BDBE4EE /* Pods-Quizorize-QuizorizeUITests.release.xcconfig */,
+				0CEB516FEF49F52E189064FF /* Pods-QuizorizeTests.debug.xcconfig */,
+				43143D971498F4F2769EF37A /* Pods-QuizorizeTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		16C285E82656EB020068AB95 /* Quizorize */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 16C286132656EB040068AB95 /* Build configuration list for PBXNativeTarget "Quizorize" */;
+			buildPhases = (
+				26E8E149317F3765E7DC444F /* [CP] Check Pods Manifest.lock */,
+				16C285E52656EB020068AB95 /* Sources */,
+				16C285E62656EB020068AB95 /* Frameworks */,
+				16C285E72656EB020068AB95 /* Resources */,
+				BB0611463EA25A41C92C4CD9 /* [CP] Embed Pods Frameworks */,
+				18FA32176825CD0F643DA95D /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Quizorize;
+			packageProductDependencies = (
+				162792F6265BB9690073718F /* AlertKit */,
+			);
+			productName = Quizorize;
+			productReference = 16C285E92656EB020068AB95 /* Quizorize.app */;
+			productType = "com.apple.product-type.application";
+		};
+		16C285FE2656EB040068AB95 /* QuizorizeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 16C286162656EB040068AB95 /* Build configuration list for PBXNativeTarget "QuizorizeTests" */;
+			buildPhases = (
+				41F109DC483657563D5C4487 /* [CP] Check Pods Manifest.lock */,
+				16C285FB2656EB040068AB95 /* Sources */,
+				16C285FC2656EB040068AB95 /* Frameworks */,
+				16C285FD2656EB040068AB95 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				16C286012656EB040068AB95 /* PBXTargetDependency */,
+			);
+			name = QuizorizeTests;
+			productName = QuizorizeTests;
+			productReference = 16C285FF2656EB040068AB95 /* QuizorizeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		16C286092656EB040068AB95 /* QuizorizeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 16C286192656EB040068AB95 /* Build configuration list for PBXNativeTarget "QuizorizeUITests" */;
+			buildPhases = (
+				369C6EF3B75DF214E3B15C69 /* [CP] Check Pods Manifest.lock */,
+				16C286062656EB040068AB95 /* Sources */,
+				16C286072656EB040068AB95 /* Frameworks */,
+				16C286082656EB040068AB95 /* Resources */,
+				87AC8C7B1AFA01DAC25164F9 /* [CP] Embed Pods Frameworks */,
+				56C8CB82F2A605C278198A80 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				16C2860C2656EB040068AB95 /* PBXTargetDependency */,
+			);
+			name = QuizorizeUITests;
+			productName = QuizorizeUITests;
+			productReference = 16C2860A2656EB040068AB95 /* QuizorizeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		16C285E12656EB020068AB95 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					16C285E82656EB020068AB95 = {
+						CreatedOnToolsVersion = 12.5;
+					};
+					16C285FE2656EB040068AB95 = {
+						CreatedOnToolsVersion = 12.5;
+						TestTargetID = 16C285E82656EB020068AB95;
+					};
+					16C286092656EB040068AB95 = {
+						CreatedOnToolsVersion = 12.5;
+						TestTargetID = 16C285E82656EB020068AB95;
+					};
+				};
+			};
+			buildConfigurationList = 16C285E42656EB020068AB95 /* Build configuration list for PBXProject "Quizorize" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 16C285E02656EB020068AB95;
+			packageReferences = (
+				162792F5265BB9690073718F /* XCRemoteSwiftPackageReference "AlertKit" */,
+			);
+			productRefGroup = 16C285EA2656EB020068AB95 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				16C285E82656EB020068AB95 /* Quizorize */,
+				16C285FE2656EB040068AB95 /* QuizorizeTests */,
+				16C286092656EB040068AB95 /* QuizorizeUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		16C285E72656EB020068AB95 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16C285F42656EB030068AB95 /* Preview Assets.xcassets in Resources */,
+				16C285F12656EB030068AB95 /* Assets.xcassets in Resources */,
+				16285C7A26593426003EE017 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16C285FD2656EB040068AB95 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16285C7B26593426003EE017 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16C286082656EB040068AB95 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16285C7C26593426003EE017 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		18FA32176825CD0F643DA95D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize/Pods-Quizorize-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize/Pods-Quizorize-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Quizorize/Pods-Quizorize-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		26E8E149317F3765E7DC444F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Quizorize-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		369C6EF3B75DF214E3B15C69 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Quizorize-QuizorizeUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		41F109DC483657563D5C4487 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QuizorizeTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		56C8CB82F2A605C278198A80 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		87AC8C7B1AFA01DAC25164F9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BB0611463EA25A41C92C4CD9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize/Pods-Quizorize-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize/Pods-Quizorize-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Quizorize/Pods-Quizorize-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		16C285E52656EB020068AB95 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16C285F92656EB030068AB95 /* Quizorize.xcdatamodeld in Sources */,
+				16279301265BFF7B0073718F /* LaunchView.swift in Sources */,
+				16C285F62656EB030068AB95 /* Persistence.swift in Sources */,
+				16C285EF2656EB020068AB95 /* ContentView.swift in Sources */,
+				162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */,
+				162792F1265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
+				162792F9265BE7860073718F /* Extensions.swift in Sources */,
+				16C2861F2656EC7A0068AB95 /* RegisterView.swift in Sources */,
+				16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */,
+				16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */,
+				162792EC265AD1240073718F /* DecksView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16C285FB2656EB040068AB95 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				162792FA265BE7860073718F /* Extensions.swift in Sources */,
+				162792E9265A61DA0073718F /* AuthViewModel.swift in Sources */,
+				16279302265BFF7B0073718F /* LaunchView.swift in Sources */,
+				162792F2265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
+				16C286042656EB040068AB95 /* QuizorizeTests.swift in Sources */,
+				162792ED265AD1240073718F /* DecksView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16C286062656EB040068AB95 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				162792FB265BE7870073718F /* Extensions.swift in Sources */,
+				162792EA265A61DA0073718F /* AuthViewModel.swift in Sources */,
+				16279303265BFF7B0073718F /* LaunchView.swift in Sources */,
+				162792F3265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
+				16C2860F2656EB040068AB95 /* QuizorizeUITests.swift in Sources */,
+				162792EE265AD1240073718F /* DecksView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		16C286012656EB040068AB95 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 16C285E82656EB020068AB95 /* Quizorize */;
+			targetProxy = 16C286002656EB040068AB95 /* PBXContainerItemProxy */;
+		};
+		16C2860C2656EB040068AB95 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 16C285E82656EB020068AB95 /* Quizorize */;
+			targetProxy = 16C2860B2656EB040068AB95 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		16C286112656EB040068AB95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		16C286122656EB040068AB95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		16C286142656EB040068AB95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2429516D6B803B85C95E7062 /* Pods-Quizorize.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Quizorize/Quizorize.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Quizorize/Preview Content\"";
+				DEVELOPMENT_TEAM = K7W85Q34X7;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Quizorize/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quizorize.Quizorize;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		16C286152656EB040068AB95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D2DBC4DD8033848512376284 /* Pods-Quizorize.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Quizorize/Quizorize.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Quizorize/Preview Content\"";
+				DEVELOPMENT_TEAM = K7W85Q34X7;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Quizorize/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quizorize.Quizorize;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		16C286172656EB040068AB95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0CEB516FEF49F52E189064FF /* Pods-QuizorizeTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = QuizorizeTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quizorize.QuizorizeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quizorize.app/Quizorize";
+			};
+			name = Debug;
+		};
+		16C286182656EB040068AB95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43143D971498F4F2769EF37A /* Pods-QuizorizeTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = QuizorizeTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quizorize.QuizorizeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quizorize.app/Quizorize";
+			};
+			name = Release;
+		};
+		16C2861A2656EB040068AB95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = QuizorizeUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quizorize.QuizorizeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Quizorize;
+			};
+			name = Debug;
+		};
+		16C2861B2656EB040068AB95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C9B0A5876205BE63BDBE4EE /* Pods-Quizorize-QuizorizeUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = QuizorizeUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quizorize.QuizorizeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Quizorize;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		16C285E42656EB020068AB95 /* Build configuration list for PBXProject "Quizorize" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16C286112656EB040068AB95 /* Debug */,
+				16C286122656EB040068AB95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		16C286132656EB040068AB95 /* Build configuration list for PBXNativeTarget "Quizorize" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16C286142656EB040068AB95 /* Debug */,
+				16C286152656EB040068AB95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		16C286162656EB040068AB95 /* Build configuration list for PBXNativeTarget "QuizorizeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16C286172656EB040068AB95 /* Debug */,
+				16C286182656EB040068AB95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		16C286192656EB040068AB95 /* Build configuration list for PBXNativeTarget "QuizorizeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16C2861A2656EB040068AB95 /* Debug */,
+				16C2861B2656EB040068AB95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		162792F5265BB9690073718F /* XCRemoteSwiftPackageReference "AlertKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rebeloper/AlertKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		162792F6265BB9690073718F /* AlertKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 162792F5265BB9690073718F /* XCRemoteSwiftPackageReference "AlertKit" */;
+			productName = AlertKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				16C285F82656EB030068AB95 /* Quizorize.xcdatamodel */,
+			);
+			currentVersion = 16C285F82656EB030068AB95 /* Quizorize.xcdatamodel */;
+			path = Quizorize.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 16C285E12656EB020068AB95 /* Project object */;
+}
