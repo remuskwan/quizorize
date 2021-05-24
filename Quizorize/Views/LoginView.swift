@@ -58,23 +58,7 @@ struct LoginView: View {
                 
                 Text("Study Hard, Study Smart.")
                     .font(.title3)
-                
-                /*
-                 HStack {
-                 Image("apple")
-                 .resizable()
-                 .scaledToFit()
-                 .frame(width: 100, height: 100, alignment: .center)
-                 Image("google")
-                 .resizable()
-                 .scaledToFit()
-                 .frame(width: 100, height: 100, alignment: .center)
-                 Image("microsoft")
-                 .resizable()
-                 .scaledToFit()
-                 .frame(width: 100, height: 100, alignment: .center)
-                 }
-                 */
+
                 
                 DefaultLoginView(frameWidth: self.frameWidth, frameHeight: self.frameHeight, borderWidth: self.borderWidth, borderCornerRadius: self.borderCornerRadius, shadowRadius: self.shadowRadius)
                 
@@ -89,7 +73,6 @@ struct LoginView: View {
     
     
     func signUp(email: String, password: String) {
-        
     }
 }
 
