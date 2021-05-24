@@ -19,7 +19,7 @@ class AuthViewModel : ObservableObject {
     
     func signIn(email: String, password: String) {
         auth.signIn(withEmail: email, password: password) { [weak self] result, error in
-            guard result != nil, error != nil else {
+            guard result != nil, error == nil else {
                 return
             }
             DispatchQueue.main.async {
@@ -31,11 +31,19 @@ class AuthViewModel : ObservableObject {
     
     func signUp(email: String, password: String) {
         auth.createUser(withEmail: email, password: password) { [weak self] result, error in
-            guard result != nil, error != nil else {
+            guard result != nil, error == nil else {
                 return
             }
             DispatchQueue.main.async {
                 self?.signedIn = true
+            }
+        }
+    }
+    func forgotPassword(email: String) {
+        auth.useAppLanguage()
+        auth.sendPasswordReset(withEmail: email) { error in
+            guard error != nil else {
+                return
             }
         }
     }
