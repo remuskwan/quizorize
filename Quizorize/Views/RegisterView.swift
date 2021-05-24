@@ -10,11 +10,12 @@ import SwiftUI
 
 
 struct RegisterView: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     @State var name: String = ""
     @State var email: String = ""
     @State var password: String = ""
     @State var confirmPassword: String = ""
-    
     @State var color = Color.black.opacity(0.7)
     @State var visible: Bool = false
     
@@ -84,6 +85,8 @@ struct RegisterView: View {
                 print("Hello World")
             }
         }
+        
+        
     }
 }
 
