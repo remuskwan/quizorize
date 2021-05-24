@@ -18,6 +18,8 @@ struct RegisterView: View {
     
     var body: some View {
         VStack() {
+            Spacer()
+            
             TextField("Enter your name", text: $name)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
