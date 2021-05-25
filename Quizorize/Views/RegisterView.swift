@@ -39,7 +39,7 @@ struct RegisterView: View {
                 .listRowBackground(Color.clear)
                 
                 Section(header: Text("DISPLAY NAME")) {
-                    InfoFieldView(InfoType: password, queryCommand: "Enter your password")
+                    InfoFieldView(InfoType: password, queryCommand: "Enter your password")	
                 }
                 .listRowBackground(Color.clear)
                 

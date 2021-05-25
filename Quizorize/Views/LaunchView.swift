@@ -47,6 +47,10 @@ struct LaunchView: View {
                     .padding()
             }
         }
+        .background(NavigationConfigurator { nc in
+                        nc.navigationBar.barTintColor = .white
+                        //nc.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]
+                    })
     }
 }
 
