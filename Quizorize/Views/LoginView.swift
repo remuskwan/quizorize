@@ -50,10 +50,7 @@ struct Login : View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewModel: AuthViewModel
     //@StateObject var customAlertManager = CustomAlertManager()
-    
-    @State var showingRegister: Bool = false
-    @State var showingForgotPassword: Bool = false
-    @State var customAlertText: String = ""
+
     @State var username: String = ""
     @State var password: String = ""
     @State var currentNonce:String?
