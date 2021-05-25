@@ -16,45 +16,70 @@ import FirebaseAuth
 import GoogleSignIn
 import AuthenticationServices
 
-class AppViewModel : ObservableObject {
-    let auth = Auth.auth()
+struct LoginView: View {
+    @EnvironmentObject var viewModel: AuthViewModel
+    
     var body: some View {
-        NavigationView {
+        VStack{
             if viewModel.signedIn {
                 DecksView()
             } else {
                 Login()
-                    .navigationTitle("Login")
+//                    .navigationTitle("Log in to Quizorize")
+//                    .toolbar {
+//                        ToolbarItem(placement: .navigationBarTrailing) {
+//                            Button("Help") {
+//                                print("Help tapped!")
+//                            }
+//                        }
+//                    }
             }
+        }
+        .onAppear {
+            viewModel.signedIn = viewModel.isSignedIn
         }
     }
 }
-
+struct ViewHeightKey: PreferenceKey {
+    static var defaultValue: CGFloat { 0 }
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value = value + nextValue()
+    }
+}
 struct Login : View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewModel: AuthViewModel
-    @StateObject var customAlertManager = CustomAlertManager()
-    
+    //@StateObject var customAlertManager = CustomAlertManager()
+
     @State var showingRegister: Bool = false
     @State var showingForgotPassword: Bool = false
     @State var customAlertText: String = ""
-    @State var email: String = ""
+    @State var username: String = ""
     @State var password: String = ""
     @State var currentNonce:String?
     
     var body: some View {
-        VStack {
-            ScrollView {
+        ScrollView {
+            ScrollViewReader { scrollView in
                 VStack {
-                    Text("Login with your username")
+                Group {
+                    Text("Log in to Quizorize")
+                        .font(.largeTitle.bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    TextField("Username", text: $email)
+                        .padding(.vertical, 24)
+                    
+                    TextField("Username", text: $username)
                         .disableAutocorrection(true)
                         .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
-                        .modifier(TextFieldClearButton(text: $email))
+                        .modifier(TextFieldClearButton(text: $username))
                         .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                         .padding(12)
                         .background(RoundedRectangle(cornerRadius: 5)
                                         .strokeBorder(Color.secondary, lineWidth: 1))
+                        .id(1)
+                        .onTapGesture {
+                            scrollView.scrollTo(1, anchor: .center)
+                        }
                     
                     SecureField("Password", text: $password)
                         .disableAutocorrection(true)
@@ -65,35 +90,46 @@ struct Login : View {
                         .padding(12)
                         .background(RoundedRectangle(cornerRadius: 5)
                                         .strokeBorder(Color.secondary, lineWidth: 1))
-                    Button("Forgot username or password?") {
-                        customAlertManager.show()
-                    }
-                    .foregroundColor(.purple)
-                    .frame(alignment: .leading)
-                    .customAlert(manager: customAlertManager, content: {
-                        VStack {
-                            Text("Forgot password").font(.title)
-                            Text("Please type in your email")
-                            TextField("Enter your email", text: $customAlertText).textFieldStyle(RoundedBorderTextFieldStyle())
+                        .id(2)
+                        .onTapGesture {
+                            scrollView.scrollTo(2, anchor: .center)
                         }
-                    }, buttons: [
-                        .cancel(content: {
-                            Text("Cancel").bold()
-                        }),
-                        .regular(content: {
-                            Text("OK")
-                        }, action: {
-                            print("Sending email: \(customAlertText)")
+                        
+                    NavigationLink(
+                        destination: RecoverPasswordView(),
+                        label: {
+                            Text("Forgot password?")
+                                .foregroundColor(.purple)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         })
-                    ])
+                        .padding(.vertical, 24)
+                    //                    Button("Forgot username or password?") {
+                    //                        customAlertManager.show()
+                    //                    }
+                    //                    .foregroundColor(.purple)
+                    //                    .frame(maxWidth: .infinity, alignment: .leading)
+                    //                    .customAlert(manager: customAlertManager, content: {
+                    //                        VStack {
+                    //                            Text("Forgot password").font(.title)
+                    //                            Text("Please type in your email")
+                    //                            TextField("Enter your email", text: $customAlertText).textFieldStyle(RoundedBorderTextFieldStyle())
+                    //                        }
+                    //                    }, buttons: [
+                    //                        .cancel(content: {
+                    //                            Text("Cancel").bold()
+                    //                        }),
+                    //                        .regular(content: {
+                    //                            Text("OK")
+                    //                        }, action: {
+                    //                            print("Sending email: \(customAlertText)")
+                    //                        })
+                    //                    ])
                 }
-                .padding(.vertical, 32)
-                    
                 Button(action: {
-                    guard !email.isEmpty, !password.isEmpty else {
+                    guard !username.isEmpty, !password.isEmpty else {
                         return
                     }
-                    viewModel.signIn(email: email, password: password)
+                    viewModel.signIn(email: username, password: password)
                 }, label: {
                     Text("Sign In")
                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -103,44 +139,43 @@ struct Login : View {
                         .background(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .leading, endPoint: .trailing))
                         .cornerRadius(5)
                 })
+                .frame(width: 280, height: 45, alignment: .center)
                 
                 Divider()
                     .padding(.vertical, 32)
                 
-                SignInWithApple()
-                
-                SignInWithGoogle()
+                Group {
+                    if self.colorScheme == .light {
+                        SignInWithApple()
+                            .signInWithAppleButtonStyle(.black)
+                    } else {
+                        SignInWithApple()
+                            .signInWithAppleButtonStyle(.white)
+                    }
+                    
+                    SignInWithGoogle()
+                }
                 
                 Spacer()
                 
-                HStack {
-                    Text("I'm a new user.")
-                    Button("Create An Account") {
-                        showingRegister.toggle()
-                    }
-                    .foregroundColor(.purple)
-                    .sheet(isPresented: $showingRegister) {
-                        RegisterView()
-                    }
+                HStack(spacing: 0) {
+                    Text("Don't have an account?")
+                        .foregroundColor(.primary)
+                    NavigationLink(
+                        destination: RegisterView(),
+                        label: {
+                            Text("Register")
+                                .foregroundColor(.purple)
+                        })
+                        .padding()
                 }
-                .padding()
-                //            NavigationLink(
-                //                destination: RegisterView(),
-                //                label: {
-                //                    HStack {
-                //                        Text("I'm a new user.")
-                //                            .foregroundColor(.primary)
-                //                        Text("Create An Account")
-                //                            .foregroundColor(.purple)
-                //                    }
-                //
-                //                })
-                //                .padding()
             }
-            .padding(.horizontal, 32)
+            }
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
+        .padding(.horizontal, 20)
     }
+    //.ignoresSafeArea(.keyboard, edges: .bottom)
+    
 }
 
 private struct SignInWithApple: View {
@@ -270,6 +305,7 @@ struct SignInWithGoogle: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
+        LoginView().preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
     }
 }
 

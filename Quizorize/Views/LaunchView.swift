@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LaunchView: View {
+    @State private var isPresented = false
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -26,7 +28,10 @@ struct LaunchView: View {
                     .font(.title3)
                 
                 Spacer()
-                
+//                Button("Get Started.") {
+//                    isPresented.toggle()
+//                }
+//                .fullScreenCover(isPresented: $isPresented, content: Login.init)
                 NavigationLink(
                     destination: LoginView()
                         .environmentObject(AuthViewModel()),
@@ -41,6 +46,16 @@ struct LaunchView: View {
                     //.addBorder(Color.purple, width: 1, cornerRadius: 20)
                     .padding()
             }
+        }
+    }
+}
+
+struct FullScreenModalView: View {
+    @Environment(\.presentationMode) var presentationMode
+
+    var body: some View {
+        Button("Dismiss Modal") {
+            presentationMode.wrappedValue.dismiss()
         }
     }
 }
