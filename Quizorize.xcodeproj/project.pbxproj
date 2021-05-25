@@ -38,6 +38,9 @@
 		1627932A265C1D840073718F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279329265C1D840073718F /* Helper.swift */; };
 		1627932B265C1D840073718F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279329265C1D840073718F /* Helper.swift */; };
 		1627932C265C1D840073718F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279329265C1D840073718F /* Helper.swift */; };
+		1627932E265CD6EA0073718F /* RecoverPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627932D265CD6EA0073718F /* RecoverPasswordView.swift */; };
+		1627932F265CD6EA0073718F /* RecoverPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627932D265CD6EA0073718F /* RecoverPasswordView.swift */; };
+		16279330265CD6EA0073718F /* RecoverPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627932D265CD6EA0073718F /* RecoverPasswordView.swift */; };
 		16285C7A26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7B26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7C26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
@@ -93,6 +96,7 @@
 		16279308265C1CDA0073718F /* InfoFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoFieldView.swift; sourceTree = "<group>"; };
 		16279309265C1CDA0073718F /* DefaultLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultLoginView.swift; sourceTree = "<group>"; };
 		16279329265C1D840073718F /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		1627932D265CD6EA0073718F /* RecoverPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPasswordView.swift; sourceTree = "<group>"; };
 		16285C7926593426003EE017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		16C285E92656EB020068AB95 /* Quizorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C285EC2656EB020068AB95 /* QuizorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeApp.swift; sourceTree = "<group>"; };
@@ -168,6 +172,7 @@
 				16C2861E2656EC7A0068AB95 /* RegisterView.swift */,
 				162792EB265AD1240073718F /* DecksView.swift */,
 				16279300265BFF7B0073718F /* LaunchView.swift */,
+				1627932D265CD6EA0073718F /* RecoverPasswordView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -579,6 +584,7 @@
 				16279311265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */,
 				162792EC265AD1240073718F /* DecksView.swift in Sources */,
 				16279317265C1CDA0073718F /* InfoFieldView.swift in Sources */,
+				1627932E265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,6 +592,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1627932F265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
 				1627932B265C1D840073718F /* Helper.swift in Sources */,
 				16279312265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */,
 				162792FA265BE7860073718F /* Extensions.swift in Sources */,
@@ -604,6 +611,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16279330265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
 				1627932C265C1D840073718F /* Helper.swift in Sources */,
 				16279313265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */,
 				162792FB265BE7870073718F /* Extensions.swift in Sources */,
