@@ -28,7 +28,7 @@ struct LaunchView: View {
                 Spacer()
                 
                 NavigationLink(
-                    destination: LoginView()
+                    destination: Login()
                         .environmentObject(AuthViewModel()),
                     label: {
                         Text("Get Started.")

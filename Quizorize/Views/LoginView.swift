@@ -17,6 +17,8 @@ import GoogleSignIn
 import AuthenticationServices
 
 class AppViewModel : ObservableObject {
+    @EnvironmentObject var viewModel: AuthViewModel
+    
     let auth = Auth.auth()
     var body: some View {
         NavigationView {
@@ -269,7 +271,7 @@ struct SignInWithGoogle: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        Login()
     }
 }
 
