@@ -23,73 +23,76 @@ struct RegisterView: View {
     
     
     var body: some View {
-        VStack {
-            Form {
-                Spacer()
+        NavigationView {
+            VStack {
+                Form {
+                    Spacer()
+                        .listRowBackground(Color.clear)
+                    
+                    Section(header: Text("DISPLAY NAME")) {
+                        InfoFieldView(InfoType: name, queryCommand: "Enter your name")
+                    }
                     .listRowBackground(Color.clear)
-                
-                Section(header: Text("DISPLAY NAME")) {
-                    InfoFieldView(InfoType: name, queryCommand: "Enter your name")
+                    
+                    Section(header: Text("EMAIL")) {
+                        InfoFieldView(InfoType: email, queryCommand: "Enter your email")
+                    }
+                    .listRowBackground(Color.clear)
+                    
+                    Section(header: Text("PASSWORD")) {
+                        InfoFieldView(InfoType: password, queryCommand: "Enter your password")
+                    }
+                    .listRowBackground(Color.clear)
+                    
+                    Section(header: Text("CONFIRM PASSWORD")) {
+                        InfoFieldView(InfoType: confirmPassword, queryCommand: "Confirm your password")
+                    }
+                    .listRowBackground(Color.clear)
+                    
+                    /*
+                     HStack {
+                     Spacer()
+                     Button(action: {}, label: {
+                     Text("Create Your Account")
+                     .font(.headline)
+                     .foregroundColor(.white)
+                     .frame(width: 250, height: 50)
+                     .background(Color.purple)
+                     .addBorder(Color.purple, width: 1, cornerRadius: 20)
+                     })
+                     .listRowBackground(Color.clear)
+                     Spacer()
+                     }
+                     .listRowBackground(Color.clear)
+                     */
+                    
+                    
                 }
-                .listRowBackground(Color.clear)
-                
-                Section(header: Text("EMAIL")) {
-                    InfoFieldView(InfoType: email, queryCommand: "Enter your email")
+                .background(Color.white)
+                .onAppear {
+                    UITableViewCell.appearance().backgroundColor = UIColor.clear
+                    UITableView.appearance().backgroundColor = UIColor.clear
                 }
-                .listRowBackground(Color.clear)
-                
-                Section(header: Text("PASSWORD")) {
-                    InfoFieldView(InfoType: password, queryCommand: "Enter your password")
-                }
-                .listRowBackground(Color.clear)
-                
-                Section(header: Text("CONFIRM PASSWORD")) {
-                    InfoFieldView(InfoType: confirmPassword, queryCommand: "Confirm your password")
-                }
-                .listRowBackground(Color.clear)
-                
-                /*
-                 HStack {
-                 Spacer()
-                 Button(action: {}, label: {
-                 Text("Create Your Account")
-                 .font(.headline)
-                 .foregroundColor(.white)
-                 .frame(width: 250, height: 50)
-                 .background(Color.purple)
-                 .addBorder(Color.purple, width: 1, cornerRadius: 20)
-                 })
-                 .listRowBackground(Color.clear)
-                 Spacer()
-                 }
-                 .listRowBackground(Color.clear)
-                 */
-                
-                
-            }
-            .onAppear {
-                UITableViewCell.appearance().backgroundColor = UIColor.clear
-                UITableView.appearance().backgroundColor = UIColor.clear
-            }
-            .background(Color.white)
-            
-            HStack {
-                Spacer()
+
                 Button(action: {}, label: {
                     Text("Create Your Account")
-                        .font(.headline)
                         .foregroundColor(.white)
-                        .padding(12)
-                        .frame(width: 280, height: 45, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        .background(RoundedRectangle(cornerRadius: 5)
-                                        .strokeBorder(Color.primary, lineWidth: 1))
-                })
-                    .background(Color.purple)
-                Spacer()
+                        .frame(width: 200, height: 50)
+                        .background(Color.purple)
+                        .cornerRadius(5)
+                            /*
+                            .background(Color.purple)
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .overlay(RoundedRectangle(cornerRadius: 25)
+                                                .stroke(Color.white, lineWidth: 2))
+                            */
+                    })
+                
+               Spacer()
+
             }
-            
-            Spacer()
-            
+
         }
         .navigationTitle("Create Your Account")
         .navigationBarTitleDisplayMode(.inline)
