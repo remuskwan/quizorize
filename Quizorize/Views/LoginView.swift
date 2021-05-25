@@ -20,24 +20,12 @@ struct LoginView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
-        VStack{
-            if viewModel.signedIn {
-                DecksView()
-            } else {
-                Login()
-                //                    .navigationTitle("Log in to Quizorize")
-                //                    .toolbar {
-                //                        ToolbarItem(placement: .navigationBarTrailing) {
-                //                            Button("Help") {
-                //                                print("Help tapped!")
-                //                            }
-                //                        }
-                //                    }
-            }
+        if viewModel.signedIn {
+            DecksView()
+        } else {
+            Login()
         }
-        .onAppear {
-            viewModel.signedIn = viewModel.isSignedIn
-        }
+        
     }
 }
 struct ViewHeightKey: PreferenceKey {
@@ -66,22 +54,21 @@ struct Login : View {
                     Group {
                         VStack {
                             HStack {
-                                Text("Username")
+                                Text("Email")
                                     .frame(width: 90, alignment: .leading)
-                                TextField("Username", text: $username)
+                                TextField("Email", text: $username)
                                     .disableAutocorrection(true)
                                     .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                                     .modifier(TextFieldClearButton(text: $username))
                                     .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
-//                                    .padding(12)
-//                                    .background(RoundedRectangle(cornerRadius: 5)
-//                                                    .strokeBorder(Color.secondary, lineWidth: 1))
                             }
                             Divider()
                         }
                         .id(1)
                         .onTapGesture {
-                            scrollView.scrollTo(1, anchor: .center)
+                            withAnimation(.easeIn(duration: 0.3)) {
+                                scrollView.scrollTo(1, anchor: .center)
+                            }
                         }
                         .padding(.vertical, 4)
                         
@@ -95,15 +82,14 @@ struct Login : View {
                                     .modifier(TextFieldClearButton(text: $password))
                                     .textContentType(.password)
                                     .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
-//                                    .padding(12)
-//                                    .background(RoundedRectangle(cornerRadius: 5)
-//                                                    .strokeBorder(Color.secondary, lineWidth: 1))
                             }
                             Divider()
                         }
                         .id(2)
                         .onTapGesture {
-                            scrollView.scrollTo(2, anchor: .center)
+                            withAnimation(.easeIn(duration: 0.3)) {
+                                scrollView.scrollTo(2, anchor: .center)
+                            }
                         }
                         .padding(.vertical, 4)
                     }
@@ -269,10 +255,11 @@ private struct SignInWithApple: View {
 }
 
 struct SignInWithGoogle: View {
+    @EnvironmentObject var viewModel: AuthViewModel
+    
     var body: some View {
         Button(action: {
-            GIDSignIn.sharedInstance()?.presentingViewController = UIApplication.shared.windows.first?.rootViewController
-            GIDSignIn.sharedInstance()?.signIn()
+            viewModel.signInWithGoogle()
         }, label: {
             HStack {
                 Image("google")

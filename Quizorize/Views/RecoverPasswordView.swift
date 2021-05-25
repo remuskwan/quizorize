@@ -21,21 +21,17 @@ struct RecoverPasswordView : View {
             VStack {
                 HStack {
                     Text("Email")
+                        .frame(width: 90, alignment: .leading)
                     TextField("Enter your email address", text: $email)
                         .disableAutocorrection(true)
                         .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                         .modifier(TextFieldClearButton(text: $email))
                         .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
-                        .padding(12)
-                        .textFieldStyle(DefaultTextFieldStyle())
-                }.padding(.horizontal, 12)
-                Divider().padding(0)
+                }
+                Divider()
             }
-            .frame(minWidth: 0, maxWidth: .infinity)
-            .introspectTableView { tableView in
-                tableView.isScrollEnabled = false
-            }
-            
+            .padding(.vertical, 4)
+        
             Button(action: {
                 guard !email.isEmpty else {
                     return
