@@ -33,7 +33,7 @@ struct LaunchView: View {
 //                }
 //                .fullScreenCover(isPresented: $isPresented, content: Login.init)
                 NavigationLink(
-                    destination: LoginView()
+                    destination: Login()
                         .environmentObject(AuthViewModel()),
                     label: {
                         Text("Get Started.")

@@ -10,20 +10,21 @@ import SwiftUI
 //MARK: InformationField Creator View
 struct InfoFieldView: View {
     
+    @ObservedObject var InfoType: InfoFieldViewModel
+    
     @State var color = Color.black.opacity(0.7)
     @State var visible: Bool = false
     
-    @State var isSensitive: Bool
     @State var userInput: String = ""
     
     let queryCommand: String
 
     var body: some View {
-        if isSensitive {
+        if InfoType.isSensitive {
             HStack(spacing: 15) {
                 VStack {
                     if self.visible {
-                        TextField(self.queryCommand, text: self.$userInput)
+                        TextField(self.queryCommand, text: self.$InfoType.userInput)
                     } else {
                         SecureField(self.queryCommand, text: self.$userInput)
                     }
@@ -50,11 +51,16 @@ struct InfoFieldView: View {
         }
     }
     
+    //MARK: gets the UserInput for InfoField
+    func getUserInput() -> String {
+        userInput
+    }
+    
     
 }
 
 struct InfoFieldView_Previews: PreviewProvider {
     static var previews: some View {
-        InfoFieldView(isSensitive: false, queryCommand: "Hi")
+        InfoFieldView(InfoType: InfoFieldViewModel.Example, queryCommand: "Hi")
     }
 }
