@@ -18,7 +18,6 @@ struct RecoverPasswordView : View {
                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                 .modifier(TextFieldClearButton(text: $email))
                 .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
-                .padding(12)
                 .textFieldStyle(DefaultTextFieldStyle())
             //                .background(RoundedRectangle(cornerRadius: 5)
             //                                .strokeBorder(Color.secondary, lineWidth: 1))
