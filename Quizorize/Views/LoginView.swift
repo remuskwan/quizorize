@@ -115,8 +115,13 @@ struct Login : View {
                 
                 Spacer()
                 
+
                 HStack {
                     Text("I'm a new user.")
+                    NavigationLink(destination: RegisterView()) {
+                        Text("Create An Account")
+                    }
+                    /*
                     Button("Create An Account") {
                         showingRegister.toggle()
                     }
@@ -124,6 +129,7 @@ struct Login : View {
                     .sheet(isPresented: $showingRegister) {
                         RegisterView()
                     }
+                    */
                 }
                 .padding()
                 //            NavigationLink(
