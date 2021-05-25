@@ -34,7 +34,7 @@ struct RegisterView: View {
                         InfoFieldView(InfoType: name, queryCommand: "Enter your name")
                     }
                     .listRowBackground(Color.clear)
-                    
+
                     Section(header: Text("EMAIL")) {
                         InfoFieldView(InfoType: email, queryCommand: "Enter your email")
                     }
@@ -90,9 +90,7 @@ struct RegisterView: View {
                             */
                     })
                Spacer()
-
             }
-
         }
         .navigationTitle("Create Your Account")
         .navigationBarTitleDisplayMode(.inline)
