@@ -18,7 +18,7 @@ import AuthenticationServices
 
 struct LoginView: View {
     @EnvironmentObject var viewModel: AuthViewModel
-    
+
     var body: some View {
         VStack{
             if viewModel.signedIn {
