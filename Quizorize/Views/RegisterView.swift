@@ -16,6 +16,8 @@ struct RegisterView: View {
     @StateObject var password: InfoFieldViewModel = InfoFieldViewModel(isSensitive: true)
     @StateObject var confirmPassword: InfoFieldViewModel = InfoFieldViewModel(isSensitive: true)
     
+    @Environment(\.presentationMode) var presentationMode
+
     @State var color = Color.black.opacity(0.7)
     @State var visible: Bool = false
     
@@ -102,6 +104,8 @@ struct RegisterView: View {
                 print("Hello World")
             }
         }
+        
+        
     }
 }
 

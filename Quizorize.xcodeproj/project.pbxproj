@@ -3,13 +3,41 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792E7265A61DA0073718F /* AuthViewModel.swift */; };
 		162792E9265A61DA0073718F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792E7265A61DA0073718F /* AuthViewModel.swift */; };
 		162792EA265A61DA0073718F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792E7265A61DA0073718F /* AuthViewModel.swift */; };
+		162792EC265AD1240073718F /* DecksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792EB265AD1240073718F /* DecksView.swift */; };
+		162792ED265AD1240073718F /* DecksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792EB265AD1240073718F /* DecksView.swift */; };
+		162792EE265AD1240073718F /* DecksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792EB265AD1240073718F /* DecksView.swift */; };
+		162792F1265ADDC90073718F /* TextFieldClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F0265ADDC90073718F /* TextFieldClearButton.swift */; };
+		162792F2265ADDC90073718F /* TextFieldClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F0265ADDC90073718F /* TextFieldClearButton.swift */; };
+		162792F3265ADDC90073718F /* TextFieldClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F0265ADDC90073718F /* TextFieldClearButton.swift */; };
+		162792F7265BB9690073718F /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 162792F6265BB9690073718F /* AlertKit */; };
+		162792F9265BE7860073718F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F8265BE7860073718F /* Extensions.swift */; };
+		162792FA265BE7860073718F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F8265BE7860073718F /* Extensions.swift */; };
+		162792FB265BE7870073718F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F8265BE7860073718F /* Extensions.swift */; };
+		16279301265BFF7B0073718F /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279300265BFF7B0073718F /* LaunchView.swift */; };
+		16279302265BFF7B0073718F /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279300265BFF7B0073718F /* LaunchView.swift */; };
+		16279303265BFF7B0073718F /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279300265BFF7B0073718F /* LaunchView.swift */; };
+		1627930E265C1CDA0073718F /* OtherLoginViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279305265C1CDA0073718F /* OtherLoginViews.swift */; };
+		1627930F265C1CDA0073718F /* OtherLoginViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279305265C1CDA0073718F /* OtherLoginViews.swift */; };
+		16279310265C1CDA0073718F /* OtherLoginViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279305265C1CDA0073718F /* OtherLoginViews.swift */; };
+		16279311265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279306265C1CDA0073718F /* QuickSignInWithApple.swift */; };
+		16279312265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279306265C1CDA0073718F /* QuickSignInWithApple.swift */; };
+		16279313265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279306265C1CDA0073718F /* QuickSignInWithApple.swift */; };
+		16279317265C1CDA0073718F /* InfoFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279308265C1CDA0073718F /* InfoFieldView.swift */; };
+		16279318265C1CDA0073718F /* InfoFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279308265C1CDA0073718F /* InfoFieldView.swift */; };
+		16279319265C1CDA0073718F /* InfoFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279308265C1CDA0073718F /* InfoFieldView.swift */; };
+		1627931A265C1CDA0073718F /* DefaultLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279309265C1CDA0073718F /* DefaultLoginView.swift */; };
+		1627931B265C1CDA0073718F /* DefaultLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279309265C1CDA0073718F /* DefaultLoginView.swift */; };
+		1627931C265C1CDA0073718F /* DefaultLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279309265C1CDA0073718F /* DefaultLoginView.swift */; };
+		1627932A265C1D840073718F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279329265C1D840073718F /* Helper.swift */; };
+		1627932B265C1D840073718F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279329265C1D840073718F /* Helper.swift */; };
+		1627932C265C1D840073718F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279329265C1D840073718F /* Helper.swift */; };
 		16285C7A26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7B26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7C26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
@@ -32,6 +60,7 @@
 		77C5E12E265B56AB002D5378 /* QuickSignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C5E12D265B56AB002D5378 /* QuickSignInWithApple.swift */; };
 		77C5E133265B6045002D5378 /* OtherLoginViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C5E132265B6045002D5378 /* OtherLoginViews.swift */; };
 		77C5E135265B630D002D5378 /* DefaultLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C5E134265B630D002D5378 /* DefaultLoginView.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +83,16 @@
 /* Begin PBXFileReference section */
 		0CEB516FEF49F52E189064FF /* Pods-QuizorizeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizorizeTests.debug.xcconfig"; path = "Target Support Files/Pods-QuizorizeTests/Pods-QuizorizeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		162792E7265A61DA0073718F /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		162792EB265AD1240073718F /* DecksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecksView.swift; sourceTree = "<group>"; };
+		162792F0265ADDC90073718F /* TextFieldClearButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldClearButton.swift; sourceTree = "<group>"; };
+		162792F4265AF12C0073718F /* Quizorize.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Quizorize.entitlements; sourceTree = "<group>"; };
+		162792F8265BE7860073718F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		16279300265BFF7B0073718F /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
+		16279305265C1CDA0073718F /* OtherLoginViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherLoginViews.swift; sourceTree = "<group>"; };
+		16279306265C1CDA0073718F /* QuickSignInWithApple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickSignInWithApple.swift; sourceTree = "<group>"; };
+		16279308265C1CDA0073718F /* InfoFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoFieldView.swift; sourceTree = "<group>"; };
+		16279309265C1CDA0073718F /* DefaultLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultLoginView.swift; sourceTree = "<group>"; };
+		16279329265C1D840073718F /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		16285C7926593426003EE017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		16C285E92656EB020068AB95 /* Quizorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C285EC2656EB020068AB95 /* QuizorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeApp.swift; sourceTree = "<group>"; };
@@ -93,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				162792F7265BB9690073718F /* AlertKit in Frameworks */,
 				571D50E1BB6F534A6DDF9D4D /* Pods_Quizorize.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,6 +156,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		162792E2265A61770073718F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				16279305265C1CDA0073718F /* OtherLoginViews.swift */,
+				16279306265C1CDA0073718F /* QuickSignInWithApple.swift */,
+				16279308265C1CDA0073718F /* InfoFieldView.swift */,
+				16279309265C1CDA0073718F /* DefaultLoginView.swift */,
+				16C285EE2656EB020068AB95 /* ContentView.swift */,
+				16C2861C2656EC6C0068AB95 /* LoginView.swift */,
+				16C2861E2656EC7A0068AB95 /* RegisterView.swift */,
+				162792EB265AD1240073718F /* DecksView.swift */,
+				16279300265BFF7B0073718F /* LaunchView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		162792EF265ADD970073718F /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				16279329265C1D840073718F /* Helper.swift */,
+				162792F0265ADDC90073718F /* TextFieldClearButton.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
 		16285C7826593193003EE017 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,9 +215,9 @@
 		16C285EB2656EB020068AB95 /* Quizorize */ = {
 			isa = PBXGroup;
 			children = (
-				77059F45265BA1FA004C0078 /* Views */,
-				77059F44265BA19E004C0078 /* ViewModifiers */,
-				77C5E12F265B5985002D5378 /* Quizorize.entitlements */,
+				162792F4265AF12C0073718F /* Quizorize.entitlements */,
+				162792EF265ADD970073718F /* ViewModifiers */,
+				162792E2265A61770073718F /* Views */,
 				16285C7826593193003EE017 /* ViewModels */,
 				16C285EC2656EB020068AB95 /* QuizorizeApp.swift */,
 				16C285F02656EB030068AB95 /* Assets.xcassets */,
@@ -161,6 +226,7 @@
 				16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */,
 				16285C7926593426003EE017 /* GoogleService-Info.plist */,
 				16C285F22656EB030068AB95 /* Preview Content */,
+				162792F8265BE7860073718F /* Extensions.swift */,
 			);
 			path = Quizorize;
 			sourceTree = "<group>";
@@ -189,28 +255,6 @@
 				16C286102656EB040068AB95 /* Info.plist */,
 			);
 			path = QuizorizeUITests;
-			sourceTree = "<group>";
-		};
-		77059F44265BA19E004C0078 /* ViewModifiers */ = {
-			isa = PBXGroup;
-			children = (
-				77C5E12B265AAB9D002D5378 /* Helper.swift */,
-			);
-			path = ViewModifiers;
-			sourceTree = "<group>";
-		};
-		77059F45265BA1FA004C0078 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				16C285EE2656EB020068AB95 /* ContentView.swift */,
-				16C2861C2656EC6C0068AB95 /* LoginView.swift */,
-				77C5E134265B630D002D5378 /* DefaultLoginView.swift */,
-				77C5E132265B6045002D5378 /* OtherLoginViews.swift */,
-				16C2861E2656EC7A0068AB95 /* RegisterView.swift */,
-				77C5E12D265B56AB002D5378 /* QuickSignInWithApple.swift */,
-				77059F46265BD987004C0078 /* InfoFieldView.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		96FE5971BEA6BB1A38867E24 /* Frameworks */ = {
@@ -248,12 +292,16 @@
 				16C285E62656EB020068AB95 /* Frameworks */,
 				16C285E72656EB020068AB95 /* Resources */,
 				BB0611463EA25A41C92C4CD9 /* [CP] Embed Pods Frameworks */,
+				18FA32176825CD0F643DA95D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Quizorize;
+			packageProductDependencies = (
+				162792F6265BB9690073718F /* AlertKit */,
+			);
 			productName = Quizorize;
 			productReference = 16C285E92656EB020068AB95 /* Quizorize.app */;
 			productType = "com.apple.product-type.application";
@@ -286,6 +334,7 @@
 				16C286072656EB040068AB95 /* Frameworks */,
 				16C286082656EB040068AB95 /* Resources */,
 				87AC8C7B1AFA01DAC25164F9 /* [CP] Embed Pods Frameworks */,
+				56C8CB82F2A605C278198A80 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -328,6 +377,9 @@
 				Base,
 			);
 			mainGroup = 16C285E02656EB020068AB95;
+			packageReferences = (
+				162792F5265BB9690073718F /* XCRemoteSwiftPackageReference "AlertKit" */,
+			);
 			productRefGroup = 16C285EA2656EB020068AB95 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -369,6 +421,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		18FA32176825CD0F643DA95D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize/Pods-Quizorize-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize/Pods-Quizorize-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Quizorize/Pods-Quizorize-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		26E8E149317F3765E7DC444F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -435,6 +504,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		56C8CB82F2A605C278198A80 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		87AC8C7B1AFA01DAC25164F9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -477,18 +563,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				16C285F92656EB030068AB95 /* Quizorize.xcdatamodeld in Sources */,
-				77C5E12E265B56AB002D5378 /* QuickSignInWithApple.swift in Sources */,
+				16279301265BFF7B0073718F /* LaunchView.swift in Sources */,
 				16C285F62656EB030068AB95 /* Persistence.swift in Sources */,
 				16C285EF2656EB020068AB95 /* ContentView.swift in Sources */,
 				77059F49265CA62E004C0078 /* InfoFieldViewModel.swift in Sources */,
 				162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */,
-				77059F47265BD987004C0078 /* InfoFieldView.swift in Sources */,
+				162792F1265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
+				162792F9265BE7860073718F /* Extensions.swift in Sources */,
+				1627932A265C1D840073718F /* Helper.swift in Sources */,
 				16C2861F2656EC7A0068AB95 /* RegisterView.swift in Sources */,
 				16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */,
+				1627931A265C1CDA0073718F /* DefaultLoginView.swift in Sources */,
+				1627930E265C1CDA0073718F /* OtherLoginViews.swift in Sources */,
 				16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */,
-				77C5E133265B6045002D5378 /* OtherLoginViews.swift in Sources */,
-				77C5E135265B630D002D5378 /* DefaultLoginView.swift in Sources */,
-				77C5E12C265AAB9D002D5378 /* Helper.swift in Sources */,
+				16279311265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */,
+				162792EC265AD1240073718F /* DecksView.swift in Sources */,
+				16279317265C1CDA0073718F /* InfoFieldView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,8 +586,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1627932B265C1D840073718F /* Helper.swift in Sources */,
+				16279312265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */,
+				162792FA265BE7860073718F /* Extensions.swift in Sources */,
+				1627930F265C1CDA0073718F /* OtherLoginViews.swift in Sources */,
+				1627931B265C1CDA0073718F /* DefaultLoginView.swift in Sources */,
 				162792E9265A61DA0073718F /* AuthViewModel.swift in Sources */,
+				16279302265BFF7B0073718F /* LaunchView.swift in Sources */,
+				162792F2265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
 				16C286042656EB040068AB95 /* QuizorizeTests.swift in Sources */,
+				162792ED265AD1240073718F /* DecksView.swift in Sources */,
+				16279318265C1CDA0073718F /* InfoFieldView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,8 +604,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1627932C265C1D840073718F /* Helper.swift in Sources */,
+				16279313265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */,
+				162792FB265BE7870073718F /* Extensions.swift in Sources */,
+				16279310265C1CDA0073718F /* OtherLoginViews.swift in Sources */,
+				1627931C265C1CDA0073718F /* DefaultLoginView.swift in Sources */,
 				162792EA265A61DA0073718F /* AuthViewModel.swift in Sources */,
+				16279303265BFF7B0073718F /* LaunchView.swift in Sources */,
+				162792F3265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
 				16C2860F2656EB040068AB95 /* QuizorizeUITests.swift in Sources */,
+				162792EE265AD1240073718F /* DecksView.swift in Sources */,
+				16279319265C1CDA0073718F /* InfoFieldView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,7 +759,7 @@
 				CODE_SIGN_ENTITLEMENTS = Quizorize/Quizorize.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Quizorize/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K7W85Q34X7;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Quizorize/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -675,7 +783,7 @@
 				CODE_SIGN_ENTITLEMENTS = Quizorize/Quizorize.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Quizorize/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K7W85Q34X7;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Quizorize/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -814,6 +922,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		162792F5265BB9690073718F /* XCRemoteSwiftPackageReference "AlertKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rebeloper/AlertKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		162792F6265BB9690073718F /* AlertKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 162792F5265BB9690073718F /* XCRemoteSwiftPackageReference "AlertKit" */;
+			productName = AlertKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */ = {
