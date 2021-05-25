@@ -10,12 +10,14 @@ import SwiftUI
 
 
 struct RegisterView: View {
-    @Environment(\.presentationMode) var presentationMode
+
+    @StateObject var name: InfoFieldViewModel = InfoFieldViewModel(isSensitive: false)
+    @StateObject var email: InfoFieldViewModel = InfoFieldViewModel(isSensitive: false)
+    @StateObject var password: InfoFieldViewModel = InfoFieldViewModel(isSensitive: true)
+    @StateObject var confirmPassword: InfoFieldViewModel = InfoFieldViewModel(isSensitive: true)
     
-    @State var name: String = ""
-    @State var email: String = ""
-    @State var password: String = ""
-    @State var confirmPassword: String = ""
+    @Environment(\.presentationMode) var presentationMode
+
     @State var color = Color.black.opacity(0.7)
     @State var visible: Bool = false
     
@@ -26,11 +28,27 @@ struct RegisterView: View {
                 Spacer()
                     .listRowBackground(Color.clear)
                 
-                Section(header: Text("NAME")) {
-                    InfoFieldView(isSensitive: false, queryCommand: "Enter your name")
+                Section(header: Text("DISPLAY NAME")) {
+                    InfoFieldView(InfoType: name, queryCommand: "Enter your name")
                 }
                 .listRowBackground(Color.clear)
                 
+                Section(header: Text("EMAIL")) {
+                    InfoFieldView(InfoType: email, queryCommand: "Enter your email")
+                }
+                .listRowBackground(Color.clear)
+                
+                Section(header: Text("DISPLAY NAME")) {
+                    InfoFieldView(InfoType: password, queryCommand: "Enter your password")
+                }
+                .listRowBackground(Color.clear)
+                
+                Section(header: Text("DISPLAY NAME")) {
+                    InfoFieldView(InfoType: confirmPassword, queryCommand: "Confirm your password")
+                }
+                .listRowBackground(Color.clear)
+                
+                /*
                 Section(header: Text("EMAIL")) {
                     InfoFieldView(isSensitive: false, queryCommand: "Enter your email")
                 }
@@ -48,6 +66,7 @@ struct RegisterView: View {
                     InfoFieldView(isSensitive: true, queryCommand: "Confirm your password")
                 }
                 .listRowBackground(Color.clear)
+                */
                 
                 Spacer()
                     .listRowBackground(Color.clear)

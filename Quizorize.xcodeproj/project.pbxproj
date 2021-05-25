@@ -57,6 +57,13 @@
 		55EDED5D956B8021A55A875F /* Pods_Quizorize_QuizorizeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */; };
 		571D50E1BB6F534A6DDF9D4D /* Pods_Quizorize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */; };
 		65AC49052D83463592C8D004 /* Pods_QuizorizeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */; };
+		77059F47265BD987004C0078 /* InfoFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77059F46265BD987004C0078 /* InfoFieldView.swift */; };
+		77059F49265CA62E004C0078 /* InfoFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77059F48265CA62E004C0078 /* InfoFieldViewModel.swift */; };
+		77C5E12C265AAB9D002D5378 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C5E12B265AAB9D002D5378 /* Helper.swift */; };
+		77C5E12E265B56AB002D5378 /* QuickSignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C5E12D265B56AB002D5378 /* QuickSignInWithApple.swift */; };
+		77C5E133265B6045002D5378 /* OtherLoginViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C5E132265B6045002D5378 /* OtherLoginViews.swift */; };
+		77C5E135265B630D002D5378 /* DefaultLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C5E134265B630D002D5378 /* DefaultLoginView.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +118,13 @@
 		3C9B0A5876205BE63BDBE4EE /* Pods-Quizorize-QuizorizeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.release.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		43143D971498F4F2769EF37A /* Pods-QuizorizeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizorizeTests.release.xcconfig"; path = "Target Support Files/Pods-QuizorizeTests/Pods-QuizorizeTests.release.xcconfig"; sourceTree = "<group>"; };
 		5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quizorize_QuizorizeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		77059F46265BD987004C0078 /* InfoFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoFieldView.swift; sourceTree = "<group>"; };
+		77059F48265CA62E004C0078 /* InfoFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoFieldViewModel.swift; sourceTree = "<group>"; };
+		77C5E12B265AAB9D002D5378 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		77C5E12D265B56AB002D5378 /* QuickSignInWithApple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSignInWithApple.swift; sourceTree = "<group>"; };
+		77C5E12F265B5985002D5378 /* Quizorize.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Quizorize.entitlements; sourceTree = "<group>"; };
+		77C5E132265B6045002D5378 /* OtherLoginViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherLoginViews.swift; sourceTree = "<group>"; };
+		77C5E134265B630D002D5378 /* DefaultLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginView.swift; sourceTree = "<group>"; };
 		7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuizorizeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2DBC4DD8033848512376284 /* Pods-Quizorize.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize.release.xcconfig"; path = "Target Support Files/Pods-Quizorize/Pods-Quizorize.release.xcconfig"; sourceTree = "<group>"; };
@@ -176,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				162792E7265A61DA0073718F /* AuthViewModel.swift */,
+				77059F48265CA62E004C0078 /* InfoFieldViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -556,6 +571,7 @@
 				16279301265BFF7B0073718F /* LaunchView.swift in Sources */,
 				16C285F62656EB030068AB95 /* Persistence.swift in Sources */,
 				16C285EF2656EB020068AB95 /* ContentView.swift in Sources */,
+				77059F49265CA62E004C0078 /* InfoFieldViewModel.swift in Sources */,
 				162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				162792F1265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
 				162792F9265BE7860073718F /* Extensions.swift in Sources */,
