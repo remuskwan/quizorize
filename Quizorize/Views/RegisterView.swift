@@ -17,6 +17,7 @@ struct RegisterView: View {
     @StateObject var confirmPassword: InfoFieldViewModel = InfoFieldViewModel(isSensitive: true)
     
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var viewModel: AuthViewModel
     
     @State var color = Color.black.opacity(0.7)
     @State var visible: Bool = false
@@ -72,7 +73,9 @@ struct RegisterView: View {
                     UITableView.appearance().backgroundColor = UIColor.clear
                 }
 
-                Button(action: {}, label: {
+                Button(action: {
+                    viewModel.signUp(email: email.userInput, password: password.userInput)
+                }, label: {
                     Text("Create Your Account")
                         .foregroundColor(.white)
                         .frame(width: 200, height: 50)
@@ -86,7 +89,6 @@ struct RegisterView: View {
                                                 .stroke(Color.white, lineWidth: 2))
                             */
                     })
-                
                Spacer()
 
             }
