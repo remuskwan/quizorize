@@ -14,9 +14,7 @@ struct InfoFieldView: View {
     
     @State var color = Color.black.opacity(0.7)
     @State var visible: Bool = false
-    
-    @State var userInput: String = ""
-    
+
     let queryCommand: String
 
     var body: some View {
@@ -26,7 +24,7 @@ struct InfoFieldView: View {
                     if self.visible {
                         TextField(self.queryCommand, text: self.$InfoType.userInput)
                     } else {
-                        SecureField(self.queryCommand, text: self.$userInput)
+                        SecureField(self.queryCommand, text: self.$InfoType.userInput)
                     }
                 }
                 
@@ -43,19 +41,13 @@ struct InfoFieldView: View {
             .padding()
             .background(Color(.secondarySystemBackground))
         } else {
-            TextField(queryCommand, text: $userInput)
+            TextField(queryCommand, text: $InfoType.userInput)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
                 .padding()
                 .background(Color(.secondarySystemBackground))
         }
     }
-    
-    //MARK: gets the UserInput for InfoField
-    func getUserInput() -> String {
-        userInput
-    }
-    
     
 }
 
