@@ -48,7 +48,7 @@ class SignupViewModel: ObservableObject {
     
     var titlePrompt: String {
         if self.title.isEmpty {
-            return ""
+            return "                            "
         } else {
             return "Enter your display name here"
         }
@@ -56,7 +56,7 @@ class SignupViewModel: ObservableObject {
     
     var confirmPwPrompt: String {
         if passwordsMatch() || self.confirmPw.isEmpty {
-            return ""
+            return "                            "
         } else {
             return "Password fields do not match"
         }
@@ -64,7 +64,7 @@ class SignupViewModel: ObservableObject {
     
     var emailPrompt: String {
         if isEmailValid() || self.email.isEmpty  {
-            return ""
+            return "                           "
         } else {
             return "Enter a valid email address"
         }
@@ -72,9 +72,26 @@ class SignupViewModel: ObservableObject {
     
     var passwordPrompt: String {
         if isPasswordValid() || self.password.isEmpty{
-            return ""
+            return "                                                                                         "
         } else {
             return "Must be between 8 and 15 characters containing at least one number and one capital letter"
+        }
+    }
+    
+    //MARK: Toggler for SecureFields if needed
+    var passwordTogglerPrompt: String {
+        if !self.password.isEmpty {
+            return "Reveal password"
+        } else {
+            return " "
+        }
+    }
+    
+    var confirmPasswordTogglerPrompt: String {
+        if !self.confirmPw.isEmpty {
+            return "Reveal Password"
+        } else {
+            return " "
         }
     }
     
