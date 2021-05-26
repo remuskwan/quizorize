@@ -29,9 +29,6 @@
 		16279311265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279306265C1CDA0073718F /* QuickSignInWithApple.swift */; };
 		16279312265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279306265C1CDA0073718F /* QuickSignInWithApple.swift */; };
 		16279313265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279306265C1CDA0073718F /* QuickSignInWithApple.swift */; };
-		16279317265C1CDA0073718F /* InfoFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279308265C1CDA0073718F /* InfoFieldView.swift */; };
-		16279318265C1CDA0073718F /* InfoFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279308265C1CDA0073718F /* InfoFieldView.swift */; };
-		16279319265C1CDA0073718F /* InfoFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279308265C1CDA0073718F /* InfoFieldView.swift */; };
 		1627931A265C1CDA0073718F /* DefaultLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279309265C1CDA0073718F /* DefaultLoginView.swift */; };
 		1627931B265C1CDA0073718F /* DefaultLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279309265C1CDA0073718F /* DefaultLoginView.swift */; };
 		1627931C265C1CDA0073718F /* DefaultLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279309265C1CDA0073718F /* DefaultLoginView.swift */; };
@@ -67,7 +64,7 @@
 		55EDED5D956B8021A55A875F /* Pods_Quizorize_QuizorizeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */; };
 		571D50E1BB6F534A6DDF9D4D /* Pods_Quizorize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */; };
 		65AC49052D83463592C8D004 /* Pods_QuizorizeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */; };
-		77059F49265CA62E004C0078 /* InfoFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77059F48265CA62E004C0078 /* InfoFieldViewModel.swift */; };
+		77F47658265EB25200AE1C06 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F47657265EB25200AE1C06 /* SignupViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,7 +94,6 @@
 		16279300265BFF7B0073718F /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		16279305265C1CDA0073718F /* OtherLoginViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherLoginViews.swift; sourceTree = "<group>"; };
 		16279306265C1CDA0073718F /* QuickSignInWithApple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickSignInWithApple.swift; sourceTree = "<group>"; };
-		16279308265C1CDA0073718F /* InfoFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoFieldView.swift; sourceTree = "<group>"; };
 		16279309265C1CDA0073718F /* DefaultLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultLoginView.swift; sourceTree = "<group>"; };
 		16279329265C1D840073718F /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		1627932D265CD6EA0073718F /* RecoverPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPasswordView.swift; sourceTree = "<group>"; };
@@ -124,7 +120,7 @@
 		3C9B0A5876205BE63BDBE4EE /* Pods-Quizorize-QuizorizeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.release.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		43143D971498F4F2769EF37A /* Pods-QuizorizeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizorizeTests.release.xcconfig"; path = "Target Support Files/Pods-QuizorizeTests/Pods-QuizorizeTests.release.xcconfig"; sourceTree = "<group>"; };
 		5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quizorize_QuizorizeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		77059F48265CA62E004C0078 /* InfoFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoFieldViewModel.swift; sourceTree = "<group>"; };
+		77F47657265EB25200AE1C06 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupViewModel.swift; path = Quizorize/ViewModels/SignupViewModel.swift; sourceTree = SOURCE_ROOT; };
 		7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuizorizeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2DBC4DD8033848512376284 /* Pods-Quizorize.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize.release.xcconfig"; path = "Target Support Files/Pods-Quizorize/Pods-Quizorize.release.xcconfig"; sourceTree = "<group>"; };
@@ -169,7 +165,6 @@
 			children = (
 				16279305265C1CDA0073718F /* OtherLoginViews.swift */,
 				16279306265C1CDA0073718F /* QuickSignInWithApple.swift */,
-				16279308265C1CDA0073718F /* InfoFieldView.swift */,
 				16279309265C1CDA0073718F /* DefaultLoginView.swift */,
 				16C285EE2656EB020068AB95 /* ContentView.swift */,
 				16C2861C2656EC6C0068AB95 /* LoginView.swift */,
@@ -202,7 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				162792E7265A61DA0073718F /* AuthViewModel.swift */,
-				77059F48265CA62E004C0078 /* InfoFieldViewModel.swift */,
+				77F47657265EB25200AE1C06 /* SignupViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -588,10 +583,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				16C285F92656EB030068AB95 /* Quizorize.xcdatamodeld in Sources */,
+				77F47658265EB25200AE1C06 /* SignupViewModel.swift in Sources */,
 				16279301265BFF7B0073718F /* LaunchView.swift in Sources */,
 				16C285F62656EB030068AB95 /* Persistence.swift in Sources */,
 				16C285EF2656EB020068AB95 /* ContentView.swift in Sources */,
-				77059F49265CA62E004C0078 /* InfoFieldViewModel.swift in Sources */,
 				162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				162792F1265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
 				16279332265D09A50073718F /* NavigationConfigurator.swift in Sources */,
@@ -605,7 +600,6 @@
 				16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */,
 				16279311265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */,
 				162792EC265AD1240073718F /* DecksView.swift in Sources */,
-				16279317265C1CDA0073718F /* InfoFieldView.swift in Sources */,
 				1627932E265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -627,7 +621,7 @@
 				16C286042656EB040068AB95 /* QuizorizeTests.swift in Sources */,
 				162792ED265AD1240073718F /* DecksView.swift in Sources */,
 				16279340265EA1520073718F /* AuthError.swift in Sources */,
-				16279318265C1CDA0073718F /* InfoFieldView.swift in Sources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -648,7 +642,6 @@
 				16C2860F2656EB040068AB95 /* QuizorizeUITests.swift in Sources */,
 				162792EE265AD1240073718F /* DecksView.swift in Sources */,
 				16279341265EA1530073718F /* AuthError.swift in Sources */,
-				16279319265C1CDA0073718F /* InfoFieldView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

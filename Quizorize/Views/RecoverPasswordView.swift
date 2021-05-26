@@ -30,7 +30,7 @@ struct RecoverPasswordView : View {
                 Divider()
             }
             .padding(.vertical, 4)
-        
+            
             Button(action: {
                 guard !email.isEmpty else {
                     return
