@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Introspect
 
 struct RecoverPasswordView : View {
     @EnvironmentObject var viewModel: AuthViewModel
