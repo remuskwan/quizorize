@@ -26,21 +26,11 @@ struct RecoverPasswordView : View {
                         .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                         .modifier(TextFieldClearButton(text: $email))
                         .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
-<<<<<<< HEAD
-                        .padding(12)
-                        .textFieldStyle(DefaultTextFieldStyle())
-                }.padding(.horizontal, 12)
-                Divider().padding(0)
-            }
-            .frame(minWidth: 0, maxWidth: .infinity)
-
-=======
                 }
                 Divider()
             }
             .padding(.vertical, 4)
-        
->>>>>>> c74a21f6d8b3b2ec281079d02d2084710b0328f6
+            
             Button(action: {
                 guard !email.isEmpty else {
                     return

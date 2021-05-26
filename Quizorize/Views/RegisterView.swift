@@ -39,6 +39,11 @@ struct Register: View {
     var body: some View {
         
         VStack {
+            
+        }
+        
+        /*
+        VStack {
             VStack {
                 Form {
                     Spacer()
@@ -113,6 +118,7 @@ struct Register: View {
         .navigationTitle("Create Your Account")
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.white)
+        */
     }
 }
 struct RegisterView_Previews: PreviewProvider {
