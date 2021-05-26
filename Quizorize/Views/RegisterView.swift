@@ -17,13 +17,15 @@ struct RegisterView: View {
     @StateObject var confirmPassword: InfoFieldViewModel = InfoFieldViewModel(isSensitive: true)
     
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var viewModel: AuthViewModel
     
     @State var color = Color.black.opacity(0.7)
     @State var visible: Bool = false
     
     
     var body: some View {
-        NavigationView {
+        
+        VStack {
             VStack {
                 Form {
                     Spacer()
@@ -33,7 +35,7 @@ struct RegisterView: View {
                         InfoFieldView(InfoType: name, queryCommand: "Enter your name")
                     }
                     .listRowBackground(Color.clear)
-                    
+
                     Section(header: Text("EMAIL")) {
                         InfoFieldView(InfoType: email, queryCommand: "Enter your email")
                     }
@@ -65,8 +67,6 @@ struct RegisterView: View {
                      }
                      .listRowBackground(Color.clear)
                      */
-                    
-                    
                 }
                 .background(Color.white)
                 .onAppear {
@@ -74,7 +74,9 @@ struct RegisterView: View {
                     UITableView.appearance().backgroundColor = UIColor.clear
                 }
 
-                Button(action: {}, label: {
+                Button(action: {
+                    viewModel.signUp(email: email.userInput, password: password.userInput)
+                }, label: {
                     Text("Create Your Account")
                         .foregroundColor(.white)
                         .frame(width: 200, height: 50)
@@ -88,11 +90,8 @@ struct RegisterView: View {
                                                 .stroke(Color.white, lineWidth: 2))
                             */
                     })
-                
                Spacer()
-
             }
-
         }
         .navigationTitle("Create Your Account")
         .navigationBarTitleDisplayMode(.inline)

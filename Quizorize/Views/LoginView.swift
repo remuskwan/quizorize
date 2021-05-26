@@ -18,21 +18,21 @@ import AuthenticationServices
 
 struct LoginView: View {
     @EnvironmentObject var viewModel: AuthViewModel
-   
+    
     var body: some View {
         VStack{
             if viewModel.signedIn {
                 DecksView()
             } else {
                 Login()
-//                    .navigationTitle("Log in to Quizorize")
-//                    .toolbar {
-//                        ToolbarItem(placement: .navigationBarTrailing) {
-//                            Button("Help") {
-//                                print("Help tapped!")
-//                            }
-//                        }
-//                    }
+                //                    .navigationTitle("Log in to Quizorize")
+                //                    .toolbar {
+                //                        ToolbarItem(placement: .navigationBarTrailing) {
+                //                            Button("Help") {
+                //                                print("Help tapped!")
+                //                            }
+                //                        }
+                //                    }
             }
         }
         .onAppear {
@@ -51,9 +51,6 @@ struct Login : View {
     @EnvironmentObject var viewModel: AuthViewModel
     //@StateObject var customAlertManager = CustomAlertManager()
 
-    @State var showingRegister: Bool = false
-    @State var showingForgotPassword: Bool = false
-    @State var customAlertText: String = ""
     @State var username: String = ""
     @State var password: String = ""
     @State var currentNonce:String?
@@ -62,114 +59,109 @@ struct Login : View {
         ScrollView {
             ScrollViewReader { scrollView in
                 VStack {
-                Group {
                     Text("Log in to Quizorize")
                         .font(.largeTitle.bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 24)
-                    
-                    TextField("Username", text: $username)
-                        .disableAutocorrection(true)
-                        .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
-                        .modifier(TextFieldClearButton(text: $username))
-                        .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
-                        .padding(12)
-                        .background(RoundedRectangle(cornerRadius: 5)
-                                        .strokeBorder(Color.secondary, lineWidth: 1))
+                    Group {
+                        VStack {
+                            HStack {
+                                Text("Username")
+                                    .frame(width: 90, alignment: .leading)
+                                TextField("Username", text: $username)
+                                    .disableAutocorrection(true)
+                                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                                    .modifier(TextFieldClearButton(text: $username))
+                                    .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+//                                    .padding(12)
+//                                    .background(RoundedRectangle(cornerRadius: 5)
+//                                                    .strokeBorder(Color.secondary, lineWidth: 1))
+                            }
+                            Divider()
+                        }
                         .id(1)
                         .onTapGesture {
                             scrollView.scrollTo(1, anchor: .center)
                         }
-                    
-                    SecureField("Password", text: $password)
-                        .disableAutocorrection(true)
-                        .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
-                        .modifier(TextFieldClearButton(text: $password))
-                        .textContentType(.password)
-                        .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
-                        .padding(12)
-                        .background(RoundedRectangle(cornerRadius: 5)
-                                        .strokeBorder(Color.secondary, lineWidth: 1))
+                        .padding(.vertical, 4)
+                        
+                        VStack {
+                            HStack {
+                                Text("Password")
+                                    .frame(width: 90, alignment: .leading)
+                                SecureField("Password", text: $password)
+                                    .disableAutocorrection(true)
+                                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                                    .modifier(TextFieldClearButton(text: $password))
+                                    .textContentType(.password)
+                                    .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+//                                    .padding(12)
+//                                    .background(RoundedRectangle(cornerRadius: 5)
+//                                                    .strokeBorder(Color.secondary, lineWidth: 1))
+                            }
+                            Divider()
+                        }
                         .id(2)
                         .onTapGesture {
                             scrollView.scrollTo(2, anchor: .center)
                         }
-                        
+                        .padding(.vertical, 4)
+                    }
+                    Button(action: {
+                        guard !username.isEmpty, !password.isEmpty else {
+                            return
+                        }
+                        viewModel.signIn(email: username, password: password)
+                    }, label: {
+                        Text("Sign In")
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .frame(height: 50)
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .background(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .leading, endPoint: .trailing))
+                            .cornerRadius(5)
+                    })
+                    .frame(width: 280, height: 45, alignment: .center)
+                    .padding(.vertical, 24)
+                    
                     NavigationLink(
                         destination: RecoverPasswordView(),
                         label: {
                             Text("Forgot password?")
                                 .foregroundColor(.purple)
-                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.caption)
+//                                .frame(maxWidth: .infinity, alignment: .leading)
                         })
-                        .padding(.vertical, 24)
-                    //                    Button("Forgot username or password?") {
-                    //                        customAlertManager.show()
-                    //                    }
-                    //                    .foregroundColor(.purple)
-                    //                    .frame(maxWidth: .infinity, alignment: .leading)
-                    //                    .customAlert(manager: customAlertManager, content: {
-                    //                        VStack {
-                    //                            Text("Forgot password").font(.title)
-                    //                            Text("Please type in your email")
-                    //                            TextField("Enter your email", text: $customAlertText).textFieldStyle(RoundedBorderTextFieldStyle())
-                    //                        }
-                    //                    }, buttons: [
-                    //                        .cancel(content: {
-                    //                            Text("Cancel").bold()
-                    //                        }),
-                    //                        .regular(content: {
-                    //                            Text("OK")
-                    //                        }, action: {
-                    //                            print("Sending email: \(customAlertText)")
-                    //                        })
-                    //                    ])
-                }
-                Button(action: {
-                    guard !username.isEmpty, !password.isEmpty else {
-                        return
-                    }
-                    viewModel.signIn(email: username, password: password)
-                }, label: {
-                    Text("Sign In")
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .frame(height: 50)
-                        .font(.system(size: 17, weight: .bold))
-                        .foregroundColor(.white)
-                        .background(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .leading, endPoint: .trailing))
-                        .cornerRadius(5)
-                })
-                .frame(width: 280, height: 45, alignment: .center)
-                
-                Divider()
-                    .padding(.vertical, 32)
-                
-                Group {
-                    if self.colorScheme == .light {
-                        SignInWithApple()
-                            .signInWithAppleButtonStyle(.black)
-                    } else {
-                        SignInWithApple()
-                            .signInWithAppleButtonStyle(.white)
+                    
+                    Divider()
+                        .padding(.vertical, 32)
+                    
+                    Group {
+                        if self.colorScheme == .light {
+                            SignInWithApple()
+                                .signInWithAppleButtonStyle(.black)
+                        } else {
+                            SignInWithApple()
+                                .signInWithAppleButtonStyle(.white)
+                        }
+                        
+                        SignInWithGoogle()
                     }
                     
-                    SignInWithGoogle()
+                    Spacer()
+                    
+                    HStack(spacing: 0) {
+                        Text("Don't have an account?")
+                            .foregroundColor(.primary)
+                        NavigationLink(
+                            destination: RegisterView(),
+                            label: {
+                                Text("Register")
+                                    .foregroundColor(.purple)
+                            })
+                            .padding()
+                    }
                 }
-                
-                Spacer()
-                
-                HStack(spacing: 0) {
-                    Text("Don't have an account?")
-                        .foregroundColor(.primary)
-                    NavigationLink(
-                        destination: RegisterView(),
-                        label: {
-                            Text("Register")
-                                .foregroundColor(.purple)
-                        })
-                        .padding()
-                }
-            }
             }
         }
         .padding(.horizontal, 20)
@@ -298,7 +290,7 @@ struct SignInWithGoogle: View {
         .background(RoundedRectangle(cornerRadius: 5)
                         .strokeBorder(Color.primary, lineWidth: 1))
         
-
+        
     }
 }
 

@@ -12,22 +12,46 @@ struct RecoverPasswordView : View {
     @State var email: String = ""
     
     var body: some View {
-        VStack(alignment: .leading) {
-            TextField("Enter your email address", text: $email)
-                .disableAutocorrection(true)
-                .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
-                .modifier(TextFieldClearButton(text: $email))
-                .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
-                .padding(12)
-                .textFieldStyle(DefaultTextFieldStyle())
-            //                .background(RoundedRectangle(cornerRadius: 5)
-            //                                .strokeBorder(Color.secondary, lineWidth: 1))
-            Button("Send recovery email") {
-                viewModel.forgotPassword(email: email)
+        VStack {
+            Text("Recover password")
+                .font(.largeTitle.bold())
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.vertical, 24)
+            VStack {
+                HStack {
+                    Text("Email")
+                    TextField("Enter your email address", text: $email)
+                        .disableAutocorrection(true)
+                        .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                        .modifier(TextFieldClearButton(text: $email))
+                        .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                        .padding(12)
+                        .textFieldStyle(DefaultTextFieldStyle())
+                }.padding(.horizontal, 12)
+                Divider().padding(0)
             }
+            .frame(minWidth: 0, maxWidth: .infinity)
+
+            Button(action: {
+                guard !email.isEmpty else {
+                    return
+                }
+                viewModel.forgotPassword(email: email)
+            }, label: {
+                Text("Send recovery email")
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .frame(height: 50)
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .background(Color.purple)
+                    .cornerRadius(5)
+            })
+            .frame(width: 280, height: 45, alignment: .center)
+            .padding()
             
+            Spacer()
         }
-        .navigationTitle("Recover password")
+        .padding(.horizontal, 20)
     }
 }
 

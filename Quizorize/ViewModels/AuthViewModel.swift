@@ -39,6 +39,7 @@ class AuthViewModel : ObservableObject {
             }
         }
     }
+    
     func forgotPassword(email: String) {
         auth.useAppLanguage()
         auth.sendPasswordReset(withEmail: email) { error in

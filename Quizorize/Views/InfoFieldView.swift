@@ -39,13 +39,17 @@ struct InfoFieldView: View {
             .disableAutocorrection(true)
             .autocapitalization(.none)
             .padding()
+            /*
             .background(Color(.secondarySystemBackground))
+            */
         } else {
             TextField(queryCommand, text: $InfoType.userInput)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
                 .padding()
+                /*
                 .background(Color(.secondarySystemBackground))
+                */
         }
     }
     
