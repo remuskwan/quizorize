@@ -57,6 +57,7 @@ struct RegisterView: View {
     
 }
 
+
 struct EntryField: View {
     
     let fieldHeight: CGFloat = 0
@@ -103,7 +104,8 @@ struct EntryField: View {
 
         }
         .padding(.horizontal)
-        Divider()
+        
+        ExtendedDivider()
         
 
         Spacer()
