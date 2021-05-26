@@ -10,19 +10,19 @@ import FirebaseAuth
 import GoogleSignIn
 
 struct DecksView: View {
+    @EnvironmentObject var viewModel: AuthViewModel
     @State private var selectedSortBy = SortBy.date
     
-    func logOut() {
-        GIDSignIn.sharedInstance()?.signOut()
-        
-        try! Auth.auth().signOut()
-    }
+//    func logOut() {
+//        GIDSignIn.sharedInstance()?.signOut()
+//        try! Auth.auth().signOut()
+//    }
     
     var body: some View {
-        NavigationView {
-            VStack {
+        VStack {
+            if viewModel.signedIn {
                 Button("Log out") {
-                    logOut()
+                    viewModel.signOut()
                 }
                 Picker("Sort By: ", selection: $selectedSortBy) {
                     ForEach(SortBy.allCases, id: \.self) {
@@ -31,10 +31,12 @@ struct DecksView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 Spacer()
-                
+            } else {
+                LaunchView()
             }
-            .navigationTitle("Decks")
+            
         }
+        .navigationTitle("Decks")
         
     }
 }

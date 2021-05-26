@@ -10,6 +10,19 @@ import SwiftUI
 
 
 struct RegisterView: View {
+    @EnvironmentObject var viewModel: AuthViewModel
+    
+    var body: some View {
+        if viewModel.signedIn {
+            DecksView()
+        } else {
+            Register()
+        }
+        
+    }
+}
+
+struct Register: View {
     
     @StateObject var name: InfoFieldViewModel = InfoFieldViewModel(isSensitive: false)
     @StateObject var email: InfoFieldViewModel = InfoFieldViewModel(isSensitive: false)
@@ -75,6 +88,10 @@ struct RegisterView: View {
                 }
 
                 Button(action: {
+                    guard !email.userInput.isEmpty, !password.userInput.isEmpty else {
+                        return
+                    }
+                    
                     viewModel.signUp(email: email.userInput, password: password.userInput)
                 }, label: {
                     Text("Create Your Account")
@@ -98,7 +115,6 @@ struct RegisterView: View {
         .background(Color.white)
     }
 }
-
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
         RegisterView()

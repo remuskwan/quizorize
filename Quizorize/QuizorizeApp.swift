@@ -13,18 +13,16 @@ import UIKit
 @main
 struct QuizorizeApp: App {
     
-    
-
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
-
 //            ContentView()
 //                .environment(\.managedObjectContext, persistenceController.container.viewContext)
             LaunchView()
+                .environmentObject(AuthViewModel())
         }
     }
 }
@@ -39,9 +37,9 @@ class AppDelegate: NSObject, UIApplicationDelegate, GIDSignInDelegate {
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
         
-      
         return true
     }
+    
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if error != nil {
             print(error.localizedDescription)

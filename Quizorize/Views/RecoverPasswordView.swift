@@ -20,11 +20,13 @@ struct RecoverPasswordView : View {
             VStack {
                 HStack {
                     Text("Email")
+                        .frame(width: 90, alignment: .leading)
                     TextField("Enter your email address", text: $email)
                         .disableAutocorrection(true)
                         .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                         .modifier(TextFieldClearButton(text: $email))
                         .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+<<<<<<< HEAD
                         .padding(12)
                         .textFieldStyle(DefaultTextFieldStyle())
                 }.padding(.horizontal, 12)
@@ -32,6 +34,13 @@ struct RecoverPasswordView : View {
             }
             .frame(minWidth: 0, maxWidth: .infinity)
 
+=======
+                }
+                Divider()
+            }
+            .padding(.vertical, 4)
+        
+>>>>>>> c74a21f6d8b3b2ec281079d02d2084710b0328f6
             Button(action: {
                 guard !email.isEmpty else {
                     return
