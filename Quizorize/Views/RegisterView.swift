@@ -53,6 +53,8 @@ struct RegisterView: View {
             .padding(.horizontal)
         }
     }
+    
+    
 }
 
 struct EntryField: View {

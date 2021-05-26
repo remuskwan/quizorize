@@ -41,12 +41,11 @@ struct LaunchView: View {
                         label: {
                             Text("Get Started.")
                         })
-                        .cornerRadius(5)
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(width: 250, height: 50)
                         .background(Color.purple)
-                        //.addBorder(Color.purple, width: 1, cornerRadius: 20)
+                        .cornerRadius(5)
                         .padding()
                 }
             }
