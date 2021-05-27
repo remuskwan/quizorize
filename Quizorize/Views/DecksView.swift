@@ -11,46 +11,55 @@ import GoogleSignIn
 
 struct DecksView: View {
     @EnvironmentObject var viewModel: AuthViewModel
+
+    var body: some View {
+        if viewModel.signedIn {
+            Decks()
+        } else {
+            LaunchView()
+        }
+    }
+}
+
+struct Decks: View {
+    @EnvironmentObject var viewModel: AuthViewModel
     @State private var selectedSortBy = SortBy.date
-    
-//    func logOut() {
-//        GIDSignIn.sharedInstance()?.signOut()
-//        try! Auth.auth().signOut()
-//    }
+    @State private var showSettingsSheet: Bool = false
     
     var body: some View {
         VStack {
-            if viewModel.signedIn {
-                Button("Log out") {
-                    viewModel.signOut()
-                }
+            ScrollView {
                 Picker("Sort By: ", selection: $selectedSortBy) {
                     ForEach(SortBy.allCases, id: \.self) {
                         Text($0.rawValue)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                Spacer()
-            } else {
-                LaunchView()
+                .frame(width: 200, height: 20, alignment: .center)
+                .padding()
             }
-            
+            Spacer()
         }
         .navigationTitle("Decks")
-        
-    }
-}
-
-struct Deck: View {
-    @State var isFaceUp: Bool = false
-    
-    var body: some View {
-        ZStack {
-            Image("rectangle.fill.on.rectangle.angled.fill")
-                .resizable()
-                .scaledToFit()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+//                Button(action: {
+//                    showSettingsSheet.toggle()
+//                }, label: {
+//                    Image(systemName: "gearshape.fill")
+//                        .foregroundColor(.purple)
+//                })
+//                .sheet(isPresented: $showSettingsSheet) {
+//                    SettingsView()
+//                }
+                NavigationLink(
+                    destination: SettingsView(),
+                    label: {
+                        Image(systemName: "gearshape.fill")
+                            .foregroundColor(.purple)
+                    })
+            }
         }
-        
     }
 }
 

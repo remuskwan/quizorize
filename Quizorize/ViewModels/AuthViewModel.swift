@@ -52,7 +52,7 @@ class AuthViewModel : ObservableObject {
             guard result != nil, error == nil else {
                 guard error == nil else {
                     print((error?.localizedDescription)!)
-                    self?.handleErrors(error: error)
+                    self?.handleErrors(error: error, email: email)
                     return
                 }
                 return //TODO
@@ -66,7 +66,6 @@ class AuthViewModel : ObservableObject {
     private func handleSignInWithGoogle() {
         GIDSignIn.sharedInstance()?.presentingViewController = UIApplication.shared.windows.first?.rootViewController
         GIDSignIn.sharedInstance()?.signIn()
-        self.signedIn = true
     }
     
     //Hashing function using CryptoKit
@@ -118,7 +117,7 @@ class AuthViewModel : ObservableObject {
             guard result != nil, error == nil else {
                 guard error == nil else {
                     print((error?.localizedDescription)!)
-                    self?.handleErrorsForSignUp(error: error, email: email)
+                    self?.handleErrors(error: error, email: email)
                     return
                 }
                 return
@@ -145,23 +144,20 @@ class AuthViewModel : ObservableObject {
         }
     }
     
-    private func handleErrors(error: Error?) {
+    private func handleErrors(error: Error?, email: String) {
         let errorCode = AuthErrorCode(rawValue: (error as NSError?)!.code)
         switch errorCode {
         case .wrongPassword:
-            self.activeError = SignInError.wrongPassword
-        case .invalidEmail:
-            self.activeError = SignInError.invalidEmail
-        case .userNotFound:
-            self.activeError = EmailVerificationError.userNotFound
-        default:
-            self.activeError = SignInError.unknown
-        }
-    }
-    
-    private func handleErrorsForSignUp(error: Error?, email: String) {
-        let errorCode = AuthErrorCode(rawValue: (error as NSError?)!.code)
-        switch errorCode {
+            //fetch sign in methods previously used for provided email address
+            auth.fetchSignInMethods(forEmail: email) { result, error in
+                guard result == nil, error == nil else {
+                    //if result is not empty and there is no error, set the activeError to emailInUseByDifferentProvider
+                    self.activeError = SignInError.wrongProvider(provider: result![0])
+                    return
+                }
+                //else set activeError to wrongPassword
+                self.activeError = SignInError.wrongPassword
+            }
         case .invalidEmail:
             self.activeError = SignInError.invalidEmail
         case .emailAlreadyInUse:
@@ -175,7 +171,6 @@ class AuthViewModel : ObservableObject {
                 //else set activeError to emailAlreadyInUse
                 self.activeError = SignUpError.emailAlreadyInUse
             }
-            
         case .userNotFound:
             self.activeError = EmailVerificationError.userNotFound
         default:

@@ -12,7 +12,7 @@ extension Alert {
     init(localizedError: LocalizedError) {
         self = Alert(nsError: localizedError as NSError)
     }
-     
+    
     init(nsError: NSError) {
         let message: Text? = {
             let message = [nsError.localizedFailureReason].compactMap({ $0 }).joined(separator: "\n\n")
