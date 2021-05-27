@@ -9,9 +9,7 @@ import SwiftUI
 
 struct LaunchView: View {
     @EnvironmentObject var viewModel: AuthViewModel
-    
-    @State private var isPresented = false
-    
+
     var body: some View {
         NavigationView {
             if viewModel.signedIn {
@@ -40,23 +38,28 @@ struct LaunchView: View {
 //                            .environmentObject(AuthViewModel()),
                         label: {
                             Text("Get Started.")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .frame(width: 250, height: 50)
+                                .background(Color.purple)
+                                .cornerRadius(5)
+                                .padding()
                         })
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(width: 250, height: 50)
-                        .background(Color.purple)
-                        .cornerRadius(5)
-                        .padding()
                 }
             }
         }
         .onAppear {
             viewModel.signedIn = viewModel.isSignedIn
+            NotificationCenter.default.addObserver(forName: NSNotification.Name("SIGNIN"), object: nil, queue: .main) { (_) in
+                viewModel.signedIn = viewModel.isSignedIn
+            }
         }
-        .background(NavigationConfigurator { nc in
-            nc.navigationBar.barTintColor = .white
-            //nc.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]
-        })
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
+//        .background(NavigationConfigurator { nc in
+//            nc.navigationBar.barTintColor = .white
+//            //nc.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]
+//        })
     }
 }
 

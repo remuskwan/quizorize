@@ -12,49 +12,52 @@ import SwiftUI
 struct RegisterView: View {
 
     @EnvironmentObject var viewModel: AuthViewModel
+    @Environment(\.presentationMode) var presentationMode
     
     @ObservedObject var signupVM = SignupViewModel()
-    
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                Text("Create Your Account")
-                    .font(.largeTitle.bold())
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.vertical, 24)
-                
-                EntryField(placeHolder: "Enter your name", title: "Name", prompt: signupVM.titlePrompt, field: $signupVM.title, isSecure: false)
-                EntryField(placeHolder: "Enter your email", title: "Email", prompt: signupVM.emailPrompt, field: $signupVM.email, isSecure: false)
-                EntryField(placeHolder: "Enter your password", title: "Password", prompt: signupVM.passwordPrompt, field: $signupVM.password, isSecure: true)
-                EntryField(placeHolder: "Confirm your password", title: "Confirm Password", prompt: signupVM.confirmPwPrompt, field: $signupVM.confirmPw, isSecure: true)
-                
-                Button(action: {
-                    guard !signupVM.email.isEmpty, !signupVM.password.isEmpty else {
-                        return
-                    }
-                    
-                    viewModel.signUp(email: signupVM.email, password: signupVM.password)
-                }, label: {
+        VStack {
+//            Button(action: {
+//                self.presentationMode.wrappedValue.dismiss()
+//            }, label: {
+//                Image(systemName: "chevron.left")
+//                    .font(.headline)
+//                    .foregroundColor(.purple)
+//            })
+//            .padding()
+            ScrollView {
+                VStack(spacing: 20) {
                     Text("Create Your Account")
-                        .foregroundColor(.white)
-                        .frame(width: 300, height: 50)
-                        .background(Color.purple)
-                        .cornerRadius(5)
-                    })
-                .opacity(signupVM.isSignUpComplete ? 1 : 0.6)
-                .disabled((!signupVM.isSignUpComplete))  //MARK: Disable sign in until all requirements are met
-
-
-               Spacer()
-                
-                
+                        .font(.largeTitle.bold())
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical, 24)
+                    
+                    EntryField(placeHolder: "Enter your name", title: "Name", prompt: signupVM.titlePrompt, field: $signupVM.title, isSecure: false)
+                    EntryField(placeHolder: "Enter your email", title: "Email", prompt: signupVM.emailPrompt, field: $signupVM.email, isSecure: false)
+                    EntryField(placeHolder: "Enter your password", title: "Password", prompt: signupVM.passwordPrompt, field: $signupVM.password, isSecure: true)
+                    EntryField(placeHolder: "Confirm your password", title: "Confirm Password", prompt: signupVM.confirmPwPrompt, field: $signupVM.confirmPw, isSecure: true)
+                    
+                    Spacer()
+                }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
+            Button(action: {
+                viewModel.signUp(email: signupVM.email, password: signupVM.password)
+            }, label: {
+                Text("Create Your Account")
+                    .foregroundColor(.white)
+                    .frame(width: 300, height: 50)
+                    .background(Color.purple)
+                    .cornerRadius(5)
+            })
+            .opacity(signupVM.isSignUpComplete ? 1 : 0.6)
+            .disabled((!signupVM.isSignUpComplete))  //MARK: Disable sign in until all requirements are met
+            .padding()
         }
+//        .navigationBarHidden(true)
+//        .navigationBarBackButtonHidden(true)
     }
-    
-    
 }
 
 struct EntryField: View {

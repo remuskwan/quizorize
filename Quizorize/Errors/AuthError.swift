@@ -15,6 +15,7 @@ protocol AuthError: LocalizedError {
 enum SignInError: AuthError {
     case wrongPassword
     case invalidEmail
+    case wrongProvider(provider: String)
     case unknown
     
     var errorDescription: String? {
@@ -23,6 +24,8 @@ enum SignInError: AuthError {
             return "Invalid password"
         case .invalidEmail:
             return "Invalid email address"
+        case .wrongProvider:
+            return "Account created using different provider"
         default:
             return "Unknown error"
         }
@@ -34,6 +37,8 @@ enum SignInError: AuthError {
             return "The password you entered was incorrect. Please try again with a different password."
         case .invalidEmail:
             return "The email address you entered doesn't appear to belong to an account. Please check your email address and try again."
+        case .wrongProvider(let provider):
+            return "You previously created an account on Quizorize with \(provider). Please sign in with \(provider)."
         default:
             return "Unknown error occured"
         }
@@ -62,9 +67,9 @@ enum SignUpError: AuthError {
     var failureReason: String? {
         switch self {
         case .emailAlreadyInUse:
-            return "The email address you entered is already in use. Please use a different email address or Sign In."
+            return "The email address you entered is already in use. Please use a different email address."
         case .emailInUseByDifferentProvider(let provider):
-            return "You already have an account on Quizorize. Please Sign In with \(provider)."
+            return "You previously created an account on Quizorize with \(provider). Please sign in with \(provider)."
         case .invalidEmail:
             return "The email address you entered doesn't appear to belong to an account. Please check your email address and try again."
         default:

@@ -11,9 +11,13 @@ struct RecoverPasswordView : View {
     @EnvironmentObject var viewModel: AuthViewModel
     @State var email: String = ""
     
+    var isDisabled: Bool {
+        return email.isEmpty
+    }
+    
     var body: some View {
         VStack {
-            Text("Recover password")
+            Text("Reset password")
                 .font(.largeTitle.bold())
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.vertical, 24)
@@ -22,6 +26,8 @@ struct RecoverPasswordView : View {
                     Text("Email")
                         .frame(width: 90, alignment: .leading)
                     TextField("Enter your email address", text: $email)
+                        .textContentType(.emailAddress)
+                        .keyboardType(.emailAddress)
                         .disableAutocorrection(true)
                         .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                         .modifier(TextFieldClearButton(text: $email))
@@ -32,19 +38,17 @@ struct RecoverPasswordView : View {
             .padding(.vertical, 4)
             
             Button(action: {
-                guard !email.isEmpty else {
-                    return
-                }
                 viewModel.forgotPassword(email: email)
             }, label: {
                 Text("Send recovery email")
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .frame(height: 50)
+                    .frame(width: 250, height: 50)
                     .font(.headline)
                     .foregroundColor(.white)
                     .background(Color.purple)
                     .cornerRadius(5)
             })
+            .opacity(isDisabled ? 0.6 : 1)
+            .disabled(isDisabled)
             .frame(width: 280, height: 45, alignment: .center)
             .padding()
             
