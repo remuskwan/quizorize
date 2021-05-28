@@ -71,6 +71,7 @@ struct Login : View {
                                         .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                                         .modifier(TextFieldClearButton(text: $email))
                                         .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                                        .frame(height: CGFloat(0))
                                 }
                                 Divider()
                             }
@@ -95,6 +96,7 @@ struct Login : View {
                                                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                                                 .modifier(TextFieldClearButton(text: $password))
                                                 .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                                                .frame(height: CGFloat(0))
                                             
                                         } else {
                                             TextField("Required", text: $password)
@@ -103,6 +105,7 @@ struct Login : View {
                                                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                                                 .modifier(TextFieldClearButton(text: $password))
                                                 .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                                                .frame(height: CGFloat(0))
                                         }
                                     }
                                 }
