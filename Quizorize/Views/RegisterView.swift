@@ -12,11 +12,21 @@ import SwiftUI
 struct RegisterView: View {
     
     @EnvironmentObject var viewModel: AuthViewModel
+    @Environment(\.presentationMode) var presentationMode
     
     @ObservedObject var signupVM = SignupViewModel()
     
-    
     var body: some View {
+    VStack {
+    //            Button(action: {
+    //                self.presentationMode.wrappedValue.dismiss()
+    //            }, label: {
+    //                Image(systemName: "chevron.left")
+    //                    .font(.headline)
+    //                    .foregroundColor(.purple)
+    //            })
+    //            .padding()
+    
         ScrollView {
             VStack(spacing: 20) {
                 Text("Create Your Account")
@@ -53,14 +63,13 @@ struct RegisterView: View {
                 
                 
                 Spacer()
-                
-                
             }
-            .padding(.horizontal)
         }
+//        .navigationBarHidden(true)
+//        .navigationBarBackButtonHidden(true)
+        }
+        .padding()
     }
-    
-    
 }
 
 

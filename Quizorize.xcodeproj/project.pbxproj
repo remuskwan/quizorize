@@ -48,6 +48,9 @@
 		16279344265EB61B0073718F /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 16279343265EB61B0073718F /* FacebookLogin */; };
 		16279346265EB61B0073718F /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = 16279345265EB61B0073718F /* FacebookShare */; };
 		16279348265EB61B0073718F /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 16279347265EB61B0073718F /* FacebookCore */; };
+		1627934E265FAF080073718F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627934D265FAF080073718F /* SettingsView.swift */; };
+		1627934F265FAF080073718F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627934D265FAF080073718F /* SettingsView.swift */; };
+		16279350265FAF080073718F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627934D265FAF080073718F /* SettingsView.swift */; };
 		16285C7A26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7B26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7C26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
@@ -99,6 +102,7 @@
 		1627932D265CD6EA0073718F /* RecoverPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPasswordView.swift; sourceTree = "<group>"; };
 		16279331265D09A50073718F /* NavigationConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationConfigurator.swift; sourceTree = "<group>"; };
 		1627933E265EA1520073718F /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
+		1627934D265FAF080073718F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		16285C7926593426003EE017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		16C285E92656EB020068AB95 /* Quizorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C285EC2656EB020068AB95 /* QuizorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeApp.swift; sourceTree = "<group>"; };
@@ -172,6 +176,7 @@
 				162792EB265AD1240073718F /* DecksView.swift */,
 				16279300265BFF7B0073718F /* LaunchView.swift */,
 				1627932D265CD6EA0073718F /* RecoverPasswordView.swift */,
+				1627934D265FAF080073718F /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -582,6 +587,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1627934E265FAF080073718F /* SettingsView.swift in Sources */,
 				16C285F92656EB030068AB95 /* Quizorize.xcdatamodeld in Sources */,
 				77F47658265EB25200AE1C06 /* SignupViewModel.swift in Sources */,
 				16279301265BFF7B0073718F /* LaunchView.swift in Sources */,
@@ -608,6 +614,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1627934F265FAF080073718F /* SettingsView.swift in Sources */,
 				1627932F265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
 				1627932B265C1D840073718F /* Helper.swift in Sources */,
 				16279312265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */,
@@ -628,6 +635,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16279350265FAF080073718F /* SettingsView.swift in Sources */,
 				16279330265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
 				1627932C265C1D840073718F /* Helper.swift in Sources */,
 				16279313265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */,
