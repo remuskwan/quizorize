@@ -24,10 +24,16 @@ struct RegisterView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.vertical, 24)
                 
-                EntryField(placeHolder: "Enter your name", title: "Name", prompt: signupVM.titlePrompt, field: $signupVM.title, isSecure: false, revealPrompt: signupVM.confirmPasswordTogglerPrompt)
-                EntryField(placeHolder: "Enter your email", title: "Email", prompt: signupVM.emailPrompt, field: $signupVM.email, isSecure: false, revealPrompt: signupVM.confirmPasswordTogglerPrompt)
-                EntryField(placeHolder: "Enter your password", title: "Password", prompt: signupVM.passwordPrompt, field: $signupVM.password, isSecure: true, revealPrompt: signupVM.confirmPasswordTogglerPrompt)
-                EntryField(placeHolder: "Confirm your password", title: "Confirm Password", prompt: signupVM.confirmPwPrompt, field: $signupVM.confirmPw, isSecure: true, revealPrompt: signupVM.confirmPasswordTogglerPrompt)
+                EntryField(placeHolder: "Enter your name", title: "Name", prompt: signupVM.titlePrompt, field: $signupVM.title, isSecure: false)
+                
+                EntryField(placeHolder: "Enter your email", title: "Email", prompt: signupVM.emailPrompt, field: $signupVM.email, isSecure: false)
+                    .keyboardType(.emailAddress)
+                
+                EntryField(placeHolder: "Enter your password", title: "Password", prompt: signupVM.passwordPrompt, field: $signupVM.password, isSecure: true)
+                    .textContentType(.newPassword)
+                
+                EntryField(placeHolder: "Confirm your password", title: "Confirm Password", prompt: signupVM.confirmPwPrompt, field: $signupVM.confirmPw, isSecure: true)
+                    .textContentType(.newPassword)
                 
                 Button(action: {
                     guard !signupVM.email.isEmpty, !signupVM.password.isEmpty else {
@@ -58,6 +64,7 @@ struct RegisterView: View {
 }
 
 
+//MARK: A View that creates any entry row specified.
 struct EntryField: View {
     
     @State var isVisible: Bool = false
@@ -71,8 +78,7 @@ struct EntryField: View {
     var prompt: String
     @Binding var field: String
     var isSecure: Bool
-    var revealPrompt: String
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             
@@ -84,7 +90,7 @@ struct EntryField: View {
                         self.isVisible.toggle()
                     }, label: {
                         Text(toggleViewChanger())
-                            .font(.caption)
+                            .font(.caption.bold())
                             .foregroundColor(Color.blue)
                     })
                     .multilineTextAlignment(.trailing)
@@ -94,7 +100,8 @@ struct EntryField: View {
             HStack {
                 Text(title)
                     .frame(width: 90, alignment: .leading)
-                
+                    .multilineTextAlignment(.leading)
+
                 if isSecure && !isVisible {
                     SecureField(placeHolder, text: $field)
                         .disableAutocorrection(true)
@@ -120,7 +127,6 @@ struct EntryField: View {
             Divider()
             
             Text(prompt)
-                .fixedSize(horizontal: false, vertical: true)
                 .font(.caption.bold())
                 .foregroundColor(Color.black)
                 .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
@@ -128,6 +134,7 @@ struct EntryField: View {
             Spacer()
         }
         .padding(.horizontal)
+        .fixedSize(horizontal: false, vertical: true)
     }
     
     func toggleViewChanger() -> String {
@@ -136,7 +143,7 @@ struct EntryField: View {
         } else if self.field.isEmpty {
             return ""
         } else {
-            return "Show password"
+            return "Reveal password"
         }
     }
 }

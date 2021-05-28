@@ -14,6 +14,8 @@ class SignupViewModel: ObservableObject {
     @Published var password = ""
     @Published var confirmPw = ""
     
+    @Published private(set) var SignUpError: LocalizedError?
+    
     //MARK: - Validation Functions
     
     func passwordsMatch() -> Bool {
@@ -34,10 +36,16 @@ class SignupViewModel: ObservableObject {
         return fieldTest.evaluate(with: email)
     }
     
+    //MARK: Not sure if Firebase stores names. Else have to use another database like CoreData.
+    func isTitleValid() -> Bool {
+       return true
+    }
+    
     var isSignUpComplete: Bool {
         if !passwordsMatch() ||
         !isPasswordValid() ||
-            !isEmailValid() {
+            !isEmailValid() ||
+            title.isEmpty {
             return false
         }
         
@@ -48,9 +56,9 @@ class SignupViewModel: ObservableObject {
     
     var titlePrompt: String {
         if self.title.isEmpty {
-            return "                            "
-        } else {
             return "Enter your display name here"
+        } else {
+            return "                            "
         }
     }
     
@@ -87,6 +95,7 @@ class SignupViewModel: ObservableObject {
         }
     }
     
+    /*
     var confirmPasswordTogglerPrompt: String {
         if !self.confirmPw.isEmpty {
             return "Reveal Password"
@@ -94,6 +103,7 @@ class SignupViewModel: ObservableObject {
             return " "
         }
     }
+    */
     
     
 }
