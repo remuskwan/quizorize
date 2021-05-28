@@ -11,23 +11,22 @@ struct SettingsView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
-//        if viewModel.signedIn {
-//            Settings()
-//        } else {
-//            LaunchView()
-//        }
-        Settings()
+        if viewModel.signedIn {
+            Settings()
+        } else {
+            LaunchView()
+        }
     }
 }
 
 struct Settings: View {
-    @Environment(\.presentationMode) var presentationMode
+//    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         Form {
             Section{
-                Button("Log out") {
+                Button("Sign out") {
                     viewModel.signOut()
 //                        presentationMode.wrappedValue.dismiss()
                 }

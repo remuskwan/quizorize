@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RecoverPasswordView : View {
     @EnvironmentObject var viewModel: AuthViewModel
+    @Environment(\.presentationMode) var presentationMode
     @State var email: String = ""
     
     var isDisabled: Bool {
@@ -39,6 +40,10 @@ struct RecoverPasswordView : View {
             
             Button(action: {
                 viewModel.forgotPassword(email: email)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+                
             }, label: {
                 Text("Send recovery email")
                     .frame(width: 250, height: 50)

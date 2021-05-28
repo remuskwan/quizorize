@@ -26,9 +26,6 @@
 		1627930E265C1CDA0073718F /* OtherLoginViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279305265C1CDA0073718F /* OtherLoginViews.swift */; };
 		1627930F265C1CDA0073718F /* OtherLoginViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279305265C1CDA0073718F /* OtherLoginViews.swift */; };
 		16279310265C1CDA0073718F /* OtherLoginViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279305265C1CDA0073718F /* OtherLoginViews.swift */; };
-		16279311265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279306265C1CDA0073718F /* QuickSignInWithApple.swift */; };
-		16279312265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279306265C1CDA0073718F /* QuickSignInWithApple.swift */; };
-		16279313265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279306265C1CDA0073718F /* QuickSignInWithApple.swift */; };
 		1627931A265C1CDA0073718F /* DefaultLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279309265C1CDA0073718F /* DefaultLoginView.swift */; };
 		1627931B265C1CDA0073718F /* DefaultLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279309265C1CDA0073718F /* DefaultLoginView.swift */; };
 		1627931C265C1CDA0073718F /* DefaultLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279309265C1CDA0073718F /* DefaultLoginView.swift */; };
@@ -51,6 +48,10 @@
 		1627934E265FAF080073718F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627934D265FAF080073718F /* SettingsView.swift */; };
 		1627934F265FAF080073718F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627934D265FAF080073718F /* SettingsView.swift */; };
 		16279350265FAF080073718F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627934D265FAF080073718F /* SettingsView.swift */; };
+		162793572660F7450073718F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162793562660F7450073718F /* ProfileView.swift */; };
+		162793582660F7450073718F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162793562660F7450073718F /* ProfileView.swift */; };
+		162793592660F7450073718F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162793562660F7450073718F /* ProfileView.swift */; };
+		1627935C26615C340073718F /* SignInWithAppleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627935B26615C330073718F /* SignInWithAppleCoordinator.swift */; };
 		16285C7A26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7B26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7C26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
@@ -96,13 +97,14 @@
 		162792F8265BE7860073718F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		16279300265BFF7B0073718F /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		16279305265C1CDA0073718F /* OtherLoginViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherLoginViews.swift; sourceTree = "<group>"; };
-		16279306265C1CDA0073718F /* QuickSignInWithApple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickSignInWithApple.swift; sourceTree = "<group>"; };
 		16279309265C1CDA0073718F /* DefaultLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultLoginView.swift; sourceTree = "<group>"; };
 		16279329265C1D840073718F /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		1627932D265CD6EA0073718F /* RecoverPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPasswordView.swift; sourceTree = "<group>"; };
 		16279331265D09A50073718F /* NavigationConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationConfigurator.swift; sourceTree = "<group>"; };
 		1627933E265EA1520073718F /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		1627934D265FAF080073718F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		162793562660F7450073718F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		1627935B26615C330073718F /* SignInWithAppleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleCoordinator.swift; sourceTree = "<group>"; };
 		16285C7926593426003EE017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		16C285E92656EB020068AB95 /* Quizorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C285EC2656EB020068AB95 /* QuizorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeApp.swift; sourceTree = "<group>"; };
@@ -168,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				16279305265C1CDA0073718F /* OtherLoginViews.swift */,
-				16279306265C1CDA0073718F /* QuickSignInWithApple.swift */,
 				16279309265C1CDA0073718F /* DefaultLoginView.swift */,
 				16C285EE2656EB020068AB95 /* ContentView.swift */,
 				16C2861C2656EC6C0068AB95 /* LoginView.swift */,
@@ -177,6 +178,7 @@
 				16279300265BFF7B0073718F /* LaunchView.swift */,
 				1627932D265CD6EA0073718F /* RecoverPasswordView.swift */,
 				1627934D265FAF080073718F /* SettingsView.swift */,
+				162793562660F7450073718F /* ProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -196,6 +198,22 @@
 				1627933E265EA1520073718F /* AuthError.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		162793552660F4070073718F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1627935A26615C120073718F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1627935B26615C330073718F /* SignInWithAppleCoordinator.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		16285C7826593193003EE017 /* ViewModels */ = {
@@ -232,6 +250,8 @@
 		16C285EB2656EB020068AB95 /* Quizorize */ = {
 			isa = PBXGroup;
 			children = (
+				1627935A26615C120073718F /* Services */,
+				162793552660F4070073718F /* Models */,
 				1627933D265EA13C0073718F /* Errors */,
 				162792F4265AF12C0073718F /* Quizorize.entitlements */,
 				162792EF265ADD970073718F /* ViewModifiers */,
@@ -241,7 +261,6 @@
 				16C285F02656EB030068AB95 /* Assets.xcassets */,
 				16C285F52656EB030068AB95 /* Persistence.swift */,
 				16C285FA2656EB030068AB95 /* Info.plist */,
-				16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */,
 				16285C7926593426003EE017 /* GoogleService-Info.plist */,
 				16C285F22656EB030068AB95 /* Preview Content */,
 				162792F8265BE7860073718F /* Extensions.swift */,
@@ -593,6 +612,7 @@
 				16279301265BFF7B0073718F /* LaunchView.swift in Sources */,
 				16C285F62656EB030068AB95 /* Persistence.swift in Sources */,
 				16C285EF2656EB020068AB95 /* ContentView.swift in Sources */,
+				1627935C26615C340073718F /* SignInWithAppleCoordinator.swift in Sources */,
 				162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				162792F1265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
 				16279332265D09A50073718F /* NavigationConfigurator.swift in Sources */,
@@ -604,8 +624,8 @@
 				1627931A265C1CDA0073718F /* DefaultLoginView.swift in Sources */,
 				1627930E265C1CDA0073718F /* OtherLoginViews.swift in Sources */,
 				16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */,
-				16279311265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */,
 				162792EC265AD1240073718F /* DecksView.swift in Sources */,
+				162793572660F7450073718F /* ProfileView.swift in Sources */,
 				1627932E265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -617,10 +637,10 @@
 				1627934F265FAF080073718F /* SettingsView.swift in Sources */,
 				1627932F265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
 				1627932B265C1D840073718F /* Helper.swift in Sources */,
-				16279312265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */,
 				16279333265D09A50073718F /* NavigationConfigurator.swift in Sources */,
 				162792FA265BE7860073718F /* Extensions.swift in Sources */,
 				1627930F265C1CDA0073718F /* OtherLoginViews.swift in Sources */,
+				162793582660F7450073718F /* ProfileView.swift in Sources */,
 				1627931B265C1CDA0073718F /* DefaultLoginView.swift in Sources */,
 				162792E9265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				16279302265BFF7B0073718F /* LaunchView.swift in Sources */,
@@ -638,10 +658,10 @@
 				16279350265FAF080073718F /* SettingsView.swift in Sources */,
 				16279330265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
 				1627932C265C1D840073718F /* Helper.swift in Sources */,
-				16279313265C1CDA0073718F /* QuickSignInWithApple.swift in Sources */,
 				16279334265D09A50073718F /* NavigationConfigurator.swift in Sources */,
 				162792FB265BE7870073718F /* Extensions.swift in Sources */,
 				16279310265C1CDA0073718F /* OtherLoginViews.swift in Sources */,
+				162793592660F7450073718F /* ProfileView.swift in Sources */,
 				1627931C265C1CDA0073718F /* DefaultLoginView.swift in Sources */,
 				162792EA265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				16279303265BFF7B0073718F /* LaunchView.swift in Sources */,

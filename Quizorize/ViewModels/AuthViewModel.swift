@@ -10,16 +10,17 @@ import CryptoKit
 import FirebaseAuth
 import GoogleSignIn
 
-class AuthViewModel : ObservableObject {
+class AuthViewModel : NSObject, ObservableObject {
     let auth = Auth.auth()
     
     @Published var signedIn = false
+    @Published var user = Auth.auth().currentUser
     @Published private(set) var activeError: LocalizedError?
     
     @State var currentNonce:String?
     
     var isSignedIn: Bool {
-        return auth.currentUser != nil
+        return user != nil
     }
     
     var isPresentingAlert: Binding<Bool> {
@@ -34,6 +35,12 @@ class AuthViewModel : ObservableObject {
     enum SignInMethod {
         case signInWithEmail(email: String, password: String)
         case signInWithGoogle
+    }
+    
+    override init() {
+        super.init()
+        
+        GIDSignIn.sharedInstance().delegate = self
     }
     
     func signIn(with signInMethod: SignInMethod) {
@@ -64,55 +71,13 @@ class AuthViewModel : ObservableObject {
     }
     
     private func handleSignInWithGoogle() {
-        GIDSignIn.sharedInstance()?.presentingViewController = UIApplication.shared.windows.first?.rootViewController
-        GIDSignIn.sharedInstance()?.signIn()
-    }
-    
-    //Hashing function using CryptoKit
-    func sha256(_ input: String) -> String {
-        let inputData = Data(input.utf8)
-        let hashedData = SHA256.hash(data: inputData)
-        let hashString = hashedData.compactMap {
-            return String(format: "%02x", $0)
-        }.joined()
-        
-        return hashString
-    }
-    
-    // from https://firebase.google.com/docs/auth/ios/apple
-    func randomNonceString(length: Int = 32) -> String {
-        precondition(length > 0)
-        let charset: Array<Character> =
-            Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-        var result = ""
-        var remainingLength = length
-        
-        while remainingLength > 0 {
-            let randoms: [UInt8] = (0 ..< 16).map { _ in
-                var random: UInt8 = 0
-                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
-                if errorCode != errSecSuccess {
-                    fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
-                }
-                return random
-            }
-            
-            randoms.forEach { random in
-                if remainingLength == 0 {
-                    return
-                }
-                
-                if random < charset.count {
-                    result.append(charset[Int(random)])
-                    remainingLength -= 1
-                }
-            }
+        if GIDSignIn.sharedInstance().currentUser == nil {
+            GIDSignIn.sharedInstance()?.presentingViewController = UIApplication.shared.windows.first?.rootViewController
+            GIDSignIn.sharedInstance()?.signIn()
         }
-        
-        return result
     }
     
-    func signUp(email: String, password: String) {
+    func signUp(email: String, password: String, displayName: String) {
         auth.createUser(withEmail: email, password: password) { [weak self] result, error in
             guard result != nil, error == nil else {
                 guard error == nil else {
@@ -122,6 +87,14 @@ class AuthViewModel : ObservableObject {
                 }
                 return
             }
+//            let changeRequest = self?.user?.createProfileChangeRequest()
+//            changeRequest?.displayName = displayName
+//            changeRequest?.commitChanges(completion: { error in
+//                guard error == nil else {
+//                    print((error?.localizedDescription)!)
+//                    return
+//                }
+//            })
             DispatchQueue.main.async {
                 self?.signedIn = true
             }
@@ -130,15 +103,22 @@ class AuthViewModel : ObservableObject {
     
     func signOut() {
         GIDSignIn.sharedInstance()?.signOut()
-        try? auth.signOut()
         
-        self.signedIn = false
+        do {
+            try auth.signOut()
+            
+            self.signedIn = false
+        } catch let signOutError as NSError {
+            print(signOutError.localizedDescription)
+        }
+        
     }
     
     func forgotPassword(email: String) {
         auth.useAppLanguage()
         auth.sendPasswordReset(withEmail: email) { error in
-            guard error != nil else {
+            guard error == nil else {
+                print((error?.localizedDescription)!)
                 return
             }
         }
@@ -177,4 +157,61 @@ class AuthViewModel : ObservableObject {
             self.activeError = SignInError.unknown
         }
     }
+    
+//    func getUserProfile() -> Profile? {
+//        let user = self.user
+//        if let user = user {
+//            // The user's ID, unique to the Firebase project.
+//            // Do NOT use this value to authenticate with your backend server,
+//            // if you have one. Use getTokenWithCompletion:completion: instead.
+//            let uid = user.uid
+//            let email = user.email
+//            let photoURL = user.photoURL
+//            var multiFactorString = "MultiFactor: "
+//            var displayName = ""
+//            for info in user.multiFactor.enrolledFactors {
+//                displayName = info.displayName ?? "[DisplayName]"
+//                multiFactorString += " "
+//            }
+//            return Profile(email: email, photoURL: photoURL, displayName: displayName)
+//        } else {
+//            return nil
+//        }
+//    }
+}
+
+extension AuthViewModel: GIDSignInDelegate {
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if error != nil {
+            print(error.localizedDescription)
+            return
+        }
+        let credential = GoogleAuthProvider.credential(withIDToken: user.authentication.idToken, accessToken: user.authentication.accessToken)
+        Auth.auth().signIn(with: credential) { result, error in
+            if let error = error, (error as NSError).code == AuthErrorCode.credentialAlreadyInUse.rawValue {
+                print("The user you're trying to sign in with has already been linked")
+                if let updatedCredential = (error as NSError).userInfo[AuthErrorUserInfoUpdatedCredentialKey] as? OAuthCredential {
+                    print("Signing in using updated credential")
+                    Auth.auth().signIn(with: updatedCredential) { result, error in
+                        if let user = result?.user {
+                            self.signedIn = true
+                        }
+                    }
+                }
+            }
+            //Sign In failure
+            guard result != nil, error == nil else {
+                print((error?.localizedDescription)!)
+                return
+            }
+            self.signedIn = true
+            //print(result?.user.email)
+        }
+    }
+}
+
+struct Profile {
+    let email: String?
+    let photoURL: URL?
+    let displayName: String?
 }
