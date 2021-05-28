@@ -14,7 +14,12 @@ struct DecksView: View {
 
     var body: some View {
         if viewModel.signedIn {
-            Decks()
+            TabView{
+                Decks()
+                    .tabItem { Label("Decks", systemImage: "square.grid.2x2.fill") }
+                ProfileView()
+                    .tabItem { Label("Profile", systemImage: "person.circle") }
+            }
         } else {
             LaunchView()
         }
@@ -27,38 +32,21 @@ struct Decks: View {
     @State private var showSettingsSheet: Bool = false
     
     var body: some View {
-        VStack {
-            ScrollView {
-                Picker("Sort By: ", selection: $selectedSortBy) {
-                    ForEach(SortBy.allCases, id: \.self) {
-                        Text($0.rawValue)
+        NavigationView {
+            VStack {
+                ScrollView {
+                    Picker("Sort By: ", selection: $selectedSortBy) {
+                        ForEach(SortBy.allCases, id: \.self) {
+                            Text($0.rawValue)
+                        }
                     }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .frame(width: 200, height: 20, alignment: .center)
+                    .padding()
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                .frame(width: 200, height: 20, alignment: .center)
-                .padding()
+                Spacer()
             }
-            Spacer()
-        }
-        .navigationTitle("Decks")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-//                Button(action: {
-//                    showSettingsSheet.toggle()
-//                }, label: {
-//                    Image(systemName: "gearshape.fill")
-//                        .foregroundColor(.purple)
-//                })
-//                .sheet(isPresented: $showSettingsSheet) {
-//                    SettingsView()
-//                }
-                NavigationLink(
-                    destination: SettingsView(),
-                    label: {
-                        Image(systemName: "gearshape.fill")
-                            .foregroundColor(.purple)
-                    })
-            }
+            .navigationTitle("Decks")
         }
     }
 }

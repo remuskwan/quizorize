@@ -8,8 +8,38 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject var viewModel: AuthViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            ScrollView {
+//                let userProfile = viewModel.getUserProfile()
+//                if let userProfile = userProfile {
+//                    let displayName = userProfile.displayName
+//                    Text("Welcome \(displayName)")
+//                }
+            }
+            .navigationTitle("Profile")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    //                Button(action: {
+                    //                    showSettingsSheet.toggle()
+                    //                }, label: {
+                    //                    Image(systemName: "gearshape.fill")
+                    //                        .foregroundColor(.purple)
+                    //                })
+                    //                .sheet(isPresented: $showSettingsSheet) {
+                    //                    SettingsView()
+                    //                }
+                    NavigationLink(
+                        destination: SettingsView(),
+                        label: {
+                            Image(systemName: "gearshape")
+                                .foregroundColor(.purple)
+                        })
+                }
+            }
+        }
     }
 }
 

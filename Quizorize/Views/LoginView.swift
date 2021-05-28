@@ -17,12 +17,10 @@ struct LoginView: View {
     @EnvironmentObject var viewModel: AuthViewModel
 
     var body: some View {
-        ZStack {
-            if viewModel.signedIn {
-                DecksView()
-            } else {
-                Login()
-            }
+        if viewModel.signedIn {
+            DecksView()
+        } else {
+            Login()
         }
     }
 }
@@ -33,13 +31,14 @@ struct LoginView: View {
 //    }
 //}
 struct Login : View {
-    @Environment(\.colorScheme) var colorScheme
+//    @Environment(\.colorScheme) var colorScheme
 //    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewModel: AuthViewModel
     
+    @State var coordinator: SignInWithAppleCoordinator?
     @State var email: String = ""
     @State var password: String = ""
-    @State var isHidden: Bool = true
+    @State var isHidden = true
 
     var body: some View {
         VStack {
@@ -114,12 +113,10 @@ struct Login : View {
                                     if self.isHidden {
                                         Text("Reveal password")
                                             .font(.caption2)
-                                            .foregroundColor(.purple)
                                             .frame(maxWidth: .infinity, alignment: .trailing)
                                     } else {
                                         Text("Hide password")
                                             .font(.caption2)
-                                            .foregroundColor(.purple)
                                             .frame(maxWidth: .infinity, alignment: .trailing)
                                     }
                                 })
@@ -132,39 +129,42 @@ struct Login : View {
                             }
                             .padding(.vertical, 4)
                         }
-                        
-                        NavigationLink(
-                            destination: RecoverPasswordView(),
-                            label: {
-                                Text("Forgot password?")
-                                    .foregroundColor(.purple)
-                                    .font(.caption)
-                            })
-                            .padding(.vertical, 10)
-                        
+                        Group {
+                            NavigationLink(
+                                destination: RecoverPasswordView(),
+                                label: {
+                                    Text("Forgot password?")
+                                        .font(.caption)
+                                })
+                                .padding(.vertical, 10)
+                        }
                         SignInButton(email: email, password: password)
                         
                         Divider()
                             .padding(.vertical, 32)
-                        
                         Group {
-                            if self.colorScheme == .light {
-                                SignInWithApple()
-                                    .signInWithAppleButtonStyle(.black)
-                            } else {
-                                SignInWithApple()
-                                    .signInWithAppleButtonStyle(.white)
-                            }
-                            
+                            SignInWithAppleButton()
+                                .frame(width: 280, height: 45, alignment: .center)
+                                .onTapGesture {
+                                    self.coordinator = SignInWithAppleCoordinator()
+                                    if let coordinator = self.coordinator {
+                                        coordinator.startSignInWithAppleFlow {
+                                            print("You successfully signed in")
+                                            viewModel.signedIn = true
+                                        }
+                                    }
+                                }
+
                             SignInWithGoogle()
+                        }
                         }
                         
                         Spacer()
-                        
                     }
                 }
             }
             .padding(.horizontal, 20)
+            
             HStack(spacing: 0) {
                 Text("Don't have an account?")
                     .foregroundColor(.primary)
@@ -172,7 +172,7 @@ struct Login : View {
                     destination: RegisterView(),
                     label: {
                         Text("Register")
-                            .foregroundColor(.purple)
+//                            .foregroundColor(.purple)
                     })
                     .padding(.horizontal, 6)
             }
@@ -187,13 +187,12 @@ struct Login : View {
 //                }, label: {
 //                    Image(systemName: "chevron.left")
 //                        .font(.headline)
-//                        .foregroundColor(.purple)
 //                })
 //                .frame(maxWidth: .infinity, alignment: .leading)
 //                .padding()
 //            }
 //        }
-    }
+    
 }
 
 struct SignInButton: View {
@@ -230,58 +229,14 @@ struct SignInButton: View {
     }
 }
 
-
-private struct SignInWithApple: View {
-    @EnvironmentObject var viewModel: AuthViewModel
+struct SignInWithAppleButton: UIViewRepresentable {
+    @Environment(\.colorScheme) var colorScheme
     
-    var body: some View {
-        SignInWithAppleButton(
-            onRequest: { request in
-                let nonce = viewModel.randomNonceString()
-                viewModel.currentNonce = nonce
-                request.requestedScopes = [.fullName, .email]
-                request.nonce = viewModel.sha256(nonce)
-            },
-            onCompletion: { result in
-                switch result {
-                case .success(let authResults):
-                    switch authResults.credential {
-                    case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                        
-                        guard let nonce = viewModel.currentNonce else {
-                            fatalError("Invalid state: A login callback was received, but no login request was sent.")
-                        }
-                        guard let appleIDToken = appleIDCredential.identityToken else {
-                            fatalError("Invalid state: A login callback was received, but no login request was sent.")
-                        }
-                        guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                            print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
-                            return
-                        }
-                        
-                        let credential = OAuthProvider.credential(withProviderID: "apple.com",idToken: idTokenString,rawNonce: nonce)
-                        Auth.auth().signIn(with: credential) { (authResult, error) in
-                            if (error != nil) {
-                                // Error. If error.code == .MissingOrInvalidNonce, make sure
-                                // you're sending the SHA256-hashed nonce as a hex string with
-                                // your request to Apple.
-                                print(error?.localizedDescription as Any)
-                                return
-                            }
-                            print("signed in")
-                        }
-                        
-                        print("\(String(describing: Auth.auth().currentUser?.uid))")
-                    default:
-                        break
-                        
-                    }
-                default:
-                    break
-                }
-            }
-        )
-        .frame(width: 280, height: 45, alignment: .center)
+    func makeUIView(context: Context) -> ASAuthorizationAppleIDButton {
+        return ASAuthorizationAppleIDButton(type: .signIn, style: colorScheme == .dark ? .white : .black)
+    }
+    
+    func updateUIView(_ uiView: ASAuthorizationAppleIDButton, context: Context) {
     }
 }
 

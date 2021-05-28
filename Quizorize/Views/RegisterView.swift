@@ -43,7 +43,7 @@ struct RegisterView: View {
                 .padding(.horizontal)
             }
             Button(action: {
-                viewModel.signUp(email: signupVM.email, password: signupVM.password)
+                viewModel.signUp(email: signupVM.email, password: signupVM.password, displayName: signupVM.title)
             }, label: {
                 Text("Create Your Account")
                     .foregroundColor(.white)
