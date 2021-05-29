@@ -29,18 +29,47 @@ struct RegisterView: View {
             
             ScrollView {
                 ScrollViewReader {scrollView in
-                    VStack(spacing: 20) {
+                    VStack {
                         Text("Create account")
                             .font(.largeTitle.bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.vertical, 24)
                         
+                        name
+                            .onTapGesture {
+                                withAnimation(.easeIn(duration: 0.3)) {
+                                    scrollView.scrollTo(1, anchor: .center)
+                                }
+                            }
+                        email
+                            .onTapGesture {
+                                withAnimation(.easeIn(duration: 0.3)) {
+                                    scrollView.scrollTo(1, anchor: .center)
+                                }
+                            }
+                        password
+                            .onTapGesture {
+                                withAnimation(.easeIn(duration: 0.3)) {
+                                    scrollView.scrollTo(1, anchor: .center)
+                                }
+                            }
+                        confirmPassword
+                            .onTapGesture {
+                                withAnimation(.easeIn(duration: 0.3)) {
+                                    scrollView.scrollTo(1, anchor: .center)
+                                }
+                            }
+                        
+                        /*
                         EntryField(placeHolder: "Enter your name", title: "Name", prompt: signupVM.titlePrompt, field: $signupVM.title, isSecure: false)
                             .id(1)
                             .onTapGesture {
                                 withAnimation(.easeIn(duration: 0.3)) {
                                     scrollView.scrollTo(1, anchor: .center)
                                 }
+                            }
+                            .onAppear {
+                                signupVM.title = ""
                             }
                         
                         EntryField(placeHolder: "Enter your email", title: "Email", prompt: signupVM.emailPrompt, field: $signupVM.email, isSecure: false)
@@ -51,6 +80,9 @@ struct RegisterView: View {
                                     scrollView.scrollTo(2, anchor: .center)
                                 }
                             }
+                            .onAppear {
+                                signupVM.email = ""
+                            }
                         
                         EntryField(placeHolder: "Enter your password", title: "Password", prompt: signupVM.passwordPrompt, field: $signupVM.password, isSecure: true)
                             .textContentType(.newPassword)
@@ -59,6 +91,9 @@ struct RegisterView: View {
                                 withAnimation(.easeIn(duration: 0.3)) {
                                     scrollView.scrollTo(3, anchor: .center)
                                 }
+                            }
+                            .onAppear {
+                                signupVM.password = ""
                             }
                         
                         EntryField(placeHolder: "Confirm your password", title: "Confirm Password", prompt: signupVM.confirmPwPrompt, field: $signupVM.confirmPw, isSecure: true)
@@ -69,11 +104,18 @@ struct RegisterView: View {
                                     scrollView.scrollTo(4, anchor: .bottom)
                                 }
                             }
+                            .onAppear {
+                                signupVM.confirmPw = ""
+                            }
+                            */
                         
                         Spacer()
                     }
                 }
             }
+            
+            createYourAccountButton
+            /*
             Button(action: {
                 viewModel.signUp(email: signupVM.email, password: signupVM.password, displayName: signupVM.title)
             }, label: {
@@ -86,8 +128,63 @@ struct RegisterView: View {
             .opacity(signupVM.isSignUpComplete ? 1 : 0.6)
             .disabled((!signupVM.isSignUpComplete))  //MARK: Disable sign in until all requirements are met
             .padding()
+            */
         }
         .padding(.horizontal, 20)
+    }
+    
+    var name: some View {
+        EntryField(placeHolder: "Enter your name", title: "Name", prompt: signupVM.titlePrompt, field: $signupVM.title, isSecure: false)
+            .id(1)
+            .onAppear {
+                signupVM.title = ""
+            }
+    }
+    
+    var email: some View {
+        EntryField(placeHolder: "Enter your email", title: "Email", prompt: signupVM.emailPrompt, field: $signupVM.email, isSecure: false)
+            .keyboardType(.emailAddress)
+            .id(2)
+            .onAppear {
+                signupVM.email = ""
+            }
+        
+    }
+    
+    var password: some View {
+        EntryField(placeHolder: "Enter your password", title: "Password", prompt: signupVM.passwordPrompt, field: $signupVM.password, isSecure: true)
+            .textContentType(.newPassword)
+            .id(3)
+            .onAppear {
+                signupVM.password = ""
+            }
+        
+    }
+    
+    var confirmPassword: some View {
+        EntryField(placeHolder: "Confirm your password", title: "Confirm Password", prompt: signupVM.confirmPwPrompt, field: $signupVM.confirmPw, isSecure: true)
+            .textContentType(.newPassword)
+            .id(4)
+            .onAppear {
+                signupVM.confirmPw = ""
+            }
+        
+    }
+    
+    var createYourAccountButton: some View {
+        Button(action: {
+            viewModel.signUp(email: signupVM.email, password: signupVM.password, displayName: signupVM.title)
+        }, label: {
+            Text("Create your account")
+                .foregroundColor(.white)
+                .frame(width: 280, height: 45)
+                .background(Color.purple)
+                .cornerRadius(5)
+        })
+        .opacity(signupVM.isSignUpComplete ? 1 : 0.6)
+        .disabled((!signupVM.isSignUpComplete))  //MARK: Disable sign in until all requirements are met
+        .padding()
+        
     }
 }
 
@@ -106,25 +203,29 @@ struct EntryField: View {
     var prompt: String
     @Binding var field: String
     var isSecure: Bool
+    var emptyTextField: String = "         "
 
     var body: some View {
         VStack(alignment: .leading) {
-            
-            if isSecure {
-                HStack {
-                    Spacer()
-                    
-                    Button(action: {
-                        self.isVisible.toggle()
-                    }, label: {
-                        Text(toggleViewChanger())
+            HStack {
+                Spacer()
+                
+                Button(action: {
+                    self.isVisible.toggle()
+                }, label: {
+                    if isSecure {
+                        Text(toggleSecureField())
                             .font(.caption.bold())
                             .foregroundColor(.accentColor)
-                    })
-                    .multilineTextAlignment(.trailing)
-                }
+                    } else {
+                        Text(emptyTextField)
+                            .font(.caption.bold())
+                            .foregroundColor(.accentColor)
+                    }
+                })
+                .multilineTextAlignment(.trailing)
             }
-
+            
             HStack {
                 Text(title)
                     .frame(width: 90, alignment: .leading)
@@ -164,11 +265,11 @@ struct EntryField: View {
         .fixedSize(horizontal: false, vertical: true)
     }
     
-    func toggleViewChanger() -> String {
+    func toggleSecureField() -> String {
         if isVisible {
             return "Hide password"
         } else if self.field.isEmpty {
-            return ""
+            return "             "
         } else {
             return "Reveal password"
         }

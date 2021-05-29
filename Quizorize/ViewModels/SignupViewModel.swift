@@ -56,9 +56,9 @@ class SignupViewModel: ObservableObject {
     
     var titlePrompt: String {
         if self.title.isEmpty {
-            return "Enter your display name here"
-        } else {
             return "                            "
+        } else {
+            return "Enter your display name here"
         }
     }
     
