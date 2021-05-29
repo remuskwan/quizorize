@@ -118,7 +118,7 @@ struct EntryField: View {
                         self.isVisible.toggle()
                     }, label: {
                         Text(toggleViewChanger())
-                            .font(.caption.bold())
+                            .font(.caption2)
                             .foregroundColor(.accentColor)
                     })
                     .multilineTextAlignment(.trailing)
