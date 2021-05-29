@@ -27,20 +27,35 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 ## Launching the App
 
 1. On the home screen of your iOS device (running on iOS 14.0 or later), tap the app icon
-2. You will be presented with the Start View of our app.
+2. You will be presented with the Launch Screen of our app.
+3. Pressing "Get Started." will bring you to the login page
+
 
 <p align="left"><img src="public/ReadMeImgs/startView.png" width="30%"/></p>
 
 ## User Login
 1. Type in your email address and password to login
 2. You can click on 'Register' to create an account if you do not have one.
+3. You may also sign in using your Apple or Google account
+4. After successful login, you will be presented with the Homepage of our app.
 
 <img src = "public/ReadMeImgs/login1.png" width ="30%" /> <img src = "public/ReadMeImgs/login2.png" width ="30%" />
 
 ## Registration
 1. Type in your particulars into the text fields provided
 2. Ensure that the validity checks of the fields are met
-3. Create Account
+3. Create account
 
 <img src = "public/ReadMeImgs/register1.png" width ="30%" /> <img src = "public/ReadMeImgs/register2.png" width ="30%" />
+
+## Homepage ("Decks screen")
+1. Currently "Work-in-progress". Will house user-created decks of flashcards
+2. Navigate to the "Profile" tab to sign out of your account.
+
+##Profile
+1. Currently "Work-in-progress". Will show user's profile details as well as level and achievements.
+2. Pressing the "gear" icon on the top-left of the screen will bring you to the settings screen
+3. Pressing "Sign out" will sign you out of your account and bring you back to the Launch Screen
+
+## Known Bugs
 
