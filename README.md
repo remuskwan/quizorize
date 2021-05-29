@@ -11,12 +11,12 @@ git clone https://github.com/remuskwan/quizorize.git
 ``` 
 
 Then, run the following command in the root directory of the cloned repository
+
 ```bash
 pod install
 ```
 
-
-Open, the workspace file 'Quizorize.xcworkspace' to view code and run the build.
+Open, the workspace file 'Quizorize.xcworkspace' to view the code and run its build.
 
 ## Documentation
 
@@ -30,4 +30,9 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 ## User Login
 1. Type in your email address and password to login
 2. You can click on 'Register' to create an account if you do not have one.
+
+## Registration
+1. Type in your particulars into the text fields provided
+2. Ensure that the validity checks of the fields are met
+3. Create Account
 
