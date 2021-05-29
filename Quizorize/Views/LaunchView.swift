@@ -61,7 +61,7 @@ struct Launch: View {
                             .font(.headline)
                             .foregroundColor(.white)
                             .frame(width: 250, height: 50)
-                            .background(Color.purple)
+                            .background(Color.accentColor)
                             .cornerRadius(5)
                             .padding()
                     })
