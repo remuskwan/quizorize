@@ -52,7 +52,7 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 1. Currently "Work-in-progress". Will house user-created decks of flashcards
 2. Navigate to the "Profile" tab to sign out of your account.
 
-##Profile
+## Profile
 1. Currently "Work-in-progress". Will show user's profile details as well as level and achievements.
 2. Pressing the "gear" icon on the top-left of the screen will bring you to the settings screen
 3. Pressing "Sign out" will sign you out of your account and bring you back to the Launch Screen
