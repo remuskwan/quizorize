@@ -28,42 +28,66 @@ struct RegisterView: View {
             //            .padding()
             
             ScrollView {
-                VStack(spacing: 20) {
-                    Text("Create Your Account")
-                        .font(.largeTitle.bold())
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.vertical, 24)
-                    
-                    EntryField(placeHolder: "Enter your name", title: "Name", prompt: signupVM.titlePrompt, field: $signupVM.title, isSecure: false)
-                    
-                    EntryField(placeHolder: "Enter your email", title: "Email", prompt: signupVM.emailPrompt, field: $signupVM.email, isSecure: false)
-                        .keyboardType(.emailAddress)
-                    
-                    EntryField(placeHolder: "Enter your password", title: "Password", prompt: signupVM.passwordPrompt, field: $signupVM.password, isSecure: true)
-                        .textContentType(.newPassword)
-                    
-                    EntryField(placeHolder: "Confirm your password", title: "Confirm Password", prompt: signupVM.confirmPwPrompt, field: $signupVM.confirmPw, isSecure: true)
-                        .textContentType(.newPassword)
-                    
-                    Button(action: {
-                        viewModel.signUp(email: signupVM.email, password: signupVM.password, displayName: signupVM.title)
-                    }, label: {
-                        Text("Create Your Account")
-                            .foregroundColor(.white)
-                            .frame(width: 280, height: 45)
-                            .background(Color.purple)
-                            .cornerRadius(5)
-                    })
-                    .opacity(signupVM.isSignUpComplete ? 1 : 0.6)
-                    .disabled((!signupVM.isSignUpComplete))  //MARK: Disable sign in until all requirements are met
-                    .padding()
-                    
+                ScrollViewReader {scrollView in
+                    VStack(spacing: 20) {
+                        Text("Create account")
+                            .font(.largeTitle.bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.vertical, 24)
+                        
+                        EntryField(placeHolder: "Enter your name", title: "Name", prompt: signupVM.titlePrompt, field: $signupVM.title, isSecure: false)
+                            .id(1)
+                            .onTapGesture {
+                                withAnimation(.easeIn(duration: 0.3)) {
+                                    scrollView.scrollTo(1, anchor: .center)
+                                }
+                            }
+                        
+                        EntryField(placeHolder: "Enter your email", title: "Email", prompt: signupVM.emailPrompt, field: $signupVM.email, isSecure: false)
+                            .keyboardType(.emailAddress)
+                            .id(2)
+                            .onTapGesture {
+                                withAnimation(.easeIn(duration: 0.3)) {
+                                    scrollView.scrollTo(2, anchor: .center)
+                                }
+                            }
+                        
+                        EntryField(placeHolder: "Enter your password", title: "Password", prompt: signupVM.passwordPrompt, field: $signupVM.password, isSecure: true)
+                            .textContentType(.newPassword)
+                            .id(3)
+                            .onTapGesture {
+                                withAnimation(.easeIn(duration: 0.3)) {
+                                    scrollView.scrollTo(3, anchor: .center)
+                                }
+                            }
+                        
+                        EntryField(placeHolder: "Confirm your password", title: "Confirm Password", prompt: signupVM.confirmPwPrompt, field: $signupVM.confirmPw, isSecure: true)
+                            .textContentType(.newPassword)
+                            .id(4)
+                            .onTapGesture {
+                                withAnimation(.easeIn(duration: 0.3)) {
+                                    scrollView.scrollTo(4, anchor: .bottom)
+                                }
+                            }
+                        
+                        Spacer()
+                    }
                 }
-                //        .navigationBarHidden(true)
-                //        .navigationBarBackButtonHidden(true)
             }
-            .padding(.horizontal, 20)
+            Button(action: {
+                viewModel.signUp(email: signupVM.email, password: signupVM.password, displayName: signupVM.title)
+            }, label: {
+                Text("Create your account")
+                    .foregroundColor(.white)
+                    .frame(width: 280, height: 45)
+                    .background(Color.purple)
+                    .cornerRadius(5)
+            })
+            .opacity(signupVM.isSignUpComplete ? 1 : 0.6)
+            .disabled((!signupVM.isSignUpComplete))  //MARK: Disable sign in until all requirements are met
+            .padding()
         }
+        .padding(.horizontal, 20)
     }
 }
 
@@ -137,7 +161,6 @@ struct EntryField: View {
             
             Spacer()
         }
-        .padding(.horizontal)
         .fixedSize(horizontal: false, vertical: true)
     }
     
