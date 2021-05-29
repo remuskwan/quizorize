@@ -49,13 +49,22 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 <img src = "public/ReadMeImgs/register1.png" width ="30%" /> <img src = "public/ReadMeImgs/register2.png" width ="30%" />
 
 ## Homepage ("Decks screen")
-1. Currently "Work-in-progress". Will house user-created decks of flashcards
+1. Currently "Work-in-Progress". Will house user-created collections of decks and decks of flashcards
 2. Navigate to the "Profile" tab to sign out of your account.
 
 ## Profile
-1. Currently "Work-in-progress". Will show user's profile details as well as level and achievements.
+1. Currently "Work-in-Progress". Will show user's profile details as well as level and achievements.
 2. Pressing the "gear" icon on the top-left of the screen will bring you to the settings screen
 3. Pressing "Sign out" will sign you out of your account and bring you back to the Launch Screen
 
-## Known Bugs
+## Planned Features
+1. Deck and Flashcard Creation
+2. Preview mode (for viewing and editing flashcards) and Practice mode (for reviewing deck of flashcards)
+3. Search (for collections, decks and flashcards)
+4. Favoriting decks and flashcards (for ease-of-access)
+5. Level and achievement system
+6. Leaderboard system
+7. Settings (to edit profile, app settings)
 
+## Known Bugs
+1. Sign in with Apple currently does not work as intended
