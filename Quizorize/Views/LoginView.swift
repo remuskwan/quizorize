@@ -157,7 +157,7 @@ struct Login : View {
                                         }
                                     }
                                 }
-
+                            
                             SignInWithGoogle()
                         }
                         }
