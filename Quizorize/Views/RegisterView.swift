@@ -47,6 +47,10 @@ struct RegisterView: View {
                                     scrollView.scrollTo(1, anchor: .center)
                                 }
                             }
+                        
+                        CustomSecureField()
+                        
+                        /*
                         password
                             .onTapGesture {
                                 withAnimation(.easeIn(duration: 0.3)) {
@@ -59,6 +63,7 @@ struct RegisterView: View {
                                     scrollView.scrollTo(1, anchor: .center)
                                 }
                             }
+                        */
                         
                         /*
                         EntryField(placeHolder: "Enter your name", title: "Name", prompt: signupVM.titlePrompt, field: $signupVM.title, isSecure: false)
@@ -130,14 +135,14 @@ struct RegisterView: View {
             .padding()
             */
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal)
     }
     
     var name: some View {
-        EntryField(placeHolder: "Enter your name", title: "Name", prompt: signupVM.titlePrompt, field: $signupVM.title, isSecure: false)
+        EntryField(placeHolder: "Enter your name", title: "Name", prompt: signupVM.namePrompt, field: $signupVM.name, isSecure: false)
             .id(1)
             .onAppear {
-                signupVM.title = ""
+                signupVM.name = ""
             }
     }
     
@@ -158,7 +163,7 @@ struct RegisterView: View {
             .onAppear {
                 signupVM.password = ""
             }
-        
+
     }
     
     var confirmPassword: some View {
@@ -168,12 +173,11 @@ struct RegisterView: View {
             .onAppear {
                 signupVM.confirmPw = ""
             }
-        
     }
-    
+
     var createYourAccountButton: some View {
         Button(action: {
-            viewModel.signUp(email: signupVM.email, password: signupVM.password, displayName: signupVM.title)
+            viewModel.signUp(email: signupVM.email, password: signupVM.password, displayName: signupVM.name)
         }, label: {
             Text("Create your account")
                 .foregroundColor(.white)
@@ -195,8 +199,6 @@ struct EntryField: View {
     @State var isVisible: Bool = false
     
     let fieldHeight: CGFloat = 0
-    
-    @State var color = Color.black.opacity(0.7)
     
     var placeHolder: String
     var title: String
@@ -231,7 +233,7 @@ struct EntryField: View {
                     .frame(width: 90, alignment: .leading)
                     .multilineTextAlignment(.leading)
 
-                if isSecure && !isVisible {
+                if isSecure && !isVisible  {
                     SecureField(placeHolder, text: $field)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
@@ -266,15 +268,18 @@ struct EntryField: View {
     }
     
     func toggleSecureField() -> String {
-        if isVisible {
-            return "Hide password"
-        } else if self.field.isEmpty {
+        if self.field.isEmpty {
             return "             "
+        } else if isVisible {
+            return "Hide password"
         } else {
             return "Reveal password"
         }
     }
 }
+
+
+
 
 
 struct RegisterView_Previews: PreviewProvider {
