@@ -9,12 +9,37 @@ import Foundation
 
 class SignupViewModel: ObservableObject {
     
-    @Published var title = ""
+    @Published var name = ""
     @Published var email = ""
     @Published var password = ""
     @Published var confirmPw = ""
     
+
     @Published private(set) var SignUpError: LocalizedError?
+    
+    private let emptyString = """
+        
+        
+    """
+    
+    private let namePromptText = """
+    Enter your display name here
+    
+    """
+    
+    private let emailPromptText = """
+    Enter a valid email address
+        
+    """
+    private let passwordPromptText = """
+    Must be between 8 and 15 characters containing at least one
+    number and one capital letter
+    """
+    
+    private let confirmPwPromptText = """
+    Password fields do not match
+        
+    """
     
     //MARK: - Validation Functions
     
@@ -45,7 +70,7 @@ class SignupViewModel: ObservableObject {
         if !passwordsMatch() ||
         !isPasswordValid() ||
             !isEmailValid() ||
-            title.isEmpty {
+            name.isEmpty {
             return false
         }
         
@@ -54,35 +79,36 @@ class SignupViewModel: ObservableObject {
     
     //MARK: - Validation Prompt Strings
     
-    var titlePrompt: String {
-        if self.title.isEmpty {
-            return "Enter your display name here"
+    var namePrompt: String {
+        if self.name.isEmpty {
+            return emptyString
         } else {
-            return "                            "
+            return namePromptText
         }
     }
     
-    var confirmPwPrompt: String {
-        if passwordsMatch() || self.confirmPw.isEmpty {
-            return "                            "
-        } else {
-            return "Password fields do not match"
-        }
-    }
-    
+
     var emailPrompt: String {
         if isEmailValid() || self.email.isEmpty  {
-            return "                           "
+            return emptyString
         } else {
-            return "Enter a valid email address"
+            return emailPromptText
         }
     }
     
     var passwordPrompt: String {
         if isPasswordValid() || self.password.isEmpty{
-            return "                                                                                         "
+            return emptyString
         } else {
-            return "Must be between 8 and 15 characters containing at least one number and one capital letter"
+            return passwordPromptText
+        }
+    }
+    
+    var confirmPwPrompt: String {
+        if passwordsMatch() || self.confirmPw.isEmpty {
+            return emptyString
+        } else {
+            return confirmPwPromptText
         }
     }
     
@@ -91,7 +117,7 @@ class SignupViewModel: ObservableObject {
         if !self.password.isEmpty {
             return "Reveal password"
         } else {
-            return " "
+            return "               "
         }
     }
     
