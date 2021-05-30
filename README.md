@@ -1,10 +1,12 @@
 # Quizorize
 ## Overview
-Quizorize is a gamified flashcard iOS application that aims to improve the learning and memorising experience of its users, leveraging on the use of 'Spaced Repetition' and 'Active Recall' studying techniques.
+Quizorize is a gamified flashcard iOS application that aims to improve the learning and memorising experience of its users, leveraging on the use of 'Spaced Repetition' and 'Active Recall' studying techniques. 
 
 This iOS application is targeted towards students aged 14 and above that wishes to leverage on good revision techniques to remember content taught in school. With a gamification features such as achievements and a leveling system, students are incentivised to spend more time on the app while ensuring productivity is met.
 
 ## Getting started
+
+### Local Test (on your Mac)
 
 To run quizorize locally, first clone this repository.
 
@@ -20,9 +22,13 @@ pod install
 
 Open, the workspace file 'Quizorize.xcworkspace' to view the code and run its build.
 
+### TestFlight (on iOS devices)
+
+To receive your TestFlight code, please head over to this link [here](https://forms.gle/QB14gRb8jx5TJTKe8).
+
 ## Documentation
 
-Please refer to our Milestone README [here](https://docs.google.com/document/d/1BBVJUarCBF2qy_ZWbH6zZka4ebhrtTBtQnHnmGUuizE/edit?ts=60afa18d)
+Please refer to our Milestone README [here](https://docs.google.com/document/d/1BBVJUarCBF2qy_ZWbH6zZka4ebhrtTBtQnHnmGUuizE/edit?ts=60afa18d).
 
 ## Launching the App
 
@@ -31,7 +37,7 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 3. Pressing "Get Started." will bring you to the login page
 
 
-<p align="left"><img src="public/ReadMeImgs/startView.png" width="30%"/></p>
+<p align="left"><img src="public/ReadMeImgs/startView.png" width="15%"/></p>
 
 ## User Login
 1. Type in your email address and password to login
@@ -39,14 +45,14 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 3. You may also sign in using your Apple or Google account
 4. After successful login, you will be presented with the Homepage of our app.
 
-<img src = "public/ReadMeImgs/login1.png" width ="30%" /> <img src = "public/ReadMeImgs/login2.png" width ="30%" />
+<img src = "public/ReadMeImgs/login1.png" width ="15%" /> <img src = "public/ReadMeImgs/login2.png" width ="15%" /> <img src = "public/ReadMeImgs/login3.png" width ="15%" />
 
 ## Registration
 1. Type in your particulars into the text fields provided
 2. Ensure that the validity checks of the fields are met
 3. Create account
 
-<img src = "public/ReadMeImgs/register1.png" width ="30%" /> <img src = "public/ReadMeImgs/register2.png" width ="30%" />
+<img src = "public/ReadMeImgs/register1.png" width ="15%" /> <img src = "public/ReadMeImgs/register2.png" width ="15%" /> <img src = "public/ReadMeImgs/register3.png" width ="15%" />
 
 ## Homepage ("Decks screen")
 1. Currently "Work-in-Progress". Will house user-created collections of decks and decks of flashcards
@@ -68,3 +74,4 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 
 ## Known Bugs
 1. Sign in with Apple currently does not work as intended
+2. If you are running Quizorize on a simulator from Xcode, the secure fields (Password and Confirm password) will sometimes show 'Strong Password' 
