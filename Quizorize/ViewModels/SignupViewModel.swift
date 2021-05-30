@@ -17,26 +17,26 @@ class SignupViewModel: ObservableObject {
 
     @Published private(set) var SignUpError: LocalizedError?
     
-    let emptyString = """
+    private let emptyString = """
         
         
     """
     
-    let namePromptText = """
+    private let namePromptText = """
     Enter your display name here
     
     """
     
-    let emailPromptText = """
+    private let emailPromptText = """
     Enter a valid email address
         
     """
-    let passwordPromptText = """
+    private let passwordPromptText = """
     Must be between 8 and 15 characters containing at least one
     number and one capital letter
     """
     
-    let confirmPwPromptText = """
+    private let confirmPwPromptText = """
     Password fields do not match
         
     """

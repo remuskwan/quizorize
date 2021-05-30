@@ -40,7 +40,7 @@ public struct TouchDownUpEventModifier: ViewModifier {
         }
         
         return content
-        .gesture(drag) /// add the gesture
+        .simultaneousGesture(drag) /// add the gesture
         .onChange(of: isPressed, perform: { (pressed) in /// call `changeState` whenever the state changes
             /// `onChange` is available in iOS 14 and higher.
             if pressed {
