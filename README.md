@@ -6,6 +6,12 @@ This iOS application is targeted towards students aged 14 and above that wishes 
 
 ## Getting started
 
+### TestFlight (on iOS devices)
+
+To request a copy of the current Pre-Alpha build of Quizorize on your iOS device, please head over to this link [here](https://forms.gle/QB14gRb8jx5TJTKe8).
+
+Note: Supports iPhone and iPad running iOS 14 and later.
+
 ### Local Test (on your Mac)
 Requirements: Mac running macOS 11 BigSur, [Xcode 12](https://developer.apple.com/xcode/)
 
@@ -22,10 +28,6 @@ pod install
 ```
 
 Open, the workspace file 'Quizorize.xcworkspace' to view the code and run its build.
-
-### TestFlight (on iOS devices)
-
-To receive your TestFlight code, please head over to this link [here](https://forms.gle/QB14gRb8jx5TJTKe8).
 
 ## Documentation
 
