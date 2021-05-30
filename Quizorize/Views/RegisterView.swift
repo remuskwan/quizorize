@@ -48,8 +48,7 @@ struct RegisterView: View {
                                 }
                             }
                         
-                        CustomSecureField()
-                        
+
                         /*
                         password
                             .onTapGesture {
@@ -278,7 +277,45 @@ struct EntryField: View {
     }
 }
 
-
+struct CustomSecureField: View {
+    @State var password: String = ""
+    @State var isShowingPassword: Bool = false
+    var body: some View {
+        VStack{
+            ZStack{
+                HStack{
+                    SecureField(
+                        isShowingPassword ? "" : "Password",
+                        text: $password) {
+                        
+                    }.opacity(isShowingPassword ? 0 : 1)
+                    // show only one of these is not empty.
+                    if(!password.isEmpty){
+                        Image(systemName: isShowingPassword ? "eye.slash" : "eye")
+                            .foregroundColor(.white)
+                            .frame(width: 20, height: 20, alignment: .center)
+                            .modifier(TouchDownUpEventModifier(changeState: { (buttonState) in
+                                if buttonState == .pressed {
+                                    isShowingPassword = true
+                                } else {
+                                    isShowingPassword = false
+                                }
+                            }))
+                    }
+                }
+                if(isShowingPassword){
+                    HStack{
+                        Text(password)
+                            .foregroundColor(.white)
+                            .allowsHitTesting(false)
+                        Spacer()
+                    }
+                }
+            }
+        }.padding(10)
+        .background(Color.gray)
+    }
+}
 
 
 

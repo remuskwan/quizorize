@@ -195,7 +195,6 @@ struct Login : View {
 //                .padding()
 //            }
 //        }
-    
 }
 
 struct SignInButton: View {
