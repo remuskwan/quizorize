@@ -6,15 +6,41 @@
 //
 
 import SwiftUI
+import Firebase
+import GoogleSignIn
+import UIKit
 
 @main
 struct QuizorizeApp: App {
+    
+//    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     let persistenceController = PersistenceController.shared
 
+    init() {
+        setupAuthentication()
+    }
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+//            ContentView()
+//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            LaunchView()
+                .environmentObject(AuthViewModel())
         }
+    }
+}
+
+//class AppDelegate: NSObject, UIApplicationDelegate {
+//    @EnvironmentObject var authViewModel: AuthViewModel
+//
+//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+//        return true
+//    }
+//}
+
+extension QuizorizeApp {
+    private func setupAuthentication() {
+        FirebaseApp.configure()
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
     }
 }
