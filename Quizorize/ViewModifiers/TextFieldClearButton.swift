@@ -26,3 +26,27 @@ struct TextFieldClearButton: ViewModifier {
         }
     }
 }
+
+/*
+struct SecureFieldClearButton: ViewModifier {
+    @Binding var text: String
+    @Binding var isVisible: Bool
+    
+    func body(content: Content) -> some View {
+        HStack {
+            content
+            
+            if !text.isEmpty {
+                Button {
+                    self.text = ""
+                    self.isVisible = false
+                } label: {
+                    
+                }
+            }
+            
+        }
+    }
+}
+ */
+

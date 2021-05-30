@@ -29,122 +29,145 @@ struct RegisterView: View {
             
             ScrollView {
                 ScrollViewReader {scrollView in
-                    VStack(spacing: 20) {
+                    VStack {
                         Text("Create account")
                             .font(.largeTitle.bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.vertical, 24)
                         
-                        EntryField(placeHolder: "Enter your name", title: "Name", prompt: signupVM.titlePrompt, field: $signupVM.title, isSecure: false)
-                            .id(1)
+                        name
                             .onTapGesture {
                                 withAnimation(.easeIn(duration: 0.3)) {
                                     scrollView.scrollTo(1, anchor: .center)
                                 }
                             }
-                        
-                        EntryField(placeHolder: "Enter your email", title: "Email", prompt: signupVM.emailPrompt, field: $signupVM.email, isSecure: false)
-                            .keyboardType(.emailAddress)
-                            .id(2)
+                        email
                             .onTapGesture {
                                 withAnimation(.easeIn(duration: 0.3)) {
                                     scrollView.scrollTo(2, anchor: .center)
                                 }
                             }
                         
-                        EntryField(placeHolder: "Enter your password", title: "Password", prompt: signupVM.passwordPrompt, field: $signupVM.password, isSecure: true)
-                            .textContentType(.newPassword)
-                            .id(3)
+                        password
                             .onTapGesture {
                                 withAnimation(.easeIn(duration: 0.3)) {
                                     scrollView.scrollTo(3, anchor: .center)
                                 }
                             }
                         
-                        EntryField(placeHolder: "Confirm your password", title: "Confirm Password", prompt: signupVM.confirmPwPrompt, field: $signupVM.confirmPw, isSecure: true)
-                            .textContentType(.newPassword)
-                            .id(4)
+                        confirmPassword
                             .onTapGesture {
                                 withAnimation(.easeIn(duration: 0.3)) {
-                                    scrollView.scrollTo(4, anchor: .bottom)
+                                    scrollView.scrollTo(4, anchor: .center)
                                 }
                             }
                         
+
+
+
                         Spacer()
                     }
                 }
             }
-            Button(action: {
-                viewModel.signUp(email: signupVM.email, password: signupVM.password, displayName: signupVM.title)
-            }, label: {
-                Text("Create your account")
-                    .foregroundColor(.white)
-                    .frame(width: 280, height: 45)
-                    .background(Color.purple)
-                    .cornerRadius(5)
-            })
-            .opacity(signupVM.isSignUpComplete ? 1 : 0.6)
-            .disabled((!signupVM.isSignUpComplete))  //MARK: Disable sign in until all requirements are met
-            .padding()
+            
+            createYourAccountButton
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal)
+    }
+    
+    var name: some View {
+        EntryField(placeHolder: "Enter your display name", title: "Name", prompt: signupVM.namePrompt, field: $signupVM.name, isSecure: false)
+            .id(1)
+            .onAppear {
+                signupVM.name = ""
+            }
+    }
+    
+    var email: some View {
+        EntryField(placeHolder: "Enter your email", title: "Email", prompt: signupVM.emailPrompt, field: $signupVM.email, isSecure: false)
+            .keyboardType(.emailAddress)
+            .id(2)
+            .onAppear {
+                signupVM.email = ""
+            }
+        
+    }
+    
+    var password: some View {
+        EntryField(placeHolder: "Enter your password", title: "Password", prompt: signupVM.passwordPrompt, field: $signupVM.password, isSecure: true)
+            .textContentType(.newPassword)
+            .id(3)
+            .onAppear {
+                signupVM.password = ""
+            }
+
+    }
+    
+    var confirmPassword: some View {
+        EntryField(placeHolder: "Confirm your password", title: "Confirm Password", prompt: signupVM.confirmPwPrompt, field: $signupVM.confirmPw, isSecure: true)
+            .textContentType(.newPassword)
+            .id(4)
+            .onAppear {
+                signupVM.confirmPw = ""
+            }
+    }
+
+    var createYourAccountButton: some View {
+        Button(action: {
+            viewModel.signUp(email: signupVM.email, password: signupVM.password, displayName: signupVM.name)
+        }, label: {
+            Text("Create your account")
+                .foregroundColor(.white)
+                .frame(width: 280, height: 45)
+                .background(Color.purple)
+                .cornerRadius(5)
+        })
+        .opacity(signupVM.isSignUpComplete ? 1 : 0.6)
+        .disabled((!signupVM.isSignUpComplete))  //MARK: Disable sign in until all requirements are met
+        .padding()
+        
     }
 }
 
 
-//MARK: A View that creates any entry row specified.
+//MARK: A View that creates any entry(text or secure) row specified.
 struct EntryField: View {
-    
-    @State var isVisible: Bool = false
-    
+    @State var isShowingPassword: Bool = false
+
     let fieldHeight: CGFloat = 0
-    
-    @State var color = Color.black.opacity(0.7)
     
     var placeHolder: String
     var title: String
     var prompt: String
     @Binding var field: String
-    var isSecure: Bool
+    var isSecure: Bool  //MARK: If EntryField is a SecureField, = true
+    var emptyTextField: String = """
+        
+    """
 
     var body: some View {
         VStack(alignment: .leading) {
-            
-            if isSecure {
-                HStack {
-                    Spacer()
-                    
-                    Button(action: {
-                        self.isVisible.toggle()
-                    }, label: {
-                        Text(toggleViewChanger())
-                            .font(.caption2)
-                            .foregroundColor(.accentColor)
-                    })
-                    .multilineTextAlignment(.trailing)
+            HStack {
+                Spacer()
+                
+                if isSecure {
+                    secureFieldTogglerView //shows 'Reveal password' when string is empty
+                } else {
+                    emptyFieldTogglerView // shows nothing but takes up the same whitespace
                 }
             }
-
+            
             HStack {
                 Text(title)
                     .frame(width: 90, alignment: .leading)
                     .multilineTextAlignment(.leading)
-
-                if isSecure && !isVisible {
-                    SecureField(placeHolder, text: $field)
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                        .modifier(TextFieldClearButton(text: $field))
-                        .multilineTextAlignment(.leading)
-                        .frame(height: fieldHeight)
+                
+                if isSecure {
+                    secureFieldSection
                 } else {
-                    TextField(placeHolder, text: $field)
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                        .modifier(TextFieldClearButton(text: $field))
-                        .multilineTextAlignment(.leading)
-                        .frame(height: fieldHeight)
+                    textFieldSection
                 }
+                
             }
             /*
              .padding(8)
@@ -164,17 +187,73 @@ struct EntryField: View {
         .fixedSize(horizontal: false, vertical: true)
     }
     
-    func toggleViewChanger() -> String {
-        if isVisible {
-            return "Hide password"
-        } else if self.field.isEmpty {
-            return ""
+    var textFieldSection: some View {
+        TextField(placeHolder, text: $field)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .modifier(TextFieldClearButton(text: $field))
+            .multilineTextAlignment(.leading)
+            .frame(height: fieldHeight)
+    }
+    
+    var secureFieldSection: some View {
+        ZStack {
+            SecureField(
+                isShowingPassword ? "" : self.placeHolder,
+                text: $field) {
+                
+            }
+            .opacity(isShowingPassword ? 0 : 1)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .modifier(TextFieldClearButton(text: $field))
+            .multilineTextAlignment(.leading)
+            .frame(height: fieldHeight)
+            
+            if(isShowingPassword){
+                HStack{
+                    Text(self.field)
+                        .foregroundColor(.black)
+                        .allowsHitTesting(false)
+                    Spacer()
+                }
+            }
+        }
+    }
+    
+    var emptyFieldTogglerView: some View {
+        Text(emptyTextField)
+            .font(.caption.bold())
+            .foregroundColor(.accentColor)
+            .multilineTextAlignment(.trailing)
+    }
+
+    var secureFieldTogglerView: some View {
+        Button {
+            
+        } label: {
+            
+            Text(toggleSecureField())
+        }
+            .foregroundColor(.accentColor)
+            .font(.caption.bold())
+            .modifier(TouchDownUpEventModifier { (buttonState) in
+                if buttonState == .pressed {
+                    isShowingPassword = true
+                } else {
+                    isShowingPassword = false
+                }
+        })
+    }
+    
+    func toggleSecureField() -> String {
+        if self.field.isEmpty {
+            return emptyTextField
         } else {
             return "Reveal password"
         }
     }
 }
-
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
