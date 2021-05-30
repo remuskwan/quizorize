@@ -37,7 +37,7 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 3. Pressing "Get Started." will bring you to the login page
 
 
-<p align="left"><img src="public/ReadMeImgs/startView.png" width="15%"/></p>
+<p align="left"><img src="public/ReadMeImgs/startView.png" width="25%"/></p>
 
 ## User Login
 1. Type in your email address and password to login
@@ -45,14 +45,14 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 3. You may also sign in using your Apple or Google account
 4. After successful login, you will be presented with the Homepage of our app.
 
-<img src = "public/ReadMeImgs/login1.png" width ="15%" /> <img src = "public/ReadMeImgs/login2.png" width ="15%" /> <img src = "public/ReadMeImgs/login3.png" width ="15%" />
+<img src = "public/ReadMeImgs/login1.png" width ="25%" /> <img src = "public/ReadMeImgs/login2.png" width ="25%" /> <img src = "public/ReadMeImgs/login3.png" width ="25%" />
 
 ## Registration
 1. Type in your particulars into the text fields provided
 2. Ensure that the validity checks of the fields are met
 3. Create account
 
-<img src = "public/ReadMeImgs/register1.png" width ="15%" /> <img src = "public/ReadMeImgs/register2.png" width ="15%" /> <img src = "public/ReadMeImgs/register3.png" width ="15%" />
+<img src = "public/ReadMeImgs/register1.png" width ="25%" /> <img src = "public/ReadMeImgs/register2.png" width ="25%" /> <img src = "public/ReadMeImgs/register3.png" width ="25%" />
 
 ## Homepage ("Decks screen")
 1. Currently "Work-in-Progress". Will house user-created collections of decks and decks of flashcards
