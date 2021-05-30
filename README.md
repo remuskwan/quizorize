@@ -7,6 +7,7 @@ This iOS application is targeted towards students aged 14 and above that wishes 
 ## Getting started
 
 ### Local Test (on your Mac)
+Requirements: Mac running macOS 11 BigSur, [Xcode 12](https://developer.apple.com/xcode/)
 
 To run quizorize locally, first clone this repository.
 
@@ -73,5 +74,4 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 7. Settings (to edit profile, app settings)
 
 ## Known Bugs
-1. Sign in with Apple currently does not work as intended
-2. If you are running Quizorize on a simulator from Xcode, the secure fields (Password and Confirm password) will sometimes show 'Strong Password' 
+1. If you are running Quizorize on a simulator from Xcode, the secure fields (Password and Confirm password) will sometimes show 'Strong Password' 
