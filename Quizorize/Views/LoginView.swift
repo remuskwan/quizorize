@@ -35,7 +35,6 @@ struct Login : View {
 //    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewModel: AuthViewModel
     
-    @State var coordinator: SignInWithAppleCoordinator?
     @State var email: String = ""
     @State var password: String = ""
     @State var isHidden = true
@@ -146,17 +145,15 @@ struct Login : View {
                         Divider()
                             .padding(.vertical, 32)
                         Group {
-                            SignInWithAppleButton()
-                                .frame(width: 280, height: 45, alignment: .center)
-                                .onTapGesture {
-                                    self.coordinator = SignInWithAppleCoordinator()
-                                    if let coordinator = self.coordinator {
-                                        coordinator.startSignInWithAppleFlow {
-                                            print("You successfully signed in")
-                                            viewModel.signedIn = true
-                                        }
-                                    }
+                            SignInWithAppleToFirebase({response in
+                                if response == .success {
+                                    print("success, logged in with apple succeeded")
+                                    viewModel.signedIn = true
+                                } else if response == .error {
+                                    print("error, logged in with apple failed")
                                 }
+                            })
+                            .frame(width: 280, height: 45, alignment: .center)
                             
                             SignInWithGoogle()
                         }
@@ -228,17 +225,6 @@ struct SignInButton: View {
         }
         .frame(width: 280, height: 45, alignment: .center)
 //        .padding(.vertical, 24)
-    }
-}
-
-struct SignInWithAppleButton: UIViewRepresentable {
-    @Environment(\.colorScheme) var colorScheme
-    
-    func makeUIView(context: Context) -> ASAuthorizationAppleIDButton {
-        return ASAuthorizationAppleIDButton(type: .signIn, style: colorScheme == .dark ? .white : .black)
-    }
-    
-    func updateUIView(_ uiView: ASAuthorizationAppleIDButton, context: Context) {
     }
 }
 
