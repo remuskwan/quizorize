@@ -10,10 +10,9 @@ This iOS application is targeted towards students aged 14 and above that wishes 
 
 To request a copy of the current Pre-Alpha build of Quizorize on your iOS device, please head over to this link [here](https://forms.gle/QB14gRb8jx5TJTKe8).
 
-Note: Supports iPhone and iPad running iOS 14 and later.
+Requirements: iPhone and iPad running iOS 14 and later.
 
 ### Local Test (on your Mac)
-Requirements: Mac running macOS 11 BigSur, [Xcode 12](https://developer.apple.com/xcode/)
 
 To run quizorize locally, first clone this repository.
 
@@ -29,6 +28,8 @@ pod install
 
 Open, the workspace file 'Quizorize.xcworkspace' to view the code and run its build.
 
+Requirements: Mac running macOS 11 BigSur, [Xcode 12](https://developer.apple.com/xcode/)
+
 ## Documentation
 
 Please refer to our Milestone README [here](https://docs.google.com/document/d/1BBVJUarCBF2qy_ZWbH6zZka4ebhrtTBtQnHnmGUuizE/edit?ts=60afa18d).
@@ -43,15 +44,14 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 <p align="left"><img src="public/ReadMeImgs/startView.png" width="25%"/></p>
 
 ## User Login
-1. Type in your email address and password to login
+1. Enter your email address and password to login. You may also sign in using your Apple or Google account
 2. You can click on 'Register' to create an account if you do not have one.
-3. You may also sign in using your Apple or Google account
-4. After successful login, you will be presented with the Homepage of our app.
+3. After successful login, you will be presented with the Homepage of our app.
 
 <img src = "public/ReadMeImgs/login1.png" width ="25%" /> <img src = "public/ReadMeImgs/login2.png" width ="25%" /> <img src = "public/ReadMeImgs/login3.png" width ="25%" />
 
 ## Registration
-1. Type in your particulars into the text fields provided
+1. Enter your particulars into the text fields provided
 2. Ensure that the validity checks of the fields are met
 3. Create account
 
@@ -77,3 +77,5 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 
 ## Known Bugs
 1. If you are running Quizorize on a simulator from Xcode, the secure fields (Password and Confirm password) will sometimes show 'Strong Password' 
+2. Does not fully support "Dark" appearance.
+3. Launch screen on iPad appears in the sidebar.
