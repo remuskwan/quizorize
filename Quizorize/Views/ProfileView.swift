@@ -23,14 +23,14 @@ struct ProfileView: View {
                 
                 Form {
                     Section{
-                        Button("Sign Out") {
+                        Button("Sign out") {
                             //                        presentationMode.wrappedValue.dismiss()
                             showSignOutConfirm = true
                         }
                         .foregroundColor(.primary)
                         .actionSheet(isPresented: $showSignOutConfirm, content: {
                             ActionSheet(title: Text(""), message: Text("Are you sure you want to sign out?"), buttons: [
-                                .default(Text("Sign Out").foregroundColor(.red)) {
+                                .destructive(Text("Sign out").foregroundColor(.red)) {
                                     viewModel.signOut()
                                 },
                                 .cancel()
