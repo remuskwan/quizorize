@@ -56,14 +56,14 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 2. You can click on 'Register' to create an account if you do not have one.
 3. After successful login, you will be presented with the Homepage of our app.
 
-<img src = "public/ReadMeMedia/loginDemo.gif" width ="50%" /> 
+<img src = "public/ReadMeMedia/loginDemo.gif" width ="90%" /> 
 
 ## Registration
 1. Enter your particulars into the text fields provided
 2. Ensure that the validity checks of the fields are met
 3. Create account
 
-<img src = "public/ReadMeMedia/registerDemo.gif" width ="50%" /> 
+<img src = "public/ReadMeMedia/registerDemo.gif" width ="90%" /> 
 
 ## Homepage ("Decks screen")
 1. Currently "Work-in-Progress". Will house user-created collections of decks and decks of flashcards
