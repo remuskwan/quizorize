@@ -14,17 +14,25 @@ Requirements: iPhone and iPad running iOS 14 and later.
 
 ### Local Test (on your Mac)
 
-To run quizorize locally, first clone this repository.
+1. To run quizorize locally, first clone this repository.
 
 ```bash
 git clone https://github.com/remuskwan/quizorize.git
 ``` 
 
-Then, run the following command in the root directory of the cloned repository
+2. If you do not already have Cocoapods installed, run the following command (if not you can skip to Step 3)
+
+```bash
+sudo gem install cocoapods
+```
+
+3. Then, run the following command in the root directory of the cloned repository
 
 ```bash
 pod install
 ```
+
+You can refer to our walkthrough video which shows the steps above [here](https://youtu.be/-w0z_bnfsF8) 
 
 Open, the workspace file 'Quizorize.xcworkspace' to view the code and run its build.
 
@@ -41,21 +49,21 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 3. Pressing "Get Started." will bring you to the login page
 
 
-<p align="left"><img src="public/ReadMeImgs/startView.png" width="25%"/></p>
+<p align="left"><img src="public/ReadMeMedia/startView.png" width="25%"/></p>
 
 ## User Login
 1. Enter your email address and password to login. You may also sign in using your Apple or Google account
 2. You can click on 'Register' to create an account if you do not have one.
 3. After successful login, you will be presented with the Homepage of our app.
 
-<img src = "public/ReadMeImgs/login1.png" width ="25%" /> <img src = "public/ReadMeImgs/login2.png" width ="25%" /> <img src = "public/ReadMeImgs/login3.png" width ="25%" />
+<img src = "public/ReadMeMedia/loginDemo.gif" width ="50%" /> 
 
 ## Registration
 1. Enter your particulars into the text fields provided
 2. Ensure that the validity checks of the fields are met
 3. Create account
 
-<img src = "public/ReadMeImgs/register1.png" width ="25%" /> <img src = "public/ReadMeImgs/register2.png" width ="25%" /> <img src = "public/ReadMeImgs/register3.png" width ="25%" />
+<img src = "public/ReadMeMedia/registerDemo.gif" width ="50%" /> 
 
 ## Homepage ("Decks screen")
 1. Currently "Work-in-Progress". Will house user-created collections of decks and decks of flashcards
