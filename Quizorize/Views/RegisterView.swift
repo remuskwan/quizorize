@@ -58,7 +58,7 @@ struct RegisterView: View {
                         confirmPassword
                             .onTapGesture {
                                 withAnimation(.easeIn(duration: 0.3)) {
-                                    scrollView.scrollTo(4, anchor: .center)
+                                    scrollView.scrollTo(4, anchor: .bottom)
                                 }
                             }
                         

@@ -210,7 +210,7 @@ struct SignInButton: View {
         Button(action: {
             viewModel.signIn(with: .signInWithEmail(email: email, password: password))
         }, label: {
-            Text("Sign In")
+            Text("Sign in")
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .frame(height: 50)
                 .font(.headline)
