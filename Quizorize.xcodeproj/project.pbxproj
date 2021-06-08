@@ -74,6 +74,11 @@
 		55EDED5D956B8021A55A875F /* Pods_Quizorize_QuizorizeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */; };
 		571D50E1BB6F534A6DDF9D4D /* Pods_Quizorize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */; };
 		65AC49052D83463592C8D004 /* Pods_QuizorizeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */; };
+		7700BC41266F57B0004C5C82 /* DeckCreationFlashCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7700BC40266F57B0004C5C82 /* DeckCreationFlashCard.swift */; };
+		7700BC5F266F6375004C5C82 /* PracticeModeFlashCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7700BC5E266F6375004C5C82 /* PracticeModeFlashCard.swift */; };
+		772136CB266C9AD500B6A5BB /* DeckModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772136CA266C9AD500B6A5BB /* DeckModel.swift */; };
+		77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77541626266A047B00BE8273 /* DeckCreationView.swift */; };
+		7783963B266D08330024293B /* DeckCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7783963A266D08330024293B /* DeckCreationViewModel.swift */; };
 		77AB03AF2663C669009F4982 /* TouchDownUpEventModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */; };
 		77F47658265EB25200AE1C06 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F47657265EB25200AE1C06 /* SignupViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -135,6 +140,11 @@
 		3C9B0A5876205BE63BDBE4EE /* Pods-Quizorize-QuizorizeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.release.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		43143D971498F4F2769EF37A /* Pods-QuizorizeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizorizeTests.release.xcconfig"; path = "Target Support Files/Pods-QuizorizeTests/Pods-QuizorizeTests.release.xcconfig"; sourceTree = "<group>"; };
 		5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quizorize_QuizorizeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7700BC40266F57B0004C5C82 /* DeckCreationFlashCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationFlashCard.swift; sourceTree = "<group>"; };
+		7700BC5E266F6375004C5C82 /* PracticeModeFlashCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeModeFlashCard.swift; sourceTree = "<group>"; };
+		772136CA266C9AD500B6A5BB /* DeckModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckModel.swift; sourceTree = "<group>"; };
+		77541626266A047B00BE8273 /* DeckCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationView.swift; sourceTree = "<group>"; };
+		7783963A266D08330024293B /* DeckCreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationViewModel.swift; sourceTree = "<group>"; };
 		77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TouchDownUpEventModifier.swift; path = Quizorize/Views/TouchDownUpEventModifier.swift; sourceTree = SOURCE_ROOT; };
 		77F47657265EB25200AE1C06 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupViewModel.swift; path = Quizorize/ViewModels/SignupViewModel.swift; sourceTree = SOURCE_ROOT; };
 		7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -179,6 +189,8 @@
 		162792E2265A61770073718F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7700BC5D266F6352004C5C82 /* PracticeModeView */,
+				77541625266A046900BE8273 /* DeckCreation */,
 				16C285EE2656EB020068AB95 /* ContentView.swift */,
 				16C2861C2656EC6C0068AB95 /* LoginView.swift */,
 				16C2861E2656EC7A0068AB95 /* RegisterView.swift */,
@@ -212,6 +224,7 @@
 		162793552660F4070073718F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				772136CA266C9AD500B6A5BB /* DeckModel.swift */,
 				16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */,
 			);
 			path = Models;
@@ -231,6 +244,7 @@
 			children = (
 				162792E7265A61DA0073718F /* AuthViewModel.swift */,
 				77F47657265EB25200AE1C06 /* SignupViewModel.swift */,
+				7783963A266D08330024293B /* DeckCreationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -314,6 +328,23 @@
 				16C286102656EB040068AB95 /* Info.plist */,
 			);
 			path = QuizorizeUITests;
+			sourceTree = "<group>";
+		};
+		7700BC5D266F6352004C5C82 /* PracticeModeView */ = {
+			isa = PBXGroup;
+			children = (
+				7700BC5E266F6375004C5C82 /* PracticeModeFlashCard.swift */,
+			);
+			path = PracticeModeView;
+			sourceTree = "<group>";
+		};
+		77541625266A046900BE8273 /* DeckCreation */ = {
+			isa = PBXGroup;
+			children = (
+				77541626266A047B00BE8273 /* DeckCreationView.swift */,
+				7700BC40266F57B0004C5C82 /* DeckCreationFlashCard.swift */,
+			);
+			path = DeckCreation;
 			sourceTree = "<group>";
 		};
 		96FE5971BEA6BB1A38867E24 /* Frameworks */ = {
@@ -637,15 +668,20 @@
 				16C285EF2656EB020068AB95 /* ContentView.swift in Sources */,
 				162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				162792F1265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
+				7700BC5F266F6375004C5C82 /* PracticeModeFlashCard.swift in Sources */,
+				772136CB266C9AD500B6A5BB /* DeckModel.swift in Sources */,
 				16279332265D09A50073718F /* NavigationConfigurator.swift in Sources */,
 				166B1E6D2663FF2700D3922B /* Keychain.swift in Sources */,
 				162792F9265BE7860073718F /* Extensions.swift in Sources */,
 				1627932A265C1D840073718F /* Helper.swift in Sources */,
 				1627933F265EA1520073718F /* AuthError.swift in Sources */,
+				77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */,
 				16C2861F2656EC7A0068AB95 /* RegisterView.swift in Sources */,
 				16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */,
 				166B1E792663FF9600D3922B /* UserDataKeychain.swift in Sources */,
+				7783963B266D08330024293B /* DeckCreationViewModel.swift in Sources */,
 				77AB03AF2663C669009F4982 /* TouchDownUpEventModifier.swift in Sources */,
+				7700BC41266F57B0004C5C82 /* DeckCreationFlashCard.swift in Sources */,
 				16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */,
 				166B1E712663FF6200D3922B /* SharedWebCredential.swift in Sources */,
 				162792EC265AD1240073718F /* DecksView.swift in Sources */,
