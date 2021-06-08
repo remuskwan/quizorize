@@ -26,6 +26,7 @@ struct DeckCreationFlashCard: View {
                             .foregroundColor(flipped ? Color.black : Color.white)
                             .font(font(in: geometry.size))
                             .padding()
+                            .shadow(radius: 1)
                     )
                     .onTapGesture {
                         withAnimation {
@@ -33,9 +34,9 @@ struct DeckCreationFlashCard: View {
                         }
                     }
             }
-            .shadow(radius: flipped ? 0 : 10)
-            .shadow(color: flipped ? Color.black.opacity(0.3) : Color.accentColor.opacity(0.3), radius: 20, x: 0, y: 10)
-            .shadow(color: flipped ? Color.black.opacity(0.2) : Color.accentColor.opacity(0.2), radius: 5, x: 0, y: 2)
+            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
+            .shadow(color: flipped ? Color.black.opacity(0) : Color.black
+                        .opacity(0.2), radius: 5, x: 0, y: 2)
         }
     }
     

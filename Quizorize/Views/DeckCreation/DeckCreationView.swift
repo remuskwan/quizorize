@@ -10,68 +10,57 @@ import SwiftUI
 struct DeckCreationView: View {
     
     @Environment(\.presentationMode) var presentationMode
-
-
+    
+    
     @State private var deckTitle = ""
-
+    
     var body: some View {
         NavigationView {
-            ZStack {
-                GeometryReader { geometry in
-                    VStack {
+            GeometryReader { geometry in
+                VStack {
+                    
+                    TextField("Untitled deck", text: $deckTitle)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
+                        .multilineTextAlignment(.center)
+                        .frame(width: geometry.size.width / 2)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 4)
+                                .stroke(Color.accentColor, lineWidth: 1.5)
+                        )
+                        .padding()
+                    
+                    Divider()
+                    
+                    
+                    flashcardView()
+                    
+                    Spacer()
+                    
+                    Button {
                         
-                        /*
-                        navBar
-                        */
-                        
-                        TextField("Untitled", text: $deckTitle)
-                            .disableAutocorrection(true)
-                            .autocapitalization(.none)
-                            .multilineTextAlignment(.center)
-                            .frame(width: geometry.size.width / 2)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 4)
-                                    .stroke(Color.accentColor, lineWidth: 1.5)
-                            )
-                            .padding()
-
-
-                        flashcardView()
+                    } label: {
+                        Circle()
+                            .fill(Color.accentColor)
+                            .frame(height: geometry.size.height / 15)
+                            .overlay(Image(systemName:
+                                            "plus").foregroundColor(.white))
                     }
+                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
                 }
             }
             .navigationBarTitle(Text("New deck"), displayMode: .inline)
             .navigationBarItems(leading: Button {
-                                    presentationMode.wrappedValue.dismiss()
+                presentationMode.wrappedValue.dismiss()
             } label: {
                 Image(systemName: "xmark")
             })
             .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
         }
-
-    }
-    
-    private var navBar: some View {
         
-        HStack {
-            Button {
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.title)
-            }
-            
-            Spacer()
-            
-            Button {
-                //Create flashcard
-            } label: {
-                Image(systemName: "plus")
-                    .font(.title)
-            }
-        }
-        .padding()
     }
     
+    //MARK: Iterate Flashcards
     @ViewBuilder
     private func flashcardView() -> some View {
         GeometryReader { fullView in
@@ -87,6 +76,7 @@ struct DeckCreationView: View {
                         .frame(width: fullView.size.width)
                 }
             }
+            .background(Color.white)
         }
     }
 }

@@ -87,3 +87,8 @@ extension View {
   }
 }
 
+extension Color {
+    //MARK: offwhite
+    static let offWhite = Color(red: 225 / 255, green: 225 / 255, blue: 235 / 255)
+}
+
