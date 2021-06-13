@@ -123,8 +123,7 @@ struct RegisterView: View {
 
 //MARK: A View that creates any entry(text or secure) row specified.
 struct EntryField: View {
-    @State var isShowingPassword: Bool = false
-    @State var isEditing = false
+    @State private var isShowingPassword: Bool = false
 
     let fieldHeight: CGFloat = 0
     
