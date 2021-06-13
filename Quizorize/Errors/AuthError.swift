@@ -16,6 +16,7 @@ enum SignInError: AuthError {
     case wrongPassword
     case invalidEmail
     case wrongProvider(provider: String)
+    case userNotVerified
     case unknown
     
     var errorDescription: String? {
@@ -26,6 +27,8 @@ enum SignInError: AuthError {
             return "Invalid email address"
         case .wrongProvider:
             return "Account created using different provider"
+        case .userNotVerified:
+            return "Email address not verified"
         default:
             return "Unknown error"
         }
@@ -39,6 +42,8 @@ enum SignInError: AuthError {
             return "The email address you entered doesn't appear to belong to an account. Please check your email address and try again."
         case .wrongProvider(let provider):
             return "You previously created an account on Quizorize with \(provider). Please sign in with \(provider)."
+        case .userNotVerified:
+            return "Please verify your email address."
         default:
             return "Unknown error occured"
         }
@@ -49,6 +54,7 @@ enum SignUpError: AuthError {
     case emailAlreadyInUse
     case emailInUseByDifferentProvider(provider: String)
     case invalidEmail
+    case userNotVerified
     case unknown
     
     var errorDescription: String? {
@@ -59,6 +65,8 @@ enum SignUpError: AuthError {
             return "Email address in use by different provider"
         case .invalidEmail:
             return "Invalid email address"
+        case .userNotVerified:
+            return "Email address not verified"
         default:
             return "Unknown error"
         }
@@ -72,6 +80,8 @@ enum SignUpError: AuthError {
             return "You previously created an account on Quizorize with \(provider). Please sign in with \(provider)."
         case .invalidEmail:
             return "The email address you entered doesn't appear to belong to an account. Please check your email address and try again."
+        case .userNotVerified:
+            return "Please verify your email address before signing in to your new account."
         default:
             return "Unknown error occured"
         }
@@ -80,12 +90,24 @@ enum SignUpError: AuthError {
 
 enum EmailVerificationError: AuthError {
     case userNotFound
+    case tooManyRequests
     
     var errorDescription: String? {
-        return "Invalid email address"
+        switch self {
+        case .userNotFound:
+            return "Invalid email address"
+        case .tooManyRequests:
+            return "Too many requests"
+        }
+        
     }
     
     var failureReason: String? {
-        return "The email address you entered doesn't exist. Please try again."
+        switch self {
+        case .userNotFound:
+            return "The email address you entered doesn't exist. Please try again."
+        case .tooManyRequests:
+            return "too many requests sent"
+        }
     }
 }

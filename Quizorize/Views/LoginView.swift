@@ -14,14 +14,13 @@ import FirebaseAuth
 import AuthenticationServices
 
 struct LoginView: View {
-    @EnvironmentObject var viewModel: AuthViewModel
-
     var body: some View {
-        if viewModel.signedIn {
-            DecksView()
-        } else {
-            Login()
-        }
+//        if viewModel.signedIn {
+//            DecksView()
+//        } else {
+//            Login()
+//        }
+        Login()
     }
 }
 //struct ViewHeightKey: PreferenceKey {
@@ -35,9 +34,10 @@ struct Login : View {
 //    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewModel: AuthViewModel
     
-    @State var email: String = ""
-    @State var password: String = ""
+    @State private var email: String = ""
+    @State private var password: String = ""
     @State var isHidden = true
+    
 
     var body: some View {
         VStack {
@@ -131,6 +131,7 @@ struct Login : View {
                             }
                             .padding(.vertical, 4)
                         }
+
                         Group {
                             NavigationLink(
                                 destination: RecoverPasswordView(),
@@ -196,7 +197,7 @@ struct Login : View {
 
 struct SignInButton: View {
     @EnvironmentObject var viewModel: AuthViewModel
-
+//    @Environment(\.presentationMode) var presentationMode
     let email: String
     let password: String
     
@@ -204,11 +205,12 @@ struct SignInButton: View {
         return email.isEmpty || password.isEmpty
     }
     
-    @State var showErrorAlert: Bool = false
-    
     var body: some View {
         Button(action: {
             viewModel.signIn(with: .signInWithEmail(email: email, password: password))
+//            if viewModel.signedIn {
+//                presentationMode.wrappedValue.dismiss()
+//            }
         }, label: {
             Text("Sign in")
                 .frame(minWidth: 0, maxWidth: .infinity)
@@ -221,19 +223,28 @@ struct SignInButton: View {
         .opacity(isDisabled ? 0.6 : 1)
         .disabled(isDisabled)
         .alert(isPresented: viewModel.isPresentingAlert) {
+            //TODO
+//            if viewModel.activeError! as SignUpError {
+//
+//            }
             Alert(localizedError: viewModel.activeError!)
         }
         .frame(width: 280, height: 45, alignment: .center)
-//        .padding(.vertical, 24)
+        //        .padding(.vertical, 24)
+//        NavigationLink(destination: DecksView(), isActive: $viewModel.signedIn) {EmptyView()}
     }
 }
 
 struct SignInWithGoogle: View {
     @EnvironmentObject var viewModel: AuthViewModel
+//    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         Button(action: {
             viewModel.signIn(with: .signInWithGoogle)
+//            if viewModel.signedIn {
+//                presentationMode.wrappedValue.dismiss()
+//            }
         }, label: {
             HStack {
                 Image("google")
@@ -250,6 +261,7 @@ struct SignInWithGoogle: View {
         })
         .background(RoundedRectangle(cornerRadius: 5)
                         .strokeBorder(Color.primary, lineWidth: 1))
+//        NavigationLink(destination: DecksView(), isActive: $viewModel.signedIn) {EmptyView()}
     }
 }
 

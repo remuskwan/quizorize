@@ -15,10 +15,11 @@ struct QuizorizeApp: App {
     
 //    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    let persistenceController = PersistenceController.shared
+//    let persistenceController = PersistenceController.shared
 
     init() {
         setupAuthentication()
+//        setupFirestore()
     }
     var body: some Scene {
         WindowGroup {
@@ -43,4 +44,7 @@ extension QuizorizeApp {
         FirebaseApp.configure()
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
     }
+//    private func setupFirestore() {
+//        let db = Firestore.firestore()
+//    }
 }
