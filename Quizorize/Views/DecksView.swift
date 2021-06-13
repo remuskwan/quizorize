@@ -12,6 +12,9 @@ import GoogleSignIn
 struct DecksView: View {
     @EnvironmentObject var viewModel: AuthViewModel
 
+    @State private var isPresented = false
+    @State private var isBlurred = false
+    
     var body: some View {
         TabView {
             DeckList(deckListViewModel: DeckListViewModel())
@@ -65,6 +68,39 @@ struct DeckList: View {
     }
 }
 
+//MARK: Blurs the background of a fullScreenCover
+struct makeViewBlur: ViewModifier {
+    
+    var toggled: Bool
+    
+    init(if toggled: Bool) {
+        self.toggled = toggled
+    }
+    
+    
+    @ViewBuilder func body(content: Content) -> some View {
+        if toggled {
+            content.blur(radius: 2.0)
+        } else {
+            content
+        }
+    }
+}
+
+//MARK: Makes fullScreenCover transparent
+struct BackgroundBlurView: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView()
+        DispatchQueue.main.async {
+            view.superview?.superview?.backgroundColor = .clear
+        }
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) {}
+}
+
+
 enum SortBy: String, CaseIterable {
     case date = "Date"
     case name = "Name"
@@ -116,6 +152,9 @@ struct CreateDeck: View {
 }
 
 struct DecksView_Previews: PreviewProvider {
+    @State private var isPresented = false
+    @State private var isBlurred = false
+    
     static var previews: some View {
         DecksView()
     }

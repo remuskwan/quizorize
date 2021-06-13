@@ -50,8 +50,57 @@ Go to
 
 ### Swift Package Manager (Beta)
 
+<<<<<<< HEAD
+After the CI is green:
+* Update the version in the podspec to match the latest entry in the [CHANGELOG.md](CHANGELOG.md)
+* Checkout the `main` branch and ensure it is up to date.
+  ```console
+  git checkout main
+  git pull
+  ```
+* Add the CocoaPods tag (`{version}` will be the latest version in the [podspec](GoogleDataTransport.podspec#L3))
+  ```console
+  git tag CocoaPods-{version}
+  git push origin CocoaPods-{version}
+  ```
+* Push the podspec to the designated repo
+  * If this version of GDT is intended to launch **before or with** the next Firebase release:
+    <details>
+    <summary>Push to <b>SpecsStaging</b></summary>
+
+    ```console
+    pod repo push --skip-tests staging GoogleDataTransport.podspec
+    ```
+
+    If the command fails with `Unable to find the 'staging' repo.`, add the staging repo with:
+    ```console
+    pod repo add staging git@github.com:firebase/SpecsStaging.git
+    ```
+    </details>
+  * Otherwise:
+    <details>
+    <summary>Push to <b>SpecsDev</b></summary>
+
+    ```console
+    pod repo push --skip-tests dev GoogleDataTransport.podspec
+    ```
+
+    If the command fails with `Unable to find the 'dev' repo.`, add the dev repo with:
+    ```console
+    pod repo add dev git@github.com:firebase/SpecsDev.git
+    ```
+    </details>
+* Run Firebase CI by waiting until next nightly or adding a PR that touches `Gemfile`.
+* On google3, create a workspace and new CL. Then copybara and run a global TAP.
+  <pre>
+  /google/data/ro/teams/copybara/copybara third_party/firebase/ios/Releases/GoogleDataTransport/copy.bara.sky \
+  --piper-description-behavior=OVERWRITE \
+  --destination-cl=<b>YOUR_CL</b> gdt
+  </pre>
+=======
 Instructions for the Beta of [Swift Package Manager](https://swift.org/package-manager/)
 support can be found at [SwiftPackageManager.md](SwiftPackageManager.md).
+>>>>>>> db80bb4764c138a8e5be7b2acdf079d0135bb10e
 
 ### Installing from GitHub
 
@@ -62,11 +111,32 @@ to CocoaPods master and available via standard
 These instructions can be used to access the Firebase repo at other branches,
 tags, or commits.
 
+<<<<<<< HEAD
+- Import `GoogleDataTransport` module:
+    ```swift
+    import GoogleDataTransport
+    ```
+- Set logging level global variable to the desired value before calling `FirebaseApp.config()`:
+    ```swift
+    GDTCORConsoleLoggerLoggingLevel = GDTCORLoggingLevel.debug.rawValue
+    ```
+### Objective-C
+
+- Import `GoogleDataTransport`:
+    ```objective-c
+    #import <GoogleDataTransport/GoogleDataTransport.h>
+    ```
+- Set logging level global variable to the desired value before calling `-[FIRApp config]`:
+    ```objective-c
+    GDTCORConsoleLoggerLoggingLevel = GDTCORLoggingLevelDebug;
+    ```
+=======
 #### Background
 
 See
 [the Podfile Syntax Reference](https://guides.cocoapods.org/syntax/podfile.html#pod)
 for instructions and options about overriding pod source locations.
+>>>>>>> db80bb4764c138a8e5be7b2acdf079d0135bb10e
 
 #### Accessing Firebase Source Snapshots
 
@@ -149,8 +219,13 @@ before creating a PR.
 GitHub Actions will verify that any code changes are done in a style compliant
 way. Install `clang-format` and `mint`:
 
+<<<<<<< HEAD
+```console
+brew install clang-format@12
+=======
 ```
 brew install clang-format
+>>>>>>> db80bb4764c138a8e5be7b2acdf079d0135bb10e
 brew install mint
 ```
 

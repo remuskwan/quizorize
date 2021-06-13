@@ -39,6 +39,10 @@ monetize your app. More information about Firebase can be found at
 
 See the three subsections for details about three different installation methods.
 1. [Standard pod install](README.md#standard-pod-install)
+<<<<<<< HEAD
+1. [Swift Package Manager](SwiftPackageManager.md)
+=======
+>>>>>>> db80bb4764c138a8e5be7b2acdf079d0135bb10e
 1. [Installing from the GitHub repo](README.md#installing-from-github)
 1. [Experimental Carthage](README.md#carthage-ios-only)
 
@@ -46,6 +50,14 @@ See the three subsections for details about three different installation methods
 
 Go to
 [https://firebase.google.com/docs/ios/setup](https://firebase.google.com/docs/ios/setup).
+<<<<<<< HEAD
+
+### Swift Package Manager
+
+Instructions for [Swift Package Manager](https://swift.org/package-manager/) support can be
+found at [SwiftPackageManager.md](SwiftPackageManager.md).
+=======
+>>>>>>> db80bb4764c138a8e5be7b2acdf079d0135bb10e
 
 ### Installing from GitHub
 
@@ -99,8 +111,20 @@ Instructions for installing binary frameworks via
 To develop Firebase software in this repository, ensure that you have at least
 the following software:
 
+<<<<<<< HEAD
+  * Xcode 12.2 (or later)
+
+CocoaPods is still the canonical way to develop, but much of the repo now supports
+development with Swift Package Manager.
+
+### CocoaPods
+
+Install
+  * CocoaPods 1.10.0 (or later)
+=======
   * Xcode 10.3 (or later)
   * CocoaPods 1.7.2 (or later)
+>>>>>>> db80bb4764c138a8e5be7b2acdf079d0135bb10e
   * [CocoaPods generate](https://github.com/square/cocoapods-generate)
 
 For the pod that you want to develop:
