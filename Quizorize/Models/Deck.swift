@@ -22,5 +22,9 @@ struct Deck: Identifiable, Codable {
     //  }
 }
 
-//#if DEBUG
-//let testDataDecks(
+#if DEBUG
+let testDataDecks = [
+    Deck(title: "English"),
+    Deck(title: "Science")
+]
+#endif

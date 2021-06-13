@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TextFieldClearButton: ViewModifier {
+//    @Binding var isEditing: Bool
     @Binding var text: String
     
     func body(content: Content) -> some View {

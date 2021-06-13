@@ -97,7 +97,7 @@ struct NewButton: View {
             ])
         }
         .sheet(isPresented: $showingCreateDeck, content: {
-            CreateDeck(deckListViewModel: DeckListViewModel())
+            CreateDeck(deckListViewModel: DeckListViewModel(), flashcardViewModel: FlashcardViewModel())
         })
     }
 }
@@ -105,10 +105,12 @@ struct NewButton: View {
 struct CreateDeck: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var deckListViewModel: DeckListViewModel
+    @ObservedObject var flashcardViewModel: FlashcardViewModel
     
     var body: some View {
         Button("Add deck") {
             let deck = Deck(title: "Math")
+            
             deckListViewModel.add(deck)
             presentationMode.wrappedValue.dismiss()
         }
