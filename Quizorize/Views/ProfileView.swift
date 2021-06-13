@@ -14,44 +14,42 @@ struct ProfileView: View {
     
     var body: some View {
         NavigationView {
-//            ScrollView {
-//                let userProfile = viewModel.getUserProfile()
-//                if let userProfile = userProfile {
-//                    let displayName = userProfile.displayName
-//                    Text("Welcome \(displayName)")
-//                }
-                
-                Form {
-                    Section{
-                        Button("Sign out") {
-                            //                        presentationMode.wrappedValue.dismiss()
-                            showSignOutConfirm = true
-                        }
-                        .foregroundColor(.primary)
-                        .actionSheet(isPresented: $showSignOutConfirm, content: {
-                            ActionSheet(title: Text(""), message: Text("Are you sure you want to sign out?"), buttons: [
-                                .destructive(Text("Sign out").foregroundColor(.red)) {
-                                    viewModel.signOut()
-                                },
-                                .cancel()
-                            ])
-                        })
-                        
+            //            ScrollView {
+            //                let userProfile = viewModel.getUserProfile()
+            //                if let userProfile = userProfile {
+            //                    let displayName = userProfile.displayName
+            //                    Text("Welcome \(displayName)")
+            //                }
+            
+            Form {
+                Section{
+                    Button("Sign out") {
+                        showSignOutConfirm = true
                     }
+                    .foregroundColor(.primary)
+                    .actionSheet(isPresented: $showSignOutConfirm, content: {
+                        ActionSheet(title: Text(""), message: Text("Are you sure you want to sign out?"), buttons: [
+                            .destructive(Text("Sign out").foregroundColor(.red)) {
+                                viewModel.signOut()
+                            },
+                            .cancel()
+                        ])
+                    })
+                    
                 }
-//            }
+            }
             .navigationTitle("Profile")
 //            .toolbar {
 //                ToolbarItem(placement: .navigationBarTrailing) {
-//                    //                Button(action: {
-//                    //                    showSettingsSheet.toggle()
-//                    //                }, label: {
-//                    //                    Image(systemName: "gearshape.fill")
-//                    //                        .foregroundColor(.purple)
-//                    //                })
-//                    //                .sheet(isPresented: $showSettingsSheet) {
-//                    //                    SettingsView()
-//                    //                }
+//            Button(action: {
+//                showSettingsSheet.toggle()
+//            }, label: {
+//                Image(systemName: "gearshape.fill")
+//                    .foregroundColor(.purple)
+//            })
+//                .sheet(isPresented: $showSettingsSheet) {
+//                    SettingsView()
+//                }
 //                    NavigationLink(
 //                        destination: SettingsView(),
 //                        label: {
@@ -63,6 +61,7 @@ struct ProfileView: View {
         }
     }
 }
+
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {

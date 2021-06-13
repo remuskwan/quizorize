@@ -13,12 +13,11 @@ struct DeckCreationFlashCard: View {
     
     @ObservedObject var deckCreationVM: DeckCreationViewModel
     
-    var index: Int
-    
-    //Front of the flashcard
-    @State var flipped: Bool = false
+    @State private var flipped = false
     @State private var question = ""
     @State private var answer = ""
+    
+    var index: Int
     
     var body: some View {
         //MARK: GeoReader makes this View adaptable

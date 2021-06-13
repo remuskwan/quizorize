@@ -9,9 +9,11 @@ import SwiftUI
 import CryptoKit
 import FirebaseAuth
 import GoogleSignIn
+import FirebaseFirestore
 
 class AuthViewModel : NSObject, ObservableObject {
     let auth = Auth.auth()
+    let db = Firestore.firestore()
     
     @Published var signedIn = false
     @Published var user = Auth.auth().currentUser
@@ -57,23 +59,42 @@ class AuthViewModel : NSObject, ObservableObject {
     private func handleSignInWithEmail(email: String, password: String) {
         auth.signIn(withEmail: email, password: password) { [weak self] result, error in
             guard result != nil, error == nil else {
-                guard error == nil else {
-                    print((error?.localizedDescription)!)
-                    self?.handleErrors(error: error, email: email)
-                    return
+                print((error?.localizedDescription)!)
+                self?.handleErrors(error: error, email: email)
+                return
+                    //TODO: update credential
+            }
+//            if let result = result {
+//                guard result.user.isEmailVerified else {
+//                    self?.activeError = SignUpError.userNotVerified
+//                    return
+//                }
+                DispatchQueue.main.async {
+                    self?.signedIn = true
                 }
-                return //TODO
-            }
-            DispatchQueue.main.async {
-                self?.signedIn = true
-            }
+//            }
         }
+        
+//        auth.addStateDidChangeListener { _, user in
+//            if let user = user {
+//                self.db.collection("users").document(user.uid).setData([
+//                    "verified": user.isEmailVerified
+//                ])
+//
+//
+//            }
+//        }
     }
     
     private func handleSignInWithGoogle() {
         if GIDSignIn.sharedInstance().currentUser == nil {
             GIDSignIn.sharedInstance()?.presentingViewController = UIApplication.shared.windows.first?.rootViewController
             GIDSignIn.sharedInstance()?.signIn()
+//            Auth.auth().addStateDidChangeListener { auth, user in
+//                if let user = user {
+//                    user.
+//                }
+//            }
         }
     }
     
@@ -95,10 +116,30 @@ class AuthViewModel : NSObject, ObservableObject {
 //                    return
 //                }
 //            })
+            
             DispatchQueue.main.async {
                 self?.signedIn = true
+
             }
         }
+        auth.addStateDidChangeListener { _, user in
+            if let user = user {
+//                if !user.isEmailVerified {
+//                    self.activeError = SignUpError.userNotVerified
+//                    user.sendEmailVerification { error in
+//                        guard let error = error else {
+//                            return
+//                        }
+//                        self.handleErrors(error: error, email: email)
+//                    }
+//                }
+                self.db.collection("users").document(user.uid).setData([
+                    "email": email,
+                    "displayName": displayName,
+                ])
+            }
+        }
+//        print(self.user?.uid)
     }
     
     func signOut() {
@@ -106,7 +147,6 @@ class AuthViewModel : NSObject, ObservableObject {
         
         do {
             try auth.signOut()
-            
             self.signedIn = false
         } catch let signOutError as NSError {
             print(signOutError.localizedDescription)
@@ -132,8 +172,7 @@ class AuthViewModel : NSObject, ObservableObject {
             auth.fetchSignInMethods(forEmail: email) { result, error in
                 guard result == nil, error == nil else {
                     //if result is not empty and there is no error, set the activeError to emailInUseByDifferentProvider
-                    self.activeError = SignInError.wrongProvider(provider: result![0])
-                    return
+                    return self.activeError = SignInError.wrongProvider(provider: result![0])	
                 }
                 //else set activeError to wrongPassword
                 self.activeError = SignInError.wrongPassword
@@ -145,14 +184,15 @@ class AuthViewModel : NSObject, ObservableObject {
             auth.fetchSignInMethods(forEmail: email) { result, error in
                 guard result == nil, error == nil else {
                     //if result is not empty and there is no error, set the activeError to emailInUseByDifferentProvider
-                    self.activeError = SignUpError.emailInUseByDifferentProvider(provider: result![0])
-                    return
+                    return self.activeError = SignUpError.emailInUseByDifferentProvider(provider: result![0])
                 }
                 //else set activeError to emailAlreadyInUse
                 self.activeError = SignUpError.emailAlreadyInUse
             }
         case .userNotFound:
             self.activeError = EmailVerificationError.userNotFound
+        case .tooManyRequests:
+            self.activeError = EmailVerificationError.tooManyRequests	
         default:
             self.activeError = SignInError.unknown
         }
