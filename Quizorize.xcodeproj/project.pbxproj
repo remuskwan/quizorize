@@ -29,9 +29,6 @@
 		1627932E265CD6EA0073718F /* RecoverPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627932D265CD6EA0073718F /* RecoverPasswordView.swift */; };
 		1627932F265CD6EA0073718F /* RecoverPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627932D265CD6EA0073718F /* RecoverPasswordView.swift */; };
 		16279330265CD6EA0073718F /* RecoverPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627932D265CD6EA0073718F /* RecoverPasswordView.swift */; };
-		16279332265D09A50073718F /* NavigationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279331265D09A50073718F /* NavigationConfigurator.swift */; };
-		16279333265D09A50073718F /* NavigationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279331265D09A50073718F /* NavigationConfigurator.swift */; };
-		16279334265D09A50073718F /* NavigationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279331265D09A50073718F /* NavigationConfigurator.swift */; };
 		16279337265D1C290073718F /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 16279336265D1C290073718F /* Introspect */; };
 		1627933F265EA1520073718F /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627933E265EA1520073718F /* AuthError.swift */; };
 		16279340265EA1520073718F /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627933E265EA1520073718F /* AuthError.swift */; };
@@ -61,12 +58,32 @@
 		166B1E792663FF9600D3922B /* UserDataKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E782663FF9600D3922B /* UserDataKeychain.swift */; };
 		166B1E7A2663FF9600D3922B /* UserDataKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E782663FF9600D3922B /* UserDataKeychain.swift */; };
 		166B1E7B2663FF9600D3922B /* UserDataKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E782663FF9600D3922B /* UserDataKeychain.swift */; };
+		166B1E7D26656A8E00D3922B /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E7C26656A8E00D3922B /* SearchView.swift */; };
+		166B1E7E26656A8E00D3922B /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E7C26656A8E00D3922B /* SearchView.swift */; };
+		166B1E7F26656A8E00D3922B /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E7C26656A8E00D3922B /* SearchView.swift */; };
+		166B1E812666258500D3922B /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E802666258500D3922B /* Deck.swift */; };
+		166B1E822666258500D3922B /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E802666258500D3922B /* Deck.swift */; };
+		166B1E832666258500D3922B /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E802666258500D3922B /* Deck.swift */; };
+		166B1E86266655B700D3922B /* DeckRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E85266655B700D3922B /* DeckRepository.swift */; };
+		166B1E87266655B700D3922B /* DeckRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E85266655B700D3922B /* DeckRepository.swift */; };
+		166B1E88266655B700D3922B /* DeckRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E85266655B700D3922B /* DeckRepository.swift */; };
+		166B1E8A2666575300D3922B /* Flashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E892666575300D3922B /* Flashcard.swift */; };
+		166B1E8B2666575300D3922B /* Flashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E892666575300D3922B /* Flashcard.swift */; };
+		166B1E8C2666575300D3922B /* Flashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E892666575300D3922B /* Flashcard.swift */; };
+		166B1E8E266F8B9800D3922B /* DeckListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E8D266F8B9800D3922B /* DeckListViewModel.swift */; };
+		166B1E8F266F8B9800D3922B /* DeckListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E8D266F8B9800D3922B /* DeckListViewModel.swift */; };
+		166B1E90266F8B9800D3922B /* DeckListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E8D266F8B9800D3922B /* DeckListViewModel.swift */; };
+		166B1E92266F8CC500D3922B /* DeckCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E91266F8CC500D3922B /* DeckCellViewModel.swift */; };
+		166B1E93266F8CC500D3922B /* DeckCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E91266F8CC500D3922B /* DeckCellViewModel.swift */; };
+		166B1E94266F8CC500D3922B /* DeckCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E91266F8CC500D3922B /* DeckCellViewModel.swift */; };
+		166B1E962670B45A00D3922B /* FlashcardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E952670B45900D3922B /* FlashcardRepository.swift */; };
+		166B1E972670B45A00D3922B /* FlashcardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E952670B45900D3922B /* FlashcardRepository.swift */; };
+		166B1E982670B45A00D3922B /* FlashcardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E952670B45900D3922B /* FlashcardRepository.swift */; };
 		16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285EC2656EB020068AB95 /* QuizorizeApp.swift */; };
 		16C285EF2656EB020068AB95 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285EE2656EB020068AB95 /* ContentView.swift */; };
 		16C285F12656EB030068AB95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16C285F02656EB030068AB95 /* Assets.xcassets */; };
 		16C285F42656EB030068AB95 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16C285F32656EB030068AB95 /* Preview Assets.xcassets */; };
 		16C285F62656EB030068AB95 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285F52656EB030068AB95 /* Persistence.swift */; };
-		16C285F92656EB030068AB95 /* Quizorize.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */; };
 		16C286042656EB040068AB95 /* QuizorizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C286032656EB040068AB95 /* QuizorizeTests.swift */; };
 		16C2860F2656EB040068AB95 /* QuizorizeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2860E2656EB040068AB95 /* QuizorizeUITests.swift */; };
 		16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2861C2656EC6C0068AB95 /* LoginView.swift */; };
@@ -105,7 +122,6 @@
 		16279300265BFF7B0073718F /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		16279329265C1D840073718F /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		1627932D265CD6EA0073718F /* RecoverPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPasswordView.swift; sourceTree = "<group>"; };
-		16279331265D09A50073718F /* NavigationConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationConfigurator.swift; sourceTree = "<group>"; };
 		1627933E265EA1520073718F /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		1627934D265FAF080073718F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		162793562660F7450073718F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -115,13 +131,19 @@
 		166B1E702663FF6200D3922B /* SharedWebCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedWebCredential.swift; sourceTree = "<group>"; };
 		166B1E742663FF7300D3922B /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		166B1E782663FF9600D3922B /* UserDataKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataKeychain.swift; sourceTree = "<group>"; };
+		166B1E7C26656A8E00D3922B /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		166B1E802666258500D3922B /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		166B1E85266655B700D3922B /* DeckRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckRepository.swift; sourceTree = "<group>"; };
+		166B1E892666575300D3922B /* Flashcard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flashcard.swift; sourceTree = "<group>"; };
+		166B1E8D266F8B9800D3922B /* DeckListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckListViewModel.swift; sourceTree = "<group>"; };
+		166B1E91266F8CC500D3922B /* DeckCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCellViewModel.swift; sourceTree = "<group>"; };
+		166B1E952670B45900D3922B /* FlashcardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardRepository.swift; sourceTree = "<group>"; };
 		16C285E92656EB020068AB95 /* Quizorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C285EC2656EB020068AB95 /* QuizorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeApp.swift; sourceTree = "<group>"; };
 		16C285EE2656EB020068AB95 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		16C285F02656EB030068AB95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		16C285F32656EB030068AB95 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		16C285F52656EB030068AB95 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		16C285F82656EB030068AB95 /* Quizorize.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Quizorize.xcdatamodel; sourceTree = "<group>"; };
 		16C285FA2656EB030068AB95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16C285FF2656EB040068AB95 /* QuizorizeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuizorizeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C286032656EB040068AB95 /* QuizorizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeTests.swift; sourceTree = "<group>"; };
@@ -187,6 +209,7 @@
 				1627932D265CD6EA0073718F /* RecoverPasswordView.swift */,
 				1627934D265FAF080073718F /* SettingsView.swift */,
 				162793562660F7450073718F /* ProfileView.swift */,
+				166B1E7C26656A8E00D3922B /* SearchView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -212,7 +235,8 @@
 		162793552660F4070073718F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */,
+				166B1E802666258500D3922B /* Deck.swift */,
+				166B1E892666575300D3922B /* Flashcard.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -231,6 +255,8 @@
 			children = (
 				162792E7265A61DA0073718F /* AuthViewModel.swift */,
 				77F47657265EB25200AE1C06 /* SignupViewModel.swift */,
+				166B1E8D266F8B9800D3922B /* DeckListViewModel.swift */,
+				166B1E91266F8CC500D3922B /* DeckCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -244,6 +270,15 @@
 				166B1E782663FF9600D3922B /* UserDataKeychain.swift */,
 			);
 			path = CredentialStorage;
+			sourceTree = "<group>";
+		};
+		166B1E842666559F00D3922B /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				166B1E85266655B700D3922B /* DeckRepository.swift */,
+				166B1E952670B45900D3922B /* FlashcardRepository.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		16C285E02656EB020068AB95 = {
@@ -271,6 +306,7 @@
 		16C285EB2656EB020068AB95 /* Quizorize */ = {
 			isa = PBXGroup;
 			children = (
+				166B1E842666559F00D3922B /* Repositories */,
 				1627935A26615C120073718F /* Services */,
 				162793552660F4070073718F /* Models */,
 				1627933D265EA13C0073718F /* Errors */,
@@ -285,7 +321,6 @@
 				16285C7926593426003EE017 /* GoogleService-Info.plist */,
 				16C285F22656EB030068AB95 /* Preview Content */,
 				162792F8265BE7860073718F /* Extensions.swift */,
-				16279331265D09A50073718F /* NavigationConfigurator.swift */,
 			);
 			path = Quizorize;
 			sourceTree = "<group>";
@@ -627,27 +662,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				166B1E86266655B700D3922B /* DeckRepository.swift in Sources */,
+				166B1E92266F8CC500D3922B /* DeckCellViewModel.swift in Sources */,
 				1627934E265FAF080073718F /* SettingsView.swift in Sources */,
-				16C285F92656EB030068AB95 /* Quizorize.xcdatamodeld in Sources */,
 				77F47658265EB25200AE1C06 /* SignupViewModel.swift in Sources */,
 				166B1E752663FF7300D3922B /* UserData.swift in Sources */,
 				166B1E6A2663FED900D3922B /* SignInWithAppleFirebase.swift in Sources */,
+				166B1E8A2666575300D3922B /* Flashcard.swift in Sources */,
 				16279301265BFF7B0073718F /* LaunchView.swift in Sources */,
 				16C285F62656EB030068AB95 /* Persistence.swift in Sources */,
 				16C285EF2656EB020068AB95 /* ContentView.swift in Sources */,
 				162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				162792F1265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
-				16279332265D09A50073718F /* NavigationConfigurator.swift in Sources */,
 				166B1E6D2663FF2700D3922B /* Keychain.swift in Sources */,
 				162792F9265BE7860073718F /* Extensions.swift in Sources */,
 				1627932A265C1D840073718F /* Helper.swift in Sources */,
 				1627933F265EA1520073718F /* AuthError.swift in Sources */,
+				166B1E8E266F8B9800D3922B /* DeckListViewModel.swift in Sources */,
+				166B1E7D26656A8E00D3922B /* SearchView.swift in Sources */,
 				16C2861F2656EC7A0068AB95 /* RegisterView.swift in Sources */,
 				16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */,
 				166B1E792663FF9600D3922B /* UserDataKeychain.swift in Sources */,
 				77AB03AF2663C669009F4982 /* TouchDownUpEventModifier.swift in Sources */,
+				166B1E962670B45A00D3922B /* FlashcardRepository.swift in Sources */,
 				16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */,
 				166B1E712663FF6200D3922B /* SharedWebCredential.swift in Sources */,
+				166B1E812666258500D3922B /* Deck.swift in Sources */,
 				162792EC265AD1240073718F /* DecksView.swift in Sources */,
 				162793572660F7450073718F /* ProfileView.swift in Sources */,
 				1627932E265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
@@ -658,12 +698,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				166B1E822666258500D3922B /* Deck.swift in Sources */,
+				166B1E93266F8CC500D3922B /* DeckCellViewModel.swift in Sources */,
+				166B1E8F266F8B9800D3922B /* DeckListViewModel.swift in Sources */,
 				1627934F265FAF080073718F /* SettingsView.swift in Sources */,
+				166B1E972670B45A00D3922B /* FlashcardRepository.swift in Sources */,
+				166B1E87266655B700D3922B /* DeckRepository.swift in Sources */,
 				1627932F265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
 				166B1E762663FF7300D3922B /* UserData.swift in Sources */,
 				1627932B265C1D840073718F /* Helper.swift in Sources */,
-				16279333265D09A50073718F /* NavigationConfigurator.swift in Sources */,
+				166B1E8B2666575300D3922B /* Flashcard.swift in Sources */,
 				162792FA265BE7860073718F /* Extensions.swift in Sources */,
+				166B1E7E26656A8E00D3922B /* SearchView.swift in Sources */,
 				162793582660F7450073718F /* ProfileView.swift in Sources */,
 				162792E9265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				16279302265BFF7B0073718F /* LaunchView.swift in Sources */,
@@ -681,12 +727,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				166B1E832666258500D3922B /* Deck.swift in Sources */,
+				166B1E94266F8CC500D3922B /* DeckCellViewModel.swift in Sources */,
+				166B1E90266F8B9800D3922B /* DeckListViewModel.swift in Sources */,
 				16279350265FAF080073718F /* SettingsView.swift in Sources */,
+				166B1E982670B45A00D3922B /* FlashcardRepository.swift in Sources */,
+				166B1E88266655B700D3922B /* DeckRepository.swift in Sources */,
 				16279330265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
 				166B1E772663FF7300D3922B /* UserData.swift in Sources */,
 				1627932C265C1D840073718F /* Helper.swift in Sources */,
-				16279334265D09A50073718F /* NavigationConfigurator.swift in Sources */,
+				166B1E8C2666575300D3922B /* Flashcard.swift in Sources */,
 				162792FB265BE7870073718F /* Extensions.swift in Sources */,
+				166B1E7F26656A8E00D3922B /* SearchView.swift in Sources */,
 				162793592660F7450073718F /* ProfileView.swift in Sources */,
 				162792EA265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				16279303265BFF7B0073718F /* LaunchView.swift in Sources */,
@@ -840,6 +892,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Quizorize/Quizorize.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Quizorize/Preview Content\"";
 				DEVELOPMENT_TEAM = K7W85Q34X7;
 				ENABLE_PREVIEWS = YES;
@@ -865,6 +918,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Quizorize/Quizorize.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Quizorize/Preview Content\"";
 				DEVELOPMENT_TEAM = K7W85Q34X7;
 				ENABLE_PREVIEWS = YES;
@@ -1061,19 +1115,6 @@
 			productName = FacebookCore;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		16C285F72656EB030068AB95 /* Quizorize.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				16C285F82656EB030068AB95 /* Quizorize.xcdatamodel */,
-			);
-			currentVersion = 16C285F82656EB030068AB95 /* Quizorize.xcdatamodel */;
-			path = Quizorize.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 16C285E12656EB020068AB95 /* Project object */;
 }
