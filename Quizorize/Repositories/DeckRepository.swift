@@ -29,7 +29,6 @@ class DeckRepository: ObservableObject {
                     try? document.data(as: Deck.self)
                 })
             }
-            print(self.decks)
         }
     }
     

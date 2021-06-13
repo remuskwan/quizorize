@@ -24,22 +24,4 @@ class DeckListViewModel: ObservableObject {
     func add(_ deck: Deck) {
         deckRepository.addData(deck)
     }
-//
-//      private var db = Firestore.firestore()
-//
-//      func fetchData() {
-//        db.collection("decks").addSnapshotListener { (querySnapshot, error) in
-//          guard let documents = querySnapshot?.documents else {
-//            print("No documents")
-//            return
-//          }
-//          self.decks = documents.map { queryDocumentSnapshot -> Deck in
-//            let data = queryDocumentSnapshot.data()
-//            let title = data["title"] as? String ?? ""
-//            let isFavorite = data["isFavorite"] as? Bool ?? false
-//            return Deck(id: .init(), title: title, isFavorite: isFavorite)
-//          }
-//        }
-//      }
-    
 }

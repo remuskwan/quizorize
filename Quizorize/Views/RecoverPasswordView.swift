@@ -10,7 +10,8 @@ import SwiftUI
 struct RecoverPasswordView : View {
     @EnvironmentObject var viewModel: AuthViewModel
     @Environment(\.presentationMode) var presentationMode
-    @State var email: String = ""
+    @State var email = ""
+//    @State var isEditing = false
     
     var isDisabled: Bool {
         return email.isEmpty
@@ -32,6 +33,7 @@ struct RecoverPasswordView : View {
                         .disableAutocorrection(true)
                         .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                         .modifier(TextFieldClearButton(text: $email))
+//                        .modifier(TextFieldClearButton(isEditing: $isEditing, text: $email))
                         .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                 }
                 Divider()

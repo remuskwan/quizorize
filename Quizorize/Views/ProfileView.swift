@@ -8,10 +8,6 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject var viewModel: AuthViewModel
-    
-    @State var showSignOutConfirm = false
-    
     var body: some View {
         NavigationView {
             //            ScrollView {
@@ -23,45 +19,33 @@ struct ProfileView: View {
             
             Form {
                 Section{
-                    Button("Sign out") {
-                        showSignOutConfirm = true
-                    }
-                    .foregroundColor(.primary)
-                    .actionSheet(isPresented: $showSignOutConfirm, content: {
-                        ActionSheet(title: Text(""), message: Text("Are you sure you want to sign out?"), buttons: [
-                            .destructive(Text("Sign out").foregroundColor(.red)) {
-                                viewModel.signOut()
-                            },
-                            .cancel()
-                        ])
-                    })
-                    
+                    SignOutButton()
                 }
             }
             .navigationTitle("Profile")
-//            .toolbar {
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//            Button(action: {
-//                showSettingsSheet.toggle()
-//            }, label: {
-//                Image(systemName: "gearshape.fill")
-//                    .foregroundColor(.purple)
-//            })
-//                .sheet(isPresented: $showSettingsSheet) {
-//                    SettingsView()
-//                }
-//                    NavigationLink(
-//                        destination: SettingsView(),
-//                        label: {
-//                            Image(systemName: "gearshape")
-//                                .foregroundColor(.purple)
-//                        })
-//                }
-//            }
         }
     }
 }
 
+struct SignOutButton: View {
+    @EnvironmentObject var viewModel: AuthViewModel
+    @State var showSignOutConfirm = false
+    
+    var body: some View {
+        Button("Sign out") {
+            showSignOutConfirm = true
+        }
+        .foregroundColor(.primary)
+        .actionSheet(isPresented: $showSignOutConfirm, content: {
+            ActionSheet(title: Text(""), message: Text("Are you sure you want to sign out?"), buttons: [
+                .destructive(Text("Sign out").foregroundColor(.red)) {
+                    viewModel.signOut()
+                },
+                .cancel()
+            ])
+        })
+    }
+}
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {

@@ -73,9 +73,6 @@
 		166B1E8E266F8B9800D3922B /* DeckListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E8D266F8B9800D3922B /* DeckListViewModel.swift */; };
 		166B1E8F266F8B9800D3922B /* DeckListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E8D266F8B9800D3922B /* DeckListViewModel.swift */; };
 		166B1E90266F8B9800D3922B /* DeckListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E8D266F8B9800D3922B /* DeckListViewModel.swift */; };
-		166B1E92266F8CC500D3922B /* DeckCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E91266F8CC500D3922B /* DeckCellViewModel.swift */; };
-		166B1E93266F8CC500D3922B /* DeckCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E91266F8CC500D3922B /* DeckCellViewModel.swift */; };
-		166B1E94266F8CC500D3922B /* DeckCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E91266F8CC500D3922B /* DeckCellViewModel.swift */; };
 		166B1E962670B45A00D3922B /* FlashcardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E952670B45900D3922B /* FlashcardRepository.swift */; };
 		166B1E972670B45A00D3922B /* FlashcardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E952670B45900D3922B /* FlashcardRepository.swift */; };
 		166B1E982670B45A00D3922B /* FlashcardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E952670B45900D3922B /* FlashcardRepository.swift */; };
@@ -88,6 +85,7 @@
 		16C2860F2656EB040068AB95 /* QuizorizeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2860E2656EB040068AB95 /* QuizorizeUITests.swift */; };
 		16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2861C2656EC6C0068AB95 /* LoginView.swift */; };
 		16C2861F2656EC7A0068AB95 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2861E2656EC7A0068AB95 /* RegisterView.swift */; };
+		16E701CB2676316D00A1E55D /* FlashcardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701CA2676316D00A1E55D /* FlashcardViewModel.swift */; };
 		55EDED5D956B8021A55A875F /* Pods_Quizorize_QuizorizeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */; };
 		571D50E1BB6F534A6DDF9D4D /* Pods_Quizorize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */; };
 		65AC49052D83463592C8D004 /* Pods_QuizorizeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */; };
@@ -145,7 +143,6 @@
 		166B1E85266655B700D3922B /* DeckRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckRepository.swift; sourceTree = "<group>"; };
 		166B1E892666575300D3922B /* Flashcard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flashcard.swift; sourceTree = "<group>"; };
 		166B1E8D266F8B9800D3922B /* DeckListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckListViewModel.swift; sourceTree = "<group>"; };
-		166B1E91266F8CC500D3922B /* DeckCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCellViewModel.swift; sourceTree = "<group>"; };
 		166B1E952670B45900D3922B /* FlashcardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardRepository.swift; sourceTree = "<group>"; };
 		16C285E92656EB020068AB95 /* Quizorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C285EC2656EB020068AB95 /* QuizorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeApp.swift; sourceTree = "<group>"; };
@@ -162,6 +159,7 @@
 		16C286102656EB040068AB95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16C2861C2656EC6C0068AB95 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		16C2861E2656EC7A0068AB95 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		16E701CA2676316D00A1E55D /* FlashcardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardViewModel.swift; sourceTree = "<group>"; };
 		2429516D6B803B85C95E7062 /* Pods-Quizorize.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize/Pods-Quizorize.debug.xcconfig"; sourceTree = "<group>"; };
 		3C9B0A5876205BE63BDBE4EE /* Pods-Quizorize-QuizorizeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.release.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		43143D971498F4F2769EF37A /* Pods-QuizorizeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizorizeTests.release.xcconfig"; path = "Target Support Files/Pods-QuizorizeTests/Pods-QuizorizeTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -282,7 +280,7 @@
 				77F47657265EB25200AE1C06 /* SignupViewModel.swift */,
 				7783963A266D08330024293B /* DeckCreationViewModel.swift */,
 				166B1E8D266F8B9800D3922B /* DeckListViewModel.swift */,
-				166B1E91266F8CC500D3922B /* DeckCellViewModel.swift */,
+				16E701CA2676316D00A1E55D /* FlashcardViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -708,7 +706,6 @@
 			files = (
 				7719A791267325E600B0A102 /* Cardify.swift in Sources */,
 				166B1E86266655B700D3922B /* DeckRepository.swift in Sources */,
-				166B1E92266F8CC500D3922B /* DeckCellViewModel.swift in Sources */,
 				1627934E265FAF080073718F /* SettingsView.swift in Sources */,
 				77F47658265EB25200AE1C06 /* SignupViewModel.swift in Sources */,
 				166B1E752663FF7300D3922B /* UserData.swift in Sources */,
@@ -723,6 +720,7 @@
 				16279332265D09A50073718F /* NavigationConfigurator.swift in Sources */,
 				166B1E6D2663FF2700D3922B /* Keychain.swift in Sources */,
 				162792F9265BE7860073718F /* Extensions.swift in Sources */,
+				16E701CB2676316D00A1E55D /* FlashcardViewModel.swift in Sources */,
 				1627932A265C1D840073718F /* Helper.swift in Sources */,
 				1627933F265EA1520073718F /* AuthError.swift in Sources */,
 				7700BC6926710470004C5C82 /* FlashcardGradeModel.swift in Sources */,
@@ -753,7 +751,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				166B1E822666258500D3922B /* Deck.swift in Sources */,
-				166B1E93266F8CC500D3922B /* DeckCellViewModel.swift in Sources */,
 				166B1E8F266F8B9800D3922B /* DeckListViewModel.swift in Sources */,
 				1627934F265FAF080073718F /* SettingsView.swift in Sources */,
 				166B1E972670B45A00D3922B /* FlashcardRepository.swift in Sources */,
@@ -782,7 +779,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				166B1E832666258500D3922B /* Deck.swift in Sources */,
-				166B1E94266F8CC500D3922B /* DeckCellViewModel.swift in Sources */,
 				166B1E90266F8B9800D3922B /* DeckListViewModel.swift in Sources */,
 				16279350265FAF080073718F /* SettingsView.swift in Sources */,
 				166B1E982670B45A00D3922B /* FlashcardRepository.swift in Sources */,

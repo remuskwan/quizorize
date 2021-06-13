@@ -18,15 +18,6 @@ struct RegisterView: View {
     
     var body: some View {
         VStack {
-            //            Button(action: {
-            //                self.presentationMode.wrappedValue.dismiss()
-            //            }, label: {
-            //                Image(systemName: "chevron.left")
-            //                    .font(.headline)
-            //                    .foregroundColor(.purple)
-            //            })
-            //            .padding()
-            
             ScrollView {
                 ScrollViewReader {scrollView in
                     VStack {
@@ -192,6 +183,7 @@ struct EntryField: View {
             .disableAutocorrection(true)
             .autocapitalization(.none)
             .modifier(TextFieldClearButton(text: $field))
+//            .modifier(TextFieldClearButton(isEditing: $isEditing, text: $field))
             .multilineTextAlignment(.leading)
             .frame(height: fieldHeight)
     }
@@ -207,6 +199,7 @@ struct EntryField: View {
             .disableAutocorrection(true)
             .autocapitalization(.none)
             .modifier(TextFieldClearButton(text: $field))
+//            .modifier(TextFieldClearButton(isEditing: $isEditing, text: $field))
             .multilineTextAlignment(.leading)
             .frame(height: fieldHeight)
             
