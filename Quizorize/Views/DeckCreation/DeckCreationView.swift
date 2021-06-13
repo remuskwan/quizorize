@@ -11,6 +11,8 @@ struct DeckCreationView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
+    
     
     @State private var deckTitle = ""
     
@@ -38,6 +40,7 @@ struct DeckCreationView: View {
                     Spacer()
                     
                     Button {
+                        deckCreationVM.addField()
                         
                     } label: {
                         Circle()
@@ -64,16 +67,13 @@ struct DeckCreationView: View {
     @ViewBuilder
     private func flashcardView() -> some View {
         GeometryReader { fullView in
-            ScrollView(.horizontal) {
-                LazyHStack {
-                    DeckCreationFlashCard()
-                        .padding()
-                        .foregroundColor(.accentColor)
-                        .frame(width: fullView.size.width)
-                    DeckCreationFlashCard()
-                        .padding()
-                        .foregroundColor(.accentColor)
-                        .frame(width: fullView.size.width)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(deckCreationVM.EmptyFlashcards) { emptyFlashcard in
+                        DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: self.deckCreationVM.EmptyFlashcards.firstIndex(where: { $0 == emptyFlashcard})!)
+                            .frame(width: fullView.size.width * 0.925, height: fullView.size.height)
+                            .padding()
+                    }
                 }
             }
             .background(Color.white)

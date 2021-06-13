@@ -21,7 +21,7 @@ struct AspectHScroll<Item, ItemView>: View where ItemView: View, Item: Identifia
     var body: some View {
         GeometryReader { fullView in
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack {
+                HStack {
                     ForEach(items) { item in
                         content(item)
                             .frame(idealWidth: fullView.size.width * 0.7, maxWidth: fullView.size.width)
