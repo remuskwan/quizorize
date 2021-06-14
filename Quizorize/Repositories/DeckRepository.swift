@@ -39,4 +39,23 @@ class DeckRepository: ObservableObject {
             fatalError("Adding deck failed")
         }
     }
+    
+    func removeData(_ deck: Deck) {
+        guard let documentId = deck.id else { return }
+        db.collection(path).document(documentId).delete { error in
+            if let error = error {
+                print("Unable to delete deck: \(error.localizedDescription)")
+            }
+            
+        }
+    }
+    
+    func updateData(_ deck: Deck) {
+        guard let documentId = deck.id else { return }
+        do {
+            try db.collection(path).document(documentId).setData(from: deck)
+        } catch {
+            fatalError("Updating deck failed")
+        }
+    }
 }
