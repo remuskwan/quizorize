@@ -9,9 +9,11 @@ import Foundation
 import FirebaseFirestore
 import Combine
 
-class FlashcardViewModel: ObservableObject {
+class FlashcardViewModel: ObservableObject, Identifiable {
     @Published var flashcardRepository = FlashcardRepository()
     @Published var flashcards = [Flashcard]()
+    
+    var id = ""
     
     private var cancellables = Set<AnyCancellable>()
 

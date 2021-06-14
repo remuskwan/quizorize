@@ -12,6 +12,7 @@ struct DeckCreationView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
+    @ObservedObject var deckListViewModel: DeckListViewModel
     
     
     @State private var deckTitle = ""
@@ -53,12 +54,25 @@ struct DeckCreationView: View {
                 }
             }
             .navigationBarTitle(Text("New deck"), displayMode: .inline)
-            .navigationBarItems(leading: Button {
-                presentationMode.wrappedValue.dismiss()
-            } label: {
-                Image(systemName: "xmark")
-            })
-            .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Cancel")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        let deck = Deck(title: self.deckTitle)
+                        deckListViewModel.add(deck)
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Create")
+                    }
+                }
+            }
+//            .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
         }
         
     }
@@ -83,12 +97,12 @@ struct DeckCreationView: View {
 
 
 
-struct DeckCreationView_Previews: PreviewProvider {
-    
-    @State private var isBlurred = false
-    
-    static var previews: some View {
-        DeckCreationView()
-            .environmentObject(AuthViewModel())
-    }
-}
+//struct DeckCreationView_Previews: PreviewProvider {
+//    
+//    @State private var isBlurred = false
+//    
+//    static var previews: some View {
+//        DeckCreationView()
+//            .environmentObject(AuthViewModel())
+//    }
+//}

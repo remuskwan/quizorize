@@ -15,7 +15,7 @@ struct LaunchView: View {
         ZStack {
             if viewModel.signedIn {
 //                NavigationLink(destination: DecksView(), isActive: $viewModel.signedIn) {EmptyView()}
-                DecksView()
+                HomeView()
             } else {
                 Launch()	
             }

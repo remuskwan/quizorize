@@ -9,15 +9,15 @@ import SwiftUI
 import FirebaseAuth
 import GoogleSignIn
 
-struct DecksView: View {
+struct HomeView: View {
     @EnvironmentObject var viewModel: AuthViewModel
-
+    
     @State private var isPresented = false
     @State private var isBlurred = false
     
     var body: some View {
         TabView {
-            DeckList(deckListViewModel: DeckListViewModel())
+            DeckListView(deckListViewModel: DeckListViewModel())
                 .tabItem { Label("Decks", systemImage: "square.grid.2x2.fill") }
             SearchView()
                 .tabItem {Label("Search", systemImage: "magnifyingglass")}
@@ -27,10 +27,12 @@ struct DecksView: View {
     }
 }
 
-struct DeckList: View {
+struct DeckListView: View {
     @ObservedObject var deckListViewModel: DeckListViewModel
     @State private var selectedSortBy = SortBy.date
-
+    @State private var showActivitySheet = false
+    @State private var showDeckOptions = false
+    
     let layout = [
         GridItem(.adaptive(minimum: 120))
     ]
@@ -49,13 +51,30 @@ struct DeckList: View {
                     .padding()
                     
                     LazyVGrid(columns: layout, spacing: 20) {
-                        NewButton()
-                        ForEach(deckListViewModel.decks) { deck in
+                        NewButton(deckListViewModel: deckListViewModel)
+                        ForEach(deckListViewModel.sortDeckVMs(self.selectedSortBy)) { deckVM in
+                            //TODO: Drag and drop into folders using onLongPressGesture
                             VStack {
-                                Image(systemName: "folder.fill")
-                                    .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: 100)
-                                Text(deck.title)
-                                    .font(.caption)
+                                Image("deck1")
+                                    .resizable()
+                                    .frame(width: 100, height: 100)
+                                Button {
+                                    showDeckOptions.toggle()
+                                } label: {
+                                    HStack {
+                                        Text(deckVM.deck.title)
+                                            .font(.caption)
+                                        Image(systemName: "chevron.down")
+                                            .font(.caption2)
+                                    }
+                                }
+                                .actionSheet(isPresented: $showDeckOptions, content: {
+                                    ActionSheet(title: Text(""), message: Text(""), buttons: [
+                                        .default(Text("Edit deck")) { deckListViewModel.update(deckVM.deck) },
+                                        .destructive(Text("Delete deck").foregroundColor(Color.red)) { deckListViewModel.remove(deckVM.deck) },
+                                        .cancel()
+                                    ])
+                                })
                             }
                         }
                     }
@@ -64,6 +83,30 @@ struct DeckList: View {
             }
             .navigationTitle("Decks")
             .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem {
+                    Button {
+                        showActivitySheet.toggle()
+                    } label: {
+                        Image(systemName: "bell.fill")
+                    }
+
+                }
+            }
+            .sheet(isPresented: $showActivitySheet) {
+                ActivityView()
+            }
+        }
+        
+
+    }
+}
+
+struct ActivityView: View {
+    var body: some View {
+        NavigationView {
+            EmptyView()
+                .navigationTitle("Activity")
         }
     }
 }
@@ -108,6 +151,7 @@ enum SortBy: String, CaseIterable {
 }
 
 struct NewButton: View {
+    @ObservedObject var deckListViewModel: DeckListViewModel
     @State private var showingActionSheet = false
     @State private var showingCreateDeck = false
     var body: some View {
@@ -125,6 +169,7 @@ struct NewButton: View {
                     .frame(width: 80, height: 100)
             })
             Text("New")
+                .font(.caption)
         }
         .actionSheet(isPresented: $showingActionSheet) {
             ActionSheet(title: Text(""), message: Text(""), buttons: [
@@ -133,7 +178,8 @@ struct NewButton: View {
             ])
         }
         .sheet(isPresented: $showingCreateDeck, content: {
-            CreateDeck(deckListViewModel: DeckListViewModel(), flashcardViewModel: FlashcardViewModel())
+            DeckCreationView(deckListViewModel: deckListViewModel)
+//            CreateDeck(deckListViewModel: DeckListViewModel(), flashcardViewModel: FlashcardViewModel())
         })
     }
 }
@@ -158,6 +204,6 @@ struct DecksView_Previews: PreviewProvider {
     @State private var isBlurred = false
     
     static var previews: some View {
-        DecksView()
+        HomeView()
     }
 }
