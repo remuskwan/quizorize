@@ -66,6 +66,11 @@ struct DeckCreationView: View {
     //MARK: Iterate Flashcards
     @ViewBuilder
     private func flashcardView() -> some View {
+        AspectHScroll(items: deckCreationVM.EmptyFlashcards, aspectRatio: 2/3) { emptyFlashcard in
+            DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: deckCreationVM.EmptyFlashcards.firstIndex(where: { $0 == emptyFlashcard })!)
+        }
+
+        /*
         GeometryReader { fullView in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
@@ -77,9 +82,10 @@ struct DeckCreationView: View {
                 }
             }
             .background(Color.white)
+            */
         }
-    }
 }
+
 
 
 
