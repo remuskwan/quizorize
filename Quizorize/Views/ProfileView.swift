@@ -8,22 +8,62 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @StateObject var userListViewModel = UserListViewModel()
+    
+    @State var password = ""
     var body: some View {
         NavigationView {
-            //            ScrollView {
-            //                let userProfile = viewModel.getUserProfile()
-            //                if let userProfile = userProfile {
-            //                    let displayName = userProfile.displayName
-            //                    Text("Welcome \(displayName)")
-            //                }
-            
             Form {
+                Section {
+                    NavigationLink(destination: EditProfileView()) {
+                        HStack {
+                            Image(systemName: "camera")
+                                .background(Circle()
+                                                .fill(Color.offWhite)
+                                                .frame(width: 50, height: 50))
+                                .frame(width: 20, height: 20)
+                                .padding()
+                            Text("Remus")
+                                .font(.title)
+                                .padding()
+                        }
+                    }
+                    
+                }
+                Section(header: Text("Settings")) {
+                    NavigationLink(destination: ChangePasswordView()) {
+                        HStack {
+                            Image(systemName: "envelope")
+                            Text("Email")
+                            
+                        }
+                    }
+                }
                 Section{
                     SignOutButton()
                 }
             }
             .navigationTitle("Profile")
         }
+    }
+}
+struct EditProfileView: View {
+    var body: some View {
+        VStack {
+            
+        }
+        .navigationTitle("Edit Profile")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+struct ChangePasswordView: View {
+    var body: some View {
+        VStack {
+        }
+        .navigationTitle("Change password")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

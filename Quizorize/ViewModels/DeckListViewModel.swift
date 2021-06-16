@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import FirebaseAuth
 import FirebaseFirestore
 import Combine
+import SwiftUI
 
 class DeckListViewModel: ObservableObject {
     @Published var deckRepository = DeckRepository()

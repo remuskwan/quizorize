@@ -86,6 +86,11 @@
 		16E701CB2676316D00A1E55D /* FlashcardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701CA2676316D00A1E55D /* FlashcardViewModel.swift */; };
 		16E701CE2677AD6E00A1E55D /* DeckViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701CD2677AD6E00A1E55D /* DeckViewModel.swift */; };
 		16E701D02677ADDA00A1E55D /* FlashcardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701CF2677ADDA00A1E55D /* FlashcardListViewModel.swift */; };
+		16E701D22678B3FB00A1E55D /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701D12678B3FB00A1E55D /* UserRepository.swift */; };
+		16E701D42678E42300A1E55D /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701D32678E42300A1E55D /* UserViewModel.swift */; };
+		16E701D62678E49B00A1E55D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701D52678E49B00A1E55D /* User.swift */; };
+		16E701D826790B9200A1E55D /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701D726790B9200A1E55D /* DeckView.swift */; };
+		16E701DA267A0DB700A1E55D /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701D9267A0DB700A1E55D /* UserListViewModel.swift */; };
 		55EDED5D956B8021A55A875F /* Pods_Quizorize_QuizorizeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */; };
 		571D50E1BB6F534A6DDF9D4D /* Pods_Quizorize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */; };
 		65AC49052D83463592C8D004 /* Pods_QuizorizeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */; };
@@ -162,6 +167,11 @@
 		16E701CA2676316D00A1E55D /* FlashcardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardViewModel.swift; sourceTree = "<group>"; };
 		16E701CD2677AD6E00A1E55D /* DeckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckViewModel.swift; sourceTree = "<group>"; };
 		16E701CF2677ADDA00A1E55D /* FlashcardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardListViewModel.swift; sourceTree = "<group>"; };
+		16E701D12678B3FB00A1E55D /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		16E701D32678E42300A1E55D /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		16E701D52678E49B00A1E55D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		16E701D726790B9200A1E55D /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
+		16E701D9267A0DB700A1E55D /* UserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewModel.swift; sourceTree = "<group>"; };
 		2429516D6B803B85C95E7062 /* Pods-Quizorize.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize/Pods-Quizorize.debug.xcconfig"; sourceTree = "<group>"; };
 		3C9B0A5876205BE63BDBE4EE /* Pods-Quizorize-QuizorizeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.release.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		43143D971498F4F2769EF37A /* Pods-QuizorizeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizorizeTests.release.xcconfig"; path = "Target Support Files/Pods-QuizorizeTests/Pods-QuizorizeTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -229,6 +239,7 @@
 				162793562660F7450073718F /* ProfileView.swift */,
 				7719A790267325E600B0A102 /* Cardify.swift */,
 				166B1E7C26656A8E00D3922B /* SearchView.swift */,
+				16E701D726790B9200A1E55D /* DeckView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -259,6 +270,7 @@
 				7719A7C72676250F00B0A102 /* EmptyFlashcards.swift */,
 				166B1E802666258500D3922B /* Deck.swift */,
 				166B1E892666575300D3922B /* Flashcard.swift */,
+				16E701D52678E49B00A1E55D /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -282,6 +294,8 @@
 				16E701CA2676316D00A1E55D /* FlashcardViewModel.swift */,
 				16E701CD2677AD6E00A1E55D /* DeckViewModel.swift */,
 				16E701CF2677ADDA00A1E55D /* FlashcardListViewModel.swift */,
+				16E701D32678E42300A1E55D /* UserViewModel.swift */,
+				16E701D9267A0DB700A1E55D /* UserListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -302,6 +316,7 @@
 			children = (
 				166B1E85266655B700D3922B /* DeckRepository.swift */,
 				166B1E952670B45900D3922B /* FlashcardRepository.swift */,
+				16E701D12678B3FB00A1E55D /* UserRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -719,6 +734,7 @@
 				166B1E86266655B700D3922B /* DeckRepository.swift in Sources */,
 				1627934E265FAF080073718F /* SettingsView.swift in Sources */,
 				77F47658265EB25200AE1C06 /* SignupViewModel.swift in Sources */,
+				16E701DA267A0DB700A1E55D /* UserListViewModel.swift in Sources */,
 				166B1E752663FF7300D3922B /* UserData.swift in Sources */,
 				166B1E6A2663FED900D3922B /* SignInWithAppleFirebase.swift in Sources */,
 				166B1E8A2666575300D3922B /* Flashcard.swift in Sources */,
@@ -734,6 +750,8 @@
 				16E701CB2676316D00A1E55D /* FlashcardViewModel.swift in Sources */,
 				1627932A265C1D840073718F /* Helper.swift in Sources */,
 				1627933F265EA1520073718F /* AuthError.swift in Sources */,
+				16E701D42678E42300A1E55D /* UserViewModel.swift in Sources */,
+				16E701D826790B9200A1E55D /* DeckView.swift in Sources */,
 				7700BC6926710470004C5C82 /* FlashcardGradeModel.swift in Sources */,
 				77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */,
 				166B1E8E266F8B9800D3922B /* DeckListViewModel.swift in Sources */,
@@ -745,6 +763,7 @@
 				7700BC652670FE75004C5C82 /* SREngine.swift in Sources */,
 				7783963B266D08330024293B /* DeckCreationViewModel.swift in Sources */,
 				77AB03AF2663C669009F4982 /* TouchDownUpEventModifier.swift in Sources */,
+				16E701D22678B3FB00A1E55D /* UserRepository.swift in Sources */,
 				7700BC61266F933A004C5C82 /* AspectHScroll.swift in Sources */,
 				7700BC41266F57B0004C5C82 /* DeckCreationFlashCard.swift in Sources */,
 				7719A7C82676250F00B0A102 /* EmptyFlashcards.swift in Sources */,
@@ -755,6 +774,7 @@
 				162792EC265AD1240073718F /* HomeView.swift in Sources */,
 				162793572660F7450073718F /* ProfileView.swift in Sources */,
 				1627932E265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
+				16E701D62678E49B00A1E55D /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,13 +13,6 @@ struct Deck: Identifiable, Codable {
     var title: String
     var isFavorite: Bool = false
     var dateCreated: Date = Date()
-    
-    //  enum CodingKeys: String, CodingKey {
-    //    case id
-    //    case title
-    //    case author
-    //    case numberOfPages = "pages"
-    //  }
 }
 
 #if DEBUG

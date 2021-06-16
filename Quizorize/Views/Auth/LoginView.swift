@@ -15,11 +15,6 @@ import AuthenticationServices
 
 struct LoginView: View {
     var body: some View {
-//        if viewModel.signedIn {
-//            DecksView()
-//        } else {
-//            Login()
-//        }
         Login()
     }
 }
@@ -61,12 +56,8 @@ struct Login : View {
                                         .disableAutocorrection(true)
                                         .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                                         .modifier(TextFieldClearButton(text: $email))
-//                                        .modifier(TextFieldClearButton(isEditing: $isEditing, text: $email))
                                         .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                                         .frame(height: CGFloat(0))
-//                                        .onTapGesture {
-//                                            self.isEditing = true
-//                                        }
                                 }
                                 Divider()
                             }
