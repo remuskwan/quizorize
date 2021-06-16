@@ -1,25 +1,27 @@
 //
-//  DeckViewModel.swift
+//  UserViewModel.swift
 //  Quizorize
 //
-//  Created by Remus Kwan on 14/6/21.
+//  Created by Remus Kwan on 15/6/21.
 //
+
+import Foundation
 
 import Foundation
 import FirebaseFirestore
 import Combine
 
-class DeckViewModel: ObservableObject, Identifiable {
-    private var deckRepository = DeckRepository()
-    @Published var deck: Deck
+class UserViewModel: ObservableObject, Identifiable {
+    private var userRepository = UserRepository()
+    @Published var user: User
     
     var id = ""
     
     private var cancellables = Set<AnyCancellable>()
 
-    init(deck: Deck) {
-        self.deck = deck
-        $deck
+    init(user: User) {
+        self.user = user
+        $user
             .compactMap { $0.id }
             .assign(to: \.id, on: self)
             .store(in: &cancellables)

@@ -64,6 +64,7 @@ struct DeckCreationView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        //TODO: Add flashcards to deck
                         let deck = Deck(title: self.deckTitle)
                         deckListViewModel.add(deck)
                         presentationMode.wrappedValue.dismiss()

@@ -10,17 +10,13 @@ import FirebaseAuth
 import GoogleSignIn
 
 struct HomeView: View {
-    @EnvironmentObject var viewModel: AuthViewModel
-    
-    @State private var isPresented = false
-    @State private var isBlurred = false
-    
+//    @ObservedObject var userViewModel: UserViewModel
     var body: some View {
         TabView {
-            DeckListView(deckListViewModel: DeckListViewModel())
+            DeckListView()
                 .tabItem { Label("Decks", systemImage: "square.grid.2x2.fill") }
             SearchView()
-                .tabItem {Label("Search", systemImage: "magnifyingglass")}
+                .tabItem { Label("Search", systemImage: "magnifyingglass") }
             ProfileView()
                 .tabItem { Label("Profile", systemImage: "person.circle") }
         }
@@ -28,7 +24,7 @@ struct HomeView: View {
 }
 
 struct DeckListView: View {
-    @ObservedObject var deckListViewModel: DeckListViewModel
+    @StateObject var deckListViewModel = DeckListViewModel()
     @State private var selectedSortBy = SortBy.date
     @State private var showActivitySheet = false
     @State private var showDeckOptions = false
@@ -55,9 +51,14 @@ struct DeckListView: View {
                         ForEach(deckListViewModel.sortDeckVMs(self.selectedSortBy)) { deckVM in
                             //TODO: Drag and drop into folders using onLongPressGesture
                             VStack {
-                                Image("deck1")
-                                    .resizable()
-                                    .frame(width: 100, height: 100)
+                                NavigationLink(
+                                    destination: DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM),
+                                    label: {
+                                    Image("deck1")
+                                        .resizable()
+                                        .frame(width: 100, height: 100)
+                                })
+
                                 Button {
                                     showDeckOptions.toggle()
                                 } label: {
@@ -97,8 +98,6 @@ struct DeckListView: View {
                 ActivityView()
             }
         }
-        
-
     }
 }
 
@@ -159,17 +158,20 @@ struct NewButton: View {
             Button(action: {
                 showingActionSheet.toggle()
             }, label: {
-                RoundedRectangle(cornerRadius: 5)
-                    .strokeBorder(
-                        style: StrokeStyle(
-                            lineWidth: 2,
-                            dash: [5]
+                VStack {
+                    RoundedRectangle(cornerRadius: 5)
+                        .strokeBorder(
+                            style: StrokeStyle(
+                                lineWidth: 2,
+                                dash: [3]
+                            )
                         )
-                    )
-                    .frame(width: 80, height: 100)
+                        .frame(width: 80, height: 100)
+                    Text("New")
+                        .font(.caption)
+                }
             })
-            Text("New")
-                .font(.caption)
+            
         }
         .actionSheet(isPresented: $showingActionSheet) {
             ActionSheet(title: Text(""), message: Text(""), buttons: [
@@ -184,26 +186,11 @@ struct NewButton: View {
     }
 }
 
-struct CreateDeck: View {
-    @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var deckListViewModel: DeckListViewModel
-    @ObservedObject var flashcardViewModel: FlashcardViewModel
-    
-    var body: some View {
-        Button("Add deck") {
-            let deck = Deck(title: "Math")
-            
-            deckListViewModel.add(deck)
-            presentationMode.wrappedValue.dismiss()
-        }
-    }
-}
-
-struct DecksView_Previews: PreviewProvider {
-    @State private var isPresented = false
-    @State private var isBlurred = false
-    
-    static var previews: some View {
-        HomeView()
-    }
-}
+//struct DecksView_Previews: PreviewProvider {
+//    @State private var isPresented = false
+//    @State private var isBlurred = false
+//
+//    static var previews: some View {
+//        HomeView()
+//    }
+//}

@@ -14,6 +14,7 @@ import FirebaseFirestore
 class AuthViewModel : NSObject, ObservableObject {
     let auth = Auth.auth()
     let db = Firestore.firestore()
+    private var userRepository = UserRepository()
     
     @Published var signedIn = false
     @Published var user = Auth.auth().currentUser
@@ -69,9 +70,9 @@ class AuthViewModel : NSObject, ObservableObject {
 //                    self?.activeError = SignUpError.userNotVerified
 //                    return
 //                }
-                DispatchQueue.main.async {
-                    self?.signedIn = true
-                }
+            DispatchQueue.main.async {
+                self?.signedIn = true
+            }
 //            }
         }
         
@@ -119,7 +120,6 @@ class AuthViewModel : NSObject, ObservableObject {
             
             DispatchQueue.main.async {
                 self?.signedIn = true
-
             }
         }
         auth.addStateDidChangeListener { _, user in
@@ -133,10 +133,7 @@ class AuthViewModel : NSObject, ObservableObject {
 //                        self.handleErrors(error: error, email: email)
 //                    }
 //                }
-                self.db.collection("users").document(user.uid).setData([
-                    "email": email,
-                    "displayName": displayName,
-                ])
+                self.userRepository.addData(User(id: user.uid, email: email, displayName: displayName))
             }
         }
 //        print(self.user?.uid)
@@ -197,27 +194,22 @@ class AuthViewModel : NSObject, ObservableObject {
             self.activeError = SignInError.unknown
         }
     }
-    
-//    func getUserProfile() -> Profile? {
-//        let user = self.user
-//        if let user = user {
-//            // The user's ID, unique to the Firebase project.
-//            // Do NOT use this value to authenticate with your backend server,
-//            // if you have one. Use getTokenWithCompletion:completion: instead.
-//            let uid = user.uid
-//            let email = user.email
-//            let photoURL = user.photoURL
-//            var multiFactorString = "MultiFactor: "
-//            var displayName = ""
-//            for info in user.multiFactor.enrolledFactors {
-//                displayName = info.displayName ?? "[DisplayName]"
-//                multiFactorString += " "
-//            }
-//            return Profile(email: email, photoURL: photoURL, displayName: displayName)
-//        } else {
-//            return nil
-//        }
-//    }
+    func updateProfile(user: User) {
+        let changeRequest = self.user?.createProfileChangeRequest()
+        changeRequest?.displayName = user.displayName
+        changeRequest?.commitChanges { error in
+            guard error == nil else {
+                return print((error?.localizedDescription)!)
+            }
+        }
+    }
+    func updateEmail(email: String) {
+        self.user?.updateEmail(to: email) { error in
+            guard error == nil else {
+                return print((error?.localizedDescription)!)
+            }
+        }
+    }
 }
 
 extension AuthViewModel: GIDSignInDelegate {
@@ -248,10 +240,4 @@ extension AuthViewModel: GIDSignInDelegate {
             //print(result?.user.email)
         }
     }
-}
-
-struct Profile {
-    let email: String?
-    let photoURL: URL?
-    let displayName: String?
 }
