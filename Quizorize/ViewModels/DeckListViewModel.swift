@@ -6,40 +6,52 @@
 //
 
 import Foundation
+import FirebaseAuth
 import FirebaseFirestore
 import Combine
+import SwiftUI
 
 class DeckListViewModel: ObservableObject {
     @Published var deckRepository = DeckRepository()
-    @Published var decks = [Deck]()
+    @Published var deckViewModels = [DeckViewModel]()
     
     private var cancellables = Set<AnyCancellable>()
 
     init() {
         deckRepository.$decks
-            .assign(to: \.decks, on: self)
+            .map { decks in
+                decks.map(DeckViewModel.init)
+            }
+            .assign(to: \.deckViewModels, on: self)
             .store(in: &cancellables)
     }
     
     func add(_ deck: Deck) {
         deckRepository.addData(deck)
     }
-//
-//      private var db = Firestore.firestore()
-//
-//      func fetchData() {
-//        db.collection("decks").addSnapshotListener { (querySnapshot, error) in
-//          guard let documents = querySnapshot?.documents else {
-//            print("No documents")
-//            return
-//          }
-//          self.decks = documents.map { queryDocumentSnapshot -> Deck in
-//            let data = queryDocumentSnapshot.data()
-//            let title = data["title"] as? String ?? ""
-//            let isFavorite = data["isFavorite"] as? Bool ?? false
-//            return Deck(id: .init(), title: title, isFavorite: isFavorite)
-//          }
-//        }
-//      }
     
+    func remove(_ deck: Deck) {
+        deckRepository.removeData(deck)
+    }
+    
+    func update(_ deck: Deck) {
+        deckRepository.updateData(deck)
+    }
+    
+    func sortDeckVMs(_ sortBy: SortBy) -> [DeckViewModel] {
+        switch sortBy {
+        case .date:
+            return deckViewModels.sorted { deckVM1, deckVM2 in
+                deckVM1.deck.dateCreated < deckVM2.deck.dateCreated
+            }
+        case .name:
+            return deckViewModels.sorted { deckVM1, deckVM2 in
+                deckVM1.deck.title < deckVM2.deck.title
+            }
+        case .type:
+            return deckViewModels.sorted { deckVM1, deckVM2 in
+                deckVM1.deck.dateCreated < deckVM2.deck.dateCreated
+            }
+        }
+    }
 }

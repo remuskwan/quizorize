@@ -12,6 +12,7 @@ struct DeckCreationView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
+    @ObservedObject var deckListViewModel: DeckListViewModel
     
     
     @State private var deckTitle = ""
@@ -40,7 +41,7 @@ struct DeckCreationView: View {
                     Spacer()
                     
                     Button {
-                        deckCreationVM.addField()
+                        deckCreationVM.addFlashcard()
                         
                     } label: {
                         Circle()
@@ -53,21 +54,34 @@ struct DeckCreationView: View {
                 }
             }
             .navigationBarTitle(Text("New deck"), displayMode: .inline)
-            .navigationBarItems(leading: Button {
-                presentationMode.wrappedValue.dismiss()
-            } label: {
-                Image(systemName: "xmark")
-            })
-            .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Cancel")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        //TODO: Add flashcards to deck
+                        let deck = Deck(title: self.deckTitle)
+                        deckListViewModel.add(deck)
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Create")
+                    }
+                }
+            }
+//            .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
         }
-        
     }
     
     //MARK: Iterate Flashcards
     @ViewBuilder
     private func flashcardView() -> some View {
-        AspectHScroll(items: deckCreationVM.EmptyFlashcards, aspectRatio: 2/3) { emptyFlashcard in
-            DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: deckCreationVM.EmptyFlashcards.firstIndex(where: { $0 == emptyFlashcard })!)
+        AspectHScroll(items: deckCreationVM.flashcards, aspectRatio: 2/3) { emptyFlashcard in
+            DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: deckCreationVM.flashcards.firstIndex(where: {$0 == emptyFlashcard})!)
         }
 
         /*
@@ -88,13 +102,12 @@ struct DeckCreationView: View {
 
 
 
-
-struct DeckCreationView_Previews: PreviewProvider {
-    
-    @State private var isBlurred = false
-    
-    static var previews: some View {
-        DeckCreationView()
-            .environmentObject(AuthViewModel())
-    }
-}
+//struct DeckCreationView_Previews: PreviewProvider {
+//    
+//    @State private var isBlurred = false
+//    
+//    static var previews: some View {
+//        DeckCreationView()
+//            .environmentObject(AuthViewModel())
+//    }
+//}

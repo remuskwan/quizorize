@@ -8,12 +8,13 @@
 import Foundation
 
 //Model for DeckCreationFlashcards
-struct EmptyFlashcard<CardContent>: Identifiable, Equatable {
+struct EmptyFlashcard: Identifiable, Equatable {
     var id = UUID()
-    var question: CardContent
-    var answer: CardContent
+    var prompt: String
+    var answer: String
+    var dateAdded: Date
     
-    static func ==(lhs: EmptyFlashcard<CardContent>, rhs: EmptyFlashcard<CardContent>) -> Bool {
+    static func ==(lhs: EmptyFlashcard, rhs: EmptyFlashcard) -> Bool {
         lhs.id == rhs.id
     }
 }

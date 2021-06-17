@@ -15,11 +15,6 @@ import AuthenticationServices
 
 struct LoginView: View {
     var body: some View {
-//        if viewModel.signedIn {
-//            DecksView()
-//        } else {
-//            Login()
-//        }
         Login()
     }
 }
@@ -36,20 +31,12 @@ struct Login : View {
     
     @State private var email: String = ""
     @State private var password: String = ""
+//    @State var isEditing = false
     @State var isHidden = true
     
 
     var body: some View {
         VStack {
-//            Button(action: {
-//                self.presentationMode.wrappedValue.dismiss()
-//            }, label: {
-//                Image(systemName: "chevron.left")
-//                    .font(.headline)
-//                    .foregroundColor(.purple)
-//            })
-//            .frame(maxWidth: .infinity, alignment: .leading)
-//            .padding()
             ScrollView {
                 ScrollViewReader {scrollView in
                     VStack {
@@ -94,6 +81,7 @@ struct Login : View {
                                                 .disableAutocorrection(true)
                                                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                                                 .modifier(TextFieldClearButton(text: $password))
+//                                                .modifier(TextFieldClearButton(isEditing: $isEditing, text: $password))
                                                 .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                                                 .frame(height: CGFloat(0))
                                             
@@ -103,6 +91,7 @@ struct Login : View {
                                                 .disableAutocorrection(true)
                                                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                                                 .modifier(TextFieldClearButton(text: $password))
+//                                                .modifier(TextFieldClearButton(isEditing: $isEditing, text: $password))
                                                 .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                                                 .frame(height: CGFloat(0))
                                         }

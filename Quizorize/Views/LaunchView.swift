@@ -9,24 +9,24 @@ import SwiftUI
 
 struct LaunchView: View {
     @EnvironmentObject var viewModel: AuthViewModel
-//    @State private var isPresented = true
+    @StateObject var userListViewModel = UserListViewModel()
 
     var body: some View {
         ZStack {
             if viewModel.signedIn {
 //                NavigationLink(destination: DecksView(), isActive: $viewModel.signedIn) {EmptyView()}
-                DecksView()
+//                HomeView(userViewModel: (userListViewModel.userViewModels.filter({ userVM in
+//                    userVM.user.id == viewModel.user?.uid
+//                }).first)!)
+                HomeView()
             } else {
                 Launch()	
             }
         }
         .onAppear {
             viewModel.signedIn = viewModel.isSignedIn
+            
         }
-//        .fullScreenCover(isPresented: $isPresented, content: Launch.init)
-        
-//        .navigationBarHidden(true)
-//        .navigationBarBackButtonHidden(true)
     }
 }
 
@@ -67,7 +67,6 @@ struct Launch: View {
                     })
             }
         }
-        
     }
 }
 

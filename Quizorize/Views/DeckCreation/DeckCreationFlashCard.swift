@@ -26,10 +26,12 @@ struct DeckCreationFlashCard: View {
                 TextField("Enter question",
                           text: $question,
                           onEditingChanged: { _ in
-                            deckCreationVM.editQuestionWith(string: question, at: index)
+                            print(deckCreationVM.flashcards)
+                            deckCreationVM.editPromptWith(string: question, at: index)
                           },
                           onCommit: {
-                            deckCreationVM.editQuestionWith(string: question, at: index)
+                            print(deckCreationVM.flashcards)
+                            deckCreationVM.editPromptWith(string: question, at: index)
                           })
                     .foregroundColor(Color.white)
                     .font(font(in: geometry.size))

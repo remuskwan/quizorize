@@ -10,31 +10,32 @@ import Combine
 
 class DeckCreationViewModel: ObservableObject {
     
-    static let oneEmptyFlashCard = EmptyFlashcard<String> (question: "", answer: "")
-    
+
     //MARK: Interpret(s) from Model
-    @Published private var emptyFlashcards = [EmptyFlashcard<String>] (arrayLiteral: DeckCreationViewModel.oneEmptyFlashCard)
+    @Published private var model: DeckCreationModel = DeckCreationModel(minimumNumberOfCards: 2)
+    @Published private var emptyFlashcards = [EmptyFlashcard](arrayLiteral: EmptyFlashcard(prompt: "", answer: "", dateAdded: Date()))
     
-    var EmptyFlashcards: [EmptyFlashcard<String>] {
-        return emptyFlashcards
+    var flashcards: [DeckCreationModel.EmptyFlashcard] {
+        model.flashcards
     }
+    
     
     //MARK: Intent(s) from View
     
-    func addField() {
-        emptyFlashcards.append(DeckCreationViewModel.oneEmptyFlashCard)
+    func addFlashcard() {
+        model.addFlashcard()
     }
     
     func removeField(at index: Int) {
-        self.emptyFlashcards.remove(at: index)
+        model.removeField(at: index)
     }
     
-    func editQuestionWith(string: String, at index: Int) {
-        emptyFlashcards[index].question = string
+    func editPromptWith(string: String, at index: Int) {
+        model.editPromptWith(string, at: index)
     }
     
     func editAnswerWith(string: String, at index: Int) {
-        emptyFlashcards[index].answer = string
+        model.editAnswerWith(string, at: index)
     }
     
     func createCards() {
@@ -42,8 +43,8 @@ class DeckCreationViewModel: ObservableObject {
     }
     
     func checkIfAnyFieldsAreEmpty() -> Bool {
-        for anyFlashcard in emptyFlashcards {
-            if anyFlashcard.question.isEmpty || anyFlashcard.answer.isEmpty {
+        for anyFlashcard in flashcards {
+            if anyFlashcard.prompt.isEmpty || anyFlashcard.answer.isEmpty {
                 return true
             }
         }
