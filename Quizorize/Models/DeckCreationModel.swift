@@ -39,6 +39,16 @@ struct DeckCreationModel {
     mutating func editAnswerWith(_ string: String, at index: Int) {
         flashcards[index].answer = string
     }
+    
+    func getFinaliseFlashcards() -> [Flashcard] {
+        var finalisedFlashcards: [Flashcard] = []
+        
+        for emptyFlashcard in self.flashcards {
+            finalisedFlashcards.append(Flashcard(prompt: emptyFlashcard.prompt, answer: emptyFlashcard.answer, dateAdded: emptyFlashcard.dateAdded))
+        }
+        
+        return finalisedFlashcards
+    }
 
 
     struct EmptyFlashcard: Identifiable, Equatable {

@@ -38,8 +38,8 @@ class DeckCreationViewModel: ObservableObject {
         model.editAnswerWith(string, at: index)
     }
     
-    func createCards() {
-        //link to DB
+    func getFinalisedFlashcards() -> [Flashcard] {
+        model.getFinaliseFlashcards()
     }
     
     func checkIfAnyFieldsAreEmpty() -> Bool {
