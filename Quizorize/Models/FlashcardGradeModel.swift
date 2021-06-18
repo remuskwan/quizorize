@@ -12,6 +12,7 @@ struct FlashcardGradeModel {
     var id: UUID
     var userID: UUID
     var deckID: UUID
+    var flashcardID: UUID
     var repetition: Int
     var interval: Int
     var easinessFactor: Double

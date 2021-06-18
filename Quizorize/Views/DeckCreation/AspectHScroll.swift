@@ -24,7 +24,7 @@ struct AspectHScroll<Item, ItemView>: View where ItemView: View, Item: Identifia
                 HStack {
                     ForEach(items) { item in
                         content(item)
-                            .frame(idealWidth: fullView.size.width * 0.7, maxWidth: fullView.size.width)
+                            .frame(idealWidth: fullView.size.width * 0.3, maxWidth: fullView.size.width)
                             .aspectRatio(aspectRatio, contentMode: .fit)
                     }
                 }

@@ -26,7 +26,7 @@ struct PracticeModeFlashCard: View {
                     .padding()
                     .shadow(radius: 1)
             }
-            .cardify(isFlipped: flipped)
+            .cardify()
             .onTapGesture {
                 withAnimation {
                     flipped.toggle()

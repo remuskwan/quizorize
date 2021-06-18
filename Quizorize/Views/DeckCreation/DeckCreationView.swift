@@ -14,7 +14,8 @@ struct DeckCreationView: View {
     @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
     @ObservedObject var deckListViewModel: DeckListViewModel
     
-    
+    @Namespace var bottomID
+
     @State private var deckTitle = ""
     
     var body: some View {
@@ -35,13 +36,12 @@ struct DeckCreationView: View {
                     
                     Divider()
                     
+                    EditButton()
                     
                     flashcardView()
-                    
-                    Spacer()
-                    
+
                     Button {
-                        deckCreationVM.addField()
+                        deckCreationVM.addFlashcard()
                         
                     } label: {
                         Circle()
@@ -65,6 +65,8 @@ struct DeckCreationView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         //TODO: Add flashcards to deck
+                        let flashcards: [Flashcard] = deckCreationVM.getFinalisedFlashcards()
+                        print(flashcards)
                         let deck = Deck(title: self.deckTitle)
                         deckListViewModel.add(deck)
                         presentationMode.wrappedValue.dismiss()
@@ -73,29 +75,65 @@ struct DeckCreationView: View {
                     }
                 }
             }
-//            .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
+            .ignoresSafeArea(.keyboard, edges: .bottom)
+            //            .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
         }
-        
     }
     
     //MARK: Iterate Flashcards
     @ViewBuilder
     private func flashcardView() -> some View {
+        /*
+         AspectHScroll(items: deckCreationVM.flashcards, aspectRatio: 2/3) { emptyFlashcard in
+         DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: deckCreationVM.flashcards.firstIndex(where: {$0 == emptyFlashcard})!)
+         }
+         */
+        
         GeometryReader { fullView in
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(deckCreationVM.EmptyFlashcards) { emptyFlashcard in
-                        DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: self.deckCreationVM.EmptyFlashcards.firstIndex(where: { $0 == emptyFlashcard})!)
-                            .frame(width: fullView.size.width * 0.925, height: fullView.size.height)
-                            .padding()
+            ScrollViewReader { scrollReader in
+                List {
+                    ForEach(deckCreationVM.flashcards) { emptyFlashcard in
+                        let index = deckCreationVM.flashcards.firstIndex(where: {$0 == emptyFlashcard})!
+                        DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: index)
+                            .frame(height: fullView.size.height * 0.25)
+                            .background(RoundedRectangle(cornerRadius: 6)
+                                            .fill(Color.white)
+                                            .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 3)
+                                            )
                     }
+                    .onDelete { indexSet in
+                        deckCreationVM.removeFields(at: indexSet)
+                    }
+                    
                 }
+                .listSeparatorStyle(style: .none, colorStyle: .clear)
+
             }
-            .background(Color.white)
         }
+
     }
 }
 
+struct ListSeparatorStyle: ViewModifier {
+    
+    let style: UITableViewCell.SeparatorStyle
+    let colorStyle: UIColor
+    
+    func body(content: Content) -> some View {
+        content
+            .onAppear() {
+                UITableView.appearance().separatorStyle = self.style
+                UITableView.appearance().separatorColor = self.colorStyle
+            }
+    }
+}
+
+extension View {
+    
+    func listSeparatorStyle(style: UITableViewCell.SeparatorStyle, colorStyle: UIColor) -> some View {
+        ModifiedContent(content: self, modifier: ListSeparatorStyle(style: style, colorStyle: colorStyle))
+    }
+}
 
 
 //struct DeckCreationView_Previews: PreviewProvider {
