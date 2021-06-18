@@ -16,16 +16,15 @@ struct DeckCreationModel {
     init(minimumNumberOfCards: Int) {
         flashcards = []
         
-        for index in 0..<minimumNumberOfCards {
-            flashcards.append(EmptyFlashcard(id: index, dateAdded: Date()))
+        for _ in 0..<minimumNumberOfCards {
+            flashcards.append(EmptyFlashcard(id: UUID(), dateAdded: Date()))
         }
     }
     
     
     //Intent(s)
     mutating func addFlashcard() {
-        let index = flashcards.count
-        flashcards.append(EmptyFlashcard(id: index, dateAdded: Date()))
+        flashcards.append(EmptyFlashcard(id: UUID(), dateAdded: Date()))
     }
     
     mutating func removeFields(at indexSet: IndexSet) {
@@ -57,7 +56,7 @@ struct DeckCreationModel {
             static let answerInit = ""
         }
         
-        var id: Int
+        var id: UUID
         var prompt = Initialisers.promptInit
         var answer = Initialisers.answerInit
         var dateAdded: Date
@@ -65,5 +64,6 @@ struct DeckCreationModel {
         static func ==(lhs: EmptyFlashcard, rhs: EmptyFlashcard) -> Bool {
             lhs.id == rhs.id
         }
+        
     }
 }

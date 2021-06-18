@@ -13,8 +13,7 @@ class DeckCreationViewModel: ObservableObject {
 
     //MARK: Interpret(s) from Model
     @Published private var model: DeckCreationModel = DeckCreationModel(minimumNumberOfCards: 2)
-    @Published private var emptyFlashcards = [EmptyFlashcard](arrayLiteral: EmptyFlashcard(prompt: "", answer: "", dateAdded: Date()))
-    
+
     var flashcards: [DeckCreationModel.EmptyFlashcard] {
         model.flashcards
     }

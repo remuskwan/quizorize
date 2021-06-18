@@ -23,7 +23,7 @@ struct DeckCreationFlashCard: View {
         GeometryReader { geometry in
             ZStack {
                 RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
-                    .strokeBorder(Color.black, lineWidth: 0.5)
+                    .fill(Color.white)
                     .frame(width: geometry.size.width, height: geometry.size.height)
                 
                 VStack {
@@ -38,11 +38,13 @@ struct DeckCreationFlashCard: View {
                                 deckCreationVM.editPromptWith(string: question, at: index)
                               })
                         .padding(.horizontal)
-                        .font(.title)
+                        .font(.body)
+                        .foregroundColor(.accentColor)
                     
                     Rectangle().frame(height: DrawingConstants.rectWidth)
                         .padding(.horizontal, 20).foregroundColor(DrawingConstants.rectLineColor)
                     
+
                     
                     TextField("Enter answer",
                               text: $answer,
@@ -53,14 +55,15 @@ struct DeckCreationFlashCard: View {
                                 deckCreationVM.editAnswerWith(string: answer, at: index)
                               })
                         .padding(.horizontal)
-                        .font(.title)
+                        .font(.body)
+                        .foregroundColor(.accentColor)
                     
                     Rectangle().frame(height: DrawingConstants.rectWidth)
                         .padding(.horizontal, 20).foregroundColor(DrawingConstants.rectLineColor)
                 }
-                
+
             }
-            
+
             
             /*
              .foregroundColor(Color.white)
@@ -124,6 +127,7 @@ struct DeckCreationFlashCard: View {
              .opacity(0.2), radius: 5, x: 0, y: 2)
              */
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
     
     private func font(in size: CGSize) -> Font {

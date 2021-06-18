@@ -14,7 +14,8 @@ struct DeckCreationView: View {
     @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
     @ObservedObject var deckListViewModel: DeckListViewModel
     
-    
+    @Namespace var bottomID
+
     @State private var deckTitle = ""
     
     var body: some View {
@@ -35,11 +36,10 @@ struct DeckCreationView: View {
                     
                     Divider()
                     
+                    EditButton()
                     
                     flashcardView()
-                    
-                    Spacer()
-                    
+
                     Button {
                         deckCreationVM.addFlashcard()
                         
@@ -75,6 +75,7 @@ struct DeckCreationView: View {
                     }
                 }
             }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
             //            .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
         }
     }
@@ -92,17 +93,24 @@ struct DeckCreationView: View {
             ScrollViewReader { scrollReader in
                 List {
                     ForEach(deckCreationVM.flashcards) { emptyFlashcard in
-                        DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: deckCreationVM.flashcards.firstIndex(where: { $0 == emptyFlashcard})!)
-                            .frame(height: fullView.size.height * 0.2)
+                        let index = deckCreationVM.flashcards.firstIndex(where: {$0 == emptyFlashcard})!
+                        DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: index)
+                            .frame(height: fullView.size.height * 0.25)
+                            .background(RoundedRectangle(cornerRadius: 6)
+                                            .fill(Color.white)
+                                            .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 3)
+                                            )
                     }
                     .onDelete { indexSet in
                         deckCreationVM.removeFields(at: indexSet)
                     }
+                    
                 }
-                .listSeparatorStyle(style: .singleLine, colorStyle: .clear)
+                .listSeparatorStyle(style: .none, colorStyle: .clear)
+
             }
         }
-        
+
     }
 }
 
