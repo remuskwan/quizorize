@@ -28,8 +28,8 @@ struct DeckCreationModel {
         flashcards.append(EmptyFlashcard(id: index, dateAdded: Date()))
     }
     
-    mutating func removeField(at index: Int) {
-        flashcards.remove(at: index)
+    mutating func removeFields(at indexSet: IndexSet) {
+        flashcards.remove(atOffsets: indexSet)
     }
     
     mutating func editPromptWith(_ string: String, at index: Int) {

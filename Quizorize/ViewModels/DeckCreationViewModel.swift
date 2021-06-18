@@ -19,15 +19,14 @@ class DeckCreationViewModel: ObservableObject {
         model.flashcards
     }
     
-    
     //MARK: Intent(s) from View
     
     func addFlashcard() {
         model.addFlashcard()
     }
     
-    func removeField(at index: Int) {
-        model.removeField(at: index)
+    func removeFields(at index: IndexSet) {
+        model.removeFields(at: index)
     }
     
     func editPromptWith(string: String, at index: Int) {

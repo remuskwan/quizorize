@@ -75,33 +75,57 @@ struct DeckCreationView: View {
                     }
                 }
             }
-//            .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
+            //            .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
         }
     }
     
     //MARK: Iterate Flashcards
     @ViewBuilder
     private func flashcardView() -> some View {
-        AspectHScroll(items: deckCreationVM.flashcards, aspectRatio: 2/3) { emptyFlashcard in
-            DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: deckCreationVM.flashcards.firstIndex(where: {$0 == emptyFlashcard})!)
-        }
-
         /*
+         AspectHScroll(items: deckCreationVM.flashcards, aspectRatio: 2/3) { emptyFlashcard in
+         DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: deckCreationVM.flashcards.firstIndex(where: {$0 == emptyFlashcard})!)
+         }
+         */
+        
         GeometryReader { fullView in
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(deckCreationVM.EmptyFlashcards) { emptyFlashcard in
-                        DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: self.deckCreationVM.EmptyFlashcards.firstIndex(where: { $0 == emptyFlashcard})!)
-                            .frame(width: fullView.size.width * 0.925, height: fullView.size.height)
-                            .padding()
+            ScrollViewReader { scrollReader in
+                List {
+                    ForEach(deckCreationVM.flashcards) { emptyFlashcard in
+                        DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: deckCreationVM.flashcards.firstIndex(where: { $0 == emptyFlashcard})!)
+                            .frame(height: fullView.size.height * 0.2)
+                    }
+                    .onDelete { indexSet in
+                        deckCreationVM.removeFields(at: indexSet)
                     }
                 }
+                .listSeparatorStyle(style: .singleLine, colorStyle: .clear)
             }
-            .background(Color.white)
-            */
         }
+        
+    }
 }
 
+struct ListSeparatorStyle: ViewModifier {
+    
+    let style: UITableViewCell.SeparatorStyle
+    let colorStyle: UIColor
+    
+    func body(content: Content) -> some View {
+        content
+            .onAppear() {
+                UITableView.appearance().separatorStyle = self.style
+                UITableView.appearance().separatorColor = self.colorStyle
+            }
+    }
+}
+
+extension View {
+    
+    func listSeparatorStyle(style: UITableViewCell.SeparatorStyle, colorStyle: UIColor) -> some View {
+        ModifiedContent(content: self, modifier: ListSeparatorStyle(style: style, colorStyle: colorStyle))
+    }
+}
 
 
 //struct DeckCreationView_Previews: PreviewProvider {
