@@ -13,7 +13,8 @@ struct DeckCreationFlashCard: View {
     
     @ObservedObject var deckCreationVM: DeckCreationViewModel
     
-    @State private var flipped = false
+    @State private var isQuestionTapped = false
+    @State private var isAnswerTapped = false
     @State private var question = ""
     @State private var answer = ""
     
@@ -22,45 +23,16 @@ struct DeckCreationFlashCard: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
-                    .fill(Color.white)
+                PromptAndQuestionContainer
                     .frame(width: geometry.size.width, height: geometry.size.height)
-                
-                VStack {
-                    TextField("Enter question",
-                              text: $question,
-                              onEditingChanged: { _ in
-                                print(deckCreationVM.flashcards)
-                                deckCreationVM.editPromptWith(string: question, at: index)
-                              },
-                              onCommit: {
-                                print(deckCreationVM.flashcards)
-                                deckCreationVM.editPromptWith(string: question, at: index)
-                              })
-                        .padding(.horizontal)
-                        .font(.body)
-                        .foregroundColor(.accentColor)
-                    
-                    Rectangle().frame(height: DrawingConstants.rectWidth)
-                        .padding(.horizontal, 20).foregroundColor(DrawingConstants.rectLineColor)
-                    
 
-                    
-                    TextField("Enter answer",
-                              text: $answer,
-                              onEditingChanged: { _ in
-                                deckCreationVM.editAnswerWith(string: answer, at: index)
-                              },
-                              onCommit: {
-                                deckCreationVM.editAnswerWith(string: answer, at: index)
-                              })
-                        .padding(.horizontal)
-                        .font(.body)
-                        .foregroundColor(.accentColor)
-                    
-                    Rectangle().frame(height: DrawingConstants.rectWidth)
-                        .padding(.horizontal, 20).foregroundColor(DrawingConstants.rectLineColor)
+                VStack {
+
+                    questionBody
+
+                    answerBody
                 }
+                .padding()
 
             }
 
@@ -127,9 +99,110 @@ struct DeckCreationFlashCard: View {
              .opacity(0.2), radius: 5, x: 0, y: 2)
              */
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
     
+    var PromptAndQuestionContainer: some View {
+        
+        RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
+            .fill(Color.white)
+
+    }
+    var questionBody: some View {
+        
+        
+        TextField(StringConstants.promptPlaceholder,
+                  text: $question,
+                  onEditingChanged: { edit in
+                    withAnimation(.easeIn(duration: DrawingConstants.easeInDuration)) {
+                        isQuestionTapped = edit
+                    }
+                    print(deckCreationVM.flashcards)
+                    deckCreationVM.editPromptWith(string: question, at: index)
+                  },
+                  onCommit: {
+                    print(deckCreationVM.flashcards)
+                    deckCreationVM.editPromptWith(string: question, at: index)
+                  })
+            .font(.body)
+            .textFieldStyle(CustomTextFieldStyle(isFieldTapped: $isQuestionTapped, captionTitle: StringConstants.promptTitle))
+        
+        /*
+        VStack {
+            TextField(StringConstants.promptPlaceholder,
+                      text: $question,
+                      onEditingChanged: { edit in
+                        withAnimation(.easeIn(duration: DrawingConstants.easeInDuration)) {
+                            isQuestionTapped = edit
+                        }
+                        print(deckCreationVM.flashcards)
+                        deckCreationVM.editPromptWith(string: question, at: index)
+                      },
+                      onCommit: {
+                        print(deckCreationVM.flashcards)
+                        deckCreationVM.editPromptWith(string: question, at: index)
+                      })
+                .font(.body)
+
+            Rectangle().frame(height: DrawingConstants.rectWidth)
+                .foregroundColor(isQuestionTapped ? DrawingConstants.tappedColor : DrawingConstants.notTappedColor )
+            
+            HStack {
+                Text(StringConstants.promptTitle)
+                    .font(.caption.bold())
+                    .foregroundColor(.secondary)
+
+                Spacer()
+            }
+
+        }
+        */
+
+    }
+    
+    var answerBody: some View {
+        TextField(StringConstants.answerPlaceholder,
+                  text: $answer,
+                  onEditingChanged: { edit in
+                    withAnimation(.easeIn(duration: DrawingConstants.easeInDuration)) {
+                        isAnswerTapped = edit
+                    }
+                    deckCreationVM.editAnswerWith(string: answer, at: index)
+                  },
+                  onCommit: {
+                    deckCreationVM.editAnswerWith(string: answer, at: index)
+                  })
+            .font(.body)
+            .textFieldStyle(CustomTextFieldStyle(isFieldTapped: $isAnswerTapped, captionTitle: StringConstants.answerTitle))
+
+        /*
+        VStack {
+            TextField(StringConstants.answerPlaceholder,
+                      text: $answer,
+                      onEditingChanged: { edit in
+                        withAnimation(.easeIn(duration: DrawingConstants.easeInDuration)) {
+                            isAnswerTapped = edit
+                        }
+                        deckCreationVM.editAnswerWith(string: answer, at: index)
+                      },
+                      onCommit: {
+                        deckCreationVM.editAnswerWith(string: answer, at: index)
+                      })
+                .font(.body)
+
+            Rectangle().frame(height: DrawingConstants.rectWidth)
+        .foregroundColor(isAnswerTapped ? DrawingConstants.tappedColor : DrawingConstants.notTappedColor)
+            
+            HStack {
+                Text(StringConstants.answerTitle)
+                    .font(.caption.bold())
+                    .foregroundColor(.secondary)
+
+                Spacer()
+            }
+        }
+        */
+    }
+
     private func font(in size: CGSize) -> Font {
         Font.system(size: min(size.width, size.height) * DrawingConstants.fontScale)
     }
@@ -140,8 +213,15 @@ struct DeckCreationFlashCard: View {
         static let lineWidth: CGFloat = 1.5
         static let fontScale: CGFloat = 0.1
         
-        static let rectLineColor: Color = .accentColor
-        static let rectWidth: CGFloat = 3
+        static let easeInDuration: Double = 0.1
+    }
+    
+    private struct StringConstants {
+        static let promptPlaceholder = "Enter prompt"
+        static let promptTitle = "PROMPT"
+        
+        static let answerPlaceholder = "Enter answer"
+        static let answerTitle = "ANSWER"
     }
 }
 
