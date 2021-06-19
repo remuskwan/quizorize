@@ -37,19 +37,21 @@ final class FlashcardRepository: ObservableObject {
         }
     }
     
-    func addData(_ flashcard: Flashcard) {
+    func addData(_ flashcard: Flashcard, deckId: String) {
         do {
             _ = try db.collection(path).document(uId)
-                .collection(subPath).addDocument(from: flashcard)
+                .collection(subPath).document(deckId)
+                .collection(subPath2).addDocument(from: flashcard)
         } catch {
             fatalError("Adding deck failed")
         }
     }
     
-    func removeData(_ flashcard: Flashcard) {
+    func removeData(_ flashcard: Flashcard, deckId: String) {
         guard let documentId = flashcard.id else { return }
         db.collection(path).document(self.uId)
-            .collection(subPath).document(documentId).delete { error in
+            .collection(subPath).document(deckId)
+            .collection(subPath2).document(documentId).delete { error in
             if let error = error {
                 print("Unable to delete deck: \(error.localizedDescription)")
             }
@@ -57,11 +59,12 @@ final class FlashcardRepository: ObservableObject {
         }
     }
     
-    func updateData(_ flashcard: Flashcard) {
+    func updateData(_ flashcard: Flashcard, deckId: String) {
         guard let documentId = flashcard.id else { return }
         do {
             try db.collection(path).document(self.uId)
-                .collection(subPath).document(documentId).setData(from: flashcard)
+                .collection(subPath).document(deckId)
+                .collection(subPath2).document(documentId).setData(from: flashcard)
         } catch {
             fatalError("Updating deck failed")
         }
