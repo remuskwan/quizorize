@@ -24,15 +24,15 @@ class FlashcardListViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func add(_ flashcard: Flashcard) {
-        flashcardRepository.addData(flashcard)
+    func add(_ flashcard: Flashcard, deckId: String) {
+        flashcardRepository.addData(flashcard, deckId: deckId)
     }
     
-    func remove(_ flashcard: Flashcard) {
-        flashcardRepository.removeData(flashcard)
+    func remove(_ flashcard: Flashcard, deckId: String) {
+        flashcardRepository.removeData(flashcard, deckId: deckId)
     }
     
-    func update(_ flashcard: Flashcard) {
-        flashcardRepository.updateData(flashcard)
+    func update(_ flashcard: Flashcard, deckId: String) {
+        flashcardRepository.updateData(flashcard, deckId: deckId)
     }
 }
