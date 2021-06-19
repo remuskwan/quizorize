@@ -8,12 +8,16 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Flashcard: Identifiable, Codable {
+struct Flashcard: Identifiable, Codable, Equatable {
     @DocumentID var id: String?
     var prompt: String
     var answer: String
 //    var flashCardAge: FlashCardAge
     var dateAdded: Date
+    
+    static func ==(lhs: Flashcard, rhs: Flashcard) -> Bool {
+        lhs.id == rhs.id
+    }
     
     
 //    enum FlashCardAge: String, Codable {
