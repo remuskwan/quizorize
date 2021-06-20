@@ -13,44 +13,28 @@ struct DeckCreationView: View {
     
     @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
     @ObservedObject var deckListViewModel: DeckListViewModel
-    
-    @Namespace var bottomID
 
     @State private var deckTitle = ""
+    @State private var isDeckTitleTapped = false
     
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
                 VStack {
                     
-                    TextField("Untitled deck", text: $deckTitle)
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                        .multilineTextAlignment(.center)
-                        .frame(width: geometry.size.width / 2)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 4)
-                                .stroke(Color.accentColor, lineWidth: 1.5)
-                        )
+                    deckTitleView
                         .padding()
-                    
+
                     Divider()
                     
-                    EditButton()
-                    
                     flashcardView()
+                        .frame(minHeight: geometry.size.height * DimensionConstants.flashcardViewRatio)
+                    
+                    Spacer()
 
-                    Button {
-                        deckCreationVM.addFlashcard()
-                        
-                    } label: {
-                        Circle()
-                            .fill(Color.accentColor)
-                            .frame(height: geometry.size.height / 15)
-                            .overlay(Image(systemName:
-                                            "plus").foregroundColor(.white))
-                    }
-                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
+                    addCards
+                        .frame(height: geometry.size.height / DimensionConstants.addCardsDimensionDivisor)
+
                 }
             }
             .navigationBarTitle(Text("New deck"), displayMode: .inline)
@@ -75,45 +59,155 @@ struct DeckCreationView: View {
                     }
                 }
             }
-            .ignoresSafeArea(.keyboard, edges: .bottom)
             //            .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
         }
     }
     
-    //MARK: Iterate Flashcards
-    @ViewBuilder
-    private func flashcardView() -> some View {
-        /*
-         AspectHScroll(items: deckCreationVM.flashcards, aspectRatio: 2/3) { emptyFlashcard in
-         DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: deckCreationVM.flashcards.firstIndex(where: {$0 == emptyFlashcard})!)
-         }
-         */
+    var deckTitleView: some View {
         
+        
+        TextField(StringConstants.titlePlaceholder, text: $deckTitle,
+                  onEditingChanged: { edit in
+                    withAnimation(.easeIn(duration: DrawingConstants.easeInDuration)) {
+                        isDeckTitleTapped = edit
+                    }
+                  })
+            .textFieldStyle(CustomTextFieldStyle(isFieldTapped: $isDeckTitleTapped, captionTitle: StringConstants.title, imageName: "title"))
+
+    }
+    
+    var addCards: some View {
+        Button {
+            deckCreationVM.addFlashcard()
+            
+        } label: {
+            Circle()
+                .fill(Color.accentColor)
+                .overlay(Image(systemName:
+                                "plus").foregroundColor(.white))
+        }
+        .shadow(color: DrawingConstants.deckCreationShadowColor, radius: DrawingConstants.deckCreationShadowRadius, x: DrawingConstants.deckCreationShadowX, y: DrawingConstants.deckCreationShadowY)
+    }
+    
+
+    //MARK: Iterate Flashcards
+    @ViewBuilder //should be used if there are conditions inside this view.
+    private func flashcardView() -> some View {
         GeometryReader { fullView in
             ScrollViewReader { scrollReader in
                 List {
                     ForEach(deckCreationVM.flashcards) { emptyFlashcard in
                         let index = deckCreationVM.flashcards.firstIndex(where: {$0 == emptyFlashcard})!
                         DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: index)
-                            .frame(height: fullView.size.height * 0.25)
-                            .background(RoundedRectangle(cornerRadius: 6)
+                            .background(RoundedRectangle(cornerRadius: DrawingConstants.deckCreationFlashcardCornerRadius)
                                             .fill(Color.white)
-                                            .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 3)
+                                            .shadow(color: DrawingConstants.deckCreationShadowColor, radius: DrawingConstants.deckCreationShadowRadius, x: DrawingConstants.deckCreationShadowX, y: DrawingConstants.deckCreationShadowY)
                                             )
+                            .frame(height: DimensionConstants.deckCreationFlashcardHeight)
+                            .id(emptyFlashcard.id)
+
                     }
                     .onDelete { indexSet in
                         deckCreationVM.removeFields(at: indexSet)
                     }
-                    
+                    .onChange(of: deckCreationVM.flashcards.count) { _ in
+                        withAnimation(.default) {
+                            scrollReader.scrollTo(deckCreationVM.flashcards.last?.id, anchor: .center)
+                        }
+                    }
                 }
                 .listSeparatorStyle(style: .none, colorStyle: .clear)
-
+                .environment(\.defaultMinListRowHeight, fullView.size.height * DimensionConstants.ScrollViewRatio)
             }
         }
+        
 
+    }
+    
+    private struct DrawingConstants {
+        static let easeInDuration: Double = 0.1
+        
+        static let deckCreationShadowColor = Color.black.opacity(0.2)
+        static let deckCreationShadowRadius: CGFloat = 3
+        static let deckCreationShadowX: CGFloat = 0
+        static let deckCreationShadowY: CGFloat = 3
+        
+        static let deckCreationFlashcardCornerRadius: CGFloat = 6
+    }
+    
+    private struct DimensionConstants {
+        static let flashcardViewRatio: CGFloat = 0.5
+        static let addCardsDimensionDivisor: CGFloat = 15
+        
+        static let deckCreationFlashcardHeight: CGFloat = 155
+        
+        static let ScrollViewRatio: CGFloat = 0.35
+        
+    }
+    
+    private struct AnimationConstants {
+        static let deckCreationDelay = 1.0
+    }
+    
+    private struct StringConstants {
+        static let title = "TITLE"
+        
+        static let titlePlaceholder = "Subject, chapter, unit"
     }
 }
 
+//MARK: CustomTextField (with a rect line and a caption at the bottom)
+struct CustomTextFieldStyle: TextFieldStyle {
+    
+    @Binding var isFieldTapped: Bool
+    
+    var captionTitle: String
+    
+    var imageName: String
+    
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        VStack {
+            HStack {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: DrawingConstants.fieldImageHeight)
+                    
+
+                configuration
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
+            }
+            .font(.body)
+
+            Rectangle().frame(height: DrawingConstants.rectWidth)
+                        .foregroundColor(isFieldTapped ? DrawingConstants.rectLineColorAfterTap : DrawingConstants.rectLineColorBeforeTap)
+            
+            HStack {
+                Text(captionTitle)
+                    .foregroundColor(.secondary)
+                
+                Spacer()
+            }
+            .font(.caption.bold())
+        }
+    }
+    
+    private struct DrawingConstants {
+        static let rectWidth: CGFloat = 3
+        static let rectLineColorBeforeTap = Color.black
+        static let rectLineColorAfterTap =  Color(hex: "15CDA8")
+        
+        static let easeInDuration: Double = 0.1
+        
+        static let fieldImageHeight: CGFloat = 21
+        
+    }
+    
+}
+
+
+//MARK: To remove line between lists.
 struct ListSeparatorStyle: ViewModifier {
     
     let style: UITableViewCell.SeparatorStyle
@@ -134,6 +228,9 @@ extension View {
         ModifiedContent(content: self, modifier: ListSeparatorStyle(style: style, colorStyle: colorStyle))
     }
 }
+
+
+//MARK: Keyboard responder
 
 
 //struct DeckCreationView_Previews: PreviewProvider {
