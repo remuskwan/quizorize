@@ -14,8 +14,6 @@ struct DeckCreationView: View {
     @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
     @ObservedObject var deckListViewModel: DeckListViewModel
 
-    @Namespace var bottomID
-
     @State private var deckTitle = ""
     @State private var isDeckTitleTapped = false
     
@@ -30,12 +28,12 @@ struct DeckCreationView: View {
                     Divider()
                     
                     flashcardView()
-                        .frame(minHeight: geometry.size.height * 0.5)
+                        .frame(minHeight: geometry.size.height * DimensionConstants.flashcardViewRatio)
                     
                     Spacer()
 
                     addCards
-                        .frame(height: geometry.size.height / 15)
+                        .frame(height: geometry.size.height / DimensionConstants.addCardsDimensionDivisor)
 
                 }
             }
@@ -88,7 +86,7 @@ struct DeckCreationView: View {
                 .overlay(Image(systemName:
                                 "plus").foregroundColor(.white))
         }
-        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
+        .shadow(color: DrawingConstants.deckCreationShadowColor, radius: DrawingConstants.deckCreationShadowRadius, x: DrawingConstants.deckCreationShadowX, y: DrawingConstants.deckCreationShadowY)
     }
     
 
@@ -101,11 +99,11 @@ struct DeckCreationView: View {
                     ForEach(deckCreationVM.flashcards) { emptyFlashcard in
                         let index = deckCreationVM.flashcards.firstIndex(where: {$0 == emptyFlashcard})!
                         DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: index)
-                            .background(RoundedRectangle(cornerRadius: 6)
+                            .background(RoundedRectangle(cornerRadius: DrawingConstants.deckCreationFlashcardCornerRadius)
                                             .fill(Color.white)
                                             .shadow(color: DrawingConstants.deckCreationShadowColor, radius: DrawingConstants.deckCreationShadowRadius, x: DrawingConstants.deckCreationShadowX, y: DrawingConstants.deckCreationShadowY)
                                             )
-                            .frame(height: 155)
+                            .frame(height: DimensionConstants.deckCreationFlashcardHeight)
                             .id(emptyFlashcard.id)
 
                     }
@@ -119,7 +117,7 @@ struct DeckCreationView: View {
                     }
                 }
                 .listSeparatorStyle(style: .none, colorStyle: .clear)
-                .environment(\.defaultMinListRowHeight, fullView.size.height * 0.35)
+                .environment(\.defaultMinListRowHeight, fullView.size.height * DimensionConstants.ScrollViewRatio)
             }
         }
         
@@ -133,6 +131,18 @@ struct DeckCreationView: View {
         static let deckCreationShadowRadius: CGFloat = 3
         static let deckCreationShadowX: CGFloat = 0
         static let deckCreationShadowY: CGFloat = 3
+        
+        static let deckCreationFlashcardCornerRadius: CGFloat = 6
+    }
+    
+    private struct DimensionConstants {
+        static let flashcardViewRatio: CGFloat = 0.5
+        static let addCardsDimensionDivisor: CGFloat = 15
+        
+        static let deckCreationFlashcardHeight: CGFloat = 155
+        
+        static let ScrollViewRatio: CGFloat = 0.35
+        
     }
     
     private struct AnimationConstants {
