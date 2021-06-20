@@ -26,14 +26,13 @@ struct DeckCreationView: View {
                     
                     deckTitleView
                         .padding()
-                        .frame(width: geometry.size.width)
 
                     Divider()
                     
-                    EditButton()
-                    
                     flashcardView()
                         .frame(minHeight: geometry.size.height * 0.5)
+                    
+                    Spacer()
 
                     addCards
                         .frame(height: geometry.size.height / 15)
@@ -62,7 +61,6 @@ struct DeckCreationView: View {
                     }
                 }
             }
-            .ignoresSafeArea(.keyboard)
             //            .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
         }
     }
@@ -76,8 +74,8 @@ struct DeckCreationView: View {
                         isDeckTitleTapped = edit
                     }
                   })
-            .textFieldStyle(CustomTextFieldStyle(isFieldTapped: $isDeckTitleTapped, captionTitle: StringConstants.title))
-    
+            .textFieldStyle(CustomTextFieldStyle(isFieldTapped: $isDeckTitleTapped, captionTitle: StringConstants.title, imageName: "title"))
+
     }
     
     var addCards: some View {
@@ -103,23 +101,25 @@ struct DeckCreationView: View {
                     ForEach(deckCreationVM.flashcards) { emptyFlashcard in
                         let index = deckCreationVM.flashcards.firstIndex(where: {$0 == emptyFlashcard})!
                         DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: index)
-                            .frame(height: fullView.size.height * 0.25)
                             .background(RoundedRectangle(cornerRadius: 6)
                                             .fill(Color.white)
-                                            .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 3)
+                                            .shadow(color: DrawingConstants.deckCreationShadowColor, radius: DrawingConstants.deckCreationShadowRadius, x: DrawingConstants.deckCreationShadowX, y: DrawingConstants.deckCreationShadowY)
                                             )
+                            .frame(height: 155)
+                            .id(emptyFlashcard.id)
+
                     }
                     .onDelete { indexSet in
                         deckCreationVM.removeFields(at: indexSet)
                     }
-                    //.onChange(of: deckCreationVM.flashcards.count) { _ in
-                    //    scrollReader.scrollTo(deckCreationVM.flashcards.last?.id, anchor: //.center)
-                   // }
-                    
+                    .onChange(of: deckCreationVM.flashcards.count) { _ in
+                        withAnimation(.default) {
+                            scrollReader.scrollTo(deckCreationVM.flashcards.last?.id, anchor: .center)
+                        }
+                    }
                 }
                 .listSeparatorStyle(style: .none, colorStyle: .clear)
                 .environment(\.defaultMinListRowHeight, fullView.size.height * 0.35)
-
             }
         }
         
@@ -129,6 +129,14 @@ struct DeckCreationView: View {
     private struct DrawingConstants {
         static let easeInDuration: Double = 0.1
         
+        static let deckCreationShadowColor = Color.black.opacity(0.2)
+        static let deckCreationShadowRadius: CGFloat = 3
+        static let deckCreationShadowX: CGFloat = 0
+        static let deckCreationShadowY: CGFloat = 3
+    }
+    
+    private struct AnimationConstants {
+        static let deckCreationDelay = 1.0
     }
     
     private struct StringConstants {
@@ -145,22 +153,33 @@ struct CustomTextFieldStyle: TextFieldStyle {
     
     var captionTitle: String
     
+    var imageName: String
+    
     func _body(configuration: TextField<Self._Label>) -> some View {
         VStack {
-            configuration
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
+            HStack {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: DrawingConstants.fieldImageHeight)
+                    
+
+                configuration
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
+            }
+            .font(.body)
 
             Rectangle().frame(height: DrawingConstants.rectWidth)
                         .foregroundColor(isFieldTapped ? DrawingConstants.rectLineColorAfterTap : DrawingConstants.rectLineColorBeforeTap)
             
             HStack {
                 Text(captionTitle)
-                    .font(.caption.bold())
                     .foregroundColor(.secondary)
                 
                 Spacer()
             }
+            .font(.caption.bold())
         }
     }
     
@@ -170,6 +189,8 @@ struct CustomTextFieldStyle: TextFieldStyle {
         static let rectLineColorAfterTap =  Color(hex: "15CDA8")
         
         static let easeInDuration: Double = 0.1
+        
+        static let fieldImageHeight: CGFloat = 21
         
     }
     

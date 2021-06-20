@@ -23,8 +23,6 @@ struct DeckCreationFlashCard: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                PromptAndQuestionContainer
-                    .frame(width: geometry.size.width, height: geometry.size.height)
 
                 VStack {
 
@@ -124,7 +122,7 @@ struct DeckCreationFlashCard: View {
                     deckCreationVM.editPromptWith(string: question, at: index)
                   })
             .font(.body)
-            .textFieldStyle(CustomTextFieldStyle(isFieldTapped: $isQuestionTapped, captionTitle: StringConstants.promptTitle))
+            .textFieldStyle(CustomTextFieldStyle(isFieldTapped: $isQuestionTapped, captionTitle: StringConstants.promptTitle, imageName: "question"))
         
         /*
         VStack {
@@ -172,7 +170,7 @@ struct DeckCreationFlashCard: View {
                     deckCreationVM.editAnswerWith(string: answer, at: index)
                   })
             .font(.body)
-            .textFieldStyle(CustomTextFieldStyle(isFieldTapped: $isAnswerTapped, captionTitle: StringConstants.answerTitle))
+            .textFieldStyle(CustomTextFieldStyle(isFieldTapped: $isAnswerTapped, captionTitle: StringConstants.answerTitle, imageName: "answer"))
 
         /*
         VStack {
