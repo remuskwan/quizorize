@@ -13,6 +13,7 @@ import SwiftUI
 
 class DeckListViewModel: ObservableObject {
     @Published var deckRepository = DeckRepository()
+    private var flashcardRepository = FlashcardRepository()
     @Published var deckViewModels = [DeckViewModel]()
     
     private var cancellables = Set<AnyCancellable>()
@@ -26,8 +27,8 @@ class DeckListViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func add(_ deck: Deck) {
-        deckRepository.addData(deck)
+    func add(deck: Deck, flashcards: [Flashcard]) {
+        deckRepository.addData(deck: deck, flashcards: flashcards)
     }
     
     func remove(_ deck: Deck) {
