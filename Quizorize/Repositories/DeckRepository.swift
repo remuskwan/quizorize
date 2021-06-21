@@ -13,8 +13,9 @@ import SwiftUI
 
 class DeckRepository: ObservableObject {
     private var uId = ""
-    private let path = "users"
+    private let primaryPath = "users"
     private let subPath = "decks"
+    private let subPath2 = "flashcards"
     private let db = Firestore.firestore()
     @Published var decks = [Deck]()
 
@@ -25,7 +26,7 @@ class DeckRepository: ObservableObject {
     }
     
     func loadData() {
-        db.collection(path).document(self.uId)
+        db.collection(primaryPath).document(self.uId)
             .collection(subPath).addSnapshotListener { querySnapshot, error in
             if let error = error {
                 print(error)
@@ -39,10 +40,17 @@ class DeckRepository: ObservableObject {
         }
     }
     
-    func addData(_ deck: Deck) {
+    func addData(deck: Deck, flashcards: [Flashcard]) {
         do {
-            _ = try db.collection(path).document(self.uId)
-                .collection(subPath).addDocument(from: deck)
+            let batch = db.batch()
+            let userRef = db.collection(primaryPath).document(self.uId)
+            let deckDocRef = try userRef.collection(subPath).addDocument(from: deck)
+            
+            _ = try flashcards.forEach { flashcard in
+                let docRef = deckDocRef.collection(subPath2).document()
+                _ = try batch.setData(from: flashcard, forDocument: docRef)
+            }
+            batch.commit()
         } catch {
             fatalError("Adding deck failed")
         }
@@ -50,7 +58,7 @@ class DeckRepository: ObservableObject {
     
     func removeData(_ deck: Deck) {
         guard let documentId = deck.id else { return }
-        db.collection(path).document(self.uId)
+        db.collection(primaryPath).document(self.uId)
             .collection(subPath).document(documentId).delete { error in
             if let error = error {
                 print("Unable to delete deck: \(error.localizedDescription)")
@@ -62,7 +70,7 @@ class DeckRepository: ObservableObject {
     func updateData(_ deck: Deck) {
         guard let documentId = deck.id else { return }
         do {
-            try db.collection(path).document(self.uId)
+            try db.collection(primaryPath).document(self.uId)
                 .collection(subPath).document(documentId).setData(from: deck)
         } catch {
             fatalError("Updating deck failed")

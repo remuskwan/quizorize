@@ -13,7 +13,9 @@ struct DeckCreationView: View {
     
     @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
     @ObservedObject var deckListViewModel: DeckListViewModel
-
+    @StateObject var flashcardListViewModel: FlashcardListViewModel = FlashcardListViewModel()
+    
+    @Namespace var bottomID
     @State private var deckTitle = ""
     @State private var isDeckTitleTapped = false
     
@@ -52,7 +54,11 @@ struct DeckCreationView: View {
                         let flashcards: [Flashcard] = deckCreationVM.getFinalisedFlashcards()
                         print(flashcards)
                         let deck = Deck(title: self.deckTitle)
-                        deckListViewModel.add(deck)
+                        deckListViewModel.add(deck: deck, flashcards: flashcards)
+//                        guard let deckId = deck.id else { return }
+//                        flashcards.forEach { flashcard in
+//                            flashcardListViewModel.add(flashcard, deckId: deckId)
+//                        }
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text("Create")
