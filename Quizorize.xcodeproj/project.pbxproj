@@ -99,6 +99,8 @@
 		7700BC61266F933A004C5C82 /* AspectHScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7700BC60266F933A004C5C82 /* AspectHScroll.swift */; };
 		7700BC652670FE75004C5C82 /* SREngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7700BC642670FE75004C5C82 /* SREngine.swift */; };
 		7700BC6926710470004C5C82 /* FlashcardGradeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7700BC6826710470004C5C82 /* FlashcardGradeModel.swift */; };
+		771526F8267F96F8005959D4 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771526F7267F96F8005959D4 /* SwiftUI.framework */; };
+		771526F9267F96F8005959D4 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771526F7267F96F8005959D4 /* SwiftUI.framework */; };
 		7719A791267325E600B0A102 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7719A790267325E600B0A102 /* Cardify.swift */; };
 		774D5912267A548A00D8A786 /* DeckCreationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774D5911267A548A00D8A786 /* DeckCreationModel.swift */; };
 		77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77541626266A047B00BE8273 /* DeckCreationView.swift */; };
@@ -181,6 +183,7 @@
 		7700BC60266F933A004C5C82 /* AspectHScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectHScroll.swift; sourceTree = "<group>"; };
 		7700BC642670FE75004C5C82 /* SREngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SREngine.swift; sourceTree = "<group>"; };
 		7700BC6826710470004C5C82 /* FlashcardGradeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardGradeModel.swift; sourceTree = "<group>"; };
+		771526F7267F96F8005959D4 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework; sourceTree = DEVELOPER_DIR; };
 		7719A790267325E600B0A102 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		774D5911267A548A00D8A786 /* DeckCreationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationModel.swift; sourceTree = "<group>"; };
 		77541626266A047B00BE8273 /* DeckCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationView.swift; sourceTree = "<group>"; };
@@ -198,6 +201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				771526F8267F96F8005959D4 /* SwiftUI.framework in Frameworks */,
 				16279344265EB61B0073718F /* FacebookLogin in Frameworks */,
 				16279348265EB61B0073718F /* FacebookCore in Frameworks */,
 				162792F7265BB9690073718F /* AlertKit in Frameworks */,
@@ -211,6 +215,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				771526F9267F96F8005959D4 /* SwiftUI.framework in Frameworks */,
 				65AC49052D83463592C8D004 /* Pods_QuizorizeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,6 +427,7 @@
 		96FE5971BEA6BB1A38867E24 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				771526F7267F96F8005959D4 /* SwiftUI.framework */,
 				EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */,
 				5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */,
 				7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */,

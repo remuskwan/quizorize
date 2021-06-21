@@ -114,11 +114,9 @@ struct DeckCreationFlashCard: View {
                     withAnimation(.easeIn(duration: DrawingConstants.easeInDuration)) {
                         isQuestionTapped = edit
                     }
-                    print(deckCreationVM.flashcards)
                     deckCreationVM.editPromptWith(string: question, at: index)
                   },
                   onCommit: {
-                    print(deckCreationVM.flashcards)
                     deckCreationVM.editPromptWith(string: question, at: index)
                   })
             .font(.body)

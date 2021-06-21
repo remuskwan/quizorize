@@ -13,9 +13,10 @@ struct DeckCreationView: View {
     
     @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
     @ObservedObject var deckListViewModel: DeckListViewModel
-
+    
     @State private var deckTitle = ""
     @State private var isDeckTitleTapped = false
+    @State private var isNotValid = false
     
     var body: some View {
         NavigationView {
@@ -49,14 +50,23 @@ struct DeckCreationView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         //TODO: Add flashcards to deck
+                        isNotValid = deckCreationVM.hasAnyFieldsEmpty() || deckCreationVM.hasDeckTitleEmpty() || deckCreationVM.hasLessThanTwoCards()
                         let flashcards: [Flashcard] = deckCreationVM.getFinalisedFlashcards()
-                        print(flashcards)
                         let deck = Deck(title: self.deckTitle)
                         deckListViewModel.add(deck)
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text("Create")
                     }
+                }
+            }
+            .alert(isPresented: $isNotValid) {
+                if (deckCreationVM.hasDeckTitleEmpty()) {
+                    return Alert(title: Text(StringConstants.alertTitle), message: Text(StringConstants.alertDeckTitleNotFound), dismissButton: .default(Text(StringConstants.alertDismissMessage)))
+                } else if (deckCreationVM.hasLessThanTwoCards()) {
+                    return Alert(title: Text(StringConstants.alertTitle), message: Text(StringConstants.alertLessThanTwoCard), dismissButton: .default(Text(StringConstants.alertDismissMessage)))
+                } else {
+                    return Alert(title: Text(StringConstants.alertTitle), message: Text(StringConstants.alertMissingField), dismissButton: .default(Text(StringConstants.alertDismissMessage)))
                 }
             }
             //            .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
@@ -68,6 +78,7 @@ struct DeckCreationView: View {
         
         TextField(StringConstants.titlePlaceholder, text: $deckTitle,
                   onEditingChanged: { edit in
+                    deckCreationVM.deckTitle = deckTitle
                     withAnimation(.easeIn(duration: DrawingConstants.easeInDuration)) {
                         isDeckTitleTapped = edit
                     }
@@ -79,7 +90,7 @@ struct DeckCreationView: View {
     var addCards: some View {
         Button {
             deckCreationVM.addFlashcard()
-            
+
         } label: {
             Circle()
                 .fill(Color.accentColor)
@@ -153,6 +164,13 @@ struct DeckCreationView: View {
         static let title = "TITLE"
         
         static let titlePlaceholder = "Subject, chapter, unit"
+        
+        static let alertTitle = "Important!"
+        static let alertMissingField = "You must fill up all fields in your deck"
+        static let alertLessThanTwoCard = "You must create a minimum of two flashcards."
+        static let alertDeckTitleNotFound = "You must have a deck title."
+        static let alertDismissMessage = "Got it!"
+        
     }
 }
 
