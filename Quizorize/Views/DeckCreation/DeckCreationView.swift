@@ -13,7 +13,6 @@ struct DeckCreationView: View {
     
     @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
     @ObservedObject var deckListViewModel: DeckListViewModel
-    @StateObject var flashcardListViewModel: FlashcardListViewModel = FlashcardListViewModel()
     
     @State private var deckTitle = ""
     @State private var isDeckTitleTapped = false

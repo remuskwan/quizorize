@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import Combine
+import SwiftUI
 
 class DeckViewModel: ObservableObject, Identifiable {
     private var deckRepository = DeckRepository()

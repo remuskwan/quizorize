@@ -18,7 +18,7 @@ class DeckRepository: ObservableObject {
     private let subPath2 = "flashcards"
     private let db = Firestore.firestore()
     @Published var decks = [Deck]()
-
+    
     init() {
         guard let user = Auth.auth().currentUser else { return }
         self.uId = user.uid

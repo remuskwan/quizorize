@@ -91,6 +91,7 @@
 		16E701D62678E49B00A1E55D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701D52678E49B00A1E55D /* User.swift */; };
 		16E701D826790B9200A1E55D /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701D726790B9200A1E55D /* DeckView.swift */; };
 		16E701DA267A0DB700A1E55D /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701D9267A0DB700A1E55D /* UserListViewModel.swift */; };
+		16E701DC2681CDCF00A1E55D /* PracticeModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701DB2681CDCD00A1E55D /* PracticeModeView.swift */; };
 		55EDED5D956B8021A55A875F /* Pods_Quizorize_QuizorizeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27CFB370D8660E55D4E71D /* Pods_Quizorize_QuizorizeUITests.framework */; };
 		571D50E1BB6F534A6DDF9D4D /* Pods_Quizorize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3121CEEC04AC15D3DF79F2 /* Pods_Quizorize.framework */; };
 		65AC49052D83463592C8D004 /* Pods_QuizorizeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */; };
@@ -174,6 +175,7 @@
 		16E701D52678E49B00A1E55D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		16E701D726790B9200A1E55D /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
 		16E701D9267A0DB700A1E55D /* UserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewModel.swift; sourceTree = "<group>"; };
+		16E701DB2681CDCD00A1E55D /* PracticeModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeModeView.swift; sourceTree = "<group>"; };
 		2429516D6B803B85C95E7062 /* Pods-Quizorize.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize/Pods-Quizorize.debug.xcconfig"; sourceTree = "<group>"; };
 		3C9B0A5876205BE63BDBE4EE /* Pods-Quizorize-QuizorizeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.release.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		43143D971498F4F2769EF37A /* Pods-QuizorizeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizorizeTests.release.xcconfig"; path = "Target Support Files/Pods-QuizorizeTests/Pods-QuizorizeTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 			isa = PBXGroup;
 			children = (
 				7700BC5E266F6375004C5C82 /* PracticeModeFlashCard.swift */,
+				16E701DB2681CDCD00A1E55D /* PracticeModeView.swift */,
 			);
 			path = PracticeModeView;
 			sourceTree = "<group>";
@@ -776,6 +779,7 @@
 				166B1E962670B45A00D3922B /* FlashcardRepository.swift in Sources */,
 				16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */,
 				166B1E712663FF6200D3922B /* SharedWebCredential.swift in Sources */,
+				16E701DC2681CDCF00A1E55D /* PracticeModeView.swift in Sources */,
 				166B1E812666258500D3922B /* Deck.swift in Sources */,
 				162792EC265AD1240073718F /* HomeView.swift in Sources */,
 				162793572660F7450073718F /* ProfileView.swift in Sources */,

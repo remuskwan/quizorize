@@ -10,7 +10,7 @@ import FirebaseFirestore
 import Combine
 
 class FlashcardViewModel: ObservableObject, Identifiable {
-    private var flashcardRepository = FlashcardRepository()
+//    private var flashcardRepository = FlashcardRepository()
     @Published var flashcard: Flashcard
     
     var id = ""

@@ -13,7 +13,7 @@ struct Flashcard: Identifiable, Codable, Equatable {
     var prompt: String
     var answer: String
 //    var flashCardAge: FlashCardAge
-    var dateAdded: Date
+    var dateAdded: Date = Date()
     
     static func ==(lhs: Flashcard, rhs: Flashcard) -> Bool {
         lhs.id == rhs.id
@@ -25,11 +25,4 @@ struct Flashcard: Identifiable, Codable, Equatable {
 //        case young
 //        case mature
 //    }
-  
-//  enum CodingKeys: String, CodingKey {
-//    case id
-//    case title
-//    case author
-//    case numberOfPages = "pages"
-//  }
 }
