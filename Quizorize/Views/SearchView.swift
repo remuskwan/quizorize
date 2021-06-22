@@ -8,81 +8,79 @@
 import SwiftUI
 
 struct SearchView: View {
+    @ObservedObject var deckListViewModel: DeckListViewModel
+    @State var filteredItems = [DeckViewModel]()
+
     var body: some View {
-        Search()
+        CustomNavigationView(view: AnyView(Search(deckListViewModel: deckListViewModel, filteredItems: $filteredItems)), title: "Search") { text in
+            if text != "" {
+                self.filteredItems = deckListViewModel.deckViewModels.filter({ deckVM in
+                    deckVM.deck.title.lowercased().contains(text.lowercased())
+                })
+            } else {
+                self.filteredItems = [DeckViewModel]()
+            }
+        } onCancel: {
+            self.filteredItems = [DeckViewModel]()
+        }
+        .ignoresSafeArea()
     }
 }
 
 struct Search: View {
-    @State private var searchText = ""
+    @ObservedObject var deckListViewModel: DeckListViewModel
+    
+    @Binding var filteredItems: [DeckViewModel]
+    @State private var showActivitySheet = false
+    @State private var showDeckOptions = false
+    
+    let layout = [
+        GridItem(.adaptive(minimum: 120))
+    ]
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                SearchBar(text: $searchText)
-            }
-            .padding(.horizontal, 12)
-            .navigationTitle("Search")
-        }
-    }
-    
-}
+        ScrollView {
+            LazyVGrid(columns: layout, spacing: 20) {
+                ForEach(filteredItems) { deckVM in
+                    //TODO: Drag and drop into folders using onLongPressGesture
+                    VStack {
+                        NavigationLink(
+                            destination: DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: FlashcardListViewModel(deckVM.deck)),
+                            label: {
+                            Image("deck1")
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                        })
 
-struct SearchBar: View {
-    @Binding var text: String
- 
-    @State private var isEditing = false
- 
-    var body: some View {
-        HStack {
-
-            TextField("Search", text: $text)
-                .padding(7)
-                .padding(.horizontal, 25)
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
-                .overlay(
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.gray)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading, 8)
-                 
-                        if isEditing {
-                            Button(action: {
-                                self.text = ""
-                            }) {
-                                Image(systemName: "multiply.circle.fill")
-                                    .foregroundColor(.gray)
-                                    .padding(.trailing, 8)
+                        Button {
+                            showDeckOptions.toggle()
+                        } label: {
+                            HStack {
+                                Text(deckVM.deck.title)
+                                    .font(.caption)
+                                Image(systemName: "chevron.down")
+                                    .font(.caption2)
                             }
                         }
+                        .actionSheet(isPresented: $showDeckOptions, content: {
+                            ActionSheet(title: Text(""), message: Text(""), buttons: [
+                                .default(Text("Edit deck")) { deckListViewModel.update(deckVM.deck) },
+                                .destructive(Text("Delete deck").foregroundColor(Color.red)) { deckListViewModel.remove(deckVM.deck) },
+                                .cancel()
+                            ])
+                        })
                     }
-                )
-                .padding(.horizontal, 10)
-                .onTapGesture {
-                    self.isEditing = true
                 }
- 
-            if isEditing {
-                Button(action: {
-                    self.isEditing = false
-                    self.text = ""
-                    // Dismiss the keyboard
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                }) {
-                    Text("Cancel")
-                }
-                .padding(.trailing, 10)
-                .transition(.move(edge: .trailing))
-                .animation(.default)
             }
         }
+        .padding(.horizontal, 12)
     }
+    
+    
 }
 
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView()
-    }
-}
+//struct SearchView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SearchView()
+//    }
+//}
