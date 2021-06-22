@@ -6,25 +6,32 @@
 //
 
 import Foundation
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Combine
 
 final class FlashcardRepository: ObservableObject {
     private var uId = ""
+    private var deckId = ""
     private let path = "users"
     private let subPath = "decks"
     private let subPath2 = "flashcards"
     private let db = Firestore.firestore()
     @Published var flashcards = [Flashcard]()
     
-    init() {
+    init(_ deck: Deck) {
+        guard let deckId = deck.id else { return }
+        self.deckId = deckId
+        guard let user = Auth.auth().currentUser else { return }
+        self.uId = user.uid
         loadData()
     }
     
     func loadData() {
-        db.collection(path).document(path)
-            .collection(subPath).addSnapshotListener { querySnapshot, error in
+        db.collection(path).document(self.uId)
+            .collection(subPath).document(self.deckId)
+            .collection(subPath2).addSnapshotListener { querySnapshot, error in
             if let error = error {
                 print(error)
                 return
@@ -37,33 +44,32 @@ final class FlashcardRepository: ObservableObject {
         }
     }
     
-    func addData(_ flashcard: Flashcard, deckId: String) {
+    func addData(_ flashcard: Flashcard) {
         do {
-            _ = try db.collection(path).document(uId)
-                .collection(subPath).document(deckId)
+            _ = try db.collection(path).document(self.uId)
+                .collection(subPath).document(self.deckId)
                 .collection(subPath2).addDocument(from: flashcard)
         } catch {
-            fatalError("Adding deck failed")
+            fatalError("Adding flashcard failed")
         }
     }
     
-    func removeData(_ flashcard: Flashcard, deckId: String) {
+    func removeData(_ flashcard: Flashcard) {
         guard let documentId = flashcard.id else { return }
         db.collection(path).document(self.uId)
-            .collection(subPath).document(deckId)
+            .collection(subPath).document(self.deckId)
             .collection(subPath2).document(documentId).delete { error in
             if let error = error {
-                print("Unable to delete deck: \(error.localizedDescription)")
+                print("Unable to delete flashcard: \(error.localizedDescription)")
             }
-            
         }
     }
     
-    func updateData(_ flashcard: Flashcard, deckId: String) {
+    func updateData(_ flashcard: Flashcard) {
         guard let documentId = flashcard.id else { return }
         do {
             try db.collection(path).document(self.uId)
-                .collection(subPath).document(deckId)
+                .collection(subPath).document(self.deckId)
                 .collection(subPath2).document(documentId).setData(from: flashcard)
         } catch {
             fatalError("Updating deck failed")

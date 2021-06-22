@@ -13,7 +13,6 @@ struct DeckCreationView: View {
     
     @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
     @ObservedObject var deckListViewModel: DeckListViewModel
-    @StateObject var flashcardListViewModel: FlashcardListViewModel = FlashcardListViewModel()
     
     @Namespace var bottomID
     @State private var deckTitle = ""

@@ -52,7 +52,7 @@ struct DeckListView: View {
                             //TODO: Drag and drop into folders using onLongPressGesture
                             VStack {
                                 NavigationLink(
-                                    destination: DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM),
+                                    destination: DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: FlashcardListViewModel(deckVM.deck)),
                                     label: {
                                     Image("deck1")
                                         .resizable()
@@ -104,8 +104,10 @@ struct DeckListView: View {
 struct ActivityView: View {
     var body: some View {
         NavigationView {
-            EmptyView()
+            VStack {
+            }
                 .navigationTitle("Activity")
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
