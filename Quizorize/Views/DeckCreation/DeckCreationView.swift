@@ -13,6 +13,7 @@ struct DeckCreationView: View {
     
     @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
     @ObservedObject var deckListViewModel: DeckListViewModel
+    @StateObject var flashcardListViewModel: FlashcardListViewModel = FlashcardListViewModel()
     
     @State private var deckTitle = ""
     @State private var isDeckTitleTapped = false
@@ -53,7 +54,11 @@ struct DeckCreationView: View {
                         isNotValid = deckCreationVM.hasAnyFieldsEmpty() || deckCreationVM.hasDeckTitleEmpty() || deckCreationVM.hasLessThanTwoCards()
                         let flashcards: [Flashcard] = deckCreationVM.getFinalisedFlashcards()
                         let deck = Deck(title: self.deckTitle)
-                        deckListViewModel.add(deck)
+                        deckListViewModel.add(deck: deck, flashcards: flashcards)
+//                        guard let deckId = deck.id else { return }
+//                        flashcards.forEach { flashcard in
+//                            flashcardListViewModel.add(flashcard, deckId: deckId)
+//                        }
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text("Create")
@@ -225,7 +230,7 @@ struct CustomTextFieldStyle: TextFieldStyle {
 }
 
 
-//MARK: To remove line between lists.
+//MARK: To remove line between lists. (does not work)
 struct ListSeparatorStyle: ViewModifier {
     
     let style: UITableViewCell.SeparatorStyle
@@ -248,7 +253,6 @@ extension View {
 }
 
 
-//MARK: Keyboard responder
 
 
 //struct DeckCreationView_Previews: PreviewProvider {
