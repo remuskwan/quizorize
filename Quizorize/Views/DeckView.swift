@@ -12,14 +12,14 @@ struct DeckView: View {
     @ObservedObject var deckViewModel: DeckViewModel
     @ObservedObject var flashcardListViewModel: FlashcardListViewModel
     
+    @State private var showPracticeModeView = false
+    
     @State var showDeckOptions = false
     var body: some View {
         ZStack {
-            NavigationLink(
-                destination: PracticeModeView(flashcardListViewModel: flashcardListViewModel),
-                label: {
-                Text("Begin Practice")
-            })
+            Button("Begin Practice") {
+                showPracticeModeView.toggle()
+            }
         }
         .navigationTitle(deckViewModel.deck.title)
         .navigationBarTitleDisplayMode(.inline)
@@ -39,6 +39,11 @@ struct DeckView: View {
                 .cancel()
             ])
         })
+        .fullScreenCover(isPresented: $showPracticeModeView, content: coverContent)
+    }
+    
+    func coverContent() -> some View {
+        PracticeModeView(flashcardListViewModel: flashcardListViewModel)
     }
 }
 
