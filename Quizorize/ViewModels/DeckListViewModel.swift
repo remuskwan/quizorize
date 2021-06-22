@@ -13,7 +13,6 @@ import SwiftUI
 
 class DeckListViewModel: ObservableObject {
     @Published var deckRepository = DeckRepository()
-    private var flashcardRepository = FlashcardRepository()
     @Published var deckViewModels = [DeckViewModel]()
     
     private var cancellables = Set<AnyCancellable>()
