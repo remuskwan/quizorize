@@ -11,8 +11,16 @@ struct DeckCreationView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
+    @ObservedObject var deckCreationVM: DeckCreationViewModel
     @ObservedObject var deckListViewModel: DeckListViewModel
+    @ObservedObject var flashcardListVM: FlashcardListViewModel
+    
+    init(deckCreationVM: DeckCreationViewModel, deckListViewModel: DeckListViewModel, flashcardListVM: FlashcardListViewModel) {
+        
+        self.deckCreationVM = deckCreationVM
+        self.deckListViewModel = deckListViewModel
+        self.flashcardListVM = flashcardListVM
+    }
     
     @State private var deckTitle = ""
     @State private var isDeckTitleTapped = false
@@ -51,6 +59,9 @@ struct DeckCreationView: View {
                     Button {
                         //TODO: Add flashcards to deck
                         isNotValid = deckCreationVM.hasAnyFieldsEmpty() || deckCreationVM.hasDeckTitleEmpty() || deckCreationVM.hasLessThanTwoCards()
+                        if isNotValid {
+                            return
+                        }
                         let flashcards: [Flashcard] = deckCreationVM.getFinalisedFlashcards()
                         let deck = Deck(title: self.deckTitle)
                         deckListViewModel.add(deck: deck, flashcards: flashcards)

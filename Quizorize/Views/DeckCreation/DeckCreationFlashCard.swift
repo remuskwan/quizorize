@@ -105,6 +105,7 @@ struct DeckCreationFlashCard: View {
             .fill(Color.white)
 
     }
+    
     var questionBody: some View {
         
         

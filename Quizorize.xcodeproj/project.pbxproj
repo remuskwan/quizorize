@@ -107,6 +107,7 @@
 		77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77541626266A047B00BE8273 /* DeckCreationView.swift */; };
 		7783963B266D08330024293B /* DeckCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7783963A266D08330024293B /* DeckCreationViewModel.swift */; };
 		77AB03AF2663C669009F4982 /* TouchDownUpEventModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */; };
+		77E495D6268385E50090C70B /* DeckPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495D5268385E50090C70B /* DeckPreviewView.swift */; };
 		77F47658265EB25200AE1C06 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F47657265EB25200AE1C06 /* SignupViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -191,6 +192,7 @@
 		77541626266A047B00BE8273 /* DeckCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationView.swift; sourceTree = "<group>"; };
 		7783963A266D08330024293B /* DeckCreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationViewModel.swift; sourceTree = "<group>"; };
 		77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TouchDownUpEventModifier.swift; path = Quizorize/Views/TouchDownUpEventModifier.swift; sourceTree = SOURCE_ROOT; };
+		77E495D5268385E50090C70B /* DeckPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckPreviewView.swift; sourceTree = "<group>"; };
 		77F47657265EB25200AE1C06 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupViewModel.swift; path = Quizorize/ViewModels/SignupViewModel.swift; sourceTree = SOURCE_ROOT; };
 		7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuizorizeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -236,6 +238,7 @@
 		162792E2265A61770073718F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				77E495D4268385D30090C70B /* DeckPreview */,
 				16E701CC267656A700A1E55D /* Auth */,
 				7700BC5D266F6352004C5C82 /* PracticeModeView */,
 				77541625266A046900BE8273 /* DeckCreation */,
@@ -246,7 +249,6 @@
 				162793562660F7450073718F /* ProfileView.swift */,
 				7719A790267325E600B0A102 /* Cardify.swift */,
 				166B1E7C26656A8E00D3922B /* SearchView.swift */,
-				16E701D726790B9200A1E55D /* DeckView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -425,6 +427,15 @@
 				7700BC60266F933A004C5C82 /* AspectHScroll.swift */,
 			);
 			path = DeckCreation;
+			sourceTree = "<group>";
+		};
+		77E495D4268385D30090C70B /* DeckPreview */ = {
+			isa = PBXGroup;
+			children = (
+				16E701D726790B9200A1E55D /* DeckView.swift */,
+				77E495D5268385E50090C70B /* DeckPreviewView.swift */,
+			);
+			path = DeckPreview;
 			sourceTree = "<group>";
 		};
 		96FE5971BEA6BB1A38867E24 /* Frameworks */ = {
@@ -753,6 +764,7 @@
 				162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				162792F1265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
 				7700BC5F266F6375004C5C82 /* PracticeModeFlashCard.swift in Sources */,
+				77E495D6268385E50090C70B /* DeckPreviewView.swift in Sources */,
 				166B1E6D2663FF2700D3922B /* Keychain.swift in Sources */,
 				162792F9265BE7860073718F /* Extensions.swift in Sources */,
 				16E701D02677ADDA00A1E55D /* FlashcardListViewModel.swift in Sources */,

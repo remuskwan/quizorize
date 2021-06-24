@@ -11,8 +11,12 @@ import Combine
 class DeckCreationViewModel: ObservableObject {
     
 
+    init() {
+        self.model = DeckCreationModel(minimumNumberOfCards: 2)
+    }
+    
     //MARK: Interpret(s) from Model
-    @Published private var model: DeckCreationModel = DeckCreationModel(minimumNumberOfCards: 2)
+    @Published private var model: DeckCreationModel
     
     @Published var alertMessage = ""
     
