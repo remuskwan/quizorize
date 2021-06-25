@@ -15,8 +15,8 @@ struct DeckCreationFlashCard: View {
     
     @State private var isQuestionTapped = false
     @State private var isAnswerTapped = false
-    @State private var question = ""
-    @State private var answer = ""
+    @State var question: String
+    @State var answer: String
     
     var index: Int
     
@@ -105,6 +105,7 @@ struct DeckCreationFlashCard: View {
             .fill(Color.white)
 
     }
+    
     var questionBody: some View {
         
         
@@ -114,11 +115,9 @@ struct DeckCreationFlashCard: View {
                     withAnimation(.easeIn(duration: DrawingConstants.easeInDuration)) {
                         isQuestionTapped = edit
                     }
-                    print(deckCreationVM.flashcards)
                     deckCreationVM.editPromptWith(string: question, at: index)
                   },
                   onCommit: {
-                    print(deckCreationVM.flashcards)
                     deckCreationVM.editPromptWith(string: question, at: index)
                   })
             .font(.body)
@@ -223,8 +222,3 @@ struct DeckCreationFlashCard: View {
     }
 }
 
-struct DeckCreationFlashCard_Previews: PreviewProvider {
-    static var previews: some View {
-        DeckCreationFlashCard(deckCreationVM: DeckCreationViewModel(), index: 1)
-    }
-}

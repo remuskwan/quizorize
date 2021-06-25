@@ -1,36 +1,20 @@
 //
-//  DeckCreationView.swift
+//  EditDeckView.swift
 //  Quizorize
 //
-//  Created by CHEN JUN HONG on 4/6/21.
+//  Created by CHEN JUN HONG on 25/6/21.
 //
 
 import SwiftUI
 
-struct DeckCreationView: View {
-    
-    init(deckListViewModel: DeckListViewModel, didCreateDeck: @escaping (_ deck: Deck, _ flashcards: [Flashcard]) -> Void) {
-        self.deckListViewModel = deckListViewModel
-        self.deckCreationVM = DeckCreationViewModel()
-        self.didCreateDeck = didCreateDeck
-    }
-    
-    init(deckListViewModel: DeckListViewModel, deckVM: DeckViewModel, flashcardListVM: FlashcardListViewModel, didCreateDeck: @escaping (_ deck: Deck, _ flashcards: [Flashcard]) -> Void) {
-        self.deckListViewModel = deckListViewModel
-        self.deckCreationVM = DeckCreationViewModel(flashcardListVM: flashcardListVM, deckVM: deckVM)
-        self.didCreateDeck = didCreateDeck
-    }
-
-    @ObservedObject var deckCreationVM: DeckCreationViewModel
-    @ObservedObject var deckListViewModel: DeckListViewModel
-
+/*
+struct EditDeckView: View {
     @Environment(\.presentationMode) var presentationMode
     
+
     @State private var deckTitle = ""
     @State private var isDeckTitleTapped = false
     @State private var isNotValid = false
-    
-    var didCreateDeck: (_ deck: Deck, _ flashcards: [Flashcard]) -> Void
     
     var body: some View {
         NavigationView {
@@ -69,8 +53,8 @@ struct DeckCreationView: View {
                             return
                         }
                         let flashcards: [Flashcard] = deckCreationVM.getFinalisedFlashcards()
-                        let deck = Deck(title: deckCreationVM.deckTitle)
-                        didCreateDeck(deck, flashcards)
+                        let deck = Deck(title: self.deckTitle)
+                        deckListViewModel.add(deck: deck, flashcards: flashcards)
 //                        guard let deckId = deck.id else { return }
 //                        flashcards.forEach { flashcard in
 //                            flashcardListViewModel.add(flashcard, deckId: deckId)
@@ -97,8 +81,9 @@ struct DeckCreationView: View {
     var deckTitleView: some View {
         
         
-        TextField(StringConstants.titlePlaceholder, text: $deckCreationVM.deckTitle,
+        TextField(StringConstants.titlePlaceholder, text: $deckTitle,
                   onEditingChanged: { edit in
+                    deckCreationVM.deckTitle = deckTitle
                     withAnimation(.easeIn(duration: DrawingConstants.easeInDuration)) {
                         isDeckTitleTapped = edit
                     }
@@ -128,9 +113,8 @@ struct DeckCreationView: View {
             ScrollViewReader { scrollReader in
                 List {
                     ForEach(deckCreationVM.flashcards) { emptyFlashcard in
-                        
                         let index = deckCreationVM.flashcards.firstIndex(where: {$0 == emptyFlashcard})!
-                        DeckCreationFlashCard(deckCreationVM: deckCreationVM, question: emptyFlashcard.prompt, answer: emptyFlashcard.answer, index: index)
+                        DeckCreationFlashCard(deckCreationVM: deckCreationVM, index: index)
                             .background(RoundedRectangle(cornerRadius: DrawingConstants.deckCreationFlashcardCornerRadius)
                                             .fill(Color.white)
                                             .shadow(color: DrawingConstants.deckCreationShadowColor, radius: DrawingConstants.deckCreationShadowRadius, x: DrawingConstants.deckCreationShadowX, y: DrawingConstants.deckCreationShadowY)
@@ -195,88 +179,9 @@ struct DeckCreationView: View {
     }
 }
 
-//MARK: CustomTextField (with a rect line and a caption at the bottom)
-struct CustomTextFieldStyle: TextFieldStyle {
-    
-    @Binding var isFieldTapped: Bool
-    
-    var captionTitle: String
-    
-    var imageName: String
-    
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        VStack {
-            HStack {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: DrawingConstants.fieldImageHeight)
-                    
-
-                configuration
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
-            }
-            .font(.body)
-
-            Rectangle().frame(height: DrawingConstants.rectWidth)
-                        .foregroundColor(isFieldTapped ? DrawingConstants.rectLineColorAfterTap : DrawingConstants.rectLineColorBeforeTap)
-            
-            HStack {
-                Text(captionTitle)
-                    .foregroundColor(.secondary)
-                
-                Spacer()
-            }
-            .font(.caption.bold())
-        }
-    }
-    
-    private struct DrawingConstants {
-        static let rectWidth: CGFloat = 3
-        static let rectLineColorBeforeTap = Color.black
-        static let rectLineColorAfterTap =  Color(hex: "15CDA8")
-        
-        static let easeInDuration: Double = 0.1
-        
-        static let fieldImageHeight: CGFloat = 21
-        
-    }
-    
-}
-
-
-//MARK: To remove line between lists. (does not work)
-struct ListSeparatorStyle: ViewModifier {
-    
-    let style: UITableViewCell.SeparatorStyle
-    let colorStyle: UIColor
-    
-    func body(content: Content) -> some View {
-        content
-            .onAppear() {
-                UITableView.appearance().separatorStyle = self.style
-                UITableView.appearance().separatorColor = self.colorStyle
-            }
+struct EditDeckView_Previews: PreviewProvider {
+    static var previews: some View {
+        EditDeckView()
     }
 }
-
-extension View {
-    
-    func listSeparatorStyle(style: UITableViewCell.SeparatorStyle, colorStyle: UIColor) -> some View {
-        ModifiedContent(content: self, modifier: ListSeparatorStyle(style: style, colorStyle: colorStyle))
-    }
-}
-
-
-
-
-//struct DeckCreationView_Previews: PreviewProvider {
-//    
-//    @State private var isBlurred = false
-//    
-//    static var previews: some View {
-//        DeckCreationView()
-//            .environmentObject(AuthViewModel())
-//    }
-//}
+ */
