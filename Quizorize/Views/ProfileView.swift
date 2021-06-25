@@ -32,7 +32,7 @@ struct ProfileView: View {
                     
                 }
                 Section(header: Text("Settings")) {
-                    NavigationLink(destination: ChangePasswordView()) {
+                    NavigationLink(destination: ChangeEmailView()) {
                         HStack {
                             Image(systemName: "envelope")
                             Text("Email")
@@ -63,6 +63,15 @@ struct ChangePasswordView: View {
         VStack {
         }
         .navigationTitle("Change password")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+struct ChangeEmailView: View {
+    var body: some View {
+        VStack {
+        }
+        .navigationTitle("Change email")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

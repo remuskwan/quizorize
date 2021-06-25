@@ -8,9 +8,24 @@
 import SwiftUI
 
 struct PracticeModeView: View {
+    @Environment(\.presentationMode) var presentationMode
     @ObservedObject var flashcardListViewModel: FlashcardListViewModel
+    
     var body: some View {
-        FlashcardListView(flashcardListViewModel: flashcardListViewModel)
+        NavigationView {
+            FlashcardListView(flashcardListViewModel: flashcardListViewModel)
+                .navigationTitle("Practice")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            presentationMode.wrappedValue.dismiss()
+                        } label: {
+                            Image(systemName: "multiply")
+                        }
+                    }
+                }
+        }
     }
 }
 
@@ -23,7 +38,6 @@ struct FlashcardListView: View {
                 let flashcard = flashcardVM.flashcard
                 FlashcardView(flashcardViewModel: flashcardVM)
                     .zIndex(self.flashcardListViewModel.zIndex(of: flashcard))
-                    .shadow(radius: 2)
                     .offset(x: self.offset(for: flashcard).width, y: self.offset(for: flashcard).height)
                     .offset(y: self.flashcardListViewModel.deckOffset(of: flashcard))
                     .scaleEffect(x: self.flashcardListViewModel.scale(of: flashcard), y: self.flashcardListViewModel.scale(of: flashcard))
@@ -59,6 +73,7 @@ struct FlashcardListView: View {
                     )
             }
         }
+        
     }
     
     func offset(for flashcard: Flashcard) -> CGSize {
@@ -79,15 +94,14 @@ struct FlashcardListView: View {
 
 struct FlashcardView: View {
     @ObservedObject var flashcardViewModel: FlashcardViewModel
-    @State var flipped = false
+
     var body: some View {
         VStack {
             VStack {
                 Spacer()
-                Text(flashcardViewModel.flashcard.prompt)
+                Text(flashcardViewModel.display)
                     .font(.system(size: 20))
                     .foregroundColor(.primary)
-                    .bold()
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                 Spacer()
@@ -98,11 +112,13 @@ struct FlashcardView: View {
         .background(
             RoundedRectangle(cornerRadius: 10)
                 .foregroundColor(Color.white)
+                .shadow(radius: 2)
+                .rotation3DEffect(flashcardViewModel.flipped ? Angle(degrees: 180): Angle(degrees: 0), axis: (x: CGFloat(0), y: CGFloat(10), z: CGFloat(0)))
+                .animation(.default)
         )
-        .rotation3DEffect(self.flipped ? Angle(degrees: 180): Angle(degrees: 0), axis: (x: CGFloat(0), y: CGFloat(10), z: CGFloat(0)))
-        .animation(.default)
+        
         .onTapGesture {
-            self.flipped.toggle()
+            flashcardViewModel.flipped.toggle()
         }
         
     }

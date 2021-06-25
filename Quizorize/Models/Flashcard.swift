@@ -25,4 +25,9 @@ struct Flashcard: Identifiable, Codable, Equatable {
 //        case young
 //        case mature
 //    }
+    
+    private struct Initialisers {
+        static let promptInit = ""
+        static let answerInit = ""
+    }
 }

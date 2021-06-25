@@ -10,12 +10,13 @@ import FirebaseAuth
 import GoogleSignIn
 
 struct HomeView: View {
+    @StateObject var deckListViewModel = DeckListViewModel()
 //    @ObservedObject var userViewModel: UserViewModel
     var body: some View {
         TabView {
-            DeckListView()
+            DeckListView(deckListViewModel: deckListViewModel)
                 .tabItem { Label("Decks", systemImage: "square.grid.2x2.fill") }
-            SearchView()
+            SearchView(deckListViewModel: deckListViewModel)
                 .tabItem { Label("Search", systemImage: "magnifyingglass") }
             ProfileView()
                 .tabItem { Label("Profile", systemImage: "person.circle") }
@@ -24,7 +25,7 @@ struct HomeView: View {
 }
 
 struct DeckListView: View {
-    @StateObject var deckListViewModel = DeckListViewModel()
+    @ObservedObject var deckListViewModel: DeckListViewModel
     @State private var selectedSortBy = SortBy.date
     @State private var showActivitySheet = false
     @State private var showDeckOptions = false
@@ -89,7 +90,7 @@ struct DeckListView: View {
                     Button {
                         showActivitySheet.toggle()
                     } label: {
-                        Image(systemName: "bell.fill")
+                        Image(systemName: "bell")
                     }
 
                 }
@@ -161,14 +162,17 @@ struct NewButton: View {
                 showingActionSheet.toggle()
             }, label: {
                 VStack {
-                    RoundedRectangle(cornerRadius: 5)
-                        .strokeBorder(
-                            style: StrokeStyle(
-                                lineWidth: 2,
-                                dash: [3]
+                    ZStack {
+                        Image(systemName: "plus")
+                        RoundedRectangle(cornerRadius: 5)
+                            .strokeBorder(
+                                style: StrokeStyle(
+                                    lineWidth: 2,
+                                    dash: [3]
+                                )
                             )
-                        )
-                        .frame(width: 80, height: 100)
+                            .frame(width: 80, height: 100)
+                    }
                     Text("New")
                         .font(.caption)
                 }
