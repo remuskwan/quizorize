@@ -10,13 +10,59 @@ import Combine
 
 class DeckCreationViewModel: ObservableObject {
     
-
+    
+    init() {
+        self.model = DeckCreationModel(minimumNumberOfCards: 2)
+        self.deckTitle = ""
+    }
+    
+    init(flashcardListVM: FlashcardListViewModel, deckVM: DeckViewModel) {
+        let flashcards = flashcardListVM.flashcardViewModels
+            .map { flashcardVM in
+                flashcardVM.flashcard
+            }
+            .map { flashcard in
+                DeckCreationModel.EmptyFlashcard(id: flashcard.id!, prompt: flashcard.prompt, answer: flashcard.answer, dateAdded: flashcard.dateAdded)
+            }
+        
+        let deckTitle = deckVM.deck.title
+        
+        self.deckTitle = deckTitle
+        
+        self.model = DeckCreationModel(flashcards, deckTitle)
+    }
+    
     //MARK: Interpret(s) from Model
-    @Published private var model: DeckCreationModel = DeckCreationModel(minimumNumberOfCards: 2)
+    @Published private var model: DeckCreationModel
+    
+    @Published var alertMessage = ""
+    
+    @Published var isNotValid = false
+    
+    @Published var deckTitle: String
 
     var flashcards: [DeckCreationModel.EmptyFlashcard] {
         model.flashcards
     }
+    
+    func hasDeckTitleEmpty() -> Bool {
+        return self.deckTitle == ""
+    }
+    
+    func hasAnyFieldsEmpty() -> Bool {
+        for flashcard in flashcards {
+            if flashcard.prompt == "" || flashcard.answer == "" {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    func hasLessThanTwoCards() -> Bool {
+        flashcards.count < 2
+    }
+    
     
     //MARK: Intent(s) from View
     
@@ -40,43 +86,21 @@ class DeckCreationViewModel: ObservableObject {
         model.getFinaliseFlashcards()
     }
     
-    func checkIfAnyFieldsAreEmpty() -> Bool {
-        for anyFlashcard in flashcards {
-            if anyFlashcard.prompt.isEmpty || anyFlashcard.answer.isEmpty {
-                return true
-            }
+}
+
+extension String {
+    var uuid: String? {
+        var string = self
+        var index = string.index(string.startIndex, offsetBy: 8)
+        print(string.count)
+        for _ in 0..<4 {
+            string.insert("-", at: index)
+            print(string)
+            index = string.index(index, offsetBy: 5)
         }
-        
-        return false
+        print(string)
+        // The init below is used to check the validity of the string returned.
+        return UUID(uuidString: string)?.uuidString
     }
 }
 
-//MARK: Make views react to keyboard
-final class KeyboardResponder: ObservableObject {
-    
-    private var notificationCenter: NotificationCenter
-    
-    @Published private(set) var currentHeight: CGFloat = 0
-    
-    init(center: NotificationCenter = .default) {
-       notificationCenter = center
-       notificationCenter.addObserver(self, selector:
-    #selector(keyBoardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-       notificationCenter.addObserver(self, selector:
-    #selector(keyBoardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-    }
-    
-    @objc func keyBoardWillShow(notification: Notification) {
-            if let _ = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                currentHeight = 0
-            }
-        }
-    @objc func keyBoardWillHide(notification: Notification) {
-            currentHeight = 0
-        }
-    
-    deinit {
-       notificationCenter.removeObserver(self)
-    }
-}

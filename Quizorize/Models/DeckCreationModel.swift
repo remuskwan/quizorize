@@ -13,18 +13,28 @@ struct DeckCreationModel {
 
     private(set) var flashcards: [EmptyFlashcard]
     
+    private(set) var deckTitle: String
+    
     init(minimumNumberOfCards: Int) {
         flashcards = []
         
         for _ in 0..<minimumNumberOfCards {
-            flashcards.append(EmptyFlashcard(id: UUID(), dateAdded: Date()))
+            flashcards.append(EmptyFlashcard(id: UUID().uuidString, dateAdded: Date()))
         }
+        
+        self.deckTitle = ""
+    }
+    
+    init(_ flashcards: [DeckCreationModel.EmptyFlashcard], _ deckTitle: String) {
+        self.flashcards = flashcards
+        
+        self.deckTitle = deckTitle
     }
     
     
     //Intent(s)
     mutating func addFlashcard() {
-        flashcards.append(EmptyFlashcard(id: UUID(), dateAdded: Date()))
+        flashcards.append(EmptyFlashcard(id: UUID().uuidString, dateAdded: Date()))
     }
     
     mutating func removeFields(at indexSet: IndexSet) {
@@ -40,13 +50,11 @@ struct DeckCreationModel {
     }
     
     func getFinaliseFlashcards() -> [Flashcard] {
-        var finalisedFlashcards: [Flashcard] = []
-        
-        for emptyFlashcard in self.flashcards {
-            finalisedFlashcards.append(Flashcard(prompt: emptyFlashcard.prompt, answer: emptyFlashcard.answer, dateAdded: emptyFlashcard.dateAdded))
-        }
-        
-        return finalisedFlashcards
+        let finalFlashcards = self.flashcards
+            .map { flashcard in
+                Flashcard(prompt: flashcard.prompt, answer: flashcard.answer)
+            }
+        return finalFlashcards
     }
 
 
@@ -56,7 +64,7 @@ struct DeckCreationModel {
             static let answerInit = ""
         }
         
-        var id: UUID
+        var id: String
         var prompt = Initialisers.promptInit
         var answer = Initialisers.answerInit
         var dateAdded: Date

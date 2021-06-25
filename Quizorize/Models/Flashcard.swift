@@ -25,4 +25,19 @@ struct Flashcard: Identifiable, Codable, Equatable {
 //        case young
 //        case mature
 //    }
+    
+    /*
+    init(id: UUID, dateAdded: Date) {
+        self.prompt = Initialisers.promptInit
+        self.answer = Initialisers.answerInit
+        
+        self.id = id.uuidString
+        self.dateAdded = dateAdded
+    }
+
+    private struct Initialisers {
+        static let promptInit = ""
+        static let answerInit = ""
+    }
+    */
 }

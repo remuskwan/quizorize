@@ -185,7 +185,9 @@ struct NewButton: View {
             ])
         }
         .sheet(isPresented: $showingCreateDeck, content: {
-            DeckCreationView(deckListViewModel: deckListViewModel)
+            DeckCreationView(deckListViewModel: deckListViewModel) { deck, flashcards in
+                        deckListViewModel.add(deck: deck, flashcards: flashcards)
+            }
 //            CreateDeck(deckListViewModel: DeckListViewModel(), flashcardViewModel: FlashcardViewModel())
         })
     }
