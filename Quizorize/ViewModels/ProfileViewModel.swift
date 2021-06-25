@@ -6,13 +6,13 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 class ProfileViewModel: ObservableObject {
     private var userRepository = UserRepository()
-    @Published var user: User? = nil
     
-    init(_ userId: String) {
-        self.user = userRepository.getDataById(userId)
+    func getCurrentUser() -> User? {
+        guard let user = Auth.auth().currentUser else { return nil }
+        return userRepository.getDataById(user.uid)
     }
-    
 }

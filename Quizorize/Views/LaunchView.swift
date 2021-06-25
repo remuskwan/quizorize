@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct LaunchView: View {
-    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
+//    @StateObject var deckListViewModel = DeckListViewModel()
+//    @StateObject var profileViewModel = ProfileViewModel()
 
     var body: some View {
         ZStack {
-            if viewModel.signedIn {
+            if authViewModel.signedIn {
 //                NavigationLink(destination: DecksView(), isActive: $viewModel.signedIn) {EmptyView()}
                 HomeView()
             } else {
@@ -20,8 +22,11 @@ struct LaunchView: View {
             }
         }
         .onAppear {
-            viewModel.signedIn = viewModel.isSignedIn
-            
+            authViewModel.signedIn = authViewModel.isSignedIn
+//            if let user = authViewModel.user {
+//                deckListViewModel.userId = user.uid
+//                profileViewModel.userId = user.uid
+//            }
         }
     }
 }

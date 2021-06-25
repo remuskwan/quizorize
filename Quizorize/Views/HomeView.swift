@@ -10,14 +10,16 @@ import FirebaseAuth
 import GoogleSignIn
 
 struct HomeView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var deckListViewModel = DeckListViewModel()
+
     var body: some View {
         TabView {
             DeckListView(deckListViewModel: deckListViewModel)
                 .tabItem { Label("Decks", systemImage: "square.grid.2x2.fill") }
             SearchView(deckListViewModel: deckListViewModel)
                 .tabItem { Label("Search", systemImage: "magnifyingglass") }
-            ProfileView()
+            ProfileView(profileViewModel: ProfileViewModel())
                 .tabItem { Label("Profile", systemImage: "person.circle") }
         }
     }
@@ -186,7 +188,7 @@ struct NewButton: View {
         }
         .sheet(isPresented: $showingCreateDeck, content: {
             DeckCreationView(deckListViewModel: deckListViewModel) { deck, flashcards in
-                        deckListViewModel.add(deck: deck, flashcards: flashcards)
+                deckListViewModel.add(deck: deck, flashcards: flashcards)
             }
 //            CreateDeck(deckListViewModel: DeckListViewModel(), flashcardViewModel: FlashcardViewModel())
         })
