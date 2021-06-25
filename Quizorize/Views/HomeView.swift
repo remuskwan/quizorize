@@ -11,7 +11,6 @@ import GoogleSignIn
 
 struct HomeView: View {
     @StateObject var deckListViewModel = DeckListViewModel()
-//    @ObservedObject var userViewModel: UserViewModel
     var body: some View {
         TabView {
             DeckListView(deckListViewModel: deckListViewModel)
@@ -113,37 +112,37 @@ struct ActivityView: View {
     }
 }
 
-//MARK: Blurs the background of a fullScreenCover
-struct makeViewBlur: ViewModifier {
-    
-    var toggled: Bool
-    
-    init(if toggled: Bool) {
-        self.toggled = toggled
-    }
-    
-    
-    @ViewBuilder func body(content: Content) -> some View {
-        if toggled {
-            content.blur(radius: 2.0)
-        } else {
-            content
-        }
-    }
-}
+////MARK: Blurs the background of a fullScreenCover
+//struct makeViewBlur: ViewModifier {
+//    
+//    var toggled: Bool
+//    
+//    init(if toggled: Bool) {
+//        self.toggled = toggled
+//    }
+//    
+//    
+//    @ViewBuilder func body(content: Content) -> some View {
+//        if toggled {
+//            content.blur(radius: 2.0)
+//        } else {
+//            content
+//        }
+//    }
+//}
 
-//MARK: Makes fullScreenCover transparent
-struct BackgroundBlurView: UIViewRepresentable {
-    func makeUIView(context: Context) -> UIView {
-        let view = UIView()
-        DispatchQueue.main.async {
-            view.superview?.superview?.backgroundColor = .clear
-        }
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIView, context: Context) {}
-}
+////MARK: Makes fullScreenCover transparent
+//struct BackgroundBlurView: UIViewRepresentable {
+//    func makeUIView(context: Context) -> UIView {
+//        let view = UIView()
+//        DispatchQueue.main.async {
+//            view.superview?.superview?.backgroundColor = .clear
+//        }
+//        return view
+//    }
+//
+//    func updateUIView(_ uiView: UIView, context: Context) {}
+//}
 
 
 enum SortBy: String, CaseIterable {

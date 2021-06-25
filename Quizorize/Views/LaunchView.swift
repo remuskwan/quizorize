@@ -9,15 +9,11 @@ import SwiftUI
 
 struct LaunchView: View {
     @EnvironmentObject var viewModel: AuthViewModel
-    @StateObject var userListViewModel = UserListViewModel()
 
     var body: some View {
         ZStack {
             if viewModel.signedIn {
 //                NavigationLink(destination: DecksView(), isActive: $viewModel.signedIn) {EmptyView()}
-//                HomeView(userViewModel: (userListViewModel.userViewModels.filter({ userVM in
-//                    userVM.user.id == viewModel.user?.uid
-//                }).first)!)
                 HomeView()
             } else {
                 Launch()	
