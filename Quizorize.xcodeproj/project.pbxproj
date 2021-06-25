@@ -43,6 +43,8 @@
 		16285C7A26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7B26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7C26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
+		166783EB26827E93003C859B /* PracticeModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166783EA26827E93003C859B /* PracticeModeViewModel.swift */; };
+		166783ED2685DD16003C859B /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166783EC2685DD15003C859B /* ProfileViewModel.swift */; };
 		166B1E6A2663FED900D3922B /* SignInWithAppleFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E692663FED900D3922B /* SignInWithAppleFirebase.swift */; };
 		166B1E6D2663FF2700D3922B /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E6C2663FF2700D3922B /* Keychain.swift */; };
 		166B1E6E2663FF2700D3922B /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E6C2663FF2700D3922B /* Keychain.swift */; };
@@ -140,6 +142,8 @@
 		1627934D265FAF080073718F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		162793562660F7450073718F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		16285C7926593426003EE017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		166783EA26827E93003C859B /* PracticeModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeModeViewModel.swift; sourceTree = "<group>"; };
+		166783EC2685DD15003C859B /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		166B1E692663FED900D3922B /* SignInWithAppleFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleFirebase.swift; sourceTree = "<group>"; };
 		166B1E6C2663FF2700D3922B /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		166B1E702663FF6200D3922B /* SharedWebCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedWebCredential.swift; sourceTree = "<group>"; };
@@ -300,6 +304,8 @@
 				16E701CF2677ADDA00A1E55D /* FlashcardListViewModel.swift */,
 				16E701D32678E42300A1E55D /* UserViewModel.swift */,
 				16E701D9267A0DB700A1E55D /* UserListViewModel.swift */,
+				166783EA26827E93003C859B /* PracticeModeViewModel.swift */,
+				166783EC2685DD15003C859B /* ProfileViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -750,6 +756,7 @@
 				162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				162792F1265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
 				7700BC5F266F6375004C5C82 /* PracticeModeFlashCard.swift in Sources */,
+				166783ED2685DD16003C859B /* ProfileViewModel.swift in Sources */,
 				166B1E6D2663FF2700D3922B /* Keychain.swift in Sources */,
 				162792F9265BE7860073718F /* Extensions.swift in Sources */,
 				16E701D02677ADDA00A1E55D /* FlashcardListViewModel.swift in Sources */,
@@ -758,6 +765,7 @@
 				1627933F265EA1520073718F /* AuthError.swift in Sources */,
 				16E701D42678E42300A1E55D /* UserViewModel.swift in Sources */,
 				16E701D826790B9200A1E55D /* DeckView.swift in Sources */,
+				166783EB26827E93003C859B /* PracticeModeViewModel.swift in Sources */,
 				7700BC6926710470004C5C82 /* FlashcardGradeModel.swift in Sources */,
 				77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */,
 				166B1E8E266F8B9800D3922B /* DeckListViewModel.swift in Sources */,

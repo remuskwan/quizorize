@@ -43,7 +43,12 @@ struct DeckView: View {
     }
     
     func coverContent() -> some View {
-        PracticeModeView(flashcardListViewModel: flashcardListViewModel)
+        var practiceFlashcards = [FlashcardViewModel]()
+        practiceFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
+        practiceFlashcards.map { flashcardVM in
+            flashcardVM.flipped = false	
+        }
+        return PracticeModeView(flashcardListViewModel: flashcardListViewModel, practiceModeViewModel: PracticeModeViewModel(practiceFlashcards))
     }
 }
 

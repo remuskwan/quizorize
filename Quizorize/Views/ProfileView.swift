@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    @StateObject var userListViewModel = UserListViewModel()
+//    @StateObject var profileViewModel = ProfileViewModel(authViewModel.user?.uid)
     
     @State var password = ""
     var body: some View {

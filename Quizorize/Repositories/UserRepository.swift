@@ -18,6 +18,19 @@ class UserRepository: ObservableObject {
         loadData()
     }
     
+    func getDataById(_ userId: String) -> User? {
+        var user: User?
+        db.collection(path).document(userId)
+            .addSnapshotListener { querySnapshot, error in
+                guard let document = querySnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                user = try? document.data(as: User.self)
+            }
+        return user
+    }
+    
     func loadData() {
         db.collection(path).addSnapshotListener { querySnapshot, error in
             if let error = error {
