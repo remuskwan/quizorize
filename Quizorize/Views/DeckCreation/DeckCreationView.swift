@@ -11,17 +11,9 @@ struct DeckCreationView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @ObservedObject var deckCreationVM: DeckCreationViewModel
+    @StateObject var deckCreationVM: DeckCreationViewModel = DeckCreationViewModel()
     @ObservedObject var deckListViewModel: DeckListViewModel
-    @ObservedObject var flashcardListVM: FlashcardListViewModel
-    
-    init(deckCreationVM: DeckCreationViewModel, deckListViewModel: DeckListViewModel, flashcardListVM: FlashcardListViewModel) {
-        
-        self.deckCreationVM = deckCreationVM
-        self.deckListViewModel = deckListViewModel
-        self.flashcardListVM = flashcardListVM
-    }
-    
+
     @State private var deckTitle = ""
     @State private var isDeckTitleTapped = false
     @State private var isNotValid = false
