@@ -17,9 +17,9 @@ struct DeckView: View {
     @State private var action: Int? = 0
     
     @State private var showingEditDeck = false
+    @State private var showPracticeModeView = false
+    @State private var showDeckOptions = false
     
-    
-    @State var showDeckOptions = false
     var body: some View {
         GeometryReader { geoProxy in
             VStack {
@@ -36,9 +36,6 @@ struct DeckView: View {
                 
                 Spacer()
                 
-                 NavigationLink(
-                    destination: PracticeModeView(flashcardListViewModel: flashcardListViewModel), tag: 1, selection: $action) {
-                 }
             }
             .navigationTitle(deckViewModel.deck.title)
             .navigationBarTitleDisplayMode(.inline)
@@ -51,14 +48,10 @@ struct DeckView: View {
                     }
                 }
             }
+            .fullScreenCover(isPresented: $showPracticeModeView, content: coverContent)
             .actionSheet(isPresented: $showDeckOptions, content: {
                 ActionSheet(title: Text(""), message: Text(""), buttons: [
-                    .default(Text("Edit deck")) {
-                        showingEditDeck = true
-                        /*
-                        flashcardListViewModel.add(Flashcard(prompt: "hello", answer: "world"))
-                        */
-                    },
+                    .default(Text("Edit deck")) { self.showingEditDeck = true },
                     .destructive(Text("Delete deck").foregroundColor(Color.red)) { deckListViewModel.remove(deckViewModel.deck) },
                     .cancel()
                 ])
@@ -106,8 +99,8 @@ struct DeckView: View {
                         }
 
                 }
-                
             }
+            
         }
     }
     
@@ -141,7 +134,7 @@ struct DeckView: View {
                 Spacer()
                 
                 Button {
-                    action = 1
+                    showPracticeModeView.toggle()
                 } label: {
                     VStack {
                         Spacer()
@@ -169,6 +162,16 @@ struct DeckView: View {
         static let buttonRatio: CGFloat = 0.45
     }
     
+    func coverContent() -> some View {
+        var practiceFlashcards = [FlashcardViewModel]()
+        
+        practiceFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
+        print(practiceFlashcards)
+        practiceFlashcards.map { flashcardVM in
+            flashcardVM.flipped = false
+        }
+        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards))
+    }
 }
 
 struct Carousel: UIViewRepresentable {

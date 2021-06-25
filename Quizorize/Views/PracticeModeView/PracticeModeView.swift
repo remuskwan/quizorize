@@ -9,41 +9,61 @@ import SwiftUI
 
 struct PracticeModeView: View {
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
     @ObservedObject var practiceModeViewModel: PracticeModeViewModel
+    
+    @State private var showOptionsSheet = false
+    @State private var dismissOptionsSheet = false
 
     var body: some View {
-        GeometryReader { gr in
-            VStack {
-                HStack {
-                    Button {
-                        presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Image(systemName: "multiply")
-                    }
-                    .frame(width: 24, height: 24)
-                    .padding()
-                    Spacer()
-                    Text("\(practiceModeViewModel.counter) / \(practiceModeViewModel.count)")
-                    Spacer()
-                    Image(systemName: "questionmark.circle")
+        GeometryReader { geometry in
+            ZStack {
+                VStack {
+                    HStack {
+                        Button {
+                            presentationMode.wrappedValue.dismiss()
+                        } label: {
+                            Image(systemName: "multiply")
+                        }
                         .frame(width: 24, height: 24)
                         .padding()
+                        Spacer()
+                        Text("\(practiceModeViewModel.counter) / \(practiceModeViewModel.count)")
+                        Spacer()
+//                        Button(action: {
+//                            showOptionsSheet.toggle()
+//                            dismissOptionsSheet.toggle()
+//                        }, label: {
+//                            Image(systemName: "questionmark.circle")
+//                                .frame(width: 24, height: 24)
+//                                .padding()
+//                        })
+                        Image(systemName: "questionmark.circle")
+                            .frame(width: 24, height: 24)
+                            .padding()
+                    }
+                    ProgressView(value: Double(practiceModeViewModel.counter), total: Double(practiceModeViewModel.count))
+                        .frame(width: geometry.size.width * 0.7, alignment: .center)
+                    FlashcardListView(practiceModeViewModel: practiceModeViewModel)
                 }
-                ProgressView(value: Double(practiceModeViewModel.counter), total: Double(practiceModeViewModel.count)).frame(width: gr.size.width * 0.7, alignment: .center)
-                FlashcardListView(flashcardListViewModel: flashcardListViewModel, practiceModeViewModel: practiceModeViewModel)
+//                OptionsSheet(showingOptionsSheet: $showOptionsSheet, dismissOptionsSheet: $dismissOptionsSheet, height: geometry.size.height * 0.8) {
+//                    OptionsSheetContent()
+//                        .padding()
+//                }
             }
         }
     }
 }
 
+struct OptionsSheetContent: View {
+    var body: some View {
+        Text("Options")
+    }
+}
+
 struct FlashcardListView: View {
-    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
     @ObservedObject var practiceModeViewModel: PracticeModeViewModel
 
     @Namespace private var animation
-    @State var x: [CGFloat] = [0, 0, 0, 0, 0, 0, 0]
-    @State var degree: [CGFloat] = [0, 0, 0, 0, 0, 0, 0]
     
     var body: some View {
         VStack {
@@ -87,20 +107,6 @@ struct FlashcardListView: View {
                                     })
 
                             )
-                            .matchedGeometryEffect(id: "Shape", in: animation)
-//                    } else {
-//                        Text("You're done!")
-//                            .padding()
-//                            .frame(width: 300, height: 400)
-//                            .background(
-//                                RoundedRectangle(cornerRadius: 10)
-//                                            .foregroundColor(Color.white)
-//                                            .shadow(radius: 2)
-//
-//                            )
-//                            .matchedGeometryEffect(id: "Shape", in: animation)
-//                    }
-                        
                     //                    .onTapGesture {
                     //                        if flashcardVM.flashcard == flashcardListViewModel.activeCard {
                     //                            withAnimation {
@@ -126,8 +132,6 @@ struct FlashcardListView: View {
                             .foregroundColor(Color.white)
                             .shadow(radius: 2)
                     )
-                    .matchedGeometryEffect(id: "Shape", in: animation)
-                    
                 }
             }
             Spacer()
@@ -170,13 +174,13 @@ struct FlashcardView: View {
             Spacer()
             if !flashcardViewModel.flipped {
                 Text(flashcardViewModel.flashcard.prompt)
-                    .font(.system(size: 20))
+                    .font(.headline.bold())
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
             } else {
                 Text(flashcardViewModel.flashcard.answer)
-                    .font(.system(size: 20))
+                    .font(.headline.bold())
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
@@ -196,7 +200,7 @@ struct FlashcardView: View {
         )
         .rotation3DEffect(flashcardViewModel.flipped ? Angle(degrees: 180): Angle(degrees: 0), axis: (x: CGFloat(0), y: CGFloat(10), z: CGFloat(0)))
         .onTapGesture {
-            withAnimation {
+            withAnimation(.spring()) {
                 flashcardViewModel.flipped.toggle()
             }
         }
@@ -213,34 +217,49 @@ struct SummaryCardView: View {
                             .shadow(radius: 2))
     }
 }
-//struct OptionsSheet: View {
-//    @State var txt = ""
-//    @Binding var offset: CGFloat
-//    var value: CGFloat
-//
-//    var body: some View {
-//        VStack {
-//            Capsule()
-//                .fill(Color.gray.opacity(0.5))
-//                .frame(width: 50, height: 50)
-//                .padding(.top)
-//                .padding(.bottom, 5)
-//            Text("Options")
-//                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-//            Button(action: {
-//                practiceModeViewModel.shuffle()
-//            }, label: {
-//                Label(
-//                    title: { Text("Shuffle") },
-//                    icon: { Image(systemName: "shuffle") }
-//)
-//            })
-//            .padding()
-//        }
-//        .background(BlurView(style: .systemMaterial))
-//        .cornerRadius(15)
-//    }
-//}
+
+struct OptionsSheet<Content: View>: View {
+    let content: Content
+    @Binding var showingOptionsSheet: Bool
+    @Binding var dismissOptionsSheet: Bool
+    let height: CGFloat
+    
+    init(showingOptionsSheet: Binding<Bool>, dismissOptionsSheet: Binding<Bool>, height: CGFloat, @ViewBuilder content: () -> Content) {
+        self.height = height
+        _showingOptionsSheet = showingOptionsSheet
+        _dismissOptionsSheet = dismissOptionsSheet
+        self.content = content()
+    }
+    
+    var body: some View {
+        ZStack {
+            GeometryReader { _ in
+                EmptyView()
+                
+            }
+            .background(Color.red.opacity(0.3))
+            .opacity(showingOptionsSheet ? 1 : 0)
+            .animation(.easeIn)
+            .onTapGesture {
+                dismissOptionsSheet.toggle()
+            }
+            VStack {
+                Spacer()
+                VStack {
+                    content
+                    Button("Dismiss") {
+                        dismissOptionsSheet.toggle()
+                    }
+                }
+            }
+            .background(Color.white)
+            .frame(height: self.height)
+            .offset(y: dismissOptionsSheet && showingOptionsSheet ? 0 : 300)
+            .animation(.default.delay(0.2))
+        }
+        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+    }
+}
 
 struct BlurView: UIViewRepresentable {
     var style: UIBlurEffect.Style

@@ -12,8 +12,9 @@ import Combine
 import SwiftUI
 
 class DeckListViewModel: ObservableObject {
-    @Published var deckRepository = DeckRepository()
+    private var deckRepository = DeckRepository()
     @Published var deckViewModels = [DeckViewModel]()
+    @Published var userId: String = ""
     
     private var cancellables = Set<AnyCancellable>()
 

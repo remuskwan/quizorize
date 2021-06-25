@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-//    @StateObject var profileViewModel = ProfileViewModel(authViewModel.user?.uid)
+    @ObservedObject var profileViewModel: ProfileViewModel
     
     @State var password = ""
     var body: some View {
@@ -24,7 +24,7 @@ struct ProfileView: View {
                                                 .frame(width: 50, height: 50))
                                 .frame(width: 20, height: 20)
                                 .padding()
-                            Text("Remus")
+                            Text(profileViewModel.getCurrentUser()?.displayName ?? "")
                                 .font(.title)
                                 .padding()
                         }
@@ -96,8 +96,8 @@ struct SignOutButton: View {
     }
 }
 
-struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView()
-    }
-}
+//struct ProfileView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ProfileView()
+//    }
+//}

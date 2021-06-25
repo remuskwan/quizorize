@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
@@ -16,18 +17,25 @@ class UserRepository: ObservableObject {
 
     init() {
         loadData()
+//        guard let user = Auth.auth().currentUser else { return }
     }
     
     func getDataById(_ userId: String) -> User? {
-        var user: User?
+        var user: User? = nil
         db.collection(path).document(userId)
-            .addSnapshotListener { querySnapshot, error in
-                guard let document = querySnapshot else {
+            .addSnapshotListener { documentSnapshot, error in
+                guard let document = documentSnapshot else {
                     print("Error fetching document: \(error!)")
                     return
                 }
-                user = try? document.data(as: User.self)
+                guard let data = document.data() else {
+                    print("Document data was empty.")
+                    return
+                }
+                user = User(id: userId, email: data["email"] as? String ?? "", displayName: data["displayName"] as? String ?? "")
+                print("Current data: \(data)")
             }
+        print(user)
         return user
     }
     

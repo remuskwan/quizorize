@@ -75,16 +75,6 @@ class AuthViewModel : NSObject, ObservableObject {
             }
 //            }
         }
-        
-//        auth.addStateDidChangeListener { _, user in
-//            if let user = user {
-//                self.db.collection("users").document(user.uid).setData([
-//                    "verified": user.isEmailVerified
-//                ])
-//
-//
-//            }
-//        }
     }
     
     private func handleSignInWithGoogle() {
