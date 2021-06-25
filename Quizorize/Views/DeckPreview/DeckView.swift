@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct DeckView: View {
+    
     @ObservedObject var deckListViewModel: DeckListViewModel
     @ObservedObject var deckViewModel: DeckViewModel
     @ObservedObject var flashcardListViewModel: FlashcardListViewModel
     
     @State private var page = 0
     @State private var action: Int? = 0
+    
+    @State private var showingEditDeck = false
     
     
     @State var showDeckOptions = false
@@ -50,11 +53,61 @@ struct DeckView: View {
             }
             .actionSheet(isPresented: $showDeckOptions, content: {
                 ActionSheet(title: Text(""), message: Text(""), buttons: [
-                    .default(Text("Edit deck")) { flashcardListViewModel.add(Flashcard(prompt: "hello", answer: "world")) },
+                    .default(Text("Edit deck")) {
+                        showingEditDeck = true
+                        /*
+                        flashcardListViewModel.add(Flashcard(prompt: "hello", answer: "world"))
+                        */
+                    },
                     .destructive(Text("Delete deck").foregroundColor(Color.red)) { deckListViewModel.remove(deckViewModel.deck) },
                     .cancel()
                 ])
             })
+            .sheet(isPresented: $showingEditDeck) {
+                DeckCreationView(deckListViewModel: self.deckListViewModel, deckVM: self.deckViewModel, flashcardListVM: self.flashcardListViewModel) { deck, flashcards in
+                    
+                    //Update the new flashcards
+                    flashcards
+                        .filter { flashcard in
+                            flashcardListViewModel.flashcardViewModels
+                                .map { flashcardVM in
+                                    flashcardVM.flashcard
+                                }
+                                .contains(where: {$0 != flashcard})
+                        }
+                        .forEach { flashcard in
+                            flashcardListViewModel.add(flashcard)
+                        }
+                    
+                    //Edit the existing flashcards
+                    flashcards
+                        .filter { flashcard in
+                            flashcardListViewModel.flashcardViewModels
+                                .map { flashcardVM in
+                                    flashcardVM.flashcard
+                                }
+                                .contains(where: {$0 == flashcard && $0.prompt != flashcard.prompt && $0.answer != flashcard.answer})
+                        }
+                        .forEach { flashcard in
+                            flashcardListViewModel.update(flashcard)
+                        }
+                    
+                    //Remove flashcards
+                    flashcardListViewModel.flashcardViewModels
+                        .map { flashcardVM in
+                            flashcardVM.flashcard
+                        }
+                        .filter { currentFlashcard in
+                            flashcards
+                                .contains(where: {$0 != currentFlashcard})
+                        }
+                        .forEach { deletedFlashcard in
+                            flashcardListViewModel.remove(deletedFlashcard)
+                        }
+
+                }
+                
+            }
         }
     }
     

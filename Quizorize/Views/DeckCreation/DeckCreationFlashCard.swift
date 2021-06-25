@@ -15,8 +15,8 @@ struct DeckCreationFlashCard: View {
     
     @State private var isQuestionTapped = false
     @State private var isAnswerTapped = false
-    @State private var question = ""
-    @State private var answer = ""
+    @State var question: String
+    @State var answer: String
     
     var index: Int
     
@@ -222,8 +222,3 @@ struct DeckCreationFlashCard: View {
     }
 }
 
-struct DeckCreationFlashCard_Previews: PreviewProvider {
-    static var previews: some View {
-        DeckCreationFlashCard(deckCreationVM: DeckCreationViewModel(), index: 1)
-    }
-}

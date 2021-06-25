@@ -16,8 +16,3 @@ struct AddFlashcard: View {
 }
  */
 
-struct AddFlashcard_Previews: PreviewProvider {
-    static var previews: some View {
-        AddFlashcard()
-    }
-}

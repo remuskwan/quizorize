@@ -110,6 +110,8 @@
 		77AB03AF2663C669009F4982 /* TouchDownUpEventModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */; };
 		77E495D6268385E50090C70B /* DeckPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495D5268385E50090C70B /* DeckPreviewView.swift */; };
 		77E495D82684DAB90090C70B /* AddFlashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495D72684DAB90090C70B /* AddFlashcard.swift */; };
+		77E495DA2685DE900090C70B /* EditDeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495D92685DE900090C70B /* EditDeckView.swift */; };
+		77E495DC2685DF8D0090C70B /* DeckPreviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495DB2685DF8D0090C70B /* DeckPreviewViewModel.swift */; };
 		77F47658265EB25200AE1C06 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F47657265EB25200AE1C06 /* SignupViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -197,6 +199,8 @@
 		77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TouchDownUpEventModifier.swift; path = Quizorize/Views/TouchDownUpEventModifier.swift; sourceTree = SOURCE_ROOT; };
 		77E495D5268385E50090C70B /* DeckPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckPreviewView.swift; sourceTree = "<group>"; };
 		77E495D72684DAB90090C70B /* AddFlashcard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFlashcard.swift; sourceTree = "<group>"; };
+		77E495D92685DE900090C70B /* EditDeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDeckView.swift; sourceTree = "<group>"; };
+		77E495DB2685DF8D0090C70B /* DeckPreviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckPreviewViewModel.swift; sourceTree = "<group>"; };
 		77F47657265EB25200AE1C06 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupViewModel.swift; path = Quizorize/ViewModels/SignupViewModel.swift; sourceTree = SOURCE_ROOT; };
 		7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuizorizeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -309,6 +313,7 @@
 				16E701CF2677ADDA00A1E55D /* FlashcardListViewModel.swift */,
 				16E701D32678E42300A1E55D /* UserViewModel.swift */,
 				16E701D9267A0DB700A1E55D /* UserListViewModel.swift */,
+				77E495DB2685DF8D0090C70B /* DeckPreviewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -440,6 +445,7 @@
 				16E701D726790B9200A1E55D /* DeckView.swift */,
 				77E495D5268385E50090C70B /* DeckPreviewView.swift */,
 				77E495D72684DAB90090C70B /* AddFlashcard.swift */,
+				77E495D92685DE900090C70B /* EditDeckView.swift */,
 			);
 			path = DeckPreview;
 			sourceTree = "<group>";
@@ -799,11 +805,13 @@
 				166B1E962670B45A00D3922B /* FlashcardRepository.swift in Sources */,
 				16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */,
 				166B1E712663FF6200D3922B /* SharedWebCredential.swift in Sources */,
+				77E495DA2685DE900090C70B /* EditDeckView.swift in Sources */,
 				16E701DC2681CDCF00A1E55D /* PracticeModeView.swift in Sources */,
 				166B1E812666258500D3922B /* Deck.swift in Sources */,
 				162792EC265AD1240073718F /* HomeView.swift in Sources */,
 				162793572660F7450073718F /* ProfileView.swift in Sources */,
 				1627932E265CD6EA0073718F /* RecoverPasswordView.swift in Sources */,
+				77E495DC2685DF8D0090C70B /* DeckPreviewViewModel.swift in Sources */,
 				16E701D62678E49B00A1E55D /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
