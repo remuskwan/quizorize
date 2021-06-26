@@ -58,18 +58,42 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 <img src = "public/ReadMeImgs/register1.png" width ="25%" /> <img src = "public/ReadMeImgs/register2.png" width ="25%" /> <img src = "public/ReadMeImgs/register3.png" width ="25%" />
 
 ## Homepage ("Decks screen")
-1. Currently "Work-in-Progress". Will house user-created collections of decks and decks of flashcards
-2. Navigate to the "Profile" tab to sign out of your account.
+1. Houses user-created decks, which can be accessed from any of the user's devices on which they are logged-in
+2. Users can create new decks by tapping the "New" icon.
+3. Users can access a deck's preview screen by tapping on its icon.
+4. Users can edit a deck or delete a deck by tapping on its title.
+5. Tapping the bell icon on the top left of the page will bring up the Activity page, which is currently work-in-progress. It will house the user's notifications and reminders to revise their decks according to the spaced repetition algorithm.
+
+## Deck Creation
+1. Tap "New" to create a new deck.
+2. Enter the deck's title and the flashcards' prompts and answers. Each deck must contain a minimum of two flashcards. 
+3. Swipe left on a flashcard to remove it from the deck.
+4. Tap "Create" to finish creating the deck.
+
+## Deck Preview
+1. The deck's flashcards are displayed in a carousel at the top of the screen. 
+2. Tap a flashcard to flip it (prompt on the front, answer on the back)
+3. Swipe left and right to navigate between flashcards.
+4. Tap "Practice" to access Practice mode.
+
+## Practice Mode
+1. The deck of flashcards are displayed as an interactive deck in the middle of the screen.
+2. Swipe left or right to navigate to the next flashcard. The counter and progress bar increments with each swipe.
+3. A summary screen is shown when "Practice" is complete. Tapping the "Reset" button resets the page.
+4. Tap the "X" in the top left corner to exit Practice mode
+5. Tapping the optional "Shuffle" button shuffles the deck of flashcards
+
+## Search
+1. Tap the "Search" icon in the tab bar to access the Search page.
+2. Enter a decks name into the search field to search for a deck.
+3. Tap on the deck's icon to view its preview screen.
 
 ## Profile
 1. Currently "Work-in-Progress". Will show user's profile details as well as level and achievements.
-2. Pressing the "gear" icon on the top-left of the screen will bring you to the settings screen
-3. Pressing "Sign out" will sign you out of your account and bring you back to the Launch Screen
+3. Pressing "Sign out" will sign the user out of their account and bring them back to the Launch Screen
 
 ## Planned Features
-1. Deck and Flashcard Creation
-2. Preview mode (for viewing and editing flashcards) and Practice mode (for reviewing deck of flashcards)
-3. Search (for collections, decks and flashcards)
+1. Spaced Repetition Algorithm
 4. Favoriting decks and flashcards (for ease-of-access)
 5. Level and achievement system
 6. Leaderboard system
