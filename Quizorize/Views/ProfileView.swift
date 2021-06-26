@@ -15,31 +15,31 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section {
-                    NavigationLink(destination: EditProfileView()) {
-                        HStack {
-                            Image(systemName: "camera")
-                                .background(Circle()
-                                                .fill(Color.offWhite)
-                                                .frame(width: 50, height: 50))
-                                .frame(width: 20, height: 20)
-                                .padding()
-                            Text(profileViewModel.getCurrentUser()?.displayName ?? "")
-                                .font(.title)
-                                .padding()
-                        }
-                    }
-                    
-                }
-                Section(header: Text("Settings")) {
-                    NavigationLink(destination: ChangeEmailView()) {
-                        HStack {
-                            Image(systemName: "envelope")
-                            Text("Email")
-                            
-                        }
-                    }
-                }
+//                Section {
+//                    NavigationLink(destination: EditProfileView()) {
+//                        HStack {
+//                            Image(systemName: "camera")
+//                                .background(Circle()
+//                                                .fill(Color.offWhite)
+//                                                .frame(width: 50, height: 50))
+//                                .frame(width: 20, height: 20)
+//                                .padding()
+//                            Text(authViewModel.user?.displayName ?? "")
+//                                .font(.title)
+//                                .padding()
+//                        }
+//                    }
+//                    
+//                }
+//                Section(header: Text("Settings")) {
+//                    NavigationLink(destination: ChangeEmailView()) {
+//                        HStack {
+//                            Image(systemName: "envelope")
+//                            Text("Email")
+//
+//                        }
+//                    }
+//                }
                 Section{
                     SignOutButton()
                 }

@@ -52,7 +52,7 @@ struct DeckCreationView: View {
 
                 }
             }
-            .navigationBarTitle(Text("New deck"), displayMode: .inline)
+            .navigationBarTitle(Text("New Deck"), displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {

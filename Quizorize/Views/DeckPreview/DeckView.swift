@@ -19,6 +19,7 @@ struct DeckView: View {
     @State private var showingEditDeck = false
     @State private var showPracticeModeView = false
     @State private var showDeckOptions = false
+    @State private var deleteDeckConfirm = false
     
     var body: some View {
         GeometryReader { geoProxy in
@@ -51,10 +52,18 @@ struct DeckView: View {
             .fullScreenCover(isPresented: $showPracticeModeView, content: coverContent)
             .actionSheet(isPresented: $showDeckOptions, content: {
                 ActionSheet(title: Text(""), message: Text(""), buttons: [
-                    .default(Text("Edit deck")) { self.showingEditDeck = true },
-                    .destructive(Text("Delete deck").foregroundColor(Color.red)) { deckListViewModel.remove(deckViewModel.deck) },
-                    .cancel()
-                ])
+                        .default(Text("Edit Deck")) { self.showingEditDeck = true },
+                        .destructive(Text("Delete Deck").foregroundColor(Color.red)) {
+                            self.deleteDeckConfirm.toggle()
+                        },
+                        .cancel()
+                    ])
+                
+            })
+            .alert(isPresented: $deleteDeckConfirm, content: {
+                Alert(title: Text("Are you sure you want to delete this deck?"), message: nil, primaryButton: .cancel(), secondaryButton:.destructive(Text("Delete"), action: {
+                    deckListViewModel.remove(deckViewModel.deck)
+                }))
             })
             .sheet(isPresented: $showingEditDeck) {
                 DeckCreationView(deckListViewModel: self.deckListViewModel, deckVM: self.deckViewModel, flashcardListVM: self.flashcardListViewModel) { deck, flashcards in

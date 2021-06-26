@@ -99,14 +99,14 @@ class AuthViewModel : NSObject, ObservableObject {
                 }
                 return
             }
-//            let changeRequest = self?.user?.createProfileChangeRequest()
-//            changeRequest?.displayName = displayName
-//            changeRequest?.commitChanges(completion: { error in
-//                guard error == nil else {
-//                    print((error?.localizedDescription)!)
-//                    return
-//                }
-//            })
+            let changeRequest = self?.user?.createProfileChangeRequest()
+            changeRequest?.displayName = displayName
+            changeRequest?.commitChanges(completion: { error in
+                guard error == nil else {
+                    print((error?.localizedDescription)!)
+                    return
+                }
+            })
             
             DispatchQueue.main.async {
                 self?.signedIn = true
@@ -200,6 +200,7 @@ class AuthViewModel : NSObject, ObservableObject {
             }
         }
     }
+
 }
 
 extension AuthViewModel: GIDSignInDelegate {
