@@ -8,32 +8,34 @@
 import SwiftUI
 
 struct LaunchView: View {
-    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
+//    @StateObject var deckListViewModel = DeckListViewModel()
+//    @StateObject var profileViewModel = ProfileViewModel()
+
     var body: some View {
         ZStack {
-            if viewModel.signedIn {
-                DecksView()
+            if authViewModel.signedIn {
+//                NavigationLink(destination: DecksView(), isActive: $viewModel.signedIn) {EmptyView()}
+                HomeView()
             } else {
-                Launch()
+                Launch()	
             }
         }
         .onAppear {
-            viewModel.signedIn = viewModel.isSignedIn
-//            NotificationCenter.default.addObserver(forName: NSNotification.Name("SIGNIN"), object: nil, queue: .main) { (_) in
-//                viewModel.signedIn = viewModel.isSignedIn
+            authViewModel.signedIn = authViewModel.isSignedIn
+//            if let user = authViewModel.user {
+//                deckListViewModel.userId = user.uid
+//                profileViewModel.userId = user.uid
 //            }
         }
-//        .navigationBarHidden(true)
-//        .navigationBarBackButtonHidden(true)
-//        .background(NavigationConfigurator { nc in
-//            nc.navigationBar.barTintColor = .white
-//            //nc.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]
-//        })
     }
 }
 
 struct Launch: View {
+    @EnvironmentObject var viewModel: AuthViewModel
+    
     var body: some View {
+        
         NavigationView {
             VStack {
                 Spacer()
@@ -54,8 +56,7 @@ struct Launch: View {
                 Spacer()
                 
                 NavigationLink(
-                    destination: Login(),
-    //                            .environmentObject(AuthViewModel()),
+                    destination: LoginView(),
                     label: {
                         Text("Get Started.")
                             .font(.headline)

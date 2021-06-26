@@ -15,8 +15,7 @@ struct QuizorizeApp: App {
     
 //    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    let persistenceController = PersistenceController.shared
-
+//    let persistenceController = PersistenceController.shared
     init() {
         setupAuthentication()
     }

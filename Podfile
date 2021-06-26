@@ -18,6 +18,7 @@ target 'Quizorize' do
   # For example, to use Firebase Authentication and Cloud Firestore
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'FirebaseFirestoreSwift'
   pod 'GoogleSignIn'
 
   target 'QuizorizeTests' do
