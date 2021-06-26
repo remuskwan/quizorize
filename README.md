@@ -70,7 +70,8 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 2. Users can create new decks by tapping the "New" icon.
 3. Users can access a deck's preview screen by tapping on its icon.
 4. Users can edit a deck or delete a deck by tapping on its title.
-5. Tapping the bell icon on the top left of the page will bring up the Activity page, which is currently work-in-progress. It will house the user's notifications and reminders to revise their decks according to the spaced repetition algorithm.
+5. Decks can be sorted by date or name.
+6. Tapping the bell icon on the top left of the page will bring up the Activity page, which is currently work-in-progress. It will house the user's notifications and reminders to revise their decks according to the spaced repetition algorithm.
 
 ## Deck Creation
 1. Tap "New" to create a new deck.
