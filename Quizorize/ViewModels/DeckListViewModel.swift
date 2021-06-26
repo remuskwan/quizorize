@@ -43,7 +43,7 @@ class DeckListViewModel: ObservableObject {
         switch sortBy {
         case .date:
             return deckViewModels.sorted { deckVM1, deckVM2 in
-                deckVM1.deck.dateCreated < deckVM2.deck.dateCreated
+                deckVM1.deck.dateCreated > deckVM2.deck.dateCreated
             }
         case .name:
             return deckViewModels.sorted { deckVM1, deckVM2 in

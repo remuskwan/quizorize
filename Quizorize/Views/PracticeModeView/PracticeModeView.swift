@@ -70,8 +70,8 @@ struct FlashcardListView: View {
             Spacer()
             ZStack {
                 if practiceModeViewModel.counter != practiceModeViewModel.count  {
-                ForEach(practiceModeViewModel.practiceFlashcards) { flashcardVM in
-                    let flashcard = flashcardVM.flashcard
+                    ForEach(practiceModeViewModel.practiceFlashcards) { flashcardVM in
+                        let flashcard = flashcardVM.flashcard
                         FlashcardView(flashcardViewModel: flashcardVM)
                             .zIndex(self.practiceModeViewModel.zIndex(of: flashcard))
                             .offset(x: self.offset(for: flashcard).width, y: self.offset(for: flashcard).height)
@@ -85,7 +85,7 @@ struct FlashcardListView: View {
                                             self.practiceModeViewModel.activeCard = flashcard
                                         }
                                         guard flashcard == self.practiceModeViewModel.activeCard else { return }
-
+                                        
                                         withAnimation(.spring()) {
                                             self.practiceModeViewModel.topCardOffset = drag.translation
                                             if drag.translation.width < -200 || drag.translation.width > 200 || drag.translation.height < -300 || drag.translation.height > 300 {
@@ -105,23 +105,13 @@ struct FlashcardListView: View {
                                             }
                                         }
                                     })
-
+                                
                             )
-                    //                    .onTapGesture {
-                    //                        if flashcardVM.flashcard == flashcardListViewModel.activeCard {
-                    //                            withAnimation {
-                    //                                flashcardVM.flipped.toggle()
-                    //                            }
-                    //                        }
-                    //                    }
-                }
+                    }
                 } else {
                     VStack {
                         Text("You're done!")
                             .padding()
-                            .frame(width: 300, height: 400)
-                        
-                        //                        .matchedGeometryEffect(id: "Shape", in: animation)
                         Button("Reset") {
                             self.practiceModeViewModel.counter = 0
                         }
@@ -131,6 +121,7 @@ struct FlashcardListView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .foregroundColor(Color.white)
                             .shadow(radius: 2)
+                            .frame(width: 300, height: 400)
                     )
                 }
             }
@@ -142,10 +133,10 @@ struct FlashcardListView: View {
                 Label(
                     title: { Text("Shuffle") },
                     icon: { Image(systemName: "shuffle") }
-)
+                )
             })
             .padding()
-
+            
         }
         
     }
