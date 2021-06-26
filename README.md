@@ -10,24 +10,33 @@ This iOS application is targeted towards students aged 14 and above that wishes 
 
 To request a copy of the current Pre-Alpha build of Quizorize on your iOS device, please head over to this link [here](https://forms.gle/QB14gRb8jx5TJTKe8).
 
-Note: Supports iPhone and iPad running iOS 14 and later.
+Requirements: iPhone and iPad running iOS 14 and later.
 
 ### Local Test (on your Mac)
-Requirements: Mac running macOS 11 BigSur, [Xcode 12](https://developer.apple.com/xcode/)
 
-To run quizorize locally, first clone this repository.
+1. To run quizorize locally, first clone this repository.
 
 ```bash
 git clone https://github.com/remuskwan/quizorize.git
 ``` 
 
-Then, run the following command in the root directory of the cloned repository
+2. If you do not already have Cocoapods installed, run the following command (if not you can skip to Step 3)
+
+```bash
+sudo gem install cocoapods
+```
+
+3. Then, run the following command in the root directory of the cloned repository
 
 ```bash
 pod install
 ```
 
+You can refer to our walkthrough video which shows the steps above [here](https://youtu.be/-w0z_bnfsF8) 
+
 Open, the workspace file 'Quizorize.xcworkspace' to view the code and run its build.
+
+Requirements: Mac running macOS 11 BigSur, [Xcode 12](https://developer.apple.com/xcode/)
 
 ## Documentation
 
@@ -40,36 +49,60 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 3. Pressing "Get Started." will bring you to the login page
 
 
-<p align="left"><img src="public/ReadMeImgs/startView.png" width="25%"/></p>
+<p align="left"><img src="public/ReadMeMedia/startView.png" width="25%"/></p>
 
 ## User Login
-1. Type in your email address and password to login
+1. Enter your email address and password to login. You may also sign in using your Apple or Google account
 2. You can click on 'Register' to create an account if you do not have one.
-3. You may also sign in using your Apple or Google account
-4. After successful login, you will be presented with the Homepage of our app.
+3. After successful login, you will be presented with the Homepage of our app.
 
-<img src = "public/ReadMeImgs/login1.png" width ="25%" /> <img src = "public/ReadMeImgs/login2.png" width ="25%" /> <img src = "public/ReadMeImgs/login3.png" width ="25%" />
+<img src = "public/ReadMeMedia/loginDemo.gif" width ="90%" /> 
 
 ## Registration
-1. Type in your particulars into the text fields provided
+1. Enter your particulars into the text fields provided
 2. Ensure that the validity checks of the fields are met
 3. Create account
 
-<img src = "public/ReadMeImgs/register1.png" width ="25%" /> <img src = "public/ReadMeImgs/register2.png" width ="25%" /> <img src = "public/ReadMeImgs/register3.png" width ="25%" />
+<img src = "public/ReadMeMedia/registerDemo.gif" width ="90%" /> 
 
 ## Homepage ("Decks screen")
-1. Currently "Work-in-Progress". Will house user-created collections of decks and decks of flashcards
-2. Navigate to the "Profile" tab to sign out of your account.
+1. Houses user-created decks, which can be accessed from any of the user's devices on which they are logged-in
+2. Users can create new decks by tapping the "New" icon.
+3. Users can access a deck's preview screen by tapping on its icon.
+4. Users can edit a deck or delete a deck by tapping on its title.
+5. Decks can be sorted by date or name.
+6. Tapping the bell icon on the top left of the page will bring up the Activity page, which is currently work-in-progress. It will house the user's notifications and reminders to revise their decks according to the spaced repetition algorithm.
+
+## Deck Creation
+1. Tap "New" to create a new deck.
+2. Enter the deck's title and the flashcards' prompts and answers. Each deck must contain a minimum of two flashcards. 
+3. Swipe left on a flashcard to remove it from the deck.
+4. Tap "Create" to finish creating the deck.
+
+## Deck Preview
+1. The deck's flashcards are displayed in a carousel at the top of the screen. 
+2. Tap a flashcard to flip it (prompt on the front, answer on the back)
+3. Swipe left and right to navigate between flashcards.
+4. Tap "Practice" to access Practice mode.
+
+## Practice Mode
+1. The deck of flashcards are displayed as an interactive deck in the middle of the screen.
+2. Swipe left or right to navigate to the next flashcard. The counter and progress bar increments with each swipe.
+3. A summary screen is shown when "Practice" is complete. Tapping the "Reset" button resets the page.
+4. Tap the "X" in the top left corner to exit Practice mode
+5. Tapping the optional "Shuffle" button shuffles the deck of flashcards
+
+## Search
+1. Tap the "Search" icon in the tab bar to access the Search page.
+2. Enter a decks name into the search field to search for a deck.
+3. Tap on the deck's icon to view its preview screen.
 
 ## Profile
 1. Currently "Work-in-Progress". Will show user's profile details as well as level and achievements.
-2. Pressing the "gear" icon on the top-left of the screen will bring you to the settings screen
-3. Pressing "Sign out" will sign you out of your account and bring you back to the Launch Screen
+3. Pressing "Sign out" will sign the user out of their account and bring them back to the Launch Screen
 
 ## Planned Features
-1. Deck and Flashcard Creation
-2. Preview mode (for viewing and editing flashcards) and Practice mode (for reviewing deck of flashcards)
-3. Search (for collections, decks and flashcards)
+1. Spaced Repetition Algorithm
 4. Favoriting decks and flashcards (for ease-of-access)
 5. Level and achievement system
 6. Leaderboard system
@@ -77,3 +110,5 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 
 ## Known Bugs
 1. If you are running Quizorize on a simulator from Xcode, the secure fields (Password and Confirm password) will sometimes show 'Strong Password' 
+2. Does not fully support "Dark" appearance.
+3. Launch screen on iPad appears in the sidebar.
