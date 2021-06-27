@@ -5,6 +5,7 @@
 //  Created by Remus Kwan on 31/5/21.
 //
 
+//Source: https://github.com/joehinkle11/Login-with-Apple-Firebase-SwiftUI
 import UIKit
 import SwiftUI
 import AuthenticationServices

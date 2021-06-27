@@ -13,34 +13,10 @@ class SignupViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
     @Published var confirmPw = ""
-    
 
     @Published private(set) var SignUpError: LocalizedError?
     
-    private let emptyString = """
-        
-        
-    """
-    
-    private let namePromptText = """
-    Enter your display name here
-    
-    """
-    
-    private let emailPromptText = """
-    Enter a valid email address
-        
-    """
-    private let passwordPromptText = """
-    Must be between 8 and 15 characters containing at least one
-    number and one capital letter
-    """
-    
-    private let confirmPwPromptText = """
-    Password fields do not match
-        
-    """
-    
+
     //MARK: - Validation Functions
     
     func passwordsMatch() -> Bool {
@@ -81,34 +57,34 @@ class SignupViewModel: ObservableObject {
     
     var namePrompt: String {
         if self.name.isEmpty {
-            return emptyString
+            return FieldConstants.emptyString
         } else {
-            return namePromptText
+            return FieldConstants.namePromptText
         }
     }
     
 
     var emailPrompt: String {
         if isEmailValid() || self.email.isEmpty  {
-            return emptyString
+            return FieldConstants.emptyString
         } else {
-            return emailPromptText
+            return FieldConstants.emailPromptText
         }
     }
     
     var passwordPrompt: String {
         if isPasswordValid() || self.password.isEmpty{
-            return emptyString
+            return FieldConstants.emptyString
         } else {
-            return passwordPromptText
+            return FieldConstants.passwordPromptText
         }
     }
     
     var confirmPwPrompt: String {
         if passwordsMatch() || self.confirmPw.isEmpty {
-            return emptyString
+            return FieldConstants.emptyString
         } else {
-            return confirmPwPromptText
+            return FieldConstants.confirmPwPromptText
         }
     }
     
@@ -117,19 +93,35 @@ class SignupViewModel: ObservableObject {
         if !self.password.isEmpty {
             return "Reveal password"
         } else {
-            return "               "
+            return FieldConstants.emptyString
         }
     }
-    
-    /*
-    var confirmPasswordTogglerPrompt: String {
-        if !self.confirmPw.isEmpty {
-            return "Reveal Password"
-        } else {
-            return " "
-        }
+
+    private struct FieldConstants {
+        static let emptyString = """
+            
+        """
+        
+        static let namePromptText = """
+        Enter your display name here
+        
+        """
+        
+        static let emailPromptText = """
+        Enter a valid email address
+            
+        """
+        
+        static let passwordPromptText = """
+        Must be between 8 and 15 characters containing at least one
+        number and one capital letter
+        """
+        
+        static let confirmPwPromptText = """
+        Password fields do not match
+            
+        """
     }
-    */
     
     
 }
