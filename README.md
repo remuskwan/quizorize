@@ -38,6 +38,9 @@ Open, the workspace file 'Quizorize.xcworkspace' to view the code and run its bu
 
 Requirements: Mac running macOS 11 BigSur, [Xcode 12](https://developer.apple.com/xcode/)
 
+## Video Demo
+Please visit our video demo on Youtube [here] (https://youtu.be/EOlAkFIuFTw)
+
 ## Documentation
 
 Please refer to our Milestone README [here](https://docs.google.com/document/d/1BBVJUarCBF2qy_ZWbH6zZka4ebhrtTBtQnHnmGUuizE/edit?ts=60afa18d).
