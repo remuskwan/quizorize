@@ -114,6 +114,9 @@ struct FlashcardListView: View {
                             .padding()
                         Button("Reset") {
                             self.practiceModeViewModel.counter = 0
+                            self.practiceModeViewModel.practiceFlashcards.forEach { flashcardVM in
+                                flashcardVM.flipped = false
+                            }
                         }
                         .padding()
                     }
