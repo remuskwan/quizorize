@@ -11,7 +11,7 @@ import SwiftUI
 //Includes: 
 struct DeckCreationFlashCard: View {
     
-    @ObservedObject var deckCreationVM: DeckCreationViewModel
+    var deckCreationVM: DeckCreationViewModel
     
     @State private var isQuestionTapped = false
     @State private var isAnswerTapped = false
@@ -110,16 +110,21 @@ struct DeckCreationFlashCard: View {
         
         
         TextField(StringConstants.promptPlaceholder,
-                  text: $question,
+                  text: Binding(get: {self.deckCreationVM.flashcards[self.index].prompt},
+                                set: {self.deckCreationVM.flashcards[self.index].prompt = $0}),
                   onEditingChanged: { edit in
                     withAnimation(.easeIn(duration: DrawingConstants.easeInDuration)) {
                         isQuestionTapped = edit
                     }
-                    deckCreationVM.editPromptWith(string: question, at: index)
-                  },
+                    //deckCreationVM.editPromptWith(string: question, at: index)
+                  }
+                  /*
                   onCommit: {
                     deckCreationVM.editPromptWith(string: question, at: index)
                   })
+                    */
+                )
+                  
             .font(.body)
             .textFieldStyle(CustomTextFieldStyle(isFieldTapped: $isQuestionTapped, captionTitle: StringConstants.promptTitle, imageName: "question"))
         
@@ -158,16 +163,18 @@ struct DeckCreationFlashCard: View {
     
     var answerBody: some View {
         TextField(StringConstants.answerPlaceholder,
-                  text: $answer,
+                  text: Binding(get: {self.deckCreationVM.flashcards[self.index].answer},
+                                set: {self.deckCreationVM.flashcards[self.index].answer = $0}),
                   onEditingChanged: { edit in
                     withAnimation(.easeIn(duration: DrawingConstants.easeInDuration)) {
                         isAnswerTapped = edit
                     }
-                    deckCreationVM.editAnswerWith(string: answer, at: index)
-                  },
+                    //deckCreationVM.editAnswerWith(string: answer, at: index)
+                  }
+                /*
                   onCommit: {
                     deckCreationVM.editAnswerWith(string: answer, at: index)
-                  })
+                  }*/)
             .font(.body)
             .textFieldStyle(CustomTextFieldStyle(isFieldTapped: $isAnswerTapped, captionTitle: StringConstants.answerTitle, imageName: "answer"))
 

@@ -45,9 +45,6 @@
 		16285C7C26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		166783EB26827E93003C859B /* PracticeModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166783EA26827E93003C859B /* PracticeModeViewModel.swift */; };
 		166783ED2685DD16003C859B /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166783EC2685DD15003C859B /* ProfileViewModel.swift */; };
-		166783F3268618DA003C859B /* EditDeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166783EF268618DA003C859B /* EditDeckView.swift */; };
-		166783F4268618DA003C859B /* AddFlashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166783F0268618DA003C859B /* AddFlashcard.swift */; };
-		166783F5268618DA003C859B /* DeckPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166783F1268618DA003C859B /* DeckPreviewView.swift */; };
 		166783F6268618DA003C859B /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166783F2268618DA003C859B /* DeckView.swift */; };
 		166783F9268645E6003C859B /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166783F8268645E6003C859B /* BottomSheetView.swift */; };
 		166B1E6A2663FED900D3922B /* SignInWithAppleFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E692663FED900D3922B /* SignInWithAppleFirebase.swift */; };
@@ -112,6 +109,8 @@
 		77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77541626266A047B00BE8273 /* DeckCreationView.swift */; };
 		7783963B266D08330024293B /* DeckCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7783963A266D08330024293B /* DeckCreationViewModel.swift */; };
 		77AB03AF2663C669009F4982 /* TouchDownUpEventModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */; };
+		77E5EBEA269314C300BA45E3 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5EBE9269314C300BA45E3 /* CarouselView.swift */; };
+		77E5EBEC269330E600BA45E3 /* TestCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5EBEB269330E600BA45E3 /* TestCarouselView.swift */; };
 		77F47658265EB25200AE1C06 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F47657265EB25200AE1C06 /* SignupViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -148,9 +147,6 @@
 		16285C7926593426003EE017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		166783EA26827E93003C859B /* PracticeModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeModeViewModel.swift; sourceTree = "<group>"; };
 		166783EC2685DD15003C859B /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
-		166783EF268618DA003C859B /* EditDeckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDeckView.swift; sourceTree = "<group>"; };
-		166783F0268618DA003C859B /* AddFlashcard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFlashcard.swift; sourceTree = "<group>"; };
-		166783F1268618DA003C859B /* DeckPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckPreviewView.swift; sourceTree = "<group>"; };
 		166783F2268618DA003C859B /* DeckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
 		166783F8268645E6003C859B /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		166B1E692663FED900D3922B /* SignInWithAppleFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleFirebase.swift; sourceTree = "<group>"; };
@@ -202,6 +198,8 @@
 		77541626266A047B00BE8273 /* DeckCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationView.swift; sourceTree = "<group>"; };
 		7783963A266D08330024293B /* DeckCreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationViewModel.swift; sourceTree = "<group>"; };
 		77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TouchDownUpEventModifier.swift; path = Quizorize/Views/TouchDownUpEventModifier.swift; sourceTree = SOURCE_ROOT; };
+		77E5EBE9269314C300BA45E3 /* CarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarouselView.swift; path = "../../../../../Desktop/Quizorize/InfiniteCarousel_Tutorial/Standalone File/CarouselView.swift"; sourceTree = "<group>"; };
+		77E5EBEB269330E600BA45E3 /* TestCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCarouselView.swift; sourceTree = "<group>"; };
 		77F47657265EB25200AE1C06 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupViewModel.swift; path = Quizorize/ViewModels/SignupViewModel.swift; sourceTree = SOURCE_ROOT; };
 		7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuizorizeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -320,10 +318,9 @@
 		166783EE268618DA003C859B /* DeckPreview */ = {
 			isa = PBXGroup;
 			children = (
-				166783EF268618DA003C859B /* EditDeckView.swift */,
-				166783F0268618DA003C859B /* AddFlashcard.swift */,
-				166783F1268618DA003C859B /* DeckPreviewView.swift */,
+				77E5EBE9269314C300BA45E3 /* CarouselView.swift */,
 				166783F2268618DA003C859B /* DeckView.swift */,
+				77E5EBEB269330E600BA45E3 /* TestCarouselView.swift */,
 			);
 			name = DeckPreview;
 			path = Views/DeckPreview;
@@ -778,6 +775,7 @@
 				16E701DA267A0DB700A1E55D /* UserListViewModel.swift in Sources */,
 				166B1E752663FF7300D3922B /* UserData.swift in Sources */,
 				166783F6268618DA003C859B /* DeckView.swift in Sources */,
+				77E5EBEA269314C300BA45E3 /* CarouselView.swift in Sources */,
 				166B1E6A2663FED900D3922B /* SignInWithAppleFirebase.swift in Sources */,
 				166B1E8A2666575300D3922B /* Flashcard.swift in Sources */,
 				16279301265BFF7B0073718F /* LaunchView.swift in Sources */,
@@ -788,7 +786,6 @@
 				7700BC5F266F6375004C5C82 /* PracticeModeFlashCard.swift in Sources */,
 				166783ED2685DD16003C859B /* ProfileViewModel.swift in Sources */,
 				166B1E6D2663FF2700D3922B /* Keychain.swift in Sources */,
-				166783F5268618DA003C859B /* DeckPreviewView.swift in Sources */,
 				162792F9265BE7860073718F /* Extensions.swift in Sources */,
 				16E701D02677ADDA00A1E55D /* FlashcardListViewModel.swift in Sources */,
 				16E701CB2676316D00A1E55D /* FlashcardViewModel.swift in Sources */,
@@ -797,8 +794,8 @@
 				16E701D42678E42300A1E55D /* UserViewModel.swift in Sources */,
 				166783EB26827E93003C859B /* PracticeModeViewModel.swift in Sources */,
 				7700BC6926710470004C5C82 /* FlashcardGradeModel.swift in Sources */,
+				77E5EBEC269330E600BA45E3 /* TestCarouselView.swift in Sources */,
 				77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */,
-				166783F4268618DA003C859B /* AddFlashcard.swift in Sources */,
 				166B1E8E266F8B9800D3922B /* DeckListViewModel.swift in Sources */,
 				16E701CE2677AD6E00A1E55D /* DeckViewModel.swift in Sources */,
 				16E701DE2682265300A1E55D /* CustomNavigationView.swift in Sources */,
@@ -817,7 +814,6 @@
 				166B1E962670B45A00D3922B /* FlashcardRepository.swift in Sources */,
 				16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */,
 				166B1E712663FF6200D3922B /* SharedWebCredential.swift in Sources */,
-				166783F3268618DA003C859B /* EditDeckView.swift in Sources */,
 				16E701DC2681CDCF00A1E55D /* PracticeModeView.swift in Sources */,
 				166B1E812666258500D3922B /* Deck.swift in Sources */,
 				162792EC265AD1240073718F /* HomeView.swift in Sources */,
