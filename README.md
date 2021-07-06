@@ -38,6 +38,9 @@ Open, the workspace file 'Quizorize.xcworkspace' to view the code and run its bu
 
 Requirements: Mac running macOS 11 BigSur, [Xcode 12](https://developer.apple.com/xcode/)
 
+## Video Demo
+Please visit our video demo on Youtube [here](https://youtu.be/EOlAkFIuFTw).
+
 ## Documentation
 
 Please refer to our Milestone README [here](https://docs.google.com/document/d/1BBVJUarCBF2qy_ZWbH6zZka4ebhrtTBtQnHnmGUuizE/edit?ts=60afa18d).
@@ -79,11 +82,15 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 3. Swipe left on a flashcard to remove it from the deck.
 4. Tap "Create" to finish creating the deck.
 
+<img src = "public/ReadMeMedia/SimulatorScreenDeckCreation.gif" width ="25%" /> 
+
 ## Deck Preview
 1. The deck's flashcards are displayed in a carousel at the top of the screen. 
 2. Tap a flashcard to flip it (prompt on the front, answer on the back)
 3. Swipe left and right to navigate between flashcards.
 4. Tap "Practice" to access Practice mode.
+
+<img src = "public/ReadMeMedia/SimulatorScreenDeckPreview.gif" width ="25%" /> 
 
 ## Practice Mode
 1. The deck of flashcards are displayed as an interactive deck in the middle of the screen.
@@ -92,10 +99,14 @@ Please refer to our Milestone README [here](https://docs.google.com/document/d/1
 4. Tap the "X" in the top left corner to exit Practice mode
 5. Tapping the optional "Shuffle" button shuffles the deck of flashcards
 
+<img src = "public/ReadMeMedia/SimulatorScreenDeckPractice.gif" width ="25%" /> 
+
 ## Search
 1. Tap the "Search" icon in the tab bar to access the Search page.
 2. Enter a decks name into the search field to search for a deck.
 3. Tap on the deck's icon to view its preview screen.
+
+<img src = "public/ReadMeMedia/SimulatorScreenDeckSearch.gif" width ="25%" /> 
 
 ## Profile
 1. Currently "Work-in-Progress". Will show user's profile details as well as level and achievements.

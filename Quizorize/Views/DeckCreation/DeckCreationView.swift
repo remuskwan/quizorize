@@ -13,12 +13,16 @@ struct DeckCreationView: View {
         self.deckListViewModel = deckListViewModel
         self.deckCreationVM = DeckCreationViewModel()
         self.didCreateDeck = didCreateDeck
+        
+        self.createOrEdit = "Create"
     }
     
     init(deckListViewModel: DeckListViewModel, deckVM: DeckViewModel, flashcardListVM: FlashcardListViewModel, didCreateDeck: @escaping (_ deck: Deck, _ flashcards: [Flashcard]) -> Void) {
         self.deckListViewModel = deckListViewModel
         self.deckCreationVM = DeckCreationViewModel(flashcardListVM: flashcardListVM, deckVM: deckVM)
         self.didCreateDeck = didCreateDeck
+        
+        self.createOrEdit = "Edit"
     }
 
     @ObservedObject var deckCreationVM: DeckCreationViewModel
@@ -30,6 +34,8 @@ struct DeckCreationView: View {
     @State private var isDeckTitleTapped = false
     @State private var isNotValid = false
     
+    
+    var createOrEdit: String
     var didCreateDeck: (_ deck: Deck, _ flashcards: [Flashcard]) -> Void
     
     var body: some View {
@@ -77,7 +83,7 @@ struct DeckCreationView: View {
 //                        }
                         presentationMode.wrappedValue.dismiss()
                     } label: {
-                        Text("Create")
+                        Text(createOrEdit)
                     }
                 }
             }
@@ -128,8 +134,9 @@ struct DeckCreationView: View {
             ScrollViewReader { scrollReader in
                 List {
                     ForEach(deckCreationVM.flashcards) { emptyFlashcard in
-                        
+
                         let index = deckCreationVM.flashcards.firstIndex(where: {$0 == emptyFlashcard})!
+                        
                         DeckCreationFlashCard(deckCreationVM: deckCreationVM, question: emptyFlashcard.prompt, answer: emptyFlashcard.answer, index: index)
                             .background(RoundedRectangle(cornerRadius: DrawingConstants.deckCreationFlashcardCornerRadius)
                                             .fill(Color.white)

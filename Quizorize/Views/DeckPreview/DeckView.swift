@@ -21,20 +21,30 @@ struct DeckView: View {
     @State private var showDeckOptions = false
     @State private var deleteDeckConfirm = false
     
+    var randomAnyViews = [AnyView(Text("Hi")), AnyView(Text("Bye")), AnyView(Text("baba")), AnyView(Text("Mama"))]
+
     var body: some View {
         GeometryReader { geoProxy in
-            VStack {
+            VStack(spacing: 0) {
                 
+                /*
                 GeometryReader { carouselGProxy in
                     Carousel(width: UIScreen.main.bounds.width, page: $page, height: carouselGProxy.frame(in: .global).height, flashcardListViewModel: flashcardListViewModel)
+
                 }
-                    .frame(height: geoProxy.size.height * 0.7)
+                .frame(height: geoProxy.size.height * 0.7)
+                */
+                
+                CarouselView(itemHeight: geoProxy.size.height * 0.5, flashcardListVM: flashcardListViewModel)
+
+                Spacer()
                 
                 generalInfo
-                    .frame(height: geoProxy.size.height * 0.15)
+                    .frame(height: UIScreen.main.bounds.height * 0.15)
                 
                 buttons
-                
+                    .frame(height: UIScreen.main.bounds.height * 0.15)
+
                 Spacer()
                 
             }
@@ -51,12 +61,12 @@ struct DeckView: View {
             .fullScreenCover(isPresented: $showTestModeView, content: testContent)
             .actionSheet(isPresented: $showDeckOptions, content: {
                 ActionSheet(title: Text(""), message: Text(""), buttons: [
-                        .default(Text("Edit Deck")) { self.showingEditDeck = true },
-                        .destructive(Text("Delete Deck").foregroundColor(Color.red)) {
-                            self.deleteDeckConfirm.toggle()
-                        },
-                        .cancel()
-                    ])
+                    .default(Text("Edit Deck")) { self.showingEditDeck = true },
+                    .destructive(Text("Delete Deck").foregroundColor(Color.red)) {
+                        self.deleteDeckConfirm.toggle()
+                    },
+                    .cancel()
+                ])
                 
             })
             .alert(isPresented: $deleteDeckConfirm, content: {
@@ -105,7 +115,9 @@ struct DeckView: View {
                         .forEach { deletedFlashcard in
                             flashcardListViewModel.remove(deletedFlashcard)
                         }
-
+                    
+                    print(flashcardListViewModel.flashcardViewModels.count)
+                    
                 }
             }
             
@@ -178,10 +190,9 @@ struct DeckView: View {
                 .frame(width: buttonGProxy.size.width * ButtonConstants.buttonRatio)
                 .buttonStyle(PreviewButtonStyle())
                 .padding()
-
                 Spacer()
             }
-
+            
         }
     }
     
@@ -246,7 +257,7 @@ struct Carousel: UIViewRepresentable {
         DispatchQueue.main.async {
             uiView.contentSize = CGSize(width: width * CGFloat(flashcardListViewModel.flashcardViewModels.count), height: 1.0)
         }
-
+        
     }
     
     class Coordinator: NSObject, UIScrollViewDelegate {
@@ -273,40 +284,49 @@ struct PreviewList: View {
     
     var body: some View {
         GeometryReader { fullView in
+            //Replace with HStack(spacing: 0) for reverting to original
             HStack(spacing: 0) {
                 
                 ForEach(flashcardListViewModel.flashcardViewModels) { flashcard in
-                    PreviewFlashcard(page: $page,
+                    PreviewFlashcard(
                                      index: flashcardListViewModel.flashcardViewModels.firstIndex(where: {$0.id == flashcard.id})!,
-                                     width: UIScreen.main.bounds.width,
+                        width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height,
                                      flashcardVM: flashcard
                     )
-                    .aspectRatio(2/3, contentMode: .fit)
-                    .frame(height: fullView.size.height * 0.75)
+                    .aspectRatio(3/2, contentMode: .fit)
+                    .frame(height: fullView.size.height * Dimensions.cardFrameRatio)
+
+
                 }
             }
         }
     }
+    
+    private struct Dimensions {
+        static let stackHPadding: CGFloat = 20
+        static let cardWidthRatio: CGFloat = 0.6
+        
+        static let cardFrameRatio: CGFloat = 0.75
+    }
 }
 
 struct PreviewFlashcard: View, Animatable {
-    @Binding var page: Int
     var index: Int
-    
+
     
     var width: CGFloat
+    var height: CGFloat
     var flashcardVM: FlashcardViewModel
     @State var isFlipped = false
     
     var body: some View {
         let flipDegrees = isFlipped ? 180.0 : 0.0
         
-        VStack {
+        VStack(spacing: 0) {
             ZStack {
                 let shape = RoundedRectangle(cornerRadius: DrawingConstants.bgCornerRadius)
                 
                 if flipDegrees < 90 {
-                    //logic here (for card before flip)
                     shape.fill().foregroundColor(.accentColor)
                         .shadow(color: DrawingConstants.shadowColor, radius: DrawingConstants.shadowRadius, x: DrawingConstants.shadowX, y: DrawingConstants.shadowY)
                     Text(flashcardVM.flashcard.prompt)
@@ -316,7 +336,6 @@ struct PreviewFlashcard: View, Animatable {
                         .padding()
                     
                 } else {
-                    //logic here for card after flip
                     shape.fill().foregroundColor(.white)
                         .shadow(color: DrawingConstants.shadowColor, radius: DrawingConstants.shadowRadius, x: DrawingConstants.shadowX, y: DrawingConstants.shadowY)
                     Text(flashcardVM.flashcard.answer).rotation3DEffect(Angle.degrees(180), axis: (0, 1, 0))
@@ -332,12 +351,11 @@ struct PreviewFlashcard: View, Animatable {
                     isFlipped.toggle()
                 }
             }
-            .padding()
-            .padding(.vertical, self.page == self.index ? 0 : 25)
-            .padding(.horizontal, self.page == self.index ? 0 : 25)
             .animation(.spring())
         }
-        .frame(width: self.width)
+        .frame(width: self.width, height: self.height)
+        .animation(.interpolatingSpring(stiffness: 300.0, damping: 30.0, initialVelocity: 10.0))
+        
     }
     
     private struct DrawingConstants {
@@ -356,7 +374,7 @@ struct PreviewFlashcard: View, Animatable {
 
 //MARK: PageControl functionality (doesn't seem to be working)
 struct PageControl: UIViewRepresentable {
-
+    
     @ObservedObject var flashcardListVM: FlashcardListViewModel
     
     @Binding var page: Int
@@ -395,15 +413,15 @@ struct PreviewButtonStyle: ButtonStyle {
                             .fill(Color.white)
                             .frame(height: geoProxy.size.height * 0.95)
                             .offset(x: 0, y: -2)
-                            )
+            )
             .background(RoundedRectangle(cornerRadius: DrawingConstants.rectCornerRadius)
                             .fill(configuration.isPressed ? DrawingConstants.tappedColor : DrawingConstants.notTappedBgColor)
                             .shadow(color: configuration.isPressed ? DrawingConstants.bgShadowColorAfterTap : DrawingConstants.bgShadowColorBeforeTap, radius: DrawingConstants.bgShadowRadius, x: DrawingConstants.bgShadowX, y: DrawingConstants.bgShadowY)
                             .frame(height: geoProxy.size.height)
-                            )
-
+            )
+            
         }
-
+        
     }
     
     private struct DrawingConstants {

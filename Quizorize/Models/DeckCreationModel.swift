@@ -11,7 +11,7 @@ struct DeckCreationModel {
     
 
 
-    private(set) var flashcards: [EmptyFlashcard]
+    var flashcards: [EmptyFlashcard]
     
     private(set) var deckTitle: String
     

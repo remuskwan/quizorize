@@ -59,7 +59,8 @@ struct DeckListView: View {
                             //TODO: Drag and drop into folders using onLongPressGesture
                             VStack {
                                 NavigationLink(
-                                    destination: DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: flashcardListViewModel),
+                                    destination:
+                                        DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: flashcardListViewModel),
                                     label: {
                                     Image("deck1")
                                         .resizable()
