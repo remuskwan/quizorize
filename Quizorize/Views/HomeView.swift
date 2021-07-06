@@ -219,6 +219,8 @@ struct NewButton: View {
         VStack {
             Button(action: {
                 showingActionSheet.toggle()
+                let impactLight = UIImpactFeedbackGenerator(style: .light)
+                impactLight.impactOccurred()
             }, label: {
                 VStack {
                     ZStack {

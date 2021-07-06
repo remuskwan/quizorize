@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DeckView: View {
-    
     @ObservedObject var deckListViewModel: DeckListViewModel
     @ObservedObject var deckViewModel: DeckViewModel
     @ObservedObject var flashcardListViewModel: FlashcardListViewModel
@@ -18,6 +17,7 @@ struct DeckView: View {
     
     @State private var showingEditDeck = false
     @State private var showPracticeModeView = false
+    @State private var showTestModeView = false
     @State private var showDeckOptions = false
     @State private var deleteDeckConfirm = false
     
@@ -48,8 +48,6 @@ struct DeckView: View {
                 Spacer()
                 
             }
-            .navigationTitle(deckViewModel.deck.title)
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -59,7 +57,8 @@ struct DeckView: View {
                     }
                 }
             }
-            .fullScreenCover(isPresented: $showPracticeModeView, content: coverContent)
+            .fullScreenCover(isPresented: $showPracticeModeView, content: practiceContent)
+            .fullScreenCover(isPresented: $showTestModeView, content: testContent)
             .actionSheet(isPresented: $showDeckOptions, content: {
                 ActionSheet(title: Text(""), message: Text(""), buttons: [
                     .default(Text("Edit Deck")) { self.showingEditDeck = true },
@@ -155,7 +154,7 @@ struct DeckView: View {
                 Spacer()
                 
                 Button {
-                    showPracticeModeView.toggle()
+                    self.showPracticeModeView.toggle()
                 } label: {
                     VStack {
                         Spacer()
@@ -171,8 +170,26 @@ struct DeckView: View {
                 }
                 .frame(width: buttonGProxy.size.width * ButtonConstants.buttonRatio)
                 .buttonStyle(PreviewButtonStyle())
+                .padding()
                 
-                
+                Button {
+                    self.showTestModeView.toggle()
+                } label: {
+                    VStack {
+                        Spacer()
+                        
+                        Image("testmode")
+                            .resizable()
+                            .scaledToFit()
+                        Text("Test")
+                            .font(.body.bold())
+                        
+                        Spacer()
+                    }
+                }
+                .frame(width: buttonGProxy.size.width * ButtonConstants.buttonRatio)
+                .buttonStyle(PreviewButtonStyle())
+                .padding()
                 Spacer()
             }
             
@@ -183,15 +200,23 @@ struct DeckView: View {
         static let buttonRatio: CGFloat = 0.45
     }
     
-    func coverContent() -> some View {
+    func practiceContent() -> some View {
         var practiceFlashcards = [FlashcardViewModel]()
-        
         practiceFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
-        print(practiceFlashcards)
         practiceFlashcards.map { flashcardVM in
             flashcardVM.flipped = false
         }
         return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards))
+    }
+    
+    func testContent() -> some View {
+        var testFlashcards = [FlashcardViewModel]()
+        
+        testFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
+        testFlashcards.map { flashcardVM in
+            flashcardVM.flipped = false
+        }
+        return TestModeView(testModeViewModel: TestModeViewModel(testFlashcards))
     }
 }
 
