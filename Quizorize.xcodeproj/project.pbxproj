@@ -108,8 +108,8 @@
 		774D5912267A548A00D8A786 /* DeckCreationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774D5911267A548A00D8A786 /* DeckCreationModel.swift */; };
 		77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77541626266A047B00BE8273 /* DeckCreationView.swift */; };
 		7783963B266D08330024293B /* DeckCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7783963A266D08330024293B /* DeckCreationViewModel.swift */; };
+		778DF3E626959BFA00C2D549 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778DF3E526959BFA00C2D549 /* CarouselView.swift */; };
 		77AB03AF2663C669009F4982 /* TouchDownUpEventModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */; };
-		77E5EBEC269330E600BA45E3 /* TestCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5EBEB269330E600BA45E3 /* TestCarouselView.swift */; };
 		77F47658265EB25200AE1C06 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F47657265EB25200AE1C06 /* SignupViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -198,9 +198,8 @@
 		774D5911267A548A00D8A786 /* DeckCreationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationModel.swift; sourceTree = "<group>"; };
 		77541626266A047B00BE8273 /* DeckCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationView.swift; sourceTree = "<group>"; };
 		7783963A266D08330024293B /* DeckCreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationViewModel.swift; sourceTree = "<group>"; };
+		778DF3E526959BFA00C2D549 /* CarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TouchDownUpEventModifier.swift; path = Quizorize/Views/TouchDownUpEventModifier.swift; sourceTree = SOURCE_ROOT; };
-		77E5EBE9269314C300BA45E3 /* CarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarouselView.swift; path = "../../../../../Desktop/Quizorize/InfiniteCarousel_Tutorial/Standalone File/CarouselView.swift"; sourceTree = "<group>"; };
-		77E5EBEB269330E600BA45E3 /* TestCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCarouselView.swift; sourceTree = "<group>"; };
 		77F47657265EB25200AE1C06 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupViewModel.swift; path = Quizorize/ViewModels/SignupViewModel.swift; sourceTree = SOURCE_ROOT; };
 		7909402B37556B93C110D675 /* Pods-Quizorize-QuizorizeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; path = "Target Support Files/Pods-Quizorize-QuizorizeUITests/Pods-Quizorize-QuizorizeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F19470671F6E994F0CDB4B5 /* Pods_QuizorizeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuizorizeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -320,9 +319,8 @@
 		166783EE268618DA003C859B /* DeckPreview */ = {
 			isa = PBXGroup;
 			children = (
-				77E5EBE9269314C300BA45E3 /* CarouselView.swift */,
+				778DF3E526959BFA00C2D549 /* CarouselView.swift */,
 				166783F2268618DA003C859B /* DeckView.swift */,
-				77E5EBEB269330E600BA45E3 /* TestCarouselView.swift */,
 			);
 			name = DeckPreview;
 			path = Views/DeckPreview;
@@ -784,6 +782,7 @@
 				77F47658265EB25200AE1C06 /* SignupViewModel.swift in Sources */,
 				16E701DA267A0DB700A1E55D /* UserListViewModel.swift in Sources */,
 				166B1E752663FF7300D3922B /* UserData.swift in Sources */,
+				778DF3E626959BFA00C2D549 /* CarouselView.swift in Sources */,
 				166783F6268618DA003C859B /* DeckView.swift in Sources */,
 				166B1E6A2663FED900D3922B /* SignInWithAppleFirebase.swift in Sources */,
 				166B1E8A2666575300D3922B /* Flashcard.swift in Sources */,
@@ -803,7 +802,6 @@
 				16E701D42678E42300A1E55D /* UserViewModel.swift in Sources */,
 				166783EB26827E93003C859B /* PracticeModeViewModel.swift in Sources */,
 				7700BC6926710470004C5C82 /* FlashcardGradeModel.swift in Sources */,
-				77E5EBEC269330E600BA45E3 /* TestCarouselView.swift in Sources */,
 				77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */,
 				166B1E8E266F8B9800D3922B /* DeckListViewModel.swift in Sources */,
 				16E701CE2677AD6E00A1E55D /* DeckViewModel.swift in Sources */,

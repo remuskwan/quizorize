@@ -38,7 +38,25 @@ final class FlashcardRepository: ObservableObject {
             }
             if let querySnapshot = querySnapshot {
                 self.flashcards = querySnapshot.documents.compactMap({ document in
-                    try? document.data(as: Flashcard.self)
+                    if let flashcard = try? document.data(as: Flashcard.self) {
+                        return flashcard
+                    } else {
+                        document.reference.updateData([
+                            "repetition": 0,
+                            "interval": 0,
+                            "easinessFactor": 2.5,
+                            "previousDate": nil,
+                            "nextDate": nil
+                        ]) { err in
+                            if let err = err {
+                                print("Error updating Flashcard")
+                            } else {
+                                print("Flashcard successfully updated")
+                            }
+                        }
+                        
+                        return try? document.data(as: Flashcard.self)
+                    }
                 })
             }
         }
