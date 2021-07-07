@@ -21,11 +21,11 @@ struct TestModeView: View {
                 ZStack {
                     VStack {
                         if !self.showingTest {
-                            let testModeOptions = TestModeOptions(testModeViewModel)
                             List {
                                 Button(action: {
                                     testModeViewModel.setQuestionTypes()
                                     testModeViewModel.setCurrentType()
+                                    testModeViewModel.setQuestionCount()
                                     self.showingTest.toggle()
                                 }, label: {
                                     Text("Start Test")
@@ -36,7 +36,7 @@ struct TestModeView: View {
                                 .frame(width: geometry.size.width * 0.8, height: 45)
                                 .listRowBackground(Color.accentColor)
                                 
-                                testModeOptions
+                                TestModeOptions(testModeViewModel)
                             }
                             .listStyle(InsetGroupedListStyle())
                             .toolbar(content: {
@@ -61,9 +61,6 @@ struct TestModeView: View {
                                         } label: {
                                             Image(systemName: "multiply")
                                         }
-                                    }
-                                    ToolbarItem(placement: .principal) {
-                                        ProgressView(value: Double(testModeViewModel.counter), total: Double(testModeViewModel.count))
                                     }
                                     ToolbarItem(placement: .navigationBarTrailing) {
                                         Image(systemName: "questionmark.circle")
@@ -92,21 +89,16 @@ struct TestModeView: View {
 struct TestModeOptions: View {
     @ObservedObject var testModeViewModel: TestModeViewModel
     
-    @State private var selectedQnCount: Int
     @State private var isInstEvalOn = false
-    @State var isTrueFalseOn = true
-    @State var isMCQOn = true
-    @State var isWrittenOn = true
     @State private var showAlert = false
     
     init(_ testModeViewModel: TestModeViewModel) {
         self.testModeViewModel = testModeViewModel
-        self.selectedQnCount = testModeViewModel.count
     }
     
     var body: some View {
         Section(header: Text("General")) {
-            Picker("Question Count", selection: $selectedQnCount) {
+            Picker("Question Count", selection: $testModeViewModel.questionCount) {
                 ForEach(1 ..< testModeViewModel.count + 1, id: \.self) {
                     Text("\($0)")
                 }
@@ -121,17 +113,17 @@ struct TestModeOptions: View {
             Toggle(isOn: $testModeViewModel.isTrueFalse, label: {
                 Text("True or false")
             })
-            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+            .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
             
             Toggle(isOn: $testModeViewModel.isMCQ, label: {
                 Text("Multiple choice")
             })
-            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+            .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
             
             Toggle(isOn: $testModeViewModel.isWritten, label: {
                 Text("Written")
             })
-            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+            .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
         }
 //        .alert(isPresented: testModeViewModel.isTrueFalse && testModeViewModel.isMCQ && testModeViewModel.isTrueFalse, content: {
 //            /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Content@*/Alert(title: Text("Alert"))/*@END_MENU_TOKEN@*/
@@ -148,24 +140,29 @@ struct TestView: View {
     @State private var dontKnow = 0
     
     var body: some View {
-        ZStack {
-            VStack {
-                if self.testModeViewModel.count != self.testModeViewModel.counter {
-                    Spacer()
-                    TestModeSnapCarousel(testModeViewModel: testModeViewModel)
-                    Spacer()
-                    if testModeViewModel.currentType == "Written" {
-                        Written(testModeViewModel: testModeViewModel)
-                    } else if testModeViewModel.currentType == "TF" {
-                        TrueFalse(testModeViewModel: testModeViewModel)
-                    } else if testModeViewModel.currentType == "MCQ" {
-                        MultipleChoice(testModeViewModel: testModeViewModel)
+        GeometryReader { geometry in
+            ZStack {
+                VStack {
+                    if self.testModeViewModel.count != self.testModeViewModel.counter {
+                        ProgressView(value: Double(testModeViewModel.counter), total: Double(testModeViewModel.count))
+                            .frame(width: geometry.size.width * 0.7, alignment: .center)
+                        Spacer()
+                        TestModeSnapCarousel(testModeViewModel: testModeViewModel)
+                        Spacer()
+                        if testModeViewModel.currentType == "Written" {
+                            Written(testModeViewModel: testModeViewModel)
+                        } else if testModeViewModel.currentType == "TF" {
+                            TrueFalse(testModeViewModel: testModeViewModel)
+                        } else if testModeViewModel.currentType == "MCQ" {
+                            MultipleChoice(testModeViewModel: testModeViewModel)
+                        }
+                    } else {
+                        Text("\(testModeViewModel.correct)/\(testModeViewModel.count)")
                     }
-                } else {
-                    Text("\(testModeViewModel.correct)/\(testModeViewModel.count)")
                 }
             }
         }
+        
         
     }
 }
@@ -187,7 +184,7 @@ struct TestModeSnapCarousel: View {
                 widthOfHiddenCards: widthOfHiddenCards,
                 testModeViewModel: testModeViewModel
             ) {
-                ForEach(0 ..< testModeViewModel.count, id: \.self) { i in
+                ForEach(0 ..< testModeViewModel.testFlashcards.count, id: \.self) { i in
                     Item(
                         _id: Int(i),
                         spacing: spacing,
@@ -197,18 +194,25 @@ struct TestModeSnapCarousel: View {
                     ) {
                         VStack {
                             Text("\(flashcards[i].flashcard.prompt)")
+                                .font(.title2)
+                                .multilineTextAlignment(.center)
                                 .padding()
                             if testModeViewModel.currentType == "TF" {
-                                Text("\(testModeViewModel.getTrueFalseOption())")
+                                Text("\(testModeViewModel.tfOption)")
+                                    .font(.title2)
+                                    .multilineTextAlignment(.center)
                                     .padding()
+                                    .onAppear {
+                                        self.testModeViewModel.setTrueFalseOption()
+                                    }
                             }
                         }
                         
                     }
-                    .foregroundColor(Color.white)
-                    .background(Color.accentColor)
+                    .foregroundColor(.primary)
+                    .background(Color.white)
                     .cornerRadius(8)
-                    .shadow(radius: 4, x: 0, y: 4)
+                    .shadow(radius: 2)
                     .transition(AnyTransition.slide)
                     .animation(.spring())
                 }
@@ -342,7 +346,8 @@ struct Written: View {
     
     var body: some View {
         HStack {
-            FirstResponderTextField(text: $answerEntered, placeholder: "Type your answer...")
+//            FirstResponderTextField(text: $answerEntered, placeholder: "Type your answer...")
+            TextField("Type your answer...", text: $answerEntered)
             Spacer()
             if self.answerEntered == "" {
                 Button(action: {
@@ -351,6 +356,7 @@ struct Written: View {
                     impactMed.impactOccurred()
                 }, label: {
                     Text("Don't know")
+                        .font(.headline)
                 })
             } else {
                 Button(action: {
@@ -361,9 +367,17 @@ struct Written: View {
                     
                 }, label: {
                     Text("Submit")
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .frame(minHeight: 0, maxHeight: .infinity)
+                        .foregroundColor(.white)
+                        .font(.subheadline.bold())
+                        .background(Color.accentColor)
+                        .cornerRadius(5)
                 })
+                .frame(width: 90)
             }
         }
+        .frame(height: 30)
         .padding()
     }
 }
@@ -374,14 +388,18 @@ struct TrueFalse: View {
         HStack {
             Spacer()
             Button(action: {
-                testModeViewModel.submitAnswer(testModeViewModel.testFlashcards[testModeViewModel.activeCard].flashcard.answer)
+                testModeViewModel.submitTFAnswer(true)
                 let impactMed = UIImpactFeedbackGenerator(style: .medium)
                 impactMed.impactOccurred()
             }, label: {
                 Text("True")
             })
             Spacer()
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+            Button(action: {
+                testModeViewModel.submitTFAnswer(false)
+                let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                impactMed.impactOccurred()
+            }, label: {
                 Text("False")
             })
             Spacer()
