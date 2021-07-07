@@ -21,8 +21,6 @@ struct DeckView: View {
     @State private var showDeckOptions = false
     @State private var deleteDeckConfirm = false
     
-    var randomAnyViews = [AnyView(Text("Hi")), AnyView(Text("Bye")), AnyView(Text("baba")), AnyView(Text("Mama"))]
-
     var body: some View {
         GeometryReader { geoProxy in
             VStack(spacing: 0) {
@@ -43,11 +41,12 @@ struct DeckView: View {
                     .frame(height: UIScreen.main.bounds.height * 0.15)
                 
                 buttons
-                    .frame(height: UIScreen.main.bounds.height * 0.15)
+                    .frame(height: UIScreen.main.bounds.height * 0.20)
 
                 Spacer()
                 
             }
+            .navigationBarTitleDisplayMode(.inline) //Added this so there's more space for the views
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -120,7 +119,7 @@ struct DeckView: View {
                     
                 }
             }
-            
+
         }
     }
     
@@ -150,8 +149,9 @@ struct DeckView: View {
     
     var buttons: some View {
         GeometryReader { buttonGProxy in
-            HStack {
-                Spacer()
+            
+            HStack(spacing: 0) {
+                //Spacer()
                 
                 Button {
                     self.showPracticeModeView.toggle()
@@ -168,10 +168,10 @@ struct DeckView: View {
                         Spacer()
                     }
                 }
-                .frame(width: buttonGProxy.size.width * ButtonConstants.buttonRatio)
                 .buttonStyle(PreviewButtonStyle())
-                .padding()
-                
+                .padding(.horizontal)
+                .frame(width: buttonGProxy.size.width / ButtonConstants.buttonCount, height: buttonGProxy.size.height / ButtonConstants.buttonCount , alignment: .center)
+
                 Button {
                     self.showTestModeView.toggle()
                 } label: {
@@ -187,17 +187,18 @@ struct DeckView: View {
                         Spacer()
                     }
                 }
-                .frame(width: buttonGProxy.size.width * ButtonConstants.buttonRatio)
                 .buttonStyle(PreviewButtonStyle())
-                .padding()
-                Spacer()
+                .padding(.horizontal)
+                .frame(width: buttonGProxy.size.width / ButtonConstants.buttonCount, height: buttonGProxy.size.height / ButtonConstants.buttonCount , alignment: .center)
+
+                //Spacer()
             }
             
         }
     }
     
     private struct ButtonConstants {
-        static let buttonRatio: CGFloat = 0.45
+        static let buttonCount: CGFloat = 2
     }
     
     func practiceContent() -> some View {
@@ -220,95 +221,6 @@ struct DeckView: View {
     }
 }
 
-struct Carousel: UIViewRepresentable {
-    func makeCoordinator() -> Coordinator {
-        Carousel.Coordinator(parent1: self)
-    }
-    var width: CGFloat
-    @Binding var page: Int
-    var height: CGFloat
-    
-    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
-    
-    func makeUIView(context: Context) -> UIScrollView {
-        
-        let total = width * CGFloat(flashcardListViewModel.flashcardViewModels.count)
-        let view = UIScrollView()
-        view.isPagingEnabled = true
-        view.contentSize = CGSize(width: total, height: 1.0)
-        view.bounces = true
-        view.showsVerticalScrollIndicator = false
-        view.showsHorizontalScrollIndicator = false
-        view.delegate = context.coordinator
-        
-        //Embedding swiftUI View into UIView
-        
-        let view1 = UIHostingController(rootView: PreviewList(flashcardListViewModel: flashcardListViewModel, page: $page))
-        view1.view.frame = CGRect(x: 0, y: 0, width: total, height: self.height)
-        
-        view1.view.backgroundColor = .clear
-        
-        view.addSubview(view1.view)
-        
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIScrollView, context: Context) {
-        DispatchQueue.main.async {
-            uiView.contentSize = CGSize(width: width * CGFloat(flashcardListViewModel.flashcardViewModels.count), height: 1.0)
-        }
-        
-    }
-    
-    class Coordinator: NSObject, UIScrollViewDelegate {
-        var parent: Carousel
-        
-        init(parent1: Carousel) {
-            parent = parent1
-        }
-        
-        func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-            let page = Int(scrollView.contentOffset.x / UIScreen.main.bounds.width)
-            
-            print(page)
-            
-            self.parent.page = page
-        }
-    }
-}
-
-struct PreviewList: View {
-    
-    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
-    @Binding var page: Int
-    
-    var body: some View {
-        GeometryReader { fullView in
-            //Replace with HStack(spacing: 0) for reverting to original
-            HStack(spacing: 0) {
-                
-                ForEach(flashcardListViewModel.flashcardViewModels) { flashcard in
-                    PreviewFlashcard(
-                                     index: flashcardListViewModel.flashcardViewModels.firstIndex(where: {$0.id == flashcard.id})!,
-                        width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height,
-                                     flashcardVM: flashcard
-                    )
-                    .aspectRatio(3/2, contentMode: .fit)
-                    .frame(height: fullView.size.height * Dimensions.cardFrameRatio)
-
-
-                }
-            }
-        }
-    }
-    
-    private struct Dimensions {
-        static let stackHPadding: CGFloat = 20
-        static let cardWidthRatio: CGFloat = 0.6
-        
-        static let cardFrameRatio: CGFloat = 0.75
-    }
-}
 
 struct PreviewFlashcard: View, Animatable {
     var index: Int
@@ -372,54 +284,30 @@ struct PreviewFlashcard: View, Animatable {
 }
 
 
-//MARK: PageControl functionality (doesn't seem to be working)
-struct PageControl: UIViewRepresentable {
-    
-    @ObservedObject var flashcardListVM: FlashcardListViewModel
-    
-    @Binding var page: Int
-    
-    func makeUIView(context: Context) -> UIPageControl {
-        let view = UIPageControl()
-        view.currentPageIndicatorTintColor = .black
-        view.pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
-        view.numberOfPages = flashcardListVM.flashcardViewModels.count
-        
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIPageControl, context: Context) {
-        //Updating PageControl here whenever page changes
-        DispatchQueue.main.async {
-            uiView.currentPage = self.page
-        }
-    }
-}
-
-
-
 
 //MARK: ButtonStyle for Preview
 struct PreviewButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         
         GeometryReader { geoProxy in
-            ZStack(alignment: .leading) {
+            ZStack(alignment: .center) {
                 configuration.label
                     .foregroundColor(configuration.isPressed ? DrawingConstants.tappedColor : DrawingConstants.notTappedColor)
-                    .frame(width: geoProxy.size.width, height: geoProxy.size.height)
             }
+            /*
             .background(RoundedRectangle(cornerRadius: DrawingConstants.rectCornerRadius)
                             .fill(Color.white)
                             .frame(height: geoProxy.size.height * 0.95)
                             .offset(x: 0, y: -2)
             )
+            */
+            .padding(5)
+            .frame(width: geoProxy.size.width, height: geoProxy.size.height, alignment: .center)
             .background(RoundedRectangle(cornerRadius: DrawingConstants.rectCornerRadius)
-                            .fill(configuration.isPressed ? DrawingConstants.tappedColor : DrawingConstants.notTappedBgColor)
+                            .fill(Color.white)
                             .shadow(color: configuration.isPressed ? DrawingConstants.bgShadowColorAfterTap : DrawingConstants.bgShadowColorBeforeTap, radius: DrawingConstants.bgShadowRadius, x: DrawingConstants.bgShadowX, y: DrawingConstants.bgShadowY)
-                            .frame(height: geoProxy.size.height)
             )
-            
+
         }
         
     }
@@ -433,8 +321,8 @@ struct PreviewButtonStyle: ButtonStyle {
         static let offsetX: CGFloat = 0
         static let offsetY: CGFloat = 3
         
-        static let bgShadowColorBeforeTap: Color = .black.opacity(0.4)
-        static let bgShadowColorAfterTap: Color = .black.opacity(0.7)
+        static let bgShadowColorBeforeTap: Color = .accentColor.opacity(0.4)
+        static let bgShadowColorAfterTap: Color = Color(hex: "15CDA8").opacity(0.7)
         
         static let bgShadowRadius: CGFloat = 3
         static let bgShadowX: CGFloat = 0
@@ -449,3 +337,97 @@ struct PreviewButtonStyle: ButtonStyle {
 //        DeckView()
 //    }
 //}
+
+/*
+struct Carousel: UIViewRepresentable {
+    func makeCoordinator() -> Coordinator {
+        Carousel.Coordinator(parent1: self)
+    }
+    var width: CGFloat
+    @Binding var page: Int
+    var height: CGFloat
+    
+    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
+    
+    func makeUIView(context: Context) -> UIScrollView {
+        
+        let total = width * CGFloat(flashcardListViewModel.flashcardViewModels.count)
+        let view = UIScrollView()
+        view.isPagingEnabled = true
+        view.contentSize = CGSize(width: total, height: 1.0)
+        view.bounces = true
+        view.showsVerticalScrollIndicator = false
+        view.showsHorizontalScrollIndicator = false
+        view.delegate = context.coordinator
+        
+        //Embedding swiftUI View into UIView
+        
+        let view1 = UIHostingController(rootView: PreviewList(flashcardListViewModel: flashcardListViewModel, page: $page))
+        view1.view.frame = CGRect(x: 0, y: 0, width: total, height: self.height)
+        
+        view1.view.backgroundColor = .clear
+        
+        view.addSubview(view1.view)
+        
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIScrollView, context: Context) {
+        DispatchQueue.main.async {
+            uiView.contentSize = CGSize(width: width * CGFloat(flashcardListViewModel.flashcardViewModels.count), height: 1.0)
+        }
+        
+    }
+    
+    class Coordinator: NSObject, UIScrollViewDelegate {
+        var parent: Carousel
+        
+        init(parent1: Carousel) {
+            parent = parent1
+        }
+        
+        func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+            let page = Int(scrollView.contentOffset.x / UIScreen.main.bounds.width)
+            
+            print(page)
+            
+            self.parent.page = page
+        }
+    }
+}
+*/
+
+/*
+struct PreviewList: View {
+    
+    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
+    @Binding var page: Int
+    
+    var body: some View {
+        GeometryReader { fullView in
+            //Replace with HStack(spacing: 0) for reverting to original
+            HStack(spacing: 0) {
+                
+                ForEach(flashcardListViewModel.flashcardViewModels) { flashcard in
+                    PreviewFlashcard(
+                                     index: flashcardListViewModel.flashcardViewModels.firstIndex(where: {$0.id == flashcard.id})!,
+                        width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height,
+                                     flashcardVM: flashcard
+                    )
+                    .aspectRatio(3/2, contentMode: .fit)
+                    .frame(height: fullView.size.height * Dimensions.cardFrameRatio)
+
+
+                }
+            }
+        }
+    }
+    
+    private struct Dimensions {
+        static let stackHPadding: CGFloat = 20
+        static let cardWidthRatio: CGFloat = 0.6
+        
+        static let cardFrameRatio: CGFloat = 0.75
+    }
+}
+ */
