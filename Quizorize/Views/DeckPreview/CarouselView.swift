@@ -80,8 +80,7 @@ struct CarouselView: View {
                 //Spacer()
             }
             VStack{
-                Spacer()
-                Spacer().frame(height:itemHeight)
+                Spacer().frame(height:itemHeight + 30)
                 Fancy3DotsIndexView(flashcardListVM: flashcardListVM,
                                     currentIndex: carouselLocation)
                     .animation(.default)

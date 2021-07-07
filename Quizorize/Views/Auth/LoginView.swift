@@ -31,14 +31,13 @@ struct Login : View {
     
     @State private var email: String = ""
     @State private var password: String = ""
-//    @State var isEditing = false
     @State var isHidden = true
     
 
     var body: some View {
         VStack {
-            ScrollView {
-                ScrollViewReader {scrollView in
+            ScrollView(showsIndicators: false) {
+                ScrollViewReader { scrollView in
                     VStack {
                         Text("Log in to Quizorize")
                             .font(.largeTitle.bold())
@@ -81,7 +80,6 @@ struct Login : View {
                                                 .disableAutocorrection(true)
                                                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                                                 .modifier(TextFieldClearButton(text: $password))
-//                                                .modifier(TextFieldClearButton(isEditing: $isEditing, text: $password))
                                                 .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                                                 .frame(height: CGFloat(0))
                                             
@@ -91,7 +89,6 @@ struct Login : View {
                                                 .disableAutocorrection(true)
                                                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                                                 .modifier(TextFieldClearButton(text: $password))
-//                                                .modifier(TextFieldClearButton(isEditing: $isEditing, text: $password))
                                                 .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                                                 .frame(height: CGFloat(0))
                                         }
@@ -206,7 +203,7 @@ struct SignInButton: View {
                 .frame(height: 50)
                 .font(.headline)
                 .foregroundColor(.white)
-                .background(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .leading, endPoint: .trailing))
+                .background(Color.accentColor)
                 .cornerRadius(5)
         })
         .opacity(isDisabled ? 0.6 : 1)
