@@ -169,7 +169,7 @@ struct DeckView: View {
                         Spacer()
                     }
                 }
-                .frame(width: buttonGProxy.size.width * ButtonConstants.buttonRatio)
+                .frame(width: buttonGProxy.size.width * ButtonConstants.buttonWidthRatio, height: buttonGProxy.size.height * ButtonConstants.buttonHeightRatio)
                 .buttonStyle(PreviewButtonStyle())
                 
                 
@@ -180,7 +180,8 @@ struct DeckView: View {
     }
     
     private struct ButtonConstants {
-        static let buttonRatio: CGFloat = 0.45
+        static let buttonWidthRatio: CGFloat = 0.45
+        static let buttonHeightRatio: CGFloat = 0.5
     }
     
     func coverContent() -> some View {
