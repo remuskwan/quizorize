@@ -168,13 +168,13 @@ struct FlashcardView: View {
             Spacer()
             if !flashcardViewModel.flipped {
                 Text(flashcardViewModel.flashcard.prompt)
-                    .font(.headline.bold())
+                    .font(.title)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
             } else {
                 Text(flashcardViewModel.flashcard.answer)
-                    .font(.headline.bold())
+                    .font(.title)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)

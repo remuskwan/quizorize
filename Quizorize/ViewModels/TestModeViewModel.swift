@@ -13,12 +13,15 @@ class TestModeViewModel: ObservableObject {
     @Published var counter: Int
     @Published var activeCard: Int = 0
     @Published var correct = 0
+    
+    @Published var questionCount = 0
     @Published var isTrueFalse = true
     @Published var isMCQ = true
     @Published var isWritten = true
+    
     @Published var questionTypes = ["TF": true, "MCQ": true, "Written": true]
     @Published var currentType = ""
-    @Published var mcqOptions = [String]()
+    
     @Published var tfOption = ""
     
     var count: Int {
@@ -43,7 +46,17 @@ class TestModeViewModel: ObservableObject {
     }
     
     func submitTFAnswer(_ answer: Bool) {
-        
+        if answer {
+            if self.tfOption == self.testFlashcards[activeCard].flashcard.answer {
+                self.correct += 1
+            }
+        } else {
+            if self.tfOption != self.testFlashcards[activeCard].flashcard.answer {
+                self.correct += 1
+            }
+        }
+        print(correct)
+        self.nextCard()
     }
     
     func nextCard() {
@@ -73,6 +86,10 @@ class TestModeViewModel: ObservableObject {
             .randomElement() ?? ""
     }
     
+    func setQuestionCount() {
+        self.testFlashcards = Array(self.testFlashcards.shuffled()[..<self.questionCount])
+    }
+    
     func getMCQOptions() -> [String] {
         var mcqOptions: [FlashcardViewModel] = []
         mcqOptions.append(contentsOf: testFlashcards)
@@ -85,10 +102,10 @@ class TestModeViewModel: ObservableObject {
         
     }
     
-    func getTrueFalseOption() -> String {
+    func setTrueFalseOption() {
         var tfOptions: [FlashcardViewModel] = []
         tfOptions.append(contentsOf: testFlashcards)
         
-        return tfOptions.randomElement()?.flashcard.answer ?? ""
+        self.tfOption = tfOptions.randomElement()?.flashcard.answer ?? ""
     }
 }

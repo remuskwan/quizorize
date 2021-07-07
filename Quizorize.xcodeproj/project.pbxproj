@@ -109,7 +109,6 @@
 		77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77541626266A047B00BE8273 /* DeckCreationView.swift */; };
 		7783963B266D08330024293B /* DeckCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7783963A266D08330024293B /* DeckCreationViewModel.swift */; };
 		77AB03AF2663C669009F4982 /* TouchDownUpEventModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */; };
-		77E5EBEA269314C300BA45E3 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5EBE9269314C300BA45E3 /* CarouselView.swift */; };
 		77E5EBEC269330E600BA45E3 /* TestCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5EBEB269330E600BA45E3 /* TestCarouselView.swift */; };
 		77F47658265EB25200AE1C06 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F47657265EB25200AE1C06 /* SignupViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -786,7 +785,6 @@
 				16E701DA267A0DB700A1E55D /* UserListViewModel.swift in Sources */,
 				166B1E752663FF7300D3922B /* UserData.swift in Sources */,
 				166783F6268618DA003C859B /* DeckView.swift in Sources */,
-				77E5EBEA269314C300BA45E3 /* CarouselView.swift in Sources */,
 				166B1E6A2663FED900D3922B /* SignInWithAppleFirebase.swift in Sources */,
 				166B1E8A2666575300D3922B /* Flashcard.swift in Sources */,
 				16279301265BFF7B0073718F /* LaunchView.swift in Sources */,

@@ -8,46 +8,22 @@
 import SwiftUI
 
 struct TextFieldClearButton: ViewModifier {
-//    @Binding var isEditing: Bool
     @Binding var text: String
     
-    func body(content: Content) -> some View {
+    public init(text: Binding<String>) {
+        self._text = text
+    }
+    
+    public func body(content: Content) -> some View {
         HStack {
             content
-            
-            if !text.isEmpty {
-                Button(
-                    action: { self.text = "" },
-                    label: {
-                        Image(systemName: "multiply.circle.fill")
-                            .foregroundColor(Color(UIColor.opaqueSeparator))
-                    }
-                )
-            }
+            Spacer()
+            // onTapGesture is better than a Button here when adding to a form
+            Image(systemName: "multiply.circle.fill")
+                .foregroundColor(.secondary)
+                .opacity(text == "" ? 0 : 1)
+                .onTapGesture { self.text = "" }
         }
     }
 }
-
-/*
-struct SecureFieldClearButton: ViewModifier {
-    @Binding var text: String
-    @Binding var isVisible: Bool
-    
-    func body(content: Content) -> some View {
-        HStack {
-            content
-            
-            if !text.isEmpty {
-                Button {
-                    self.text = ""
-                    self.isVisible = false
-                } label: {
-                    
-                }
-            }
-            
-        }
-    }
-}
- */
 
