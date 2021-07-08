@@ -20,7 +20,7 @@ struct DeckView: View {
     @State private var showTestModeView = false
     @State private var showDeckOptions = false
     @State private var deleteDeckConfirm = false
-    
+
     var body: some View {
         GeometryReader { geoProxy in
             VStack(spacing: 0) {
@@ -127,7 +127,7 @@ struct DeckView: View {
         VStack {
             HStack {
                 Text(deckViewModel.deck.title)
-                    .font(.title)
+                    .font(.largeTitle.bold())
                 
                 Spacer()
                 
@@ -198,7 +198,7 @@ struct DeckView: View {
     }
     
     private struct ButtonConstants {
-        static let buttonCount: CGFloat = 2
+        static let buttonCount: CGFloat = 2 //MARK: Change this with more buttons
     }
     
     func practiceContent() -> some View {
