@@ -15,7 +15,7 @@ struct HomeView: View {
 
     var body: some View {
         TabView {
-            DeckListView(deckListViewModel: deckListViewModel, authViewModel: self.authViewModel)
+            DeckListView(deckListViewModel: deckListViewModel)
                 .tabItem { Label("Decks", systemImage: "square.grid.2x2.fill") }
             SearchView(deckListViewModel: deckListViewModel)
                 .tabItem { Label("Search", systemImage: "magnifyingglass") }
@@ -27,23 +27,13 @@ struct HomeView: View {
 
 struct DeckListView: View {
     @ObservedObject var deckListViewModel: DeckListViewModel
-    @ObservedObject var authViewModel: AuthViewModel
-    
+
     @State private var showingEditDeck = false
     @State private var selectedSortBy = SortBy.date
     @State private var showActivitySheet = false
     @State private var showDeckOptions = false
     @State private var deleteDeckConfirm = false
-    
-    @State private var userDoesNotHaveDisplayName: Bool
-    @Binding private var displayName: String?
-    
-    init(deckListViewModel: DeckListViewModel, authViewModel: AuthViewModel) {
-        self.deckListViewModel = deckListViewModel
-        self.authViewModel = authViewModel
-        userDoesNotHaveDisplayName = !authViewModel.checkIfUserHasDisplayName()
-    }
-    
+
     let layout = [
         GridItem(.adaptive(minimum: 120))
     ]
