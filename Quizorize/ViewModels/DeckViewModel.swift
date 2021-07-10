@@ -17,6 +17,12 @@ class DeckViewModel: ObservableObject, Identifiable {
     var id = ""
     
     private var cancellables = Set<AnyCancellable>()
+    
+    //MARK: Intent(s)
+    func toggleExamMode() {
+        deckRepository.updateData(deck)
+        print(deck.isExamMode)
+    }
 
     init(deck: Deck) {
         self.deck = deck

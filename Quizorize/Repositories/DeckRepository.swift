@@ -34,7 +34,21 @@ class DeckRepository: ObservableObject {
             }
             if let querySnapshot = querySnapshot {
                 self.decks = querySnapshot.documents.compactMap({ document in
-                    try? document.data(as: Deck.self)
+                    if let deck = try? document.data(as: Deck.self) {
+                        return deck
+                    } else {
+                        document.reference.updateData([
+                            "isExamMode": false
+                        ]) { err in
+                            if let err = err {
+                                print("Error updating Deck")
+                            } else {
+                                print("Flashcard successfully updated")
+                            }
+                        }
+                    }
+                    
+                    return try? document.data(as: Deck.self)
                 })
             }
         }

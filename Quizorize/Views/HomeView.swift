@@ -27,13 +27,13 @@ struct HomeView: View {
 
 struct DeckListView: View {
     @ObservedObject var deckListViewModel: DeckListViewModel
-    
+
     @State private var showingEditDeck = false
     @State private var selectedSortBy = SortBy.date
     @State private var showActivitySheet = false
     @State private var showDeckOptions = false
     @State private var deleteDeckConfirm = false
-    
+
     let layout = [
         GridItem(.adaptive(minimum: 120))
     ]
@@ -157,6 +157,11 @@ struct DeckListView: View {
             .sheet(isPresented: $showActivitySheet) {
                 ActivityView()
             }
+            /*
+            .textFieldAlert(isPresented: $userDoesNotHaveDisplayName) { () -> TextFieldAlert in
+                TextFieldAlert(title: "Create Display Name", message: "Welcome to Quizorize! Please enter your display name below", text: $displayName)
+            }
+            */
         }
     }
 }
