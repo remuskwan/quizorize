@@ -14,13 +14,13 @@ struct PracticeModeFlashCard: View {
     @State private var question = "Hi"
     @State private var answer = "Bye"
     
-    
-    
+    @ObservedObject var practiceModeViewModel: PracticeModeViewModel
+    private var uuid: String
     var body: some View {
         //MARK: GeoReader makes this View adaptable
         GeometryReader { geometry in
             ZStack {
-                Text(flipped ? answer : question)
+                Text(practiceModeViewModel.getFlipStatusOf(uuid: uuid) ? answer : question)
                     .foregroundColor(flipped ? Color.black : Color.white)
                     .font(font(in: geometry.size))
                     .padding()
@@ -29,7 +29,7 @@ struct PracticeModeFlashCard: View {
             .cardify()
             .onTapGesture {
                 withAnimation {
-                    flipped.toggle()
+                    practiceModeViewModel.toggleFlipStatusOf(uuid: uuid)
                 }
             }
         }
@@ -51,8 +51,10 @@ struct PracticeModeFlashCard: View {
     }
 }
 
+/*
 struct PracticeModeFlashCard_Previews: PreviewProvider {
     static var previews: some View {
         PracticeModeFlashCard()
     }
 }
+*/

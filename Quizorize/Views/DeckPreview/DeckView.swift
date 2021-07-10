@@ -11,7 +11,7 @@ struct DeckView: View {
     @ObservedObject var deckListViewModel: DeckListViewModel
     @ObservedObject var deckViewModel: DeckViewModel
     @ObservedObject var flashcardListViewModel: FlashcardListViewModel
-    
+
     @State private var page = 0
     @State private var action: Int? = 0
     
@@ -20,6 +20,9 @@ struct DeckView: View {
     @State private var showTestModeView = false
     @State private var showDeckOptions = false
     @State private var deleteDeckConfirm = false
+    
+    //Temp, delete after
+    @State private var toggle = false
 
     var body: some View {
         GeometryReader { geoProxy in
@@ -46,7 +49,7 @@ struct DeckView: View {
                 Spacer()
                 
             }
-            .navigationBarTitle(deckViewModel.deck.title, displayMode: .large) 
+            .navigationBarTitle(deckViewModel.deck.title, displayMode: .large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -124,29 +127,49 @@ struct DeckView: View {
     }
     
     var generalInfo: some View {
-        VStack {
-            /*
-            HStack {
-                Text(deckViewModel.deck.title)
-                    .font(.largeTitle.bold())
+        GeometryReader { geo in
+            VStack {
+                /*
+                HStack {
+                    Text(deckViewModel.deck.title)
+                        .font(.largeTitle.bold())
+                    
+                    Spacer()
+                    
+                }
+                */
                 
-                Spacer()
+                HStack {
+                    Text("Username")
+                        .font(.title2.bold())
+                    
+                    Divider()
+
+                    Text("\(flashcardListViewModel.flashcardViewModels.count) flashcards")
+                        .font(.title2.bold())
+                    
+                    Spacer()
+                }
                 
+                HStack(spacing: 0) {
+                    Toggle(isOn: self.$deckViewModel.deck.isExamMode, label: {
+                        Text("Exam Mode")
+                            .font(.body.bold())
+                    })
+                    .onChange(of: deckViewModel.deck.isExamMode) { value in
+                        deckViewModel.toggleExamMode()
+                        print(value)
+                    }
+                    .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
+
+                    Spacer()
+                        .frame(minWidth: geo.size.width * 0.55)
+                }
+
             }
-            */
+            .padding()
             
-            HStack {
-                Text("Username")
-                    .font(.body)
-                
-                Divider()
-                
-                Text("\(flashcardListViewModel.flashcardViewModels.count) flashcards")
-                
-                Spacer()
-            }
         }
-        .padding()
     }
     
     var buttons: some View {
@@ -209,7 +232,7 @@ struct DeckView: View {
         practiceFlashcards.map { flashcardVM in
             flashcardVM.flipped = false
         }
-        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards))
+        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards, isExamMode: deckViewModel.deck.isExamMode))
     }
     
     func testContent() -> some View {
