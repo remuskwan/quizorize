@@ -15,6 +15,7 @@ struct DeckCreationView: View {
         self.didCreateDeck = didCreateDeck
         
         self.createOrEdit = "Create"
+        self.pageTitle = "New Deck"
     }
     
     init(deckListViewModel: DeckListViewModel, deckVM: DeckViewModel, flashcardListVM: FlashcardListViewModel, didCreateDeck: @escaping (_ deck: Deck, _ flashcards: [Flashcard]) -> Void) {
@@ -23,6 +24,7 @@ struct DeckCreationView: View {
         self.didCreateDeck = didCreateDeck
         
         self.createOrEdit = "Edit"
+        self.pageTitle = "Edit Deck"
     }
 
     @ObservedObject var deckCreationVM: DeckCreationViewModel
@@ -36,6 +38,7 @@ struct DeckCreationView: View {
     
     
     var createOrEdit: String
+    var pageTitle: String
     var didCreateDeck: (_ deck: Deck, _ flashcards: [Flashcard]) -> Void
     
     var body: some View {
@@ -58,7 +61,7 @@ struct DeckCreationView: View {
 
                 }
             }
-            .navigationBarTitle(Text("New Deck"), displayMode: .inline)
+            .navigationBarTitle(Text(self.pageTitle), displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {

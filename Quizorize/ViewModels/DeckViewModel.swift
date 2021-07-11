@@ -23,6 +23,10 @@ class DeckViewModel: ObservableObject, Identifiable {
         deckRepository.updateData(deck)
         print(deck.isExamMode)
     }
+    
+    func updateFlashcards(_ flashcards: [Flashcard]) {
+        deckRepository.updateFlashcardsData(self.deck, flashcards: flashcards)
+    }
 
     init(deck: Deck) {
         self.deck = deck

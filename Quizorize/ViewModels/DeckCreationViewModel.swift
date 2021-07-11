@@ -102,7 +102,7 @@ class DeckCreationViewModel: ObservableObject {
         //model.getFinaliseFlashcards()
         let finalFlashcards = self.flashcards
             .map { flashcard in
-                Flashcard(prompt: flashcard.prompt, answer: flashcard.answer)
+                Flashcard(id: flashcard.id, prompt: flashcard.prompt, answer: flashcard.answer, dateAdded: flashcard.dateAdded, repetition: flashcard.repetition, interval: flashcard.interval, easinessFactor: flashcard.easinessFactor, previousDate: flashcard.previousDate, nextDate: flashcard.nextDate)
             }
         
         return finalFlashcards
@@ -118,6 +118,14 @@ class DeckCreationViewModel: ObservableObject {
         var prompt = Initialisers.promptInit
         var answer = Initialisers.answerInit
         var dateAdded: Date
+        
+        //MARK: SR Algo vars
+        var repetition = 0
+        var interval = 0
+        var easinessFactor = 2.5
+        var previousDate: TimeInterval?
+        var nextDate: TimeInterval?
+
         
         static func ==(lhs: EmptyFlashcard, rhs: EmptyFlashcard) -> Bool {
             lhs.id == rhs.id

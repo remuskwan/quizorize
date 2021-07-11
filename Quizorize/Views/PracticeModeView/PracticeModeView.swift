@@ -10,11 +10,16 @@ import SwiftUI
 struct PracticeModeView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var practiceModeViewModel: PracticeModeViewModel
+    @ObservedObject var examModeVM: ExamModeViewModel
     
     @State private var showOptionsSheet = false
     @State private var dismissOptionsSheet = false
     
+    @State var isExamMode: Bool
     @State private var showingNotice: Bool = false
+
+    //To update DB
+    var didFinishDeck: (_ updatedFlashcards: [Flashcard]) -> Void
 
     var body: some View {
         GeometryReader { geometry in
@@ -47,7 +52,11 @@ struct PracticeModeView: View {
                     ProgressView(value: Double(practiceModeViewModel.counter), total: Double(practiceModeViewModel.count))
                         .frame(width: geometry.size.width * 0.7, alignment: .center)
                     
-                    FlashcardListView(practiceModeViewModel: practiceModeViewModel, showingNotice: $showingNotice)
+                    if isExamMode {
+                        FlashcardListView(practiceModeViewModel: practiceModeViewModel, examModeVM: self.examModeVM, showingNotice: $showingNotice)
+                    } else {
+                        FlashcardListView(practiceModeViewModel: practiceModeViewModel, showingNotice: $showingNotice)
+                    }
                 }
                 //                OptionsSheet(showingOptionsSheet: $showOptionsSheet, dismissOptionsSheet: $dismissOptionsSheet, height: geometry.size.height * 0.8) {
                 //                    OptionsSheetContent()
@@ -62,6 +71,7 @@ struct PracticeModeView: View {
             }
         }
     }
+    
 }
 
 struct OptionsSheetContent: View {
@@ -73,13 +83,12 @@ struct OptionsSheetContent: View {
 
 struct FlashcardListView: View {
     @ObservedObject var practiceModeViewModel: PracticeModeViewModel
+    var examModeVM: ExamModeViewModel?
     
     @Namespace private var animation
     
     @State private var distanceTravelled: CGFloat = 0
     @Binding var showingNotice: Bool
-    
-    var flashcardGrader = FlashcardGrader()
 
     var body: some View {
         VStack {
@@ -91,6 +100,7 @@ struct FlashcardListView: View {
                         FlashcardView(flashcardViewModel: flashcardVM,
                                       practiceModeViewModel: practiceModeViewModel,
                                       uuid: flashcardVM.id)
+                            .showIndicators(translation: self.distanceTravelled)
                             .zIndex(self.practiceModeViewModel.zIndex(of: flashcard))
                             .offset(x: self.offset(for: flashcard).width, y: self.offset(for: flashcard).height)
                             .offset(y: self.practiceModeViewModel.deckOffset(of: flashcard))
@@ -105,8 +115,10 @@ struct FlashcardListView: View {
                                         }
                                         guard flashcard == self.practiceModeViewModel.activeCard else { return }
                                         
-                                        withAnimation(.spring()) {
+                                        withAnimation() {
                                             self.practiceModeViewModel.topCardOffset = drag.translation
+                                            
+                                            self.distanceTravelled = drag.translation.width
                                             
                                             /*
                                              if drag.translation.width > 50 && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id) {
@@ -150,6 +162,11 @@ struct FlashcardListView: View {
                                             if allRequirementsMet {
                                                 self.practiceModeViewModel.counter += 1
                                                 self.practiceModeViewModel.moveToBack(flashcard)
+                                                if cardFailedMovesBack {
+                                                    self.examModeVM?.addAndUpdateFailed(flashcard)
+                                                } else {
+                                                    self.examModeVM?.addAndUpdatePassed(flashcard)
+                                                }
                                             } else if didNotFlip {
                                                 self.practiceModeViewModel.moveToFront(flashcard)
                                                 self.showingNotice = true
@@ -163,13 +180,32 @@ struct FlashcardListView: View {
                     }
                 } else {
                     VStack {
-                        Text("You're done!")
+                        /*
+                        */
+                        if let _ = self.examModeVM {
+                            Text("Congratulations!")
+                                .font(.title2.bold())
+                                .padding()
+                            Text("You have finished your deck for today")
+                            Text("To memorize the cards in this deck better, come back on:")
+                            
+                            Text(self.examModeVM!.nextDate())
+                                .bold()
+                            Button("Reset") {
+                                resetCards()
+                            }
                             .padding()
-                        Button("Reset") {
-                            resetCards()
+                        } else {
+                            Text("You're done!")
+                                .padding()
+                            Button("Reset") {
+                                resetCards()
+                            }
+                            .padding()
+                            
                         }
-                        .padding()
                     }
+                    .font(.body)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
                             .foregroundColor(Color.white)
@@ -349,6 +385,51 @@ struct ShowHelp: View {
                 self.showingNotice = false
             })
         })
+    }
+}
+
+//MARK: Fading indicator
+struct ShowIndicator: AnimatableModifier {
+    var translation: CGFloat
+    
+    var animatableData: CGFloat {
+        get { translation }
+        set { translation = newValue }
+    }
+    
+    func body(content: Content) -> some View {
+        ZStack {
+            if translation < 0 {
+                Text("I have to work on this... 🥲")
+                    .font(.body.bold())
+                    .background(DrawingConstants.failColor)
+                    .cornerRadius(DrawingConstants.cornerRadius, corners: [.topRight, .topLeft])
+                    .opacity(translation <= -200 ? 1 : 0)
+                    .offset(y: 150)
+            }
+            if translation > 0 {
+                Text("Got it! 😋")
+                    .font(.body.bold())
+                    .background(DrawingConstants.passColor)
+                    .cornerRadius(DrawingConstants.cornerRadius, corners: [.topRight, .topLeft])
+                    .opacity(translation >= 200 ? 1 : 0)
+                    .offset(y: 150)
+            }
+            content
+        }
+    }
+    
+    private struct DrawingConstants {
+        static let failColor = Color.orange
+        static let passColor = Color(hex: "15CDA8")
+        
+        static let cornerRadius: CGFloat = 10
+    }
+}
+
+extension View {
+    func showIndicators(translation: CGFloat) -> some View {
+        self.modifier(ShowIndicator(translation: translation))
     }
 }
 
