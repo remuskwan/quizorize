@@ -9,9 +9,11 @@ import Foundation
 import Combine
 
 class TestModeViewModel: ObservableObject {
-    @Published var testFlashcards: [FlashcardViewModel]
-    @Published var counter: Int
-    @Published var activeCard: Int = 0
+    @Published var flashcardRepository: FlashcardRepository
+    @Published var testFlashcards = [FlashcardViewModel]()
+    
+    @Published var counter = 0
+    @Published var activeCard = 0
     @Published var correct = 0
     
     @Published var questionCount = 0
@@ -23,18 +25,33 @@ class TestModeViewModel: ObservableObject {
     @Published var currentType = ""
     
     @Published var tfOption = ""
+    @Published var mcqOptions = [String]()
+    
+    @Published var latestScore = 0.0
+    @Published var hasTakenTest = false
+    
+    private var cancellables = Set<AnyCancellable>()
     
     var count: Int {
         return self.testFlashcards.count
     }
     
-    init(_ testFlashcards: [FlashcardViewModel]) {
-        self.testFlashcards = testFlashcards.shuffled()
-        self.counter = 0
+    init(_ deck: Deck) {
+        self.flashcardRepository = FlashcardRepository(deck)
+        flashcardRepository.$flashcards
+            .map { flashcards in
+                flashcards.map(FlashcardViewModel.init)
+            }
+            .assign(to: \.testFlashcards, on: self)
+            .store(in: &cancellables)
     }
-    
+
     func reset() {
         self.activeCard = 0
+        self.counter = 0
+        self.correct = 0
+        self.questionCount = self.count
+        self.testFlashcards.shuffle()
     }
     
     func submitAnswer(_ answer: String) {
@@ -42,6 +59,7 @@ class TestModeViewModel: ObservableObject {
             self.correct += 1
         }
         print(correct)
+        self.setMCQOptions()
         self.nextCard()
     }
     
@@ -56,6 +74,7 @@ class TestModeViewModel: ObservableObject {
             }
         }
         print(correct)
+        self.setTrueFalseOption()
         self.nextCard()
     }
     
@@ -68,15 +87,9 @@ class TestModeViewModel: ObservableObject {
     }
     
     func setQuestionTypes() {
-        if !self.isTrueFalse {
-            questionTypes["TF"] = false
-        }
-        if !self.isMCQ {
-            questionTypes["MCQ"] = false
-        }
-        if !self.isWritten {
-            questionTypes["Written"] = false
-        }
+        questionTypes["TF"] = self.isTrueFalse
+        questionTypes["MCQ"] = self.isMCQ
+        questionTypes["Written"] = self.isWritten
     }
     
     func setCurrentType() {
@@ -90,13 +103,13 @@ class TestModeViewModel: ObservableObject {
         self.testFlashcards = Array(self.testFlashcards.shuffled()[..<self.questionCount])
     }
     
-    func getMCQOptions() -> [String] {
+    func setMCQOptions() {
         var mcqOptions: [FlashcardViewModel] = []
         mcqOptions.append(contentsOf: testFlashcards)
         mcqOptions.remove(at: activeCard) //remove correct answer
         mcqOptions = Array(mcqOptions.shuffled().prefix(3)) //pick 3 incorrect answers
         mcqOptions.append(testFlashcards[activeCard]) //add correct answer
-        return mcqOptions.shuffled().map { flashcardVM in
+        self.mcqOptions = mcqOptions.shuffled().map { flashcardVM in
             flashcardVM.flashcard.answer
         } //shuffle answers
         
@@ -108,4 +121,10 @@ class TestModeViewModel: ObservableObject {
         
         self.tfOption = tfOptions.randomElement()?.flashcard.answer ?? ""
     }
+    
+    func setLatestScore() {
+        self.latestScore = Double(self.correct) / Double(self.count)
+        self.hasTakenTest = true
+    }
+    
 }

@@ -11,7 +11,8 @@ struct DeckView: View {
     @ObservedObject var deckListViewModel: DeckListViewModel
     @ObservedObject var deckViewModel: DeckViewModel
     @ObservedObject var flashcardListViewModel: FlashcardListViewModel
-
+    @ObservedObject var testModeViewModel: TestModeViewModel
+    
     @State private var page = 0
     @State private var action: Int? = 0
     
@@ -138,7 +139,6 @@ struct DeckView: View {
                     
                 }
                 */
-                
                 HStack {
                     Text("Username")
                         .font(.title2.bold())
@@ -236,13 +236,7 @@ struct DeckView: View {
     }
     
     func testContent() -> some View {
-        var testFlashcards = [FlashcardViewModel]()
-        
-        testFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
-        testFlashcards.map { flashcardVM in
-            flashcardVM.flipped = false
-        }
-        return TestModeView(testModeViewModel: TestModeViewModel(testFlashcards))
+        TestModeView(testModeViewModel: testModeViewModel)
     }
 }
 
