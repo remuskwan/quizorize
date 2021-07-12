@@ -78,6 +78,7 @@
 		16AB3E5F2692386B00B9DF86 /* TestModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AB3E5E2692386B00B9DF86 /* TestModeView.swift */; };
 		16AB3E61269245DD00B9DF86 /* TestModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AB3E60269245DD00B9DF86 /* TestModeViewModel.swift */; };
 		16AB3E632694B4ED00B9DF86 /* FirstResponderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AB3E622694B4ED00B9DF86 /* FirstResponderTextField.swift */; };
+		16AB3E652695FC7700B9DF86 /* TestModeSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AB3E642695FC7700B9DF86 /* TestModeSummaryView.swift */; };
 		16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285EC2656EB020068AB95 /* QuizorizeApp.swift */; };
 		16C285EF2656EB020068AB95 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285EE2656EB020068AB95 /* ContentView.swift */; };
 		16C285F12656EB030068AB95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16C285F02656EB030068AB95 /* Assets.xcassets */; };
@@ -162,6 +163,7 @@
 		16AB3E5E2692386B00B9DF86 /* TestModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestModeView.swift; sourceTree = "<group>"; };
 		16AB3E60269245DD00B9DF86 /* TestModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestModeViewModel.swift; sourceTree = "<group>"; };
 		16AB3E622694B4ED00B9DF86 /* FirstResponderTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstResponderTextField.swift; sourceTree = "<group>"; };
+		16AB3E642695FC7700B9DF86 /* TestModeSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestModeSummaryView.swift; sourceTree = "<group>"; };
 		16C285E92656EB020068AB95 /* Quizorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C285EC2656EB020068AB95 /* QuizorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeApp.swift; sourceTree = "<group>"; };
 		16C285EE2656EB020068AB95 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 		162792E2265A61770073718F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				166783EE268618DA003C859B /* DeckPreview */,
 				16AB3E5D2692380D00B9DF86 /* TestMode */,
 				16E701CC267656A700A1E55D /* Auth */,
 				7700BC5D266F6352004C5C82 /* PracticeModeView */,
@@ -325,8 +328,7 @@
 				778DF3E526959BFA00C2D549 /* CarouselView.swift */,
 				166783F2268618DA003C859B /* DeckView.swift */,
 			);
-			name = DeckPreview;
-			path = Views/DeckPreview;
+			path = DeckPreview;
 			sourceTree = "<group>";
 		};
 		166783F7268645C8003C859B /* Custom Views */ = {
@@ -364,6 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				16AB3E5E2692386B00B9DF86 /* TestModeView.swift */,
+				16AB3E642695FC7700B9DF86 /* TestModeSummaryView.swift */,
 			);
 			path = TestMode;
 			sourceTree = "<group>";
@@ -394,7 +397,6 @@
 			isa = PBXGroup;
 			children = (
 				166783F7268645C8003C859B /* Custom Views */,
-				166783EE268618DA003C859B /* DeckPreview */,
 				166B1E842666559F00D3922B /* Repositories */,
 				1627935A26615C120073718F /* Services */,
 				162793552660F4070073718F /* Models */,
@@ -824,6 +826,7 @@
 				166B1E792663FF9600D3922B /* UserDataKeychain.swift in Sources */,
 				7700BC652670FE75004C5C82 /* SREngine.swift in Sources */,
 				7783963B266D08330024293B /* DeckCreationViewModel.swift in Sources */,
+				16AB3E652695FC7700B9DF86 /* TestModeSummaryView.swift in Sources */,
 				77AB03AF2663C669009F4982 /* TouchDownUpEventModifier.swift in Sources */,
 				16AB3E61269245DD00B9DF86 /* TestModeViewModel.swift in Sources */,
 				16E701D22678B3FB00A1E55D /* UserRepository.swift in Sources */,
