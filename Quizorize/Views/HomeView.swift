@@ -33,6 +33,7 @@ struct DeckListView: View {
     @State private var showActivitySheet = false
     @State private var showDeckOptions = false
     @State private var deleteDeckConfirm = false
+    @State private var showListView = false
     
     let layout = [
         GridItem(.adaptive(minimum: 120))
@@ -42,105 +43,157 @@ struct DeckListView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    Picker("Sort By: ", selection: $selectedSortBy) {
-                        ForEach(SortBy.allCases, id: \.self) {
-                            Text($0.rawValue)
+                    Divider()
+                        .padding(.horizontal)
+                    HStack {
+                        Spacer()
+                        Picker("Sort By: ", selection: $selectedSortBy) {
+                            ForEach(SortBy.allCases, id: \.self) {
+                                Text($0.rawValue)
+                            }
                         }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .frame(width: 200, height: 20, alignment: .center)
+                        Spacer()
+//                        Button(action: {
+//                            self.showListView.toggle()
+//                        }, label: {
+//                            Image(systemName: "list.dash")
+//                        })
                     }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .frame(width: 200, height: 20, alignment: .center)
-                    .padding()
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 12)
                     
-                    LazyVGrid(columns: layout, spacing: 20) {
-                        NewButton(deckListViewModel: deckListViewModel)
-                        ForEach(deckListViewModel.sortDeckVMs(self.selectedSortBy)) { deckVM in
-                            let flashcardListViewModel = FlashcardListViewModel(deckVM.deck)
-                            let deck = deckVM.deck
-                            //TODO: Drag and drop into folders using onLongPressGesture
-                            VStack {
-                                NavigationLink(
-                                    destination:
-                                        DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: flashcardListViewModel),
-                                    label: {
-                                    Image("deck1")
-                                        .resizable()
-                                        .frame(width: 100, height: 100)
-                                })
+                    if !self.showListView {
+                        LazyVGrid(columns: layout, spacing: 20) {
+                            NewButton(deckListViewModel: deckListViewModel)
+                            ForEach(deckListViewModel.sortDeckVMs(self.selectedSortBy)) { deckVM in
+                                let deck = deckVM.deck
+                                let flashcardListViewModel = FlashcardListViewModel(deck)
+                                let testModeViewModel = TestModeViewModel(deck)
+                                
+                                //TODO: Drag and drop into folders using onLongPressGesture
+                                VStack {
+                                    NavigationLink(
+                                        destination:
+                                            DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: flashcardListViewModel, testModeViewModel: testModeViewModel),
+                                        label: {
+                                        Image("deck1")
+                                            .resizable()
+                                            .frame(width: 110, height: 110)
+                                    })
 
-                                Button {
-                                    showDeckOptions.toggle()
-                                } label: {
-                                    HStack {
-                                        Text(deck.title)
-                                            .font(.caption)
-                                        Image(systemName: "chevron.down")
-                                            .font(.caption2)
+                                    Button {
+                                        showDeckOptions.toggle()
+                                    } label: {
+                                        HStack {
+                                            Text(deck.title)
+                                                .font(.footnote)
+                                            Image(systemName: "chevron.down")
+                                                .font(.caption2)
+                                        }
                                     }
-                                }
-                                .actionSheet(isPresented: $showDeckOptions, content: {
-                                    ActionSheet(title: Text(""), message: Text(""), buttons: [
-                                            .default(Text("Edit Deck")) { self.showingEditDeck = true },
-                                            .destructive(Text("Delete Deck").foregroundColor(Color.red)) {
-                                                self.deleteDeckConfirm.toggle()
-                                            },
-                                            .cancel()
-                                        ])
-                                })
-                                .alert(isPresented: $deleteDeckConfirm, content: {
-                                    Alert(title: Text("Are you sure you want to delete this deck?"), message: nil, primaryButton: .cancel(), secondaryButton:.destructive(Text("Delete"), action: {
-                                        deckListViewModel.remove(deck)
-                                    }))
-                                })
-                                .sheet(isPresented: $showingEditDeck) {
-                                    DeckCreationView(deckListViewModel: self.deckListViewModel, deckVM: deckVM, flashcardListVM: flashcardListViewModel) { deck, flashcards in
-                                        
-                                        //Update the new flashcards
-                                        flashcards
-                                            .filter { flashcard in
-                                                flashcardListViewModel.flashcardViewModels
-                                                    .map { flashcardVM in
-                                                        flashcardVM.flashcard
-                                                    }
-                                                    .contains(where: {$0 != flashcard})
-                                            }
-                                            .forEach { flashcard in
-                                                flashcardListViewModel.add(flashcard)
-                                            }
-                                        
-                                        //Edit the existing flashcards
-                                        flashcards
-                                            .filter { flashcard in
-                                                flashcardListViewModel.flashcardViewModels
-                                                    .map { flashcardVM in
-                                                        flashcardVM.flashcard
-                                                    }
-                                                    .contains(where: {$0 == flashcard && $0.prompt != flashcard.prompt && $0.answer != flashcard.answer})
-                                            }
-                                            .forEach { flashcard in
-                                                flashcardListViewModel.update(flashcard)
-                                            }
-                                        
-                                        //Remove flashcards
-                                        flashcardListViewModel.flashcardViewModels
-                                            .map { flashcardVM in
-                                                flashcardVM.flashcard
-                                            }
-                                            .filter { currentFlashcard in
-                                                flashcards
-                                                    .contains(where: {$0 != currentFlashcard})
-                                            }
-                                            .forEach { deletedFlashcard in
-                                                flashcardListViewModel.remove(deletedFlashcard)
-                                            }
+                                    .actionSheet(isPresented: $showDeckOptions, content: {
+                                        ActionSheet(title: Text(""), message: Text(""), buttons: [
+                                                .default(Text("Edit Deck")) { self.showingEditDeck = true },
+                                                .destructive(Text("Delete Deck").foregroundColor(Color.red)) {
+                                                    self.deleteDeckConfirm.toggle()
+                                                },
+                                                .cancel()
+                                            ])
+                                    })
+                                    .alert(isPresented: $deleteDeckConfirm, content: {
+                                        Alert(title: Text("Are you sure you want to delete this deck?"), message: nil, primaryButton: .cancel(), secondaryButton:.destructive(Text("Delete"), action: {
+                                            deckListViewModel.remove(deck)
+                                        }))
+                                    })
+                                    .sheet(isPresented: $showingEditDeck) {
+                                        DeckCreationView(deckListViewModel: self.deckListViewModel, deckVM: deckVM, flashcardListVM: flashcardListViewModel) { deck, flashcards in
+                                            
+                                            //Update the new flashcards
+                                            flashcards
+                                                .filter { flashcard in
+                                                    flashcardListViewModel.flashcardViewModels
+                                                        .map { flashcardVM in
+                                                            flashcardVM.flashcard
+                                                        }
+                                                        .contains(where: {$0 != flashcard})
+                                                }
+                                                .forEach { flashcard in
+                                                    flashcardListViewModel.add(flashcard)
+                                                }
+                                            
+                                            //Edit the existing flashcards
+                                            flashcards
+                                                .filter { flashcard in
+                                                    flashcardListViewModel.flashcardViewModels
+                                                        .map { flashcardVM in
+                                                            flashcardVM.flashcard
+                                                        }
+                                                        .contains(where: {$0 == flashcard && $0.prompt != flashcard.prompt && $0.answer != flashcard.answer})
+                                                }
+                                                .forEach { flashcard in
+                                                    flashcardListViewModel.update(flashcard)
+                                                }
+                                            
+                                            //Remove flashcards
+                                            flashcardListViewModel.flashcardViewModels
+                                                .map { flashcardVM in
+                                                    flashcardVM.flashcard
+                                                }
+                                                .filter { currentFlashcard in
+                                                    flashcards
+                                                        .contains(where: {$0 != currentFlashcard})
+                                                }
+                                                .forEach { deletedFlashcard in
+                                                    flashcardListViewModel.remove(deletedFlashcard)
+                                                }
 
+                                        }
                                     }
                                 }
                             }
                         }
+                        .padding(12)
+                    } else {
+                        List {
+                            NewButton(deckListViewModel: deckListViewModel)
+                            ForEach(deckListViewModel.sortDeckVMs(self.selectedSortBy)) { deckVM in
+                                let deck = deckVM.deck
+                                let flashcardListViewModel = FlashcardListViewModel(deck)
+                                let testModeViewModel = TestModeViewModel(deck)
+                                
+                                NavigationLink(
+                                    destination:
+                                        DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: flashcardListViewModel, testModeViewModel: testModeViewModel),
+                                    label: {
+                                        HStack {
+                                            Image("deck1")
+                                                .resizable()
+                                                .frame(width: 110, height: 110)
+                                                .padding()
+                                            VStack {
+                                                Text(deck.title)
+                                            }
+                                            Spacer()
+                                            
+                                            Button {
+                                                showDeckOptions.toggle()
+                                            } label: {
+                                                HStack {
+                                                    Image(systemName: "chevron.down")
+                                                }
+                                            }
+                                            
+                                        }
+                                    })
+                                    
+                            }
+                        }
                     }
-                    .padding(.horizontal, 12)
                     
                 }
+                
             }
             .navigationTitle("Decks")
             .navigationBarBackButtonHidden(true)
@@ -232,10 +285,10 @@ struct NewButton: View {
                                     dash: [3]
                                 )
                             )
-                            .frame(width: 80, height: 100)
+                            .frame(width: 90, height: 110)
                     }
                     Text("New")
-                        .font(.caption)
+                        .font(.footnote)
                 }
             })
             

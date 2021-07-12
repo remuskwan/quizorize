@@ -13,6 +13,7 @@ struct TestModeView: View {
     
     @State private var showingTest = false
     @State private var showingEndTestAlert = false
+    @State private var progressValue = 0.0
     
     
     var body: some View {
@@ -22,21 +23,44 @@ struct TestModeView: View {
                     VStack {
                         if !self.showingTest {
                             List {
-                                Button(action: {
-                                    testModeViewModel.setQuestionTypes()
-                                    testModeViewModel.setCurrentType()
-                                    testModeViewModel.setQuestionCount()
-                                    self.showingTest.toggle()
-                                }, label: {
-                                    Text("Start Test")
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                    
-                                })
-                                .frame(width: geometry.size.width * 0.8, height: 45)
-                                .listRowBackground(Color.accentColor)
+                                if testModeViewModel.hasTakenTest {
+                                    Section {
+                                        HStack {
+                                            SummaryProgressBar(progress: $progressValue)
+                                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                                .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.4)
+                                                .padding()
+                                                .onAppear {
+                                                    self.progressValue = testModeViewModel.latestScore
+                                                }
+                                                .listRowBackground(Color.clear)
+//                                            Text("Last\nScore")
+//                                                .headline()
+//                                                .padding()
+                                        }
+                                        
+                                    }
+                                }
                                 
+                                Section {
+                                    Button(action: {
+                                        testModeViewModel.setQuestionTypes()
+                                        testModeViewModel.setCurrentType()
+                                        testModeViewModel.setQuestionCount()
+                                        self.showingTest.toggle()
+                                    }, label: {
+                                        Text("Start Test")
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                        
+                                    })
+                                    .frame(width: geometry.size.width * 0.8, height: 45)
+                                    .listRowBackground(Color.accentColor)
+                                }
                                 TestModeOptions(testModeViewModel)
+                            }
+                            .onAppear {
+                                testModeViewModel.questionCount = testModeViewModel.count
                             }
                             .listStyle(InsetGroupedListStyle())
                             .toolbar(content: {
@@ -57,7 +81,12 @@ struct TestModeView: View {
                                 .toolbar(content: {
                                     ToolbarItem(placement: .navigationBarLeading) {
                                         Button {
-                                            self.showingEndTestAlert.toggle()
+                                            if self.testModeViewModel.count != self.testModeViewModel.counter {
+                                                self.showingEndTestAlert.toggle()
+                                            } else {
+                                                self.testModeViewModel.reset()
+                                                presentationMode.wrappedValue.dismiss()
+                                            }
                                         } label: {
                                             Image(systemName: "multiply")
                                         }
@@ -106,7 +135,7 @@ struct TestModeOptions: View {
             Toggle(isOn: $isInstEvalOn, label: {
                 Text("Instant Evaluation")
             })
-            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+            .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
         }
         
         Section(header: Text("Question types")) {
@@ -137,7 +166,6 @@ struct TestView: View {
     @ObservedObject var testModeViewModel: TestModeViewModel
     
     @State private var answer = ""
-    @State private var dontKnow = 0
     
     var body: some View {
         GeometryReader { geometry in
@@ -157,7 +185,7 @@ struct TestView: View {
                             MultipleChoice(testModeViewModel: testModeViewModel)
                         }
                     } else {
-                        Text("\(testModeViewModel.correct)/\(testModeViewModel.count)")
+                        TestModeSummaryView(testModeViewModel: testModeViewModel)
                     }
                 }
             }
@@ -167,6 +195,7 @@ struct TestView: View {
     }
 }
 
+//Source: https://medium.com/flawless-app-stories/implementing-snap-carousel-in-swiftui-3ae084504670
 struct TestModeSnapCarousel: View {
     @ObservedObject var testModeViewModel: TestModeViewModel
     
@@ -184,7 +213,7 @@ struct TestModeSnapCarousel: View {
                 widthOfHiddenCards: widthOfHiddenCards,
                 testModeViewModel: testModeViewModel
             ) {
-                ForEach(0 ..< testModeViewModel.testFlashcards.count, id: \.self) { i in
+                ForEach(0 ..< testModeViewModel.questionCount, id: \.self) { i in
                     Item(
                         _id: Int(i),
                         spacing: spacing,
@@ -384,26 +413,52 @@ struct Written: View {
 
 struct TrueFalse: View {
     @ObservedObject var testModeViewModel: TestModeViewModel
+    
     var body: some View {
-        HStack {
-            Spacer()
-            Button(action: {
-                testModeViewModel.submitTFAnswer(true)
-                let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                impactMed.impactOccurred()
-            }, label: {
-                Text("True")
-            })
-            Spacer()
-            Button(action: {
-                testModeViewModel.submitTFAnswer(false)
-                let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                impactMed.impactOccurred()
-            }, label: {
-                Text("False")
-            })
-            Spacer()
+        GeometryReader { geometry in
+            ZStack {
+                HStack {
+                    Spacer()
+                    Button("True") {
+                        testModeViewModel.submitTFAnswer(true)
+                        let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                        impactMed.impactOccurred()
+                    }
+                    .buttonStyle(TestModeButtonStyle())
+                    .frame(width: geometry.size.width * 0.45, height: geometry.size.height * 0.2)
+                    
+                    Spacer()
+                    
+                    Button("False") {
+                        testModeViewModel.submitTFAnswer(false)
+                        let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                        impactMed.impactOccurred()
+                    }
+                    .buttonStyle(TestModeButtonStyle())
+                    .frame(width: geometry.size.width * 0.45, height: geometry.size.height * 0.2)
+                    
+                    Spacer()
+                }
+                .frame(height: geometry.size.height * 0.2)
+                .padding()
+                //
+            }
         }
+    }
+}
+
+struct TestModeButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            //                .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.05, alignment: .center)
+            .font(.headline)
+            .foregroundColor(.white)
+            .background(RoundedRectangle(cornerRadius: 5)
+                            .fill(configuration.isPressed ? Color(hex: "15CDA8") : Color.accentColor))
+            .padding()
+        
+        
     }
 }
 
@@ -412,7 +467,7 @@ struct MultipleChoice: View {
     
     var body: some View {
         VStack {
-            ForEach(testModeViewModel.getMCQOptions(), id: \.self) { option in
+            ForEach(testModeViewModel.mcqOptions, id: \.self) { option in
                 Button(action: {
                     self.testModeViewModel.submitAnswer(option)
                     let impactMed = UIImpactFeedbackGenerator(style: .medium)
@@ -423,8 +478,13 @@ struct MultipleChoice: View {
                 .padding()
             }
         }
+        .onAppear {
+            self.testModeViewModel.setMCQOptions()
+        }
     }
 }
+
+
 
 //struct TestModeView_Previews: PreviewProvider {
 //    static var previews: some View {

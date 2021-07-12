@@ -11,6 +11,7 @@ struct DeckView: View {
     @ObservedObject var deckListViewModel: DeckListViewModel
     @ObservedObject var deckViewModel: DeckViewModel
     @ObservedObject var flashcardListViewModel: FlashcardListViewModel
+    @ObservedObject var testModeViewModel: TestModeViewModel
     
     @State private var page = 0
     @State private var action: Int? = 0
@@ -46,6 +47,7 @@ struct DeckView: View {
                 Spacer()
                 
             }
+
             .navigationBarTitleDisplayMode(.inline) //Added this so there's more space for the views
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -127,7 +129,7 @@ struct DeckView: View {
         VStack {
             HStack {
                 Text(deckViewModel.deck.title)
-                    .font(.title)
+                    .font(.largeTitle)
                 
                 Spacer()
                 
@@ -211,13 +213,7 @@ struct DeckView: View {
     }
     
     func testContent() -> some View {
-        var testFlashcards = [FlashcardViewModel]()
-        
-        testFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
-        testFlashcards.map { flashcardVM in
-            flashcardVM.flipped = false
-        }
-        return TestModeView(testModeViewModel: TestModeViewModel(testFlashcards))
+        TestModeView(testModeViewModel: testModeViewModel)
     }
 }
 
