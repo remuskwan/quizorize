@@ -57,7 +57,7 @@ struct TestModeView: View {
                                     .frame(width: geometry.size.width * 0.8, height: 45)
                                     .listRowBackground(Color.accentColor)
                                 }
-                                TestModeOptions(testModeViewModel)
+                                TestModeOptions(testModeViewModel: testModeViewModel)
                             }
                             .onAppear {
                                 testModeViewModel.questionCount = testModeViewModel.count
@@ -84,6 +84,19 @@ struct TestModeView: View {
                                             if self.testModeViewModel.count != self.testModeViewModel.counter {
                                                 self.showingEndTestAlert.toggle()
                                             } else {
+                                                self.testModeViewModel.setNextReminderTime()
+                                                if testModeViewModel.nextReminderTime != 0 {
+                                                    let content = UNMutableNotificationContent()
+                                                    content.title = "Revise soon!"
+                                                    content.body = "Revise DeckName to make the most out of your Quizorize revision!"
+                                                    content.sound = UNNotificationSound.default
+                                                    
+                                                    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: testModeViewModel.nextReminderTime, repeats: false)
+                                                    
+                                                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                                                    
+                                                    UNUserNotificationCenter.current().add(request)
+                                                }
                                                 self.testModeViewModel.reset()
                                                 presentationMode.wrappedValue.dismiss()
                                             }
@@ -109,9 +122,7 @@ struct TestModeView: View {
                     }
                 }
             }
-            
         }
-        
     }
 }
 
@@ -119,11 +130,8 @@ struct TestModeOptions: View {
     @ObservedObject var testModeViewModel: TestModeViewModel
     
     @State private var isInstEvalOn = false
+    @State private var isSpacedRepetitionOn = true
     @State private var showAlert = false
-    
-    init(_ testModeViewModel: TestModeViewModel) {
-        self.testModeViewModel = testModeViewModel
-    }
     
     var body: some View {
         Section(header: Text("General")) {
@@ -154,10 +162,36 @@ struct TestModeOptions: View {
             })
             .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
         }
+        
+        Section(header: Text("Reminders")) {
+            Toggle(isOn: $isSpacedRepetitionOn, label: {
+                Text("Spaced Repetition")
+            })
+            .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
+            
+            if !isSpacedRepetitionOn {
+                Picker("Remind Me", selection: $testModeViewModel.reminderType) {
+                    ForEach(ReminderType.allCases, id: \.self) {
+                        Text($0.rawValue)
+                    }
+                }
+            }
+            
+        }
 //        .alert(isPresented: testModeViewModel.isTrueFalse && testModeViewModel.isMCQ && testModeViewModel.isTrueFalse, content: {
 //            /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Content@*/Alert(title: Text("Alert"))/*@END_MENU_TOKEN@*/
 //        })
     }
+}
+
+enum ReminderType: String, CaseIterable {
+    case never = "Never"
+    case oneDay = "Every day"
+    case threeDays = "Every 3 days"
+    case fiveDays = "Every 5 days"
+    case oneWeek = "Every week"
+    case twoWeeks = "Every 2 weeks"
+    case oneMonth = "Every month"
 }
 
 struct TestView: View {

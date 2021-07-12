@@ -30,6 +30,10 @@ class TestModeViewModel: ObservableObject {
     @Published var latestScore = 0.0
     @Published var hasTakenTest = false
     
+    @Published var spacedRepetitionOn = true
+    @Published var reminderType = ReminderType.never
+    @Published var nextReminderTime: TimeInterval = 0.0
+    
     private var cancellables = Set<AnyCancellable>()
     
     var count: Int {
@@ -125,6 +129,25 @@ class TestModeViewModel: ObservableObject {
     func setLatestScore() {
         self.latestScore = Double(self.correct) / Double(self.count)
         self.hasTakenTest = true
+    }
+    
+    func setNextReminderTime() {
+        if self.reminderType == ReminderType.never {
+            self.nextReminderTime = 0
+        } else if self.reminderType == ReminderType.oneDay {
+            self.nextReminderTime = 86400
+//            self.nextReminderTime = 5
+        } else if self.reminderType == ReminderType.threeDays {
+            self.nextReminderTime = 259200
+        } else if self.reminderType == ReminderType.fiveDays {
+            self.nextReminderTime = 432000
+        } else if self.reminderType == ReminderType.oneWeek {
+            self.nextReminderTime = 604800
+        } else if self.reminderType == ReminderType.twoWeeks {
+            self.nextReminderTime = 1209600
+        } else if self.reminderType == ReminderType.oneMonth {
+            self.nextReminderTime = 2592000
+        }
     }
     
 }

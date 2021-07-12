@@ -19,6 +19,7 @@ target 'Quizorize' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'Firebase/Messaging'
   pod 'GoogleSignIn'
 
   target 'QuizorizeTests' do

@@ -16,7 +16,6 @@
 		162792F1265ADDC90073718F /* TextFieldClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F0265ADDC90073718F /* TextFieldClearButton.swift */; };
 		162792F2265ADDC90073718F /* TextFieldClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F0265ADDC90073718F /* TextFieldClearButton.swift */; };
 		162792F3265ADDC90073718F /* TextFieldClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F0265ADDC90073718F /* TextFieldClearButton.swift */; };
-		162792F7265BB9690073718F /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 162792F6265BB9690073718F /* AlertKit */; };
 		162792F9265BE7860073718F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F8265BE7860073718F /* Extensions.swift */; };
 		162792FA265BE7860073718F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F8265BE7860073718F /* Extensions.swift */; };
 		162792FB265BE7870073718F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162792F8265BE7860073718F /* Extensions.swift */; };
@@ -27,13 +26,9 @@
 		1627932B265C1D840073718F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279329265C1D840073718F /* Helper.swift */; };
 		1627932C265C1D840073718F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16279329265C1D840073718F /* Helper.swift */; };
 		1627932E265CD6EA0073718F /* RecoverPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627932D265CD6EA0073718F /* RecoverPasswordView.swift */; };
-		16279337265D1C290073718F /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 16279336265D1C290073718F /* Introspect */; };
 		1627933F265EA1520073718F /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627933E265EA1520073718F /* AuthError.swift */; };
 		16279340265EA1520073718F /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627933E265EA1520073718F /* AuthError.swift */; };
 		16279341265EA1530073718F /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627933E265EA1520073718F /* AuthError.swift */; };
-		16279344265EB61B0073718F /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 16279343265EB61B0073718F /* FacebookLogin */; };
-		16279346265EB61B0073718F /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = 16279345265EB61B0073718F /* FacebookShare */; };
-		16279348265EB61B0073718F /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 16279347265EB61B0073718F /* FacebookCore */; };
 		162793572660F7450073718F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162793562660F7450073718F /* ProfileView.swift */; };
 		162793582660F7450073718F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162793562660F7450073718F /* ProfileView.swift */; };
 		162793592660F7450073718F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162793562660F7450073718F /* ProfileView.swift */; };
@@ -214,11 +209,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16279344265EB61B0073718F /* FacebookLogin in Frameworks */,
-				16279348265EB61B0073718F /* FacebookCore in Frameworks */,
-				162792F7265BB9690073718F /* AlertKit in Frameworks */,
-				16279337265D1C290073718F /* Introspect in Frameworks */,
-				16279346265EB61B0073718F /* FacebookShare in Frameworks */,
 				571D50E1BB6F534A6DDF9D4D /* Pods_Quizorize.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -511,11 +501,6 @@
 			);
 			name = Quizorize;
 			packageProductDependencies = (
-				162792F6265BB9690073718F /* AlertKit */,
-				16279336265D1C290073718F /* Introspect */,
-				16279343265EB61B0073718F /* FacebookLogin */,
-				16279345265EB61B0073718F /* FacebookShare */,
-				16279347265EB61B0073718F /* FacebookCore */,
 			);
 			productName = Quizorize;
 			productReference = 16C285E92656EB020068AB95 /* Quizorize.app */;
@@ -1223,34 +1208,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		162792F6265BB9690073718F /* AlertKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 162792F5265BB9690073718F /* XCRemoteSwiftPackageReference "AlertKit" */;
-			productName = AlertKit;
-		};
-		16279336265D1C290073718F /* Introspect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16279335265D1C290073718F /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = Introspect;
-		};
-		16279343265EB61B0073718F /* FacebookLogin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16279342265EB61B0073718F /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookLogin;
-		};
-		16279345265EB61B0073718F /* FacebookShare */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16279342265EB61B0073718F /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookShare;
-		};
-		16279347265EB61B0073718F /* FacebookCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16279342265EB61B0073718F /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookCore;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 16C285E12656EB020068AB95 /* Project object */;
 }
