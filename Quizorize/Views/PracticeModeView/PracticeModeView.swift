@@ -13,6 +13,8 @@ struct PracticeModeView: View {
     
     @State private var showOptionsSheet = false
     @State private var dismissOptionsSheet = false
+    
+    @State private var showingNotice: Bool = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -29,26 +31,34 @@ struct PracticeModeView: View {
                         Spacer()
                         Text("\(practiceModeViewModel.counter) / \(practiceModeViewModel.count)")
                         Spacer()
-//                        Button(action: {
-//                            showOptionsSheet.toggle()
-//                            dismissOptionsSheet.toggle()
-//                        }, label: {
-//                            Image(systemName: "questionmark.circle")
-//                                .frame(width: 24, height: 24)
-//                                .padding()
-//                        })
+                        //                        Button(action: {
+                        //                            showOptionsSheet.toggle()
+                        //                            dismissOptionsSheet.toggle()
+                        //                        }, label: {
+                        //                            Image(systemName: "questionmark.circle")
+                        //                                .frame(width: 24, height: 24)
+                        //                                .padding()
+                        //                        })
                         Image(systemName: "questionmark.circle")
                             .frame(width: 24, height: 24)
                             .padding()
                     }
+                    
                     ProgressView(value: Double(practiceModeViewModel.counter), total: Double(practiceModeViewModel.count))
                         .frame(width: geometry.size.width * 0.7, alignment: .center)
-                    FlashcardListView(practiceModeViewModel: practiceModeViewModel)
+                    
+                    FlashcardListView(practiceModeViewModel: practiceModeViewModel, showingNotice: $showingNotice)
                 }
-//                OptionsSheet(showingOptionsSheet: $showOptionsSheet, dismissOptionsSheet: $dismissOptionsSheet, height: geometry.size.height * 0.8) {
-//                    OptionsSheetContent()
-//                        .padding()
-//                }
+                //                OptionsSheet(showingOptionsSheet: $showOptionsSheet, dismissOptionsSheet: $dismissOptionsSheet, height: geometry.size.height * 0.8) {
+                //                    OptionsSheetContent()
+                //                        .padding()
+                //                }
+                
+                if showingNotice {
+                    ShowHelp(showingNotice: $showingNotice)
+                        .animation(.easeInOut(duration: 1))
+                        .offset(y: -300) //Not sure how to dynamically adjust this, giving fixed value for now
+                }
             }
         }
     }
@@ -60,11 +70,17 @@ struct OptionsSheetContent: View {
     }
 }
 
+
 struct FlashcardListView: View {
     @ObservedObject var practiceModeViewModel: PracticeModeViewModel
-
+    
     @Namespace private var animation
     
+    @State private var distanceTravelled: CGFloat = 0
+    @Binding var showingNotice: Bool
+    
+    var flashcardGrader = FlashcardGrader()
+
     var body: some View {
         VStack {
             Spacer()
@@ -72,7 +88,9 @@ struct FlashcardListView: View {
                 if practiceModeViewModel.counter != practiceModeViewModel.count  {
                     ForEach(practiceModeViewModel.practiceFlashcards) { flashcardVM in
                         let flashcard = flashcardVM.flashcard
-                        FlashcardView(flashcardViewModel: flashcardVM)
+                        FlashcardView(flashcardViewModel: flashcardVM,
+                                      practiceModeViewModel: practiceModeViewModel,
+                                      uuid: flashcardVM.id)
                             .zIndex(self.practiceModeViewModel.zIndex(of: flashcard))
                             .offset(x: self.offset(for: flashcard).width, y: self.offset(for: flashcard).height)
                             .offset(y: self.practiceModeViewModel.deckOffset(of: flashcard))
@@ -81,6 +99,7 @@ struct FlashcardListView: View {
                             .gesture(
                                 DragGesture()
                                     .onChanged({ drag in
+                                        
                                         if self.practiceModeViewModel.activeCard == nil {
                                             self.practiceModeViewModel.activeCard = flashcard
                                         }
@@ -88,20 +107,54 @@ struct FlashcardListView: View {
                                         
                                         withAnimation(.spring()) {
                                             self.practiceModeViewModel.topCardOffset = drag.translation
-                                            if drag.translation.width < -200 || drag.translation.width > 200 || drag.translation.height < -300 || drag.translation.height > 300 {
-                                                self.practiceModeViewModel.moveToBack(flashcard)
-                                            }
-                                            else {
-                                                self.practiceModeViewModel.moveToFront(flashcard)
-                                            }
+                                            
+                                            /*
+                                             if drag.translation.width > 50 && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id) {
+                                             practiceModeViewModel.togglePass(of: flashcard.id)
+                                             } else if drag.translation.width < -50 && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id) {
+                                             practiceModeViewModel.toggleFail(of: flashcard.id)
+                                             } else {
+                                             practiceModeViewModel.toggleNil(of: flashcard.id)
+                                             }
+                                             */
+                                            /*
+                                             let cardMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.translation.width > dragThreshold
+                                             || drag.predictedEndTranslation.width > dragThreshold
+                                             || drag.predictedEndTranslation.width < (-1 * dragThreshold)
+                                             
+                                             if (cardMovesBack) {
+                                             //drag.translation.height < -300 || drag.translation.height > 30) {
+                                             }
+                                             else {
+                                             }
+                                             */
                                         }
                                     })
                                     .onEnded({ drag in
+                                        let dragThreshold: CGFloat = 250
+                                        //drag.predictedEndTranslation predicts the width based on how fast the user drags
+                                        let cardMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.translation.width > dragThreshold || drag.predictedEndTranslation.width > dragThreshold || drag.predictedEndTranslation.width < (-1 * dragThreshold)
+                                        
+                                        let cardFailedMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.predictedEndTranslation.width < (-1 * dragThreshold)
+                                        
+                                        let cardPassedMovesBack = drag.translation.width > dragThreshold || drag.predictedEndTranslation.width > dragThreshold
+                                        
+                                        let allRequirementsMet = cardMovesBack && (practiceModeViewModel.counter < practiceModeViewModel.count) && practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id)
+                                        
+                                        let didNotFlip = practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id) == false
+                                        
+                                        
                                         withAnimation(.spring()) {
                                             self.practiceModeViewModel.activeCard = nil
                                             self.practiceModeViewModel.topCardOffset = .zero
-                                            if practiceModeViewModel.counter < practiceModeViewModel.count {
+                                            if allRequirementsMet {
                                                 self.practiceModeViewModel.counter += 1
+                                                self.practiceModeViewModel.moveToBack(flashcard)
+                                            } else if didNotFlip {
+                                                self.practiceModeViewModel.moveToFront(flashcard)
+                                                self.showingNotice = true
+                                            } else {
+                                                self.practiceModeViewModel.moveToFront(flashcard)
                                             }
                                         }
                                     })
@@ -113,10 +166,7 @@ struct FlashcardListView: View {
                         Text("You're done!")
                             .padding()
                         Button("Reset") {
-                            self.practiceModeViewModel.counter = 0
-                            self.practiceModeViewModel.practiceFlashcards.forEach { flashcardVM in
-                                flashcardVM.flipped = false
-                            }
+                            resetCards()
                         }
                         .padding()
                     }
@@ -131,7 +181,9 @@ struct FlashcardListView: View {
             Spacer()
             
             Button(action: {
-                practiceModeViewModel.shuffle()
+                withAnimation(.spring()) {
+                    resetCards()
+                }
             }, label: {
                 Label(
                     title: { Text("Shuffle") },
@@ -144,6 +196,15 @@ struct FlashcardListView: View {
         
     }
     
+    func resetCards() {
+        practiceModeViewModel.counter = 0
+        practiceModeViewModel.shuffle()
+        practiceModeViewModel.flipStatuses =
+            practiceModeViewModel.flipStatuses.mapValues { values in
+                return false
+            }
+    }
+    
     func offset(for flashcard: Flashcard) -> CGSize {
         if flashcard != self.practiceModeViewModel.activeCard { return .zero }
         
@@ -152,21 +213,25 @@ struct FlashcardListView: View {
     
     func rotation(for flashcard: Flashcard) -> Angle {
         guard let activeCard = self.practiceModeViewModel.activeCard
-            else {return .degrees(0)}
+        else {return .degrees(0)}
         
         if flashcard != activeCard {return .degrees(0)}
         
         return practiceModeViewModel.rotation(for: activeCard, offset: practiceModeViewModel.topCardOffset)
     }
+    
 }
 
 struct FlashcardView: View {
     @ObservedObject var flashcardViewModel: FlashcardViewModel
-
+    @ObservedObject var practiceModeViewModel: PracticeModeViewModel
+    
+    var uuid: String
+    
     var body: some View {
         VStack {
             Spacer()
-            if !flashcardViewModel.flipped {
+            if !practiceModeViewModel.getFlipStatusOf(uuid: uuid) /* flashcardViewModel.flipped */ {
                 Text(flashcardViewModel.flashcard.prompt)
                     .font(.title)
                     .foregroundColor(.primary)
@@ -190,12 +255,13 @@ struct FlashcardView: View {
         .background(
             RoundedRectangle(cornerRadius: 10)
                 .foregroundColor(Color.white)
-                .shadow(radius: 2)       	
+                .shadow(radius: 2)
         )
-        .rotation3DEffect(flashcardViewModel.flipped ? Angle(degrees: 180): Angle(degrees: 0), axis: (x: CGFloat(0), y: CGFloat(10), z: CGFloat(0)))
+        .rotation3DEffect(/*flashcardViewModel.flipped*/practiceModeViewModel.getFlipStatusOf(uuid: uuid) ? Angle(degrees: 180): Angle(degrees: 0), axis: (x: CGFloat(0), y: CGFloat(10), z: CGFloat(0)))
         .onTapGesture {
             withAnimation(.spring()) {
-                flashcardViewModel.flipped.toggle()
+                //flashcardViewModel.flipped.toggle()
+                practiceModeViewModel.toggleFlipStatusOf(uuid: uuid)
             }
         }
         
@@ -207,8 +273,8 @@ struct SummaryCardView: View {
         Text("You're done!")
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                            .foregroundColor(Color.white)
-                            .shadow(radius: 2))
+                    .foregroundColor(Color.white)
+                    .shadow(radius: 2))
     }
 }
 
@@ -267,6 +333,24 @@ struct BlurView: UIViewRepresentable {
     }
 }
 
+//MARK: Fading view
+struct ShowHelp: View {
+    @Binding var showingNotice: Bool
+    
+    var body: some View {
+        VStack (alignment: .center, spacing: 8) {
+            Text("Tap to flip before swiping!")
+                .foregroundColor(.black)
+                .font(.callout.bold())
+        }
+        .transition(.scale)
+        .onAppear(perform: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                self.showingNotice = false
+            })
+        })
+    }
+}
 
 //struct PracticeModeView_Previews: PreviewProvider {
 //    static var previews: some View {

@@ -10,7 +10,7 @@ import FirebaseFirestore
 import Combine
 
 class FlashcardViewModel: ObservableObject, Identifiable {
-//    private var flashcardRepository = FlashcardRepository()
+    //private var flashcardRepository = FlashcardRepository()
     @Published var flashcard: Flashcard
     @Published var flipped = false
     
@@ -25,6 +25,8 @@ class FlashcardViewModel: ObservableObject, Identifiable {
     var id = ""
     
     private var cancellables = Set<AnyCancellable>()
+    
+    //MARK: Intent(s)
 
     init(flashcard: Flashcard) {
         self.flashcard = flashcard

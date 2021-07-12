@@ -16,6 +16,12 @@ struct CarouselView: View {
     var itemHeight:CGFloat
     @ObservedObject var flashcardListVM: FlashcardListViewModel
     
+    private struct Dimensions {
+        static let width: CGFloat = 350
+        
+        static let heightOffset: CGFloat = 50 //For the adjacent view
+    }
+    
     
     private func onDragEnded(drag: DragGesture.Value) {
         print("drag ended")
@@ -48,10 +54,10 @@ struct CarouselView: View {
                         VStack{
                             //Spacer()
                             
-                            PreviewFlashcard(index: i, width: 300, height: self.getHeight(i), flashcardVM: flashcard)
+                            PreviewFlashcard(index: i, width: Dimensions.width, height: self.getHeight(i), flashcardVM: flashcard)
                                 //Text("\(i)")
                                 /*
-                                 .animation(.interpolatingSpring(stiffness: 300.0, damping: 30.0, initialVelocity: 10.0))
+                                 .animation(.interpolatingSpring(stiffness: Dimensions.width.0, damping: 30.0, initialVelocity: 10.0))
                                  .background(Color.white)
                                  .cornerRadius(10)
                                  .shadow(radius: 3)
@@ -102,7 +108,7 @@ struct CarouselView: View {
         if i == relativeLoc(){
             return itemHeight
         } else {
-            return itemHeight - 100
+            return itemHeight - Dimensions.heightOffset
         }
     }
     
@@ -132,7 +138,7 @@ struct CarouselView: View {
         if i == relativeLoc() {
             return self.dragState.translation.width
         } else {
-            return self.dragState.translation.width + (indexInCGFloat * (300 + 20))
+            return self.dragState.translation.width + (indexInCGFloat * (Dimensions.width + 20))
         }
         
         //This sets up the central offset

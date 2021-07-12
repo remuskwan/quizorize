@@ -155,7 +155,7 @@ struct DeckCreationView: View {
                         }
                     }
                 }
-                .listSeparatorStyle(style: .none, colorStyle: .clear)
+                .listSeparatorStyle(style: .none, colorStyle: .white)
                 .environment(\.defaultMinListRowHeight, fullView.size.height * DimensionConstants.ScrollViewRatio)
             }
         }

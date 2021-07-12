@@ -22,6 +22,9 @@ struct DeckView: View {
     @State private var showDeckOptions = false
     @State private var deleteDeckConfirm = false
     
+    //Temp, delete after
+    @State private var toggle = false
+
     var body: some View {
         GeometryReader { geoProxy in
             VStack(spacing: 0) {
@@ -34,7 +37,7 @@ struct DeckView: View {
                 .frame(height: geoProxy.size.height * 0.7)
                 */
                 
-                CarouselView(itemHeight: geoProxy.size.height * 0.5, flashcardListVM: flashcardListViewModel)
+                CarouselView(itemHeight: UIScreen.main.bounds.height * 0.30, flashcardListVM: flashcardListViewModel)
 
                 Spacer()
                 
@@ -47,8 +50,7 @@ struct DeckView: View {
                 Spacer()
                 
             }
-
-            .navigationBarTitleDisplayMode(.inline) //Added this so there's more space for the views
+            .navigationBarTitle(deckViewModel.deck.title, displayMode: .large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -78,7 +80,7 @@ struct DeckView: View {
             .sheet(isPresented: $showingEditDeck) {
                 DeckCreationView(deckListViewModel: self.deckListViewModel, deckVM: self.deckViewModel, flashcardListVM: self.flashcardListViewModel) { deck, flashcards in
                     
-                    //Update the new flashcards
+                    //Add the new flashcards
                     flashcards
                         .filter { flashcard in
                             flashcardListViewModel.flashcardViewModels
@@ -126,27 +128,48 @@ struct DeckView: View {
     }
     
     var generalInfo: some View {
-        VStack {
-            HStack {
-                Text(deckViewModel.deck.title)
-                    .font(.largeTitle)
+        GeometryReader { geo in
+            VStack {
+                /*
+                HStack {
+                    Text(deckViewModel.deck.title)
+                        .font(.largeTitle.bold())
+                    
+                    Spacer()
+                    
+                }
+                */
+                HStack {
+                    Text("Username")
+                        .font(.title2.bold())
+                    
+                    Divider()
+
+                    Text("\(flashcardListViewModel.flashcardViewModels.count) flashcards")
+                        .font(.title2.bold())
+                    
+                    Spacer()
+                }
                 
-                Spacer()
-                
+                HStack(spacing: 0) {
+                    Toggle(isOn: self.$deckViewModel.deck.isExamMode, label: {
+                        Text("Exam Mode")
+                            .font(.body.bold())
+                    })
+                    .onChange(of: deckViewModel.deck.isExamMode) { value in
+                        deckViewModel.toggleExamMode()
+                        print(value)
+                    }
+                    .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
+
+                    Spacer()
+                        .frame(minWidth: geo.size.width * 0.55)
+                }
+
             }
+            .padding()
             
-            HStack {
-                Text("Username")
-                    .font(.body)
-                
-                Divider()
-                
-                Text("\(flashcardListViewModel.flashcardViewModels.count) flashcards")
-                
-                Spacer()
-            }
         }
-        .padding()
     }
     
     var buttons: some View {
@@ -200,7 +223,7 @@ struct DeckView: View {
     }
     
     private struct ButtonConstants {
-        static let buttonCount: CGFloat = 2
+        static let buttonCount: CGFloat = 2 //MARK: Change this with more buttons
     }
     
     func practiceContent() -> some View {
@@ -209,7 +232,7 @@ struct DeckView: View {
         practiceFlashcards.map { flashcardVM in
             flashcardVM.flipped = false
         }
-        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards))
+        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards, isExamMode: deckViewModel.deck.isExamMode))
     }
     
     func testContent() -> some View {
@@ -245,15 +268,15 @@ struct PreviewFlashcard: View, Animatable {
                     
                 } else {
                     shape.fill().foregroundColor(.white)
-                        .shadow(color: DrawingConstants.shadowColor, radius: DrawingConstants.shadowRadius, x: DrawingConstants.shadowX, y: DrawingConstants.shadowY)
-                    Text(flashcardVM.flashcard.answer).rotation3DEffect(Angle.degrees(180), axis: (0, 1, 0))
+                        .shadow(color: DrawingConstants.shadowColor, radius: DrawingConstants.shadowRadius, x: DrawingConstants.shadowX, y: DrawingConstants.flippedShadowY)
+                    Text(flashcardVM.flashcard.answer).rotation3DEffect(Angle.degrees(180), axis: (1, 0, 0))
                         .font(.body.bold())
                         .opacity(flipDegrees < 90 ? 0 : 1)
                         .padding()
                 }
             }
             .lineLimit(nil)
-            .rotation3DEffect(Angle.degrees(flipDegrees), axis: (0, 1, 0))
+            .rotation3DEffect(Angle.degrees(flipDegrees), axis: (1, 0, 0))
             .onTapGesture {
                 withAnimation(.spring()) {
                     isFlipped.toggle()
@@ -276,6 +299,8 @@ struct PreviewFlashcard: View, Animatable {
         static let shadowRadius: CGFloat = 3
         static let shadowX: CGFloat = 0
         static let shadowY: CGFloat = 3
+        
+        static let flippedShadowY: CGFloat = -3
     }
 }
 

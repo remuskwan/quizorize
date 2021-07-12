@@ -200,6 +200,23 @@ class AuthViewModel : NSObject, ObservableObject {
             }
         }
     }
+    
+    //MARK: Return false if user does not have a displayName yet
+    /*
+    @Published private var userDoesNotHaveDisplayName = true
+    
+    func checkIfUserHasDisplayName() -> Bool {
+        if let displayName = user?.displayName {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func toggleUserDisplayNameExistence() {
+        userDoesNotHaveDisplayName.toggle()
+    }
+    */
 
 }
 
