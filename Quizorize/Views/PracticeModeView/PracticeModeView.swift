@@ -15,11 +15,11 @@ struct PracticeModeView: View {
     @State private var showOptionsSheet = false
     @State private var dismissOptionsSheet = false
     
-    @State var isExamMode: Bool
     @State private var showingNotice: Bool = false
+    @State private var progressValue = 0.0
     
     //To update DB
-    var didFinishDeck: (_ updatedFlashcards: [Flashcard]) -> Void
+    @Binding var didFinishDeck: (_ updatedFlashcards: [Flashcard]) -> Void
     
     var body: some View {
         GeometryReader { geometry in
@@ -49,13 +49,18 @@ struct PracticeModeView: View {
                             .padding()
                     }
                     
-                    ProgressView(value: Double(practiceModeViewModel.counter), total: Double(practiceModeViewModel.count))
-                        .frame(width: geometry.size.width * 0.7, alignment: .center)
-                    
-                    if isExamMode {
-                        FlashcardListView(practiceModeViewModel: practiceModeViewModel, examModeVM: self.examModeVM, showingNotice: $showingNotice)
+                    if practiceModeViewModel.counter != practiceModeViewModel.count {
+                        ProgressView(value: Double(practiceModeViewModel.counter), total: Double(practiceModeViewModel.count))
+                            .frame(width: geometry.size.width * 0.7, alignment: .center)
+                        
+                        if examModeVM.isExamMode {
+                            FlashcardListView(practiceModeViewModel: practiceModeViewModel, examModeVM: self.examModeVM, showingNotice: $showingNotice)
+                        } else {
+                            FlashcardListView(practiceModeViewModel: practiceModeViewModel, showingNotice: $showingNotice)
+                        }
                     } else {
-                        FlashcardListView(practiceModeViewModel: practiceModeViewModel, showingNotice: $showingNotice)
+                        //Put Exam Summary here.
+                        summaryView
                     }
                 }
                 //                OptionsSheet(showingOptionsSheet: $showOptionsSheet, dismissOptionsSheet: $dismissOptionsSheet, height: geometry.size.height * 0.8) {
@@ -70,6 +75,87 @@ struct PracticeModeView: View {
                 }
             }
         }
+    }
+    
+    var summaryView: some View {
+        //Took most of this from TestModeSummary
+         ZStack {
+            if examModeVM.isExamMode {
+                 GeometryReader { geometry in
+                     VStack {
+                         Spacer()
+                         SummaryProgressBar(progress: $progressValue)
+                             .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.4)
+                             .padding()
+                             .onAppear {
+                                 self.progressValue = self.examModeVM.getPercentageScore()
+                             }
+                         
+                         Text("Date of Completion: \(examModeVM.dateOfCompletion())")
+                             .padding()
+                         
+                         Text("Next Study Date: \(examModeVM.nextDate())")
+                             .padding()
+                        
+                         if examModeVM.isExamMode {
+                            Text("Looks like you need to study now 🤓")
+                             Button(action: {
+                                 resetCards()
+                             }, label: {
+                                 Text("Study Again Now")
+                                     .font(.headline)
+                                     .frame(width: geometry.size.width * 0.8, height: 32)
+                             })
+                         } else {
+                             Button {
+                                 resetCards()
+                                 examModeVM.turnOffExamMode()
+                             } label: {
+                                 Text("I still want to practice now")
+                                     .font(.headline)
+                                     .frame(width: geometry.size.width * 0.8, height: 32)
+                             }
+                             .padding()
+                             
+                             Text("(This will NOT affect your next study date)")
+                                 .padding()
+                         }
+                         Spacer()
+                     }
+                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                 }
+             } else {
+                 GeometryReader { geometry in
+                     VStack {
+                         Text("Congraluations")
+                             .font(.title2.bold())
+                         
+                         Text("You're done!")
+                             .font(.body)
+                             .padding()
+                         
+                         Button("Reset") {
+                             resetCards()
+                         }
+                         .padding()
+                     }
+                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                 }
+                 
+             }
+             
+         }
+        
+    }
+    
+    func resetCards() {
+        practiceModeViewModel.counter = 0
+        practiceModeViewModel.shuffle()
+        practiceModeViewModel.flipStatuses =
+            practiceModeViewModel.flipStatuses.mapValues { values in
+                return false
+            }
+        examModeVM?.reset()
     }
     
 }
@@ -210,6 +296,9 @@ struct FlashcardListView: View {
                                 .padding()
                             }
                         } else {
+                            Text("Congraluations")
+                                .font(.title2.bold())
+                            
                             Text("You're done!")
                                 .padding()
                             Button("Reset") {

@@ -8,24 +8,34 @@
 import Foundation
 import SwiftUI
 
+//MARK: Only flashcards that have finished grading will be passed here.
 class ExamModeViewModel: ObservableObject {
     
     //Do an init and pass existing flashcards to filter out which ones should be tested.
     //Only pass in flashcards to this ViewModel whereby Date().timeIntervalSince1970 - flashcard.nextDate <= 0
     
     
-    init() {
+    init(isExamMode: Bool) {
         self.updatedFlashcards = []
         self.flashcardGrader = FlashcardGrader()
+        self.isExamMode = isExamMode
     }
     
     private(set) var distancesTravelled: [String: CGFloat] = [String: CGFloat]()
     private var updatedFlashcards: [Flashcard] //Should only have flashcards that are updated
     private var flashcardGrader: FlashcardGrader
     
+    @Published private(set) var isExamMode: Bool
+    
     private var correctCount: Double = 0
 
     //MARK: Intent(s)
+    
+    //Toggle ExamMode (while user still inside practice)
+    func turnOffExamMode() {
+        self.isExamMode = false
+    }
+    
     //Set the translation width of a flashcard
     func setTranslationWidthOf(id: String, width: CGFloat) {
         self.distancesTravelled[id] = width

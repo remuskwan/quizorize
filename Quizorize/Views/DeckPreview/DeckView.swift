@@ -232,7 +232,7 @@ struct DeckView: View {
         practiceFlashcards.map { flashcardVM in
             flashcardVM.flipped = false
         }
-        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards, isExamMode: deckViewModel.deck.isExamMode), examModeVM: ExamModeViewModel(), isExamMode: deckViewModel.deck.isExamMode) { updatedFlashcards in
+        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards, isExamMode: deckViewModel.deck.isExamMode), examModeVM: ExamModeViewModel(isExamMode: deckViewModel.deck.isExamMode)) { updatedFlashcards in
             
             let sortedUpdatedFlashcards = updatedFlashcards.sorted {
                 $0.nextDate! < $1.nextDate!
