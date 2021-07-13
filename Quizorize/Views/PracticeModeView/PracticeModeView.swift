@@ -17,10 +17,10 @@ struct PracticeModeView: View {
     
     @State var isExamMode: Bool
     @State private var showingNotice: Bool = false
-
+    
     //To update DB
     var didFinishDeck: (_ updatedFlashcards: [Flashcard]) -> Void
-
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -87,8 +87,10 @@ struct FlashcardListView: View {
     
     @Namespace private var animation
     
-    @State private var distanceTravelled: CGFloat = 0
+    //@State private var cardsMovedBacK: [String: Bool] = [String: Bool]()
     @Binding var showingNotice: Bool
+    
+    @GestureState private var isDragging = false
 
     var body: some View {
         VStack {
@@ -97,104 +99,116 @@ struct FlashcardListView: View {
                 if practiceModeViewModel.counter != practiceModeViewModel.count  {
                     ForEach(practiceModeViewModel.practiceFlashcards) { flashcardVM in
                         let flashcard = flashcardVM.flashcard
-                        FlashcardView(flashcardViewModel: flashcardVM,
-                                      practiceModeViewModel: practiceModeViewModel,
-                                      uuid: flashcardVM.id)
-                            .showIndicators(translation: self.distanceTravelled)
-                            .zIndex(self.practiceModeViewModel.zIndex(of: flashcard))
-                            .offset(x: self.offset(for: flashcard).width, y: self.offset(for: flashcard).height)
-                            .offset(y: self.practiceModeViewModel.deckOffset(of: flashcard))
-                            .scaleEffect(x: self.practiceModeViewModel.scale(of: flashcard), y: self.practiceModeViewModel.scale(of: flashcard))
-                            .rotationEffect(self.rotation(for: flashcard))
-                            .gesture(
-                                DragGesture()
-                                    .onChanged({ drag in
-                                        
-                                        if self.practiceModeViewModel.activeCard == nil {
-                                            self.practiceModeViewModel.activeCard = flashcard
-                                        }
-                                        guard flashcard == self.practiceModeViewModel.activeCard else { return }
-                                        
-                                        withAnimation() {
-                                            self.practiceModeViewModel.topCardOffset = drag.translation
-                                            
-                                            self.distanceTravelled = drag.translation.width
-                                            
-                                            /*
-                                             if drag.translation.width > 50 && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id) {
-                                             practiceModeViewModel.togglePass(of: flashcard.id)
-                                             } else if drag.translation.width < -50 && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id) {
-                                             practiceModeViewModel.toggleFail(of: flashcard.id)
-                                             } else {
-                                             practiceModeViewModel.toggleNil(of: flashcard.id)
-                                             }
-                                             */
-                                            /*
-                                             let cardMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.translation.width > dragThreshold
-                                             || drag.predictedEndTranslation.width > dragThreshold
-                                             || drag.predictedEndTranslation.width < (-1 * dragThreshold)
-                                             
-                                             if (cardMovesBack) {
-                                             //drag.translation.height < -300 || drag.translation.height > 30) {
-                                             }
-                                             else {
-                                             }
-                                             */
-                                        }
-                                    })
-                                    .onEnded({ drag in
-                                        let dragThreshold: CGFloat = 250
-                                        //drag.predictedEndTranslation predicts the width based on how fast the user drags
-                                        let cardMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.translation.width > dragThreshold || drag.predictedEndTranslation.width > dragThreshold || drag.predictedEndTranslation.width < (-1 * dragThreshold)
-                                        
-                                        let cardFailedMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.predictedEndTranslation.width < (-1 * dragThreshold)
-                                        
-                                        let cardPassedMovesBack = drag.translation.width > dragThreshold || drag.predictedEndTranslation.width > dragThreshold
-                                        
-                                        let allRequirementsMet = cardMovesBack && (practiceModeViewModel.counter < practiceModeViewModel.count) && practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id)
-                                        
-                                        let didNotFlip = practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id) == false
-                                        
-                                        
-                                        withAnimation(.spring()) {
-                                            self.practiceModeViewModel.activeCard = nil
-                                            self.practiceModeViewModel.topCardOffset = .zero
-                                            if allRequirementsMet {
-                                                self.practiceModeViewModel.counter += 1
-                                                self.practiceModeViewModel.moveToBack(flashcard)
-                                                if cardFailedMovesBack {
-                                                    self.examModeVM?.addAndUpdateFailed(flashcard)
-                                                } else {
-                                                    self.examModeVM?.addAndUpdatePassed(flashcard)
-                                                }
-                                            } else if didNotFlip {
-                                                self.practiceModeViewModel.moveToFront(flashcard)
-                                                self.showingNotice = true
-                                            } else {
-                                                self.practiceModeViewModel.moveToFront(flashcard)
+                       
+                        if examModeVM?.checkIfFlashcardIsDue(flashcard) ?? true {
+                            FlashcardView(flashcardViewModel: flashcardVM,
+                                          practiceModeViewModel: practiceModeViewModel,
+                                          uuid: flashcardVM.id)
+                                .showIndicators(translation: self.examModeVM?.distancesTravelled[flashcardVM.id] ?? 0, isFlipped: practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id), isDragging: self.isDragging)
+                                .zIndex(self.practiceModeViewModel.zIndex(of: flashcard))
+                                .offset(x: self.offset(for: flashcard).width, y: self.offset(for: flashcard).height)
+                                .offset(y: self.practiceModeViewModel.deckOffset(of: flashcard))
+                                .scaleEffect(x: self.practiceModeViewModel.scale(of: flashcard), y: self.practiceModeViewModel.scale(of: flashcard))
+                                .rotationEffect(self.rotation(for: flashcard))
+                                .gesture(
+                                    DragGesture()
+                                        .onChanged({ drag in
+                                            let didNotFlip = practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id) == false
+
+                                            if self.practiceModeViewModel.activeCard == nil {
+                                                self.practiceModeViewModel.activeCard = flashcard
                                             }
+                                            guard flashcard == self.practiceModeViewModel.activeCard else { return }
+                                            
+                                            withAnimation(.default) {
+                                                self.practiceModeViewModel.topCardOffset = drag.translation
+                                                
+                                                if !didNotFlip {
+                                                    self.examModeVM?.setTranslationWidthOf(id: flashcardVM.id, width: drag.translation.width)
+                                                }
+
+                                                /*
+                                                 if drag.translation.width > 50 && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id) {
+                                                 practiceModeViewModel.togglePass(of: flashcard.id)
+                                                 } else if drag.translation.width < -50 && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id) {
+                                                 practiceModeViewModel.toggleFail(of: flashcard.id)
+                                                 } else {
+                                                 practiceModeViewModel.toggleNil(of: flashcard.id)
+                                                 }
+                                                 */
+                                                /*
+                                                 let cardMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.translation.width > dragThreshold
+                                                 || drag.predictedEndTranslation.width > dragThreshold
+                                                 || drag.predictedEndTranslation.width < (-1 * dragThreshold)
+                                                 
+                                                 if (cardMovesBack) {
+                                                 //drag.translation.height < -300 || drag.translation.height > 30) {
+                                                 }
+                                                 else {
+                                                 }
+                                                 */
+                                            }
+                                        })
+                                        .updating($isDragging) { drag, state, trans in
+                                            state = true
+                                            print(self.isDragging)
                                         }
-                                    })
-                                
-                            )
+                                        .onEnded({ drag in
+                                            let dragThreshold: CGFloat = 250
+                                            //drag.predictedEndTranslation predicts the width based on how fast the user drags
+                                            let cardMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.translation.width > dragThreshold || drag.predictedEndTranslation.width > dragThreshold || drag.predictedEndTranslation.width < (-1 * dragThreshold)
+                                            
+                                            let cardFailedMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.predictedEndTranslation.width < (-1 * dragThreshold)
+                                            
+                                            //let cardPassedMovesBack = drag.translation.width > dragThreshold || drag.predictedEndTranslation.width > dragThreshold
+                                            
+                                            let allRequirementsMet = cardMovesBack && (practiceModeViewModel.counter < practiceModeViewModel.count) && practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id)
+                                            
+                                            let didNotFlip = practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id) == false
+                                            
+                                            
+                                            withAnimation(.default) {
+                                                self.practiceModeViewModel.activeCard = nil
+                                                self.practiceModeViewModel.topCardOffset = .zero
+                                                if allRequirementsMet {
+                                                    self.practiceModeViewModel.counter += 1
+                                                    self.practiceModeViewModel.moveToBack(flashcard)
+                                                    if cardFailedMovesBack {
+                                                        self.examModeVM?.addAndUpdateFailed(flashcard)
+                                                    } else {
+                                                        self.examModeVM?.addAndUpdatePassed(flashcard)
+                                                    }
+                                                } else if didNotFlip {
+                                                    self.practiceModeViewModel.moveToFront(flashcard)
+                                                    self.showingNotice = true
+                                                } else {
+                                                    self.examModeVM?.setTranslationWidthOf(id: flashcardVM.id, width: 0)
+                                                    self.practiceModeViewModel.moveToFront(flashcard)
+                                                }
+                                            }
+                                        })
+                                )
+                        }
                     }
                 } else {
                     VStack {
                         /*
-                        */
+                         */
                         if let _ = self.examModeVM {
-                            Text("Congratulations!")
-                                .font(.title2.bold())
+                            VStack {
+                                Text("Congratulations!")
+                                    .font(.title2.bold())
+                                    .padding()
+                                Text("You have finished your deck for today")
+                                Text("To memorize the cards in this deck better, come back on:")
+                                
+                                Text(self.examModeVM!.nextDate())
+                                    .bold()
+                                Button("Reset") {
+                                    resetCards()
+                                }
                                 .padding()
-                            Text("You have finished your deck for today")
-                            Text("To memorize the cards in this deck better, come back on:")
-                            
-                            Text(self.examModeVM!.nextDate())
-                                .bold()
-                            Button("Reset") {
-                                resetCards()
                             }
-                            .padding()
                         } else {
                             Text("You're done!")
                                 .padding()
@@ -206,6 +220,7 @@ struct FlashcardListView: View {
                         }
                     }
                     .font(.body)
+                    .frame(width: 300, height: 400, alignment: .center)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
                             .foregroundColor(Color.white)
@@ -239,6 +254,7 @@ struct FlashcardListView: View {
             practiceModeViewModel.flipStatuses.mapValues { values in
                 return false
             }
+        examModeVM?.reset()
     }
     
     func offset(for flashcard: Flashcard) -> CGSize {
@@ -373,6 +389,7 @@ struct BlurView: UIViewRepresentable {
 struct ShowHelp: View {
     @Binding var showingNotice: Bool
     
+    
     var body: some View {
         VStack (alignment: .center, spacing: 8) {
             Text("Tap to flip before swiping!")
@@ -391,6 +408,10 @@ struct ShowHelp: View {
 //MARK: Fading indicator
 struct ShowIndicator: AnimatableModifier {
     var translation: CGFloat
+    var isDragging: Bool
+    var isFlipped: Bool
+    
+    //var cardIsMovedBack: Bool
     
     var animatableData: CGFloat {
         get { translation }
@@ -399,23 +420,32 @@ struct ShowIndicator: AnimatableModifier {
     
     func body(content: Content) -> some View {
         ZStack {
-            if translation < 0 {
+            content
+            if (translation < 0 && isFlipped /*&& isDragging*/) /*|| cardIsMovedBack*/ {
                 Text("I have to work on this... 🥲")
                     .font(.body.bold())
+                    .padding()
+                    .frame(width: 300, height: 50)
                     .background(DrawingConstants.failColor)
                     .cornerRadius(DrawingConstants.cornerRadius, corners: [.topRight, .topLeft])
-                    .opacity(translation <= -200 ? 1 : 0)
-                    .offset(y: 150)
+                    .opacity(translation <= -30 ? 1 : 0)
+                    .offset(y: -175)
+                    .animation(.easeInOut)
             }
-            if translation > 0 {
+            else if (translation > 0 && isFlipped /*&& isDragging*/) /*|| cardIsMovedBack*/  {
                 Text("Got it! 😋")
                     .font(.body.bold())
+                    .padding()
+                    .frame(width: 300, height: 50)
                     .background(DrawingConstants.passColor)
                     .cornerRadius(DrawingConstants.cornerRadius, corners: [.topRight, .topLeft])
-                    .opacity(translation >= 200 ? 1 : 0)
-                    .offset(y: 150)
+                    .opacity(translation >= 30 ? 1 : 0)
+                    .offset(y: -175)
+                    .animation(.easeInOut)
             }
-            content
+            else {
+                
+            }
         }
     }
     
@@ -428,8 +458,20 @@ struct ShowIndicator: AnimatableModifier {
 }
 
 extension View {
-    func showIndicators(translation: CGFloat) -> some View {
-        self.modifier(ShowIndicator(translation: translation))
+    func showIndicators(translation: CGFloat, isFlipped: Bool, isDragging: Bool/*, cardIsMovedBack: Bool*/) -> some View {
+        self.modifier(ShowIndicator(translation: translation, isDragging: isDragging, isFlipped: isFlipped/*, cardIsMovedBack: cardIsMovedBack*/))
+    }
+}
+
+//MARK: Helps to break animating subviews
+struct HelperView<Content: View>: UIViewRepresentable {
+    let content: () -> Content
+    func makeUIView(context: Context) -> UIView {
+        let controller = UIHostingController(rootView: content())
+        return controller.view
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) {
     }
 }
 

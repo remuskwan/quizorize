@@ -6,18 +6,31 @@
 //
 
 import Foundation
+import SwiftUI
 
 class ExamModeViewModel: ObservableObject {
+    
+    //Do an init and pass existing flashcards to filter out which ones should be tested.
+    //Only pass in flashcards to this ViewModel whereby Date().timeIntervalSince1970 - flashcard.nextDate <= 0
+    
     
     init() {
         self.updatedFlashcards = []
         self.flashcardGrader = FlashcardGrader()
     }
     
-    private var updatedFlashcards: [Flashcard]
+    private(set) var distancesTravelled: [String: CGFloat] = [String: CGFloat]()
+    private var updatedFlashcards: [Flashcard] //Should only have flashcards that are updated
     private var flashcardGrader: FlashcardGrader
     
+    private var correctCount: Double = 0
+
     //MARK: Intent(s)
+    //Set the translation width of a flashcard
+    func setTranslationWidthOf(id: String, width: CGFloat) {
+        self.distancesTravelled[id] = width
+    }
+    
     func addAndUpdateFailed(_ currentFlashcard: Flashcard) {
         let updatedFlashcard = self.flashcardGrader.gradeFlashcard(flashcard: currentFlashcard, grade: ExamModeViewModel.Grade.fail, currentDateTime: Date().timeIntervalSince1970)
         
@@ -28,17 +41,34 @@ class ExamModeViewModel: ObservableObject {
         let updatedFlashcard = self.flashcardGrader.gradeFlashcard(flashcard: currentFlashcard, grade: ExamModeViewModel.Grade.pass, currentDateTime: Date().timeIntervalSince1970)
         
         self.updatedFlashcards.append(updatedFlashcard)
+        self.correctCount += 1
+    }
+    
+    func getPercentageScore() -> Double {
+        correctCount / Double(updatedFlashcards.count)
+    }
+    
+    private func getSortedFlashcards() -> [Flashcard] {
+        updatedFlashcards.sorted {
+            $0.nextDate! < $1.nextDate!
+        }
     }
     
     //Helper for Date in String
     private func getEarliestNextDate() -> Date {
-        let sortedUpdatedFlashcards: [Flashcard] = updatedFlashcards.sorted {
-            $0.nextDate! < $1.nextDate!
-        }
+        let sortedUpdatedFlashcards: [Flashcard] = self.getSortedFlashcards()
         
-        let earliestDate = sortedUpdatedFlashcards.first!.nextDate!
+        let earliestDate = sortedUpdatedFlashcards.first!.nextDate ?? 0
         
         return Date(timeIntervalSince1970: earliestDate)
+    }
+    
+    private func getDateOfCompletion() -> Date {
+        let sortedUpdatedFlashcards: [Flashcard] = self.getSortedFlashcards()
+        
+        let dateOfCompletion = sortedUpdatedFlashcards.last!.previousDate ?? 0
+        
+        return Date(timeIntervalSince1970: dateOfCompletion)
     }
     
     func nextDate() -> String {
@@ -46,6 +76,35 @@ class ExamModeViewModel: ObservableObject {
         
         return nextDate
     }
+    
+    func dateOfCompletion() -> String {
+        let dateOfCompletion = DateFormatter().string(from: getDateOfCompletion())
+        
+        return dateOfCompletion
+    }
+    
+    func reset() {
+        self.updatedFlashcards = []
+        self.correctCount = 0
+        self.distancesTravelled = [String: CGFloat]()
+    }
+    
+    //MARK: Changes (to UI)
+    func intervalIsZero() -> Bool {
+        let totalSecondsInADay: Double = 86400
+        let intervalZeroFlashcards = updatedFlashcards.filter { flashcard in
+            (flashcard.nextDate ?? 0) - (flashcard.previousDate ?? 0) < totalSecondsInADay
+        }
+        
+        return !intervalZeroFlashcards.isEmpty
+    }
+    
+    func checkIfFlashcardIsDue(_ flashcard: Flashcard) -> Bool {
+        //if nextDate does not exist it means that it has yet to start the algo hence it should return true
+        flashcard.nextDate ?? 0 <= Date().timeIntervalSince1970
+    }
+    
+
     
 
 
@@ -69,7 +128,7 @@ class ExamModeViewModel: ObservableObject {
             //Shouldnt be needed but I will add it just in case
             if let _ = flashcard.nextDate {
             } else {
-                newFlashcard.nextDate = flashcard.dateAdded.timeIntervalSince1970
+                newFlashcard.nextDate = Date().timeIntervalSince1970
             }
             
 
