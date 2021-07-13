@@ -18,7 +18,6 @@ class PracticeModeViewModel: ObservableObject {
     @Published var swipeRight = 0
     
     //MARK: SR Algo
-    private var isExamMode: Bool
     @Published var flipStatuses: [String: Bool]
 
     
@@ -26,11 +25,10 @@ class PracticeModeViewModel: ObservableObject {
         return practiceFlashcards.count
     }
     
-    init(_ practiceFlashcards: [FlashcardViewModel], isExamMode: Bool) {
+    init(_ practiceFlashcards: [FlashcardViewModel]) {
         self.practiceFlashcards = practiceFlashcards
         self.counter = 0
-        self.isExamMode = isExamMode
-        
+
         self.flipStatuses = [String: Bool]()
         
         //Keep track of flip statuses of flashcards

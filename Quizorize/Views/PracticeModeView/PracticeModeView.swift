@@ -17,9 +17,10 @@ struct PracticeModeView: View {
     
     @State private var showingNotice: Bool = false
     @State private var progressValue = 0.0
+    @State var prevExamScore: Double
     
     //To update DB
-    @Binding var didFinishDeck: (_ updatedFlashcards: [Flashcard]) -> Void
+    var didFinishDeck: (_ updatedFlashcards: [Flashcard], _ score: Double) -> Void
     
     var body: some View {
         GeometryReader { geometry in
@@ -27,6 +28,8 @@ struct PracticeModeView: View {
                 VStack {
                     HStack {
                         Button {
+                            didFinishDeck(examModeVM.getUpdatedFlashcards(), self.examModeVM.getPercentageScore(prevExamScore: self.prevExamScore))
+                            resetCards()
                             presentationMode.wrappedValue.dismiss()
                         } label: {
                             Image(systemName: "multiply")
@@ -34,7 +37,7 @@ struct PracticeModeView: View {
                         .frame(width: 24, height: 24)
                         .padding()
                         Spacer()
-                        Text("\(practiceModeViewModel.counter) / \(practiceModeViewModel.count)")
+                        Text("\(practiceModeViewModel.counter) / \((examModeVM.isExamMode && examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards)) ? examModeVM.cardsDue : practiceModeViewModel.count)")
                         Spacer()
                         //                        Button(action: {
                         //                            showOptionsSheet.toggle()
@@ -49,11 +52,14 @@ struct PracticeModeView: View {
                             .padding()
                     }
                     
-                    if practiceModeViewModel.counter != practiceModeViewModel.count {
+                    //if (isExamMode + areAnycardsDue+ counter != count) OR (isNotExamMode && counter != count)
+                    if (examModeVM.isExamMode && examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards) && practiceModeViewModel.counter != examModeVM.cardsDue)
+                        ||
+                        (!examModeVM.isExamMode && practiceModeViewModel.counter != practiceModeViewModel.count) {
                         ProgressView(value: Double(practiceModeViewModel.counter), total: Double(practiceModeViewModel.count))
                             .frame(width: geometry.size.width * 0.7, alignment: .center)
                         
-                        if examModeVM.isExamMode {
+                        if (examModeVM.isExamMode && examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards)) {
                             FlashcardListView(practiceModeViewModel: practiceModeViewModel, examModeVM: self.examModeVM, showingNotice: $showingNotice)
                         } else {
                             FlashcardListView(practiceModeViewModel: practiceModeViewModel, showingNotice: $showingNotice)
@@ -61,6 +67,13 @@ struct PracticeModeView: View {
                     } else {
                         //Put Exam Summary here.
                         summaryView
+                            /*
+                            .onAppear {
+                                if examModeVM.isExamMode {
+                                    didFinishDeck(examModeVM.getUpdatedFlashcards(), examModeVM.getPercentageScore())
+                                }
+                            }
+                            */
                     }
                 }
                 //                OptionsSheet(showingOptionsSheet: $showOptionsSheet, dismissOptionsSheet: $dismissOptionsSheet, height: geometry.size.height * 0.8) {
@@ -79,72 +92,82 @@ struct PracticeModeView: View {
     
     var summaryView: some View {
         //Took most of this from TestModeSummary
-         ZStack {
+        ZStack {
             if examModeVM.isExamMode {
-                 GeometryReader { geometry in
-                     VStack {
-                         Spacer()
-                         SummaryProgressBar(progress: $progressValue)
-                             .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.4)
-                             .padding()
-                             .onAppear {
-                                 self.progressValue = self.examModeVM.getPercentageScore()
-                             }
-                         
-                         Text("Date of Completion: \(examModeVM.dateOfCompletion())")
-                             .padding()
-                         
-                         Text("Next Study Date: \(examModeVM.nextDate())")
-                             .padding()
+                GeometryReader { geometry in
+                    VStack {
+                        Spacer()
+                        Text("Previous Exam Mode Score")
+                            .font(.title.bold())
                         
-                         if examModeVM.isExamMode {
-                            Text("Looks like you need to study now 🤓")
-                             Button(action: {
-                                 resetCards()
-                             }, label: {
-                                 Text("Study Again Now")
-                                     .font(.headline)
-                                     .frame(width: geometry.size.width * 0.8, height: 32)
-                             })
-                         } else {
-                             Button {
-                                 resetCards()
-                                 examModeVM.turnOffExamMode()
-                             } label: {
-                                 Text("I still want to practice now")
-                                     .font(.headline)
-                                     .frame(width: geometry.size.width * 0.8, height: 32)
-                             }
-                             .padding()
-                             
-                             Text("(This will NOT affect your next study date)")
-                                 .padding()
-                         }
-                         Spacer()
-                     }
-                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                 }
-             } else {
-                 GeometryReader { geometry in
-                     VStack {
-                         Text("Congraluations")
-                             .font(.title2.bold())
-                         
-                         Text("You're done!")
-                             .font(.body)
-                             .padding()
-                         
-                         Button("Reset") {
-                             resetCards()
-                         }
-                         .padding()
-                     }
-                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                 }
-                 
-             }
-             
-         }
+                        SummaryProgressBar(progress: $progressValue)
+                            .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.4)
+                            .padding()
+                            .onAppear {
+                                self.progressValue = self.examModeVM.getPercentageScore(prevExamScore: self.prevExamScore)
+                            }
+                        
+                        Text("Date of Completion: \(examModeVM.dateOfCompletion(of: practiceModeViewModel.practiceFlashcards))")
+                            .padding()
+                        
+                        Text("Next Study Date: \(examModeVM.nextDate(of: practiceModeViewModel.practiceFlashcards))")
+                            .padding()
+                        
+                        if examModeVM.intervalIsZero() {
+                            Text("Looks like you need to study more 🤓")
+                                .padding()
+                            
+                            Button(action: {
+                                didFinishDeck(examModeVM.getUpdatedFlashcards(), self.examModeVM.getPercentageScore(prevExamScore: self.prevExamScore))
+                                resetCards()
+                            }, label: {
+                                Text("Study Again Now")
+                                    .font(.headline)
+                                    .frame(width: geometry.size.width * 0.8, height: 32)
+                            })
+                        }
+                        /*
+                        else {
+                            Button {
+                                didFinishDeck(examModeVM.getUpdatedFlashcards(), self.examModeVM.getPercentageScore(prevExamScore: self.prevExamScore))
+                                examModeVM.turnOffExamMode()
+                                resetCards()
+                                print(examModeVM.isExamMode)
+                            } label: {
+                                Text("I still want to practice now")
+                                    .font(.headline)
+                                    .frame(width: geometry.size.width * 0.8, height: 32)
+                            }
+
+                            Text("(This will NOT affect your next study date)")
+                                .padding()
+                        }
+                        */
+                        Spacer()
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                }
+            } else {
+                GeometryReader { geometry in
+                    VStack {
+                        Text("Congraluations")
+                            .font(.title2.bold())
+                        
+                        Text("You're done!")
+                            .font(.body)
+                            .padding()
+                        
+                        Button("Reset") {
+                            resetCards()
+                        }
+                        .padding()
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                }
+                
+            }
+            
+        }
         
     }
     
@@ -155,7 +178,7 @@ struct PracticeModeView: View {
             practiceModeViewModel.flipStatuses.mapValues { values in
                 return false
             }
-        examModeVM?.reset()
+        examModeVM.reset()
     }
     
 }
@@ -177,161 +200,165 @@ struct FlashcardListView: View {
     @Binding var showingNotice: Bool
     
     @GestureState private var isDragging = false
-
+    
     var body: some View {
         VStack {
             Spacer()
             ZStack {
-                if practiceModeViewModel.counter != practiceModeViewModel.count  {
-                    ForEach(practiceModeViewModel.practiceFlashcards) { flashcardVM in
-                        let flashcard = flashcardVM.flashcard
-                       
-                        if examModeVM?.checkIfFlashcardIsDue(flashcard) ?? true {
-                            FlashcardView(flashcardViewModel: flashcardVM,
-                                          practiceModeViewModel: practiceModeViewModel,
-                                          uuid: flashcardVM.id)
-                                .showIndicators(translation: self.examModeVM?.distancesTravelled[flashcardVM.id] ?? 0, isFlipped: practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id), isDragging: self.isDragging)
-                                .zIndex(self.practiceModeViewModel.zIndex(of: flashcard))
-                                .offset(x: self.offset(for: flashcard).width, y: self.offset(for: flashcard).height)
-                                .offset(y: self.practiceModeViewModel.deckOffset(of: flashcard))
-                                .scaleEffect(x: self.practiceModeViewModel.scale(of: flashcard), y: self.practiceModeViewModel.scale(of: flashcard))
-                                .rotationEffect(self.rotation(for: flashcard))
-                                .gesture(
-                                    DragGesture()
-                                        .onChanged({ drag in
-                                            let didNotFlip = practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id) == false
-
-                                            if self.practiceModeViewModel.activeCard == nil {
-                                                self.practiceModeViewModel.activeCard = flashcard
-                                            }
-                                            guard flashcard == self.practiceModeViewModel.activeCard else { return }
-                                            
-                                            withAnimation(.default) {
-                                                self.practiceModeViewModel.topCardOffset = drag.translation
-                                                
-                                                if !didNotFlip {
-                                                    self.examModeVM?.setTranslationWidthOf(id: flashcardVM.id, width: drag.translation.width)
-                                                }
-
-                                                /*
-                                                 if drag.translation.width > 50 && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id) {
-                                                 practiceModeViewModel.togglePass(of: flashcard.id)
-                                                 } else if drag.translation.width < -50 && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id) {
-                                                 practiceModeViewModel.toggleFail(of: flashcard.id)
-                                                 } else {
-                                                 practiceModeViewModel.toggleNil(of: flashcard.id)
-                                                 }
-                                                 */
-                                                /*
-                                                 let cardMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.translation.width > dragThreshold
-                                                 || drag.predictedEndTranslation.width > dragThreshold
-                                                 || drag.predictedEndTranslation.width < (-1 * dragThreshold)
-                                                 
-                                                 if (cardMovesBack) {
-                                                 //drag.translation.height < -300 || drag.translation.height > 30) {
-                                                 }
-                                                 else {
-                                                 }
-                                                 */
-                                            }
-                                        })
-                                        .updating($isDragging) { drag, state, trans in
-                                            state = true
-                                            print(self.isDragging)
+                //if practiceModeViewModel.counter != practiceModeViewModel.count  {
+                ForEach(practiceModeViewModel.practiceFlashcards) { flashcardVM in
+                    let flashcard = flashcardVM.flashcard
+                    
+                    if examModeVM?.checkIfFlashcardIsDue(flashcard) ?? true {
+                        FlashcardView(flashcardViewModel: flashcardVM,
+                                      practiceModeViewModel: practiceModeViewModel,
+                                      uuid: flashcardVM.id)
+                            .showIndicators(translation: self.examModeVM?.distancesTravelled[flashcardVM.id] ?? 0, isFlipped: practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id), isDragging: self.isDragging)
+                            .zIndex(self.practiceModeViewModel.zIndex(of: flashcard))
+                            .offset(x: self.offset(for: flashcard).width, y: self.offset(for: flashcard).height)
+                            .offset(y: self.practiceModeViewModel.deckOffset(of: flashcard))
+                            .scaleEffect(x: self.practiceModeViewModel.scale(of: flashcard), y: self.practiceModeViewModel.scale(of: flashcard))
+                            .rotationEffect(self.rotation(for: flashcard))
+                            .gesture(
+                                DragGesture()
+                                    .onChanged({ drag in
+                                        let didNotFlip = practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id) == false
+                                        
+                                        if self.practiceModeViewModel.activeCard == nil {
+                                            self.practiceModeViewModel.activeCard = flashcard
                                         }
-                                        .onEnded({ drag in
-                                            let dragThreshold: CGFloat = 250
-                                            //drag.predictedEndTranslation predicts the width based on how fast the user drags
-                                            let cardMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.translation.width > dragThreshold || drag.predictedEndTranslation.width > dragThreshold || drag.predictedEndTranslation.width < (-1 * dragThreshold)
+                                        guard flashcard == self.practiceModeViewModel.activeCard else { return }
+                                        
+                                        withAnimation(.default) {
+                                            self.practiceModeViewModel.topCardOffset = drag.translation
                                             
-                                            let cardFailedMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.predictedEndTranslation.width < (-1 * dragThreshold)
-                                            
-                                            //let cardPassedMovesBack = drag.translation.width > dragThreshold || drag.predictedEndTranslation.width > dragThreshold
-                                            
-                                            let allRequirementsMet = cardMovesBack && (practiceModeViewModel.counter < practiceModeViewModel.count) && practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id)
-                                            
-                                            let didNotFlip = practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id) == false
-                                            
-                                            
-                                            withAnimation(.default) {
-                                                self.practiceModeViewModel.activeCard = nil
-                                                self.practiceModeViewModel.topCardOffset = .zero
-                                                if allRequirementsMet {
-                                                    self.practiceModeViewModel.counter += 1
-                                                    self.practiceModeViewModel.moveToBack(flashcard)
-                                                    if cardFailedMovesBack {
-                                                        self.examModeVM?.addAndUpdateFailed(flashcard)
-                                                    } else {
-                                                        self.examModeVM?.addAndUpdatePassed(flashcard)
-                                                    }
-                                                } else if didNotFlip {
-                                                    self.practiceModeViewModel.moveToFront(flashcard)
-                                                    self.showingNotice = true
-                                                } else {
-                                                    self.examModeVM?.setTranslationWidthOf(id: flashcardVM.id, width: 0)
-                                                    self.practiceModeViewModel.moveToFront(flashcard)
-                                                }
+                                            if !didNotFlip {
+                                                self.examModeVM?.setTranslationWidthOf(id: flashcardVM.id, width: drag.translation.width)
                                             }
-                                        })
-                                )
-                        }
+                                            
+                                            /*
+                                             if drag.translation.width > 50 && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id) {
+                                             practiceModeViewModel.togglePass(of: flashcard.id)
+                                             } else if drag.translation.width < -50 && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id) {
+                                             practiceModeViewModel.toggleFail(of: flashcard.id)
+                                             } else {
+                                             practiceModeViewModel.toggleNil(of: flashcard.id)
+                                             }
+                                             */
+                                            /*
+                                             let cardMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.translation.width > dragThreshold
+                                             || drag.predictedEndTranslation.width > dragThreshold
+                                             || drag.predictedEndTranslation.width < (-1 * dragThreshold)
+                                             
+                                             if (cardMovesBack) {
+                                             //drag.translation.height < -300 || drag.translation.height > 30) {
+                                             }
+                                             else {
+                                             }
+                                             */
+                                        }
+                                    })
+                                    .updating($isDragging) { drag, state, trans in
+                                        state = true
+                                        print(self.isDragging)
+                                    }
+                                    .onEnded({ drag in
+                                        let dragThreshold: CGFloat = 250
+                                        //drag.predictedEndTranslation predicts the width based on how fast the user drags
+                                        let cardMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.translation.width > dragThreshold || drag.predictedEndTranslation.width > dragThreshold || drag.predictedEndTranslation.width < (-1 * dragThreshold)
+                                        
+                                        let cardFailedMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.predictedEndTranslation.width < (-1 * dragThreshold)
+                                        
+                                        //let cardPassedMovesBack = drag.translation.width > dragThreshold || drag.predictedEndTranslation.width > dragThreshold
+                                        
+                                        let allRequirementsMet = cardMovesBack && (practiceModeViewModel.counter < practiceModeViewModel.count) && practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id)
+                                        
+                                        let didNotFlip = practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id) == false
+                                        
+                                        
+                                        withAnimation(.default) {
+                                            self.practiceModeViewModel.activeCard = nil
+                                            self.practiceModeViewModel.topCardOffset = .zero
+                                            if allRequirementsMet {
+                                                self.practiceModeViewModel.counter += 1
+                                                self.practiceModeViewModel.moveToBack(flashcard)
+                                                if cardFailedMovesBack {
+                                                    self.examModeVM?.addAndUpdateFailed(flashcard)
+                                                } else {
+                                                    self.examModeVM?.addAndUpdatePassed(flashcard)
+                                                }
+                                            } else if didNotFlip {
+                                                self.practiceModeViewModel.moveToFront(flashcard)
+                                                self.showingNotice = true
+                                            } else {
+                                                self.examModeVM?.setTranslationWidthOf(id: flashcardVM.id, width: 0)
+                                                self.practiceModeViewModel.moveToFront(flashcard)
+                                            }
+                                        }
+                                    })
+                            )
                     }
-                } else {
-                    VStack {
-                        /*
-                         */
-                        if let _ = self.examModeVM {
-                            VStack {
-                                Text("Congratulations!")
-                                    .font(.title2.bold())
-                                    .padding()
-                                Text("You have finished your deck for today")
-                                Text("To memorize the cards in this deck better, come back on:")
-                                
-                                Text(self.examModeVM!.nextDate())
-                                    .bold()
-                                Button("Reset") {
-                                    resetCards()
-                                }
-                                .padding()
-                            }
-                        } else {
-                            Text("Congraluations")
-                                .font(.title2.bold())
-                            
-                            Text("You're done!")
-                                .padding()
-                            Button("Reset") {
-                                resetCards()
-                            }
-                            .padding()
-                            
-                        }
-                    }
-                    .font(.body)
-                    .frame(width: 300, height: 400, alignment: .center)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .foregroundColor(Color.white)
-                            .shadow(radius: 2)
-                            .frame(width: 300, height: 400)
-                    )
                 }
+                /*
+                 } else {
+                 VStack {
+                 /*
+                 */
+                 if let _ = self.examModeVM {
+                 VStack {
+                 Text("Congratulations!")
+                 .font(.title2.bold())
+                 .padding()
+                 Text("You have finished your deck for today")
+                 Text("To memorize the cards in this deck better, come back on:")
+                 
+                 Text(self.examModeVM!.nextDate())
+                 .bold()
+                 Button("Reset") {
+                 resetCards()
+                 }
+                 .padding()
+                 }
+                 } else {
+                 Text("Congraluations")
+                 .font(.title2.bold())
+                 
+                 Text("You're done!")
+                 .padding()
+                 Button("Reset") {
+                 resetCards()
+                 }
+                 .padding()
+                 
+                 }
+                 }
+                 .font(.body)
+                 .frame(width: 300, height: 400, alignment: .center)
+                 .background(
+                 RoundedRectangle(cornerRadius: 10)
+                 .foregroundColor(Color.white)
+                 .shadow(radius: 2)
+                 .frame(width: 300, height: 400)
+                 )
+                 }
+                 */
             }
             Spacer()
             
-            Button(action: {
-                withAnimation(.spring()) {
-                    resetCards()
-                }
-            }, label: {
-                Label(
-                    title: { Text("Shuffle") },
-                    icon: { Image(systemName: "shuffle") }
-                )
-            })
-            .padding()
-            
+            if !(examModeVM?.isExamMode ?? false) {
+                Button(action: {
+                    withAnimation(.spring()) {
+                        resetCards()
+                    }
+                }, label: {
+                    Label(
+                        title: { Text("Shuffle") },
+                        icon: { Image(systemName: "shuffle") }
+                    )
+                })
+                .padding()
+            }
+
         }
         
     }

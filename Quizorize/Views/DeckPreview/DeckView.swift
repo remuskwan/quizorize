@@ -24,6 +24,8 @@ struct DeckView: View {
     
     //Temp, delete after
     @State private var toggle = false
+    
+    @State private var carouselLocation = 0
 
     var body: some View {
         GeometryReader { geoProxy in
@@ -37,7 +39,7 @@ struct DeckView: View {
                 .frame(height: geoProxy.size.height * 0.7)
                 */
                 
-                CarouselView(itemHeight: UIScreen.main.bounds.height * 0.30, flashcardListVM: flashcardListViewModel)
+                CarouselView(carouselLocation: self.$carouselLocation, itemHeight: UIScreen.main.bounds.height * 0.30, flashcardListVM: flashcardListViewModel)
 
                 Spacer()
                 
@@ -79,21 +81,52 @@ struct DeckView: View {
             })
             .sheet(isPresented: $showingEditDeck) {
                 DeckCreationView(deckListViewModel: self.deckListViewModel, deckVM: self.deckViewModel, flashcardListVM: self.flashcardListViewModel) { deck, flashcards in
-                    
+                   
                     //Add the new flashcards
-                    flashcards
+                    let newFlashcards = flashcards.filter { flashcard in
+                        let existingFlashcards = flashcardListViewModel
+                            .flashcardViewModels
+                            .map { flashcardVM in
+                                return flashcardVM.flashcard
+                            }
+                        
+                        return !existingFlashcards.contains(flashcard)
+                        /*
+                            flashcardListViewModel.flashcardViewModels
+                                .map { flashcardVM in
+                                    flashcardVM.flashcard
+                                }
+                                .contains(where: {$0.id != flashcard.id
+                                    && $0.dateAdded != flashcard.dateAdded
+                                    && $0.prompt != flashcard.prompt
+                                    && $0.answer != flashcard.answer
+                                })
+                        */
+                        }
+                    /*
+                        .forEach { flashcard in
+                            flashcardListViewModel.add(flashcard)
+                        }
+                    */
+                    
+                    print("\(newFlashcards.count) created")
+                    deckViewModel.addFlashcards(newFlashcards)
+                    
+                    //Edit the existing flashcards
+                    let editedFlashcards = flashcards
                         .filter { flashcard in
                             flashcardListViewModel.flashcardViewModels
                                 .map { flashcardVM in
                                     flashcardVM.flashcard
                                 }
-                                .contains(where: {$0 != flashcard})
-                        }
-                        .forEach { flashcard in
-                            flashcardListViewModel.add(flashcard)
+                                .contains(where: {$0.id == flashcard.id
+                                            && $0.dateAdded == flashcard.dateAdded
+                                            && ($0.prompt != flashcard.prompt || $0.answer != flashcard.answer)})
                         }
                     
-                    //Edit the existing flashcards
+                    print("\(editedFlashcards.count) updated")
+                    deckViewModel.updateFlashcards(editedFlashcards)
+                    /*
                     flashcards
                         .filter { flashcard in
                             flashcardListViewModel.flashcardViewModels
@@ -105,22 +138,27 @@ struct DeckView: View {
                         .forEach { flashcard in
                             flashcardListViewModel.update(flashcard)
                         }
+                    */
                     
                     //Remove flashcards
-                    flashcardListViewModel.flashcardViewModels
+                    let deletedFlashcards = flashcardListViewModel.flashcardViewModels
                         .map { flashcardVM in
                             flashcardVM.flashcard
                         }
                         .filter { currentFlashcard in
-                            flashcards
-                                .contains(where: {$0 != currentFlashcard})
+                            !flashcards
+                                .contains(currentFlashcard)
                         }
+                    
+                    print("\(deletedFlashcards.count) deleted")
+                    deckViewModel.deleteFlashcards(deletedFlashcards)
+                        /*
                         .forEach { deletedFlashcard in
                             flashcardListViewModel.remove(deletedFlashcard)
                         }
-                    
-                    print(flashcardListViewModel.flashcardViewModels.count)
-                    
+                       */
+                    self.carouselLocation = 0
+                    print("Carousel location is now\(carouselLocation)")
                 }
             }
 
@@ -232,13 +270,14 @@ struct DeckView: View {
         practiceFlashcards.map { flashcardVM in
             flashcardVM.flipped = false
         }
-        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards, isExamMode: deckViewModel.deck.isExamMode), examModeVM: ExamModeViewModel(isExamMode: deckViewModel.deck.isExamMode)) { updatedFlashcards in
+        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), examModeVM: ExamModeViewModel(isExamMode: deckViewModel.deck.isExamMode, flashcardVMs: practiceFlashcards), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, score in
             
             let sortedUpdatedFlashcards = updatedFlashcards.sorted {
                 $0.nextDate! < $1.nextDate!
             }
             
             self.deckViewModel.updateFlashcards(sortedUpdatedFlashcards)
+            self.deckViewModel.updatePrevExamScore(score)
         }
     }
     

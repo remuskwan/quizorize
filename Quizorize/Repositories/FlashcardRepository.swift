@@ -51,7 +51,7 @@ final class FlashcardRepository: ObservableObject {
                             if let err = err {
                                 print("Error updating Flashcard")
                             } else {
-                                print("Flashcard successfully updated")
+                                print("Flashcard successfully updatedd")
                             }
                         }
                         

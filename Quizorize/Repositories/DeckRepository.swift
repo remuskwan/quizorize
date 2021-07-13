@@ -39,7 +39,8 @@ class DeckRepository: ObservableObject {
                             return flashcard
                         } else {
                             document.reference.updateData([
-                                "isExamMode": false
+                                "isExamMode": false,
+                                "examModePrevScore": 0
                             ]) { err in
                                 if let err = err {
                                     print("Error updating Deck")
@@ -92,6 +93,40 @@ class DeckRepository: ObservableObject {
         }
     }
     
+    func addFlashcardData(_ deck: Deck, flashcards: [Flashcard]) {
+        guard let documentId = deck.id else { return }
+        do {
+            //Get new write batch
+            let batch = db.batch()
+            
+            // Set the reference to flashcards
+            let flashcardsRef = db.collection(self.primaryPath)
+                .document(self.uId)
+                .collection(self.subPath)
+                .document(documentId)
+                .collection(self.subPath2)
+            
+            for flashcard in flashcards {
+                let flashcardRef = flashcardsRef.document(flashcard.id!)
+                batch.setData([
+                    "prompt": flashcard.prompt,
+                    "answer": flashcard.answer,
+                    "dateAdded": flashcard.dateAdded,
+                    "repetition": flashcard.repetition,
+                    "interval": flashcard.interval,
+                    "easinessFactor": flashcard.easinessFactor,
+                    "previousDate": flashcard.previousDate,
+                    "nextDate": flashcard.nextDate
+                ]
+                , forDocument: flashcardRef)
+            }
+            
+            batch.commit()
+        } catch {
+            fatalError("Adding flashcards failed")
+        }
+    }
+
     func updateFlashcardsData(_ deck: Deck, flashcards: [Flashcard]) {
         guard let documentId = deck.id else { return }
         do {
@@ -121,7 +156,32 @@ class DeckRepository: ObservableObject {
             
             batch.commit()
         } catch {
-            fatalError("Updating deck failed")
+            fatalError("Updating flashcards failed")
+        }
+    }
+    
+    func deleteFlashcardsData(_ deck: Deck, flashcards: [Flashcard]) {
+        guard let documentId = deck.id else { return }
+        
+        do {
+            //Get new write batch
+            let batch = db.batch()
+            
+            // Set the reference to flashcards
+            let flashcardsRef = db.collection(self.primaryPath)
+                .document(self.uId)
+                .collection(self.subPath)
+                .document(documentId)
+                .collection(self.subPath2)
+            
+            for flashcard in flashcards {
+                let flashcardRef = flashcardsRef.document(flashcard.id!)
+                batch.deleteDocument(flashcardRef)
+            }
+            
+            batch.commit()
+        } catch {
+            fatalError("Updating flashcards failed")
         }
     }
 }

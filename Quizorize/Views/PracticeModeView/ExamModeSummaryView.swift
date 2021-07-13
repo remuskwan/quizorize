@@ -5,6 +5,7 @@
 //  Created by CHEN JUN HONG on 12/7/21.
 //
 
+/*
 import SwiftUI
 
 struct ExamModeSummaryView: View {
@@ -91,4 +92,5 @@ struct ExamModeSummaryView: View {
         examModeVM?.reset()
     }
 }
+ */
 
