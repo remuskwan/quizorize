@@ -24,6 +24,7 @@ struct QuizorizeApp: App {
 //                .environment(\.managedObjectContext, persistenceController.container.viewContext)
             LaunchView()
                 .environmentObject(AuthViewModel())
+                .environmentObject(ReminderViewModel())
         }
     }
 }
