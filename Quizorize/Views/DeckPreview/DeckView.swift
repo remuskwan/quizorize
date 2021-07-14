@@ -282,7 +282,7 @@ struct DeckView: View {
     }
     
     func testContent() -> some View {
-        TestModeView(testModeViewModel: testModeViewModel)
+        TestModeView(testModeViewModel: testModeViewModel, deckTitle: deckViewModel.deck.title)
     }
 }
 
