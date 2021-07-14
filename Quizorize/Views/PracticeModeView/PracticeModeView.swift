@@ -37,7 +37,7 @@ struct PracticeModeView: View {
                         .frame(width: 24, height: 24)
                         .padding()
                         Spacer()
-                        Text("\(practiceModeViewModel.counter) / \((examModeVM.isExamMode && examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards)) ? examModeVM.cardsDue : practiceModeViewModel.count)")
+                        Text("\(practiceModeViewModel.counter) / \(examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards) ? examModeVM.cardsDue : practiceModeViewModel.count)")
                         Spacer()
                         //                        Button(action: {
                         //                            showOptionsSheet.toggle()
@@ -126,8 +126,9 @@ struct PracticeModeView: View {
                                     .frame(width: geometry.size.width * 0.8, height: 32)
                             })
                         }
-                        /*
                         else {
+                            Color.clear
+                            /*
                             Button {
                                 didFinishDeck(examModeVM.getUpdatedFlashcards(), self.examModeVM.getPercentageScore(prevExamScore: self.prevExamScore))
                                 examModeVM.turnOffExamMode()
@@ -141,8 +142,9 @@ struct PracticeModeView: View {
 
                             Text("(This will NOT affect your next study date)")
                                 .padding()
+                            */
                         }
-                        */
+                        
                         Spacer()
                     }
                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
@@ -150,6 +152,8 @@ struct PracticeModeView: View {
             } else {
                 GeometryReader { geometry in
                     VStack {
+                        Spacer()
+                        
                         Text("Congraluations")
                             .font(.title2.bold())
                         
@@ -176,7 +180,6 @@ struct PracticeModeView: View {
         practiceModeViewModel.shuffle()
         practiceModeViewModel.flipStatuses =
             practiceModeViewModel.flipStatuses.mapValues { values in
-                return false
             }
         examModeVM.reset()
     }
