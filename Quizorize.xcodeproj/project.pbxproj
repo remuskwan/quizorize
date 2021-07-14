@@ -74,6 +74,7 @@
 		16AB3E61269245DD00B9DF86 /* TestModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AB3E60269245DD00B9DF86 /* TestModeViewModel.swift */; };
 		16AB3E632694B4ED00B9DF86 /* FirstResponderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AB3E622694B4ED00B9DF86 /* FirstResponderTextField.swift */; };
 		16AB3E652695FC7700B9DF86 /* TestModeSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AB3E642695FC7700B9DF86 /* TestModeSummaryView.swift */; };
+		16AB3E67269ED17100B9DF86 /* ReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AB3E66269ED17100B9DF86 /* ReminderViewModel.swift */; };
 		16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285EC2656EB020068AB95 /* QuizorizeApp.swift */; };
 		16C285EF2656EB020068AB95 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285EE2656EB020068AB95 /* ContentView.swift */; };
 		16C285F12656EB030068AB95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16C285F02656EB030068AB95 /* Assets.xcassets */; };
@@ -158,6 +159,7 @@
 		16AB3E60269245DD00B9DF86 /* TestModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestModeViewModel.swift; sourceTree = "<group>"; };
 		16AB3E622694B4ED00B9DF86 /* FirstResponderTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstResponderTextField.swift; sourceTree = "<group>"; };
 		16AB3E642695FC7700B9DF86 /* TestModeSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestModeSummaryView.swift; sourceTree = "<group>"; };
+		16AB3E66269ED17100B9DF86 /* ReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewModel.swift; sourceTree = "<group>"; };
 		16C285E92656EB020068AB95 /* Quizorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C285EC2656EB020068AB95 /* QuizorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeApp.swift; sourceTree = "<group>"; };
 		16C285EE2656EB020068AB95 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 				166783EA26827E93003C859B /* PracticeModeViewModel.swift */,
 				166783EC2685DD15003C859B /* ProfileViewModel.swift */,
 				16AB3E60269245DD00B9DF86 /* TestModeViewModel.swift */,
+				16AB3E66269ED17100B9DF86 /* ReminderViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -774,6 +777,7 @@
 				166B1E6A2663FED900D3922B /* SignInWithAppleFirebase.swift in Sources */,
 				166B1E8A2666575300D3922B /* Flashcard.swift in Sources */,
 				16279301265BFF7B0073718F /* LaunchView.swift in Sources */,
+				16AB3E67269ED17100B9DF86 /* ReminderViewModel.swift in Sources */,
 				16C285F62656EB030068AB95 /* Persistence.swift in Sources */,
 				16C285EF2656EB020068AB95 /* ContentView.swift in Sources */,
 				162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */,

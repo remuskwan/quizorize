@@ -9,12 +9,14 @@ import SwiftUI
 
 struct TestModeView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var reminderViewModel: ReminderViewModel
     @ObservedObject var testModeViewModel: TestModeViewModel
     
     @State private var showingTest = false
     @State private var showingEndTestAlert = false
     @State private var progressValue = 0.0
     
+    let deckTitle: String
     
     var body: some View {
         NavigationView {
@@ -85,17 +87,9 @@ struct TestModeView: View {
                                                 self.showingEndTestAlert.toggle()
                                             } else {
                                                 self.testModeViewModel.setNextReminderTime()
-                                                if testModeViewModel.nextReminderTime != 0 {
-                                                    let content = UNMutableNotificationContent()
-                                                    content.title = "Revise soon!"
-                                                    content.body = "Revise DeckName to make the most out of your Quizorize revision!"
-                                                    content.sound = UNNotificationSound.default
-                                                    
-                                                    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: testModeViewModel.nextReminderTime, repeats: false)
-                                                    
-                                                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-                                                    
-                                                    UNUserNotificationCenter.current().add(request)
+                                                let reminderTime = testModeViewModel.nextReminderTime
+                                                if reminderTime != 0 {
+                                                    reminderViewModel.sendReminderNotif(deckTitle: self.deckTitle, reminderTime: reminderTime)
                                                 }
                                                 self.testModeViewModel.reset()
                                                 presentationMode.wrappedValue.dismiss()
