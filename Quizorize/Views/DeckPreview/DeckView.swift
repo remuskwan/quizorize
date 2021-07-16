@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct DeckView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     @ObservedObject var deckListViewModel: DeckListViewModel
     @ObservedObject var deckViewModel: DeckViewModel
     @ObservedObject var flashcardListViewModel: FlashcardListViewModel
     @ObservedObject var testModeViewModel: TestModeViewModel
-    
+
     @State private var page = 0
     @State private var action: Int? = 0
     
@@ -26,18 +27,10 @@ struct DeckView: View {
     @State private var toggle = false
     
     @State private var carouselLocation = 0
-
+    
     var body: some View {
         GeometryReader { geoProxy in
             VStack(spacing: 0) {
-                
-                /*
-                GeometryReader { carouselGProxy in
-                    Carousel(width: UIScreen.main.bounds.width, page: $page, height: carouselGProxy.frame(in: .global).height, flashcardListViewModel: flashcardListViewModel)
-
-                }
-                .frame(height: geoProxy.size.height * 0.7)
-                */
                 
                 CarouselView(carouselLocation: self.$carouselLocation, itemHeight: UIScreen.main.bounds.height * 0.30, flashcardListVM: flashcardListViewModel)
 
@@ -91,24 +84,8 @@ struct DeckView: View {
                             }
                         
                         return !existingFlashcards.contains(flashcard)
-                        /*
-                            flashcardListViewModel.flashcardViewModels
-                                .map { flashcardVM in
-                                    flashcardVM.flashcard
-                                }
-                                .contains(where: {$0.id != flashcard.id
-                                    && $0.dateAdded != flashcard.dateAdded
-                                    && $0.prompt != flashcard.prompt
-                                    && $0.answer != flashcard.answer
-                                })
-                        */
                         }
-                    /*
-                        .forEach { flashcard in
-                            flashcardListViewModel.add(flashcard)
-                        }
-                    */
-                    
+
                     print("\(newFlashcards.count) created")
                     deckViewModel.addFlashcards(newFlashcards)
                     
@@ -126,20 +103,7 @@ struct DeckView: View {
                     
                     print("\(editedFlashcards.count) updated")
                     deckViewModel.updateFlashcards(editedFlashcards)
-                    /*
-                    flashcards
-                        .filter { flashcard in
-                            flashcardListViewModel.flashcardViewModels
-                                .map { flashcardVM in
-                                    flashcardVM.flashcard
-                                }
-                                .contains(where: {$0 == flashcard && $0.prompt != flashcard.prompt && $0.answer != flashcard.answer})
-                        }
-                        .forEach { flashcard in
-                            flashcardListViewModel.update(flashcard)
-                        }
-                    */
-                    
+
                     //Remove flashcards
                     let deletedFlashcards = flashcardListViewModel.flashcardViewModels
                         .map { flashcardVM in
@@ -152,16 +116,15 @@ struct DeckView: View {
                     
                     print("\(deletedFlashcards.count) deleted")
                     deckViewModel.deleteFlashcards(deletedFlashcards)
-                        /*
-                        .forEach { deletedFlashcard in
-                            flashcardListViewModel.remove(deletedFlashcard)
-                        }
-                       */
+                    
                     self.carouselLocation = 0
                     print("Carousel location is now\(carouselLocation)")
                 }
             }
 
+        }
+        .onDisappear {
+            self.deckViewModel.toggleExamMode()
         }
     }
     
@@ -194,10 +157,12 @@ struct DeckView: View {
                         Text("Exam Mode")
                             .font(.body.bold())
                     })
+                    /*
                     .onChange(of: deckViewModel.deck.isExamMode) { value in
                         deckViewModel.toggleExamMode()
                         print(value)
                     }
+                    */
                     .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
 
                     Spacer()
@@ -206,7 +171,6 @@ struct DeckView: View {
 
             }
             .padding()
-            
         }
     }
     
@@ -266,11 +230,30 @@ struct DeckView: View {
     
     func practiceContent() -> some View {
         var practiceFlashcards = [FlashcardViewModel]()
+        let isExamMode = deckViewModel.deck.isExamMode
+        let timeAsOfRightNow = Date().timeIntervalSince1970
+        let databaseFlashcardViewModels = flashcardListViewModel.flashcardViewModels
+
+        if isExamMode {
+            let cardsTobeAdded = flashcardListViewModel.flashcardViewModels
+                .filter { flashcardVM in
+                    flashcardVM.flashcard.nextDate ?? 0 <= timeAsOfRightNow
+                }
+            practiceFlashcards.append(contentsOf: cardsTobeAdded)
+        } else {
+            practiceFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
+        }
+        
+        /*
         practiceFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
         practiceFlashcards.map { flashcardVM in
             flashcardVM.flipped = false
         }
-        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), examModeVM: ExamModeViewModel(isExamMode: deckViewModel.deck.isExamMode, flashcardVMs: practiceFlashcards), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, score in
+        */
+        
+        
+        
+        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), examModeVM: ExamModeViewModel(isExamMode: isExamMode, flashcardVMs: practiceFlashcards, databaseFlashcardViewModels: databaseFlashcardViewModels), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, score in
             
             let sortedUpdatedFlashcards = updatedFlashcards.sorted {
                 $0.nextDate! < $1.nextDate!

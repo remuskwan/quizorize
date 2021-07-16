@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PracticeModeView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var reminderVM: ReminderViewModel
     @ObservedObject var practiceModeViewModel: PracticeModeViewModel
     @ObservedObject var examModeVM: ExamModeViewModel
     
@@ -17,6 +18,8 @@ struct PracticeModeView: View {
     
     @State private var showingNotice: Bool = false
     @State private var progressValue = 0.0
+    @State private var correctCount = 0.0
+    @State private var totalQuestionsAnswered = 0.0
     @State var prevExamScore: Double
     
     //To update DB
@@ -28,9 +31,13 @@ struct PracticeModeView: View {
                 VStack {
                     HStack {
                         Button {
-                            didFinishDeck(examModeVM.getUpdatedFlashcards(), self.examModeVM.getPercentageScore(prevExamScore: self.prevExamScore))
-                            resetCards()
+                            /*
+                            if self.examModeVM.isExamMode && examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards) {
+                                didFinishDeck(examModeVM.getUpdatedFlashcards(), correctCount / totalQuestionsAnswered)
+                            }
+                            */
                             presentationMode.wrappedValue.dismiss()
+                            resetCards()
                         } label: {
                             Image(systemName: "multiply")
                         }
@@ -53,9 +60,22 @@ struct PracticeModeView: View {
                     }
                     
                     //if (isExamMode + areAnycardsDue+ counter != count) OR (isNotExamMode && counter != count)
-                    if (examModeVM.isExamMode && examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards) && practiceModeViewModel.counter != examModeVM.cardsDue)
+                    //examModeVM.cardsAreDue has to be a state. and also, because this view is based on a function that is constantly running, there are some weird bugs
+                    if ((examModeVM.isExamMode && examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards)))
                         ||
                         (!examModeVM.isExamMode && practiceModeViewModel.counter != practiceModeViewModel.count) {
+                        //testView
+                        testView
+                            .onReceive(self.practiceModeViewModel.$counter) { counter in
+                                if examModeVM.isExamMode && (counter == self.practiceModeViewModel.count) {
+                                    didFinishDeck(examModeVM.getUpdatedFlashcards(), correctCount / totalQuestionsAnswered)
+                                    withAnimation {
+                                        resetCards()
+                                    }
+                                }
+                            }
+                            .transition(.opacity)
+                        /*
                         ProgressView(value: Double(practiceModeViewModel.counter), total: Double(practiceModeViewModel.count))
                             .frame(width: geometry.size.width * 0.7, alignment: .center)
                         
@@ -64,9 +84,12 @@ struct PracticeModeView: View {
                         } else {
                             FlashcardListView(practiceModeViewModel: practiceModeViewModel, showingNotice: $showingNotice)
                         }
-                    } else {
+                         */
+                    }
+                    else {
                         //Put Exam Summary here.
                         summaryView
+                            .transition(.opacity)
                             /*
                             .onAppear {
                                 if examModeVM.isExamMode {
@@ -90,6 +113,22 @@ struct PracticeModeView: View {
         }
     }
     
+    var testView: some View {
+        GeometryReader { geometry in
+            VStack {
+                ProgressView(value: Double(practiceModeViewModel.counter), total: Double(practiceModeViewModel.count))
+                    .frame(width: geometry.size.width * 0.7, alignment: .center)
+                
+                if (examModeVM.isExamMode && examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards)) {
+                    FlashcardListView(practiceModeViewModel: practiceModeViewModel, examModeVM: self.examModeVM, showingNotice: $showingNotice, correctCount: $correctCount, totalQuestionsAnswered: $totalQuestionsAnswered)
+                } else {
+                    FlashcardListView(practiceModeViewModel: practiceModeViewModel, showingNotice: $showingNotice, correctCount: $correctCount, totalQuestionsAnswered: $totalQuestionsAnswered)
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+    
     var summaryView: some View {
         //Took most of this from TestModeSummary
         ZStack {
@@ -104,21 +143,22 @@ struct PracticeModeView: View {
                             .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.4)
                             .padding()
                             .onAppear {
-                                self.progressValue = self.examModeVM.getPercentageScore(prevExamScore: self.prevExamScore)
+                                self.progressValue = (correctCount / totalQuestionsAnswered).isNaN ? self.prevExamScore : (correctCount / totalQuestionsAnswered)
                             }
                         
-                        Text("Date of Completion: \(examModeVM.dateOfCompletion(of: practiceModeViewModel.practiceFlashcards))")
+                        Text("Date of Completion: \(examModeVM.dateOfCompletion())")
                             .padding()
                         
-                        Text("Next Study Date: \(examModeVM.nextDate(of: practiceModeViewModel.practiceFlashcards))")
+                        Text("Next Study Date: \(examModeVM.nextDate())")
                             .padding()
                         
+                        /*
                         if examModeVM.intervalIsZero() {
                             Text("Looks like you need to study more 🤓")
                                 .padding()
                             
                             Button(action: {
-                                didFinishDeck(examModeVM.getUpdatedFlashcards(), self.examModeVM.getPercentageScore(prevExamScore: self.prevExamScore))
+                                didFinishDeck(examModeVM.getUpdatedFlashcards(), self.examModeVM.getPercentageScore())
                                 resetCards()
                             }, label: {
                                 Text("Study Again Now")
@@ -144,6 +184,7 @@ struct PracticeModeView: View {
                                 .padding()
                             */
                         }
+                        */
                         
                         Spacer()
                     }
@@ -165,6 +206,8 @@ struct PracticeModeView: View {
                             resetCards()
                         }
                         .padding()
+                        
+                        Spacer()
                     }
                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                 }
@@ -177,10 +220,11 @@ struct PracticeModeView: View {
     
     func resetCards() {
         practiceModeViewModel.counter = 0
-        practiceModeViewModel.shuffle()
         practiceModeViewModel.flipStatuses =
             practiceModeViewModel.flipStatuses.mapValues { values in
+                return false
             }
+        practiceModeViewModel.shuffle()
         examModeVM.reset()
     }
     
@@ -201,10 +245,13 @@ struct FlashcardListView: View {
     
     //@State private var cardsMovedBacK: [String: Bool] = [String: Bool]()
     @Binding var showingNotice: Bool
+    @Binding var correctCount: Double
+    @Binding var totalQuestionsAnswered: Double
     
     @GestureState private var isDragging = false
     
     var body: some View {
+
         VStack {
             Spacer()
             ZStack {
@@ -212,7 +259,6 @@ struct FlashcardListView: View {
                 ForEach(practiceModeViewModel.practiceFlashcards) { flashcardVM in
                     let flashcard = flashcardVM.flashcard
                     
-                    if examModeVM?.checkIfFlashcardIsDue(flashcard) ?? true {
                         FlashcardView(flashcardViewModel: flashcardVM,
                                       practiceModeViewModel: practiceModeViewModel,
                                       uuid: flashcardVM.id)
@@ -239,26 +285,6 @@ struct FlashcardListView: View {
                                                 self.examModeVM?.setTranslationWidthOf(id: flashcardVM.id, width: drag.translation.width)
                                             }
                                             
-                                            /*
-                                             if drag.translation.width > 50 && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id) {
-                                             practiceModeViewModel.togglePass(of: flashcard.id)
-                                             } else if drag.translation.width < -50 && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id) {
-                                             practiceModeViewModel.toggleFail(of: flashcard.id)
-                                             } else {
-                                             practiceModeViewModel.toggleNil(of: flashcard.id)
-                                             }
-                                             */
-                                            /*
-                                             let cardMovesBack = drag.translation.width < (-1 * dragThreshold) || drag.translation.width > dragThreshold
-                                             || drag.predictedEndTranslation.width > dragThreshold
-                                             || drag.predictedEndTranslation.width < (-1 * dragThreshold)
-                                             
-                                             if (cardMovesBack) {
-                                             //drag.translation.height < -300 || drag.translation.height > 30) {
-                                             }
-                                             else {
-                                             }
-                                             */
                                         }
                                     })
                                     .updating($isDragging) { drag, state, trans in
@@ -289,7 +315,9 @@ struct FlashcardListView: View {
                                                     self.examModeVM?.addAndUpdateFailed(flashcard)
                                                 } else {
                                                     self.examModeVM?.addAndUpdatePassed(flashcard)
+                                                    self.correctCount += 1
                                                 }
+                                                self.totalQuestionsAnswered += 1
                                             } else if didNotFlip {
                                                 self.practiceModeViewModel.moveToFront(flashcard)
                                                 self.showingNotice = true
@@ -300,7 +328,6 @@ struct FlashcardListView: View {
                                         }
                                     })
                             )
-                    }
                 }
                 /*
                  } else {

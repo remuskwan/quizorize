@@ -7,11 +7,14 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 //MARK: Only flashcards that have finished grading will be passed here.
 class ExamModeViewModel: ObservableObject {
     
-    init(isExamMode: Bool, flashcardVMs: [FlashcardViewModel]) {
+    init(isExamMode: Bool, flashcardVMs: [FlashcardViewModel], databaseFlashcardViewModels: [FlashcardViewModel]) {
+        let timeIntervalAsOfClick = Date().timeIntervalSince1970
+        
         self.updatedFlashcards = []
         self.flashcardGrader = FlashcardGrader()
         self.isExamMode = isExamMode
@@ -19,19 +22,26 @@ class ExamModeViewModel: ObservableObject {
             flashcardVM.flashcard
         }
         .filter { flashcard in
-            flashcard.nextDate ?? 0 <= Date().timeIntervalSince1970
+            flashcard.nextDate ?? 0 <= timeIntervalAsOfClick
         }
         .count
+        
+        self.timeIntervalAsOfClick = timeIntervalAsOfClick
+        self.databaseFlashcardViewModels = databaseFlashcardViewModels
     }
     
     private(set) var distancesTravelled: [String: CGFloat] = [String: CGFloat]()
     private var updatedFlashcards: [Flashcard] //Should only have flashcards that are updated
     private var flashcardGrader: FlashcardGrader
     
+    @Published private(set) var databaseFlashcardViewModels: [FlashcardViewModel] //Flashcards from database, used to compare with current updatedFlashcards
+    
     @Published private(set) var isExamMode: Bool
     @Published private(set) var cardsDue: Int
+    @Published private(set) var cardsAreDue: Bool = false
+        
 
-    private var correctCount: Double = 0
+    private let timeIntervalAsOfClick: TimeInterval
 
     //MARK: Intent(s)
     
@@ -52,26 +62,16 @@ class ExamModeViewModel: ObservableObject {
     }
     
     func addAndUpdateFailed(_ currentFlashcard: Flashcard) {
-        let updatedFlashcard = self.flashcardGrader.gradeFlashcard(flashcard: currentFlashcard, grade: ExamModeViewModel.Grade.fail, currentDateTime: Date().timeIntervalSince1970)
+        let updatedFlashcard = self.flashcardGrader.gradeFlashcard(flashcard: currentFlashcard, grade: ExamModeViewModel.Grade.fail, currentDateTime: self.timeIntervalAsOfClick)
         
         self.updatedFlashcards.append(updatedFlashcard)
     }
     
     func addAndUpdatePassed(_ currentFlashcard: Flashcard) {
-        let updatedFlashcard = self.flashcardGrader.gradeFlashcard(flashcard: currentFlashcard, grade: ExamModeViewModel.Grade.pass, currentDateTime: Date().timeIntervalSince1970)
+        let updatedFlashcard = self.flashcardGrader.gradeFlashcard(flashcard: currentFlashcard, grade: ExamModeViewModel.Grade.pass, currentDateTime: self.timeIntervalAsOfClick)
         
         self.updatedFlashcards.append(updatedFlashcard)
-        self.correctCount += 1
-    }
-    
-    func getPercentageScore(prevExamScore: Double) -> Double {
-        let score = correctCount / Double(updatedFlashcards.count)
         
-        if score.isNaN || score.isZero {
-            return prevExamScore
-        } else {
-            return score
-        }
     }
     
     private func getSortedFlashcards(_ flashcards: [Flashcard]) -> [Flashcard] {
@@ -81,17 +81,22 @@ class ExamModeViewModel: ObservableObject {
     }
     
     //Helper for Date in String
-    private func getEarliestNextDate(of flashcardVMs: [FlashcardViewModel]) -> Date {
-        let flashcards = flashcardVMs.map { flashcardVM in
+    private func getEarliestNextDate() -> Date {
+        
+        let databaseFlashcards = self.databaseFlashcardViewModels.map { flashcardVM in
             flashcardVM.flashcard
         }
         
-        let sortedDbFlashcards: [Flashcard] = self.getSortedFlashcards(flashcards)
+        let earliestDate = self.getSortedFlashcards(databaseFlashcards)
+            .first?.nextDate ?? 0
+
+        /*
+        let sortedDbFlashcards: [Flashcard] = self.getSortedFlashcards(databaseFlashcards)
         let sortedUpdatedFlashcards: [Flashcard] = self.getSortedFlashcards(self.updatedFlashcards)
         var earliestDate: TimeInterval = 0
         
         if let earliestDbFlashcard = sortedDbFlashcards.first?.nextDate, let earliestUpdatedFlashcard = sortedUpdatedFlashcards.first?.nextDate {
-            if earliestDbFlashcard < earliestUpdatedFlashcard {
+            if earliestDbFlashcard < earliestUpdatedFlashcard && self.intervalIsZero() {
                 earliestDate = earliestDbFlashcard
             } else {
                 earliestDate = earliestUpdatedFlashcard
@@ -101,54 +106,60 @@ class ExamModeViewModel: ObservableObject {
         if earliestDate == 0 {
             earliestDate = sortedUpdatedFlashcards.first?.nextDate ?? sortedDbFlashcards.first?.nextDate ?? 0
         }
+        */
 
         return Date(timeIntervalSince1970: earliestDate)
     }
     
-    private func getDateOfCompletion(of flashcardVMs: [FlashcardViewModel]) -> Date {
-        let dbFlashcards = flashcardVMs.map { flashcardVM in
+    private func getDateOfCompletion() -> Date {
+        
+        let databaseFlashcards = self.databaseFlashcardViewModels.map { flashcardVM in
             flashcardVM.flashcard
         }
         
-        let sortedDbFlashcards: [Flashcard] = self.getSortedFlashcards(dbFlashcards)
+        let dateOfCompletion = self.getSortedFlashcards(databaseFlashcards)
+            .last?.previousDate ?? 0
+
+        /*
+        let sortedDbFlashcards: [Flashcard] = self.getSortedFlashcards(databaseFlashcards)
         let sortedUpdatedFlashcards: [Flashcard] = self.getSortedFlashcards(self.updatedFlashcards)
 
         let dateOfCompletion = sortedUpdatedFlashcards.last?.previousDate ?? sortedDbFlashcards.last?.previousDate ?? 0
         
+        */
+        
         return Date(timeIntervalSince1970: dateOfCompletion)
     }
     
-    func nextDate(of flashcardVMs: [FlashcardViewModel]) -> String {
+    func nextDate() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         dateFormatter.locale = Locale(identifier: "en_US")
         
-        let nextDate = dateFormatter.string(from: self.getEarliestNextDate(of: flashcardVMs))
+        let nextDate = dateFormatter.string(from: self.getEarliestNextDate())
         return nextDate
     }
     
-    func dateOfCompletion(of flashcardVMs: [FlashcardViewModel]) -> String {
+    func dateOfCompletion() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         dateFormatter.locale = Locale(identifier: "en_US")
         
-        let dateOfCompletion = dateFormatter.string(from: getDateOfCompletion(of: flashcardVMs))
+        let dateOfCompletion = dateFormatter.string(from: getDateOfCompletion())
         return dateOfCompletion
     }
     
     func reset() {
         self.updatedFlashcards = []
-        self.correctCount = 0
         self.distancesTravelled = [String: CGFloat]()
     }
 
     //MARK: Changes (to UI)
     func intervalIsZero() -> Bool {
-        let totalSecondsInADay: Double = 86400
         let intervalZeroFlashcards = updatedFlashcards.filter { flashcard in
-            (flashcard.nextDate ?? 0) - (flashcard.previousDate ?? 0) < totalSecondsInADay
+            flashcard.nextDate ?? 0 <= self.timeIntervalAsOfClick
         }
         
         return !intervalZeroFlashcards.isEmpty
@@ -163,27 +174,58 @@ class ExamModeViewModel: ObservableObject {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         dateFormatter.locale = Locale(identifier: "en_US")
+        /*
         print("flashcard's nextDate is \(dateFormatter.string(from: Date(timeIntervalSince1970: flashcard.nextDate ?? 0))) and currentDateIs \(dateFormatter.string(from: Date()))")
-        return flashcard.nextDate ?? 0 <= Date().timeIntervalSince1970
+        */
+        return flashcard.nextDate ?? 0 <= self.timeIntervalAsOfClick
+    }
+    
+    //Converts flashcardVM to flashcards
+    private func convertFlashcardViewModelToFlashcard(flashcardViewModels: [FlashcardViewModel]) -> [Flashcard] {
+        flashcardViewModels.map { flashcardVM in
+            flashcardVM.flashcard
+        }
     }
     
     //Checks for whether or not to show summary view first or flashcard view first
     func cardsAreDue(flashcards: [FlashcardViewModel]) -> Bool {
-        let cardsDue = flashcards
-            .map { flashcardVM in
-                flashcardVM.flashcard
-            }
-            .filter { flashcard in
-                flashcard.nextDate ?? 0 <= Date().timeIntervalSince1970 //cards are due and hence array wont be empty, so if array is not empty it means that there are cards due
-            }
-        
-        print(cardsDue.count)
+        let cardsDue =
+            self.getCardViewModelsThatAreDue(from: flashcards)
+
         return !cardsDue.isEmpty
     }
-
     
-
-
+    func getCardViewModelsThatAreDue(from flashcardViewModels: [FlashcardViewModel]) -> [FlashcardViewModel] {
+        let cardViewModelsDue = self.convertFlashcardViewModelToFlashcard(flashcardViewModels: flashcardViewModels)
+            .filter { flashcard in
+                flashcard.nextDate ?? 0 <= self.timeIntervalAsOfClick
+            }
+            .map { flashcard in
+                FlashcardViewModel(flashcard: flashcard)
+            }
+        
+        print("There are \(cardViewModelsDue.count) cards due for study")
+        return cardViewModelsDue
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //Engine to run the algo
     struct FlashcardGrader {
         private let maxQuality = 2

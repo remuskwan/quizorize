@@ -64,6 +64,8 @@ class PracticeModeViewModel: ObservableObject {
     
    
     //MARK: Display Functions
+    
+    //function that mainly determines the offset+position, get it to work with other flashcardviewmodels
     func position(of flashcard: Flashcard) -> Int {
         let flashcards = practiceFlashcards.map { flashcardVM in
             flashcardVM.flashcard
