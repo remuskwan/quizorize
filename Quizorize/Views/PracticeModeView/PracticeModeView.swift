@@ -11,8 +11,7 @@ struct PracticeModeView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var reminderVM: ReminderViewModel
     @ObservedObject var practiceModeViewModel: PracticeModeViewModel
-    @ObservedObject var examModeVM: ExamModeViewModel
-    
+
     @State private var showOptionsSheet = false
     @State private var dismissOptionsSheet = false
     
@@ -23,7 +22,8 @@ struct PracticeModeView: View {
     @State var prevExamScore: Double
     
     
-    @State private var showingTest: Bool = false
+    @State private var showingTest = false
+    @State private var showingEndTestAlert = false
     @State private var isSpacedRepetitionOn: Bool = false
     
     //To update DB
@@ -65,7 +65,7 @@ struct PracticeModeView: View {
                          .padding()
                          }
                          */
-                        
+
                         if !self.showingTest {
                             List {
                                 Section {
@@ -76,17 +76,36 @@ struct PracticeModeView: View {
                                             .font(.headline)
                                             .foregroundColor(.white)
                                     }
+                                    .frame(width: geometry.size.width * 0.8, height: 45)
+                                    .listRowBackground(Color.accentColor)
                                 }
                                 
                                 Section(header: Text("Reminders")) {
-                                    Toggle(isOn: $examModeVM.isExamMode, label: {
+                                    Toggle(isOn: $practiceModeViewModel.isSpacedRepetitionOn, label: {
                                         Text("Spaced Repetition")
                                     })
+                                    .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
                                 }
                                 
                             }
+                            .listStyle(InsetGroupedListStyle())
+                            .toolbar(content: {
+                                ToolbarItem(placement: .navigationBarLeading) {
+                                    Button {
+                                        presentationMode.wrappedValue.dismiss()
+                                    } label: {
+                                        Image(systemName: "multiply")
+                                    }
+                                }
+                                ToolbarItem(placement: .navigationBarTrailing) {
+                                    Image(systemName: "questionmark.circle")
+                                        .frame(width: 24, height: 24)
+                                }
+                            })
                         } else {
                             if practiceModeViewModel.isTesting {
+                                Text("\(practiceModeViewModel.counter) / \(practiceModeViewModel.count)")
+                                
                                 //testView
                                 testView
                                     .toolbar(content: {
@@ -102,6 +121,15 @@ struct PracticeModeView: View {
                                                 .frame(width: 24, height: 24)
                                         }
                                     })
+                                    .alert(isPresented: $showingEndTestAlert, content: {
+                                        Alert(title: Text("Are you sure you want to end this test?"),
+                                              message: Text("Test progress will not be saved."),
+                                              primaryButton: .cancel(),
+                                              secondaryButton: .default(Text("End Test")) {
+                                                self.practiceModeViewModel.reset()
+                                                presentationMode.wrappedValue.dismiss()
+                                              })
+                                    })
                             }
                             else {
                                 //Put Exam Summary here.
@@ -116,6 +144,10 @@ struct PracticeModeView: View {
                                     .toolbar(content: {
                                         ToolbarItem(placement: .navigationBarLeading) {
                                             Button {
+                                                if self.practiceModeViewModel.isSpacedRepetitionOn {
+                                                    didFinishDeck(self.practiceModeViewModel.actualPracticeFlashcards, correctCount / totalQuestionsAnswered)
+                                                    
+                                                }
                                                 presentationMode.wrappedValue.dismiss()
                                             } label: {
                                                 Image(systemName: "multiply")
@@ -152,7 +184,7 @@ struct PracticeModeView: View {
                 ProgressView(value: Double(practiceModeViewModel.counter), total: Double(practiceModeViewModel.count))
                     .frame(width: geometry.size.width * 0.7, alignment: .center)
                 
-                FlashcardListView(practiceModeViewModel: practiceModeViewModel, examModeVM: self.examModeVM, showingNotice: $showingNotice, correctCount: $correctCount, totalQuestionsAnswered: $totalQuestionsAnswered)
+                FlashcardListView(practiceModeViewModel: practiceModeViewModel, showingNotice: $showingNotice, correctCount: $correctCount, totalQuestionsAnswered: $totalQuestionsAnswered)
                 
                 /*
                  if (examModeVM.isExamMode && examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards)) {
@@ -168,7 +200,6 @@ struct PracticeModeView: View {
     var summaryView: some View {
         //Took most of this from TestModeSummary
         ZStack {
-            if examModeVM.isExamMode {
                 GeometryReader { geometry in
                     VStack {
                         Spacer()
@@ -182,84 +213,46 @@ struct PracticeModeView: View {
                                 self.progressValue = (correctCount / totalQuestionsAnswered).isNaN ? self.prevExamScore : (correctCount / totalQuestionsAnswered)
                             }
                         
-                        Text("Date of Completion: \(examModeVM.dateOfCompletion())")
-                            .padding()
-                        
-                        Text("Next Study Date: \(examModeVM.nextDate())")
-                            .padding()
-                        
-                        if examModeVM.intervalIsZero() {
-                            Text("Looks like you need to study more 🤓")
+
+                        if practiceModeViewModel.isSpacedRepetitionOn {
+                            
+                            Text("Date of Completion: \(practiceModeViewModel.dateOfCompletionInString())")
                                 .padding()
                             
-                            Button(action: {
-                                //didFinishDeck(examModeVM.getUpdatedFlashcards(), self.examModeVM.getPercentageScore())
-                                resetCards()
-                            }, label: {
-                                Text("Study Again Now")
-                                    .font(.headline)
-                                    .frame(width: geometry.size.width * 0.8, height: 32)
-                            })
+                            Text("Next Study Date: \(practiceModeViewModel.earliestDateInString())")
+                                .padding()
+                            if practiceModeViewModel.intervalIsZero() {
+                                Text("Looks like you need to study more 🤓")
+                                    .padding()
+                                
+                                Button(action: {
+                                    //didFinishDeck(examModeVM.getUpdatedFlashcards(), self.examModeVM.getPercentageScore())
+                                    self.practiceModeViewModel.reset()
+                                }, label: {
+                                    Text("Study Again Now")
+                                        .font(.headline)
+                                        .frame(width: geometry.size.width * 0.8, height: 32)
+                                })
+                            }
                         }
-                        else {
-                            Color.clear
-                            /*
+                        else if !practiceModeViewModel.isSpacedRepetitionOn {
+                            
+                            Text("You have finished the deck!")
                              Button {
-                             didFinishDeck(examModeVM.getUpdatedFlashcards(), self.examModeVM.getPercentageScore(prevExamScore: self.prevExamScore))
-                             examModeVM.turnOffExamMode()
-                             resetCards()
-                             print(examModeVM.isExamMode)
+                                self.practiceModeViewModel.reset()
                              } label: {
-                             Text("I still want to practice now")
+                             Text("Reset")
                              .font(.headline)
                              .frame(width: geometry.size.width * 0.8, height: 32)
                              }
-                             
-                             Text("(This will NOT affect your next study date)")
-                             .padding()
-                             */
                         }
                         
                         Spacer()
                     }
                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                 }
-            } else {
-                GeometryReader { geometry in
-                    VStack {
-                        Spacer()
-                        
-                        Text("Congraluations")
-                            .font(.title2.bold())
-                        
-                        Text("You're done!")
-                            .font(.body)
-                            .padding()
-                        
-                        Button("Reset") {
-                            resetCards()
-                        }
-                        .padding()
-                        
-                        Spacer()
-                    }
-                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                }
-                
-            }
-            
         }
         
-    }
-    
-    func resetCards() {
-        practiceModeViewModel.counter = 0
-        practiceModeViewModel.flipStatuses =
-            practiceModeViewModel.flipStatuses.mapValues { values in
-                return false
-            }
-        practiceModeViewModel.shuffle()
-        examModeVM.reset()
     }
     
 }
@@ -272,8 +265,7 @@ struct OptionsSheetContent: View {
 
 struct FlashcardListView: View {
     @ObservedObject var practiceModeViewModel: PracticeModeViewModel
-    @ObservedObject var examModeVM: ExamModeViewModel
-    
+
     @Namespace private var animation
     
     //@State private var cardsMovedBacK: [String: Bool] = [String: Bool]()
@@ -289,13 +281,11 @@ struct FlashcardListView: View {
             Spacer()
             ZStack {
                 //if practiceModeViewModel.counter != practiceModeViewModel.count  {
-                ForEach(practiceModeViewModel.practiceFlashcards) { flashcardVM in
-                    let flashcard = flashcardVM.flashcard
-                    
-                    FlashcardView(flashcardViewModel: flashcardVM,
+                ForEach(practiceModeViewModel.actualPracticeFlashcards) { flashcard in
+                    FlashcardView(flashcard: flashcard,
                                   practiceModeViewModel: practiceModeViewModel,
-                                  uuid: flashcardVM.id)
-                        .showIndicators(translation: self.examModeVM.distancesTravelled[flashcardVM.id] ?? 0, isFlipped: practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id), isDragging: self.isDragging)
+                                  uuid: flashcard.id!)
+                        .showIndicators(translation: self.practiceModeViewModel.distancesTravelled[flashcard.id!] ?? 0, isFlipped: practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id!), isDragging: self.isDragging)
                         .zIndex(self.practiceModeViewModel.zIndex(of: flashcard))
                         .offset(x: self.offset(for: flashcard).width, y: self.offset(for: flashcard).height)
                         .offset(y: self.practiceModeViewModel.deckOffset(of: flashcard))
@@ -304,7 +294,7 @@ struct FlashcardListView: View {
                         .gesture(
                             DragGesture()
                                 .onChanged({ drag in
-                                    let didNotFlip = practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id) == false
+                                    let didNotFlip = practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id!) == false
                                     
                                     if self.practiceModeViewModel.activeCard == nil {
                                         self.practiceModeViewModel.activeCard = flashcard
@@ -315,7 +305,7 @@ struct FlashcardListView: View {
                                         self.practiceModeViewModel.topCardOffset = drag.translation
                                         
                                         if !didNotFlip {
-                                            self.examModeVM.setTranslationWidthOf(id: flashcardVM.id, width: drag.translation.width)
+                                            self.practiceModeViewModel.setTranslationWidthOf(id: flashcard.id!, width: drag.translation.width)
                                         }
                                     }
                                 })
@@ -332,9 +322,9 @@ struct FlashcardListView: View {
                                     
                                     //let cardPassedMovesBack = drag.translation.width > dragThreshold || drag.predictedEndTranslation.width > dragThreshold
                                     
-                                    let allRequirementsMet = cardMovesBack && (practiceModeViewModel.counter < practiceModeViewModel.count) && practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id)
+                                    let allRequirementsMet = cardMovesBack && (practiceModeViewModel.counter < practiceModeViewModel.count) && practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id!)
                                     
-                                    let didNotFlip = practiceModeViewModel.getFlipStatusOf(uuid: flashcardVM.id) == false
+                                    let didNotFlip = practiceModeViewModel.getFlipStatusOf(uuid: flashcard.id!) == false
                                     
                                     
                                     withAnimation(.default) {
@@ -344,9 +334,9 @@ struct FlashcardListView: View {
                                             self.practiceModeViewModel.counter += 1
                                             self.practiceModeViewModel.moveToBack(flashcard)
                                             if cardFailedMovesBack {
-                                                self.examModeVM.addAndUpdateFailed(flashcard)
+                                                self.practiceModeViewModel.addAndUpdateFailed(flashcard)
                                             } else {
-                                                self.examModeVM.addAndUpdatePassed(flashcard)
+                                                self.practiceModeViewModel.addAndUpdatePassed(flashcard)
                                                 self.correctCount += 1
                                             }
                                             self.totalQuestionsAnswered += 1
@@ -354,7 +344,7 @@ struct FlashcardListView: View {
                                             self.practiceModeViewModel.moveToFront(flashcard)
                                             self.showingNotice = true
                                         } else {
-                                            self.examModeVM.setTranslationWidthOf(id: flashcardVM.id, width: 0)
+                                            self.practiceModeViewModel.setTranslationWidthOf(id: flashcard.id!, width: 0)
                                             self.practiceModeViewModel.moveToFront(flashcard)
                                         }
                                     }
@@ -407,7 +397,7 @@ struct FlashcardListView: View {
             }
             Spacer()
             
-            if !examModeVM.isExamMode {
+            if !practiceModeViewModel.isSpacedRepetitionOn {
                 Button(action: {
                     withAnimation(.spring()) {
                         resetCards()
@@ -433,7 +423,7 @@ struct FlashcardListView: View {
                 return false
             }
         
-        examModeVM.reset()
+        //examModeVM.reset()
     }
     
     func offset(for flashcard: Flashcard) -> CGSize {
@@ -454,7 +444,8 @@ struct FlashcardListView: View {
 }
 
 struct FlashcardView: View {
-    @ObservedObject var flashcardViewModel: FlashcardViewModel
+    //@ObservedObject var flashcardViewModel: FlashcardViewModel
+    var flashcard: Flashcard
     @ObservedObject var practiceModeViewModel: PracticeModeViewModel
     
     var uuid: String
@@ -463,13 +454,13 @@ struct FlashcardView: View {
         VStack {
             Spacer()
             if !practiceModeViewModel.getFlipStatusOf(uuid: uuid) /* flashcardViewModel.flipped */ {
-                Text(flashcardViewModel.flashcard.prompt)
+                Text(/*flashcardViewModel.*/flashcard.prompt)
                     .font(.title)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
             } else {
-                Text(flashcardViewModel.flashcard.answer)
+                Text(/*flashcardViewModel.*/flashcard.answer)
                     .font(.title)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)

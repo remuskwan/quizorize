@@ -232,8 +232,6 @@ struct DeckView: View {
     
     func practiceContent() -> some View {
         var practiceFlashcards = [FlashcardViewModel]()
-        let isExamMode = self.isExamMode
-        let databaseFlashcardViewModels = flashcardListViewModel.flashcardViewModels
 
         practiceFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
 
@@ -246,7 +244,7 @@ struct DeckView: View {
         
         
         
-        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), examModeVM: ExamModeViewModel(isExamMode: isExamMode, flashcardVMs: practiceFlashcards, databaseFlashcardViewModels: databaseFlashcardViewModels), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, score in
+        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, score in
             
             let sortedUpdatedFlashcards = updatedFlashcards.sorted {
                 $0.nextDate! < $1.nextDate!
