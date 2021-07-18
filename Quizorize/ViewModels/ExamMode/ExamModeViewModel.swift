@@ -34,9 +34,9 @@ class ExamModeViewModel: ObservableObject {
     private var updatedFlashcards: [Flashcard] //Should only have flashcards that are updated
     private var flashcardGrader: FlashcardGrader
     
-    @Published private(set) var databaseFlashcardViewModels: [FlashcardViewModel] //Flashcards from database, used to compare with current updatedFlashcards
+    private(set) var databaseFlashcardViewModels: [FlashcardViewModel] //Flashcards from database, used to compare with current updatedFlashcards
     
-    @Published private(set) var isExamMode: Bool
+    @Published  var isExamMode: Bool
     @Published private(set) var cardsDue: Int
     @Published private(set) var cardsAreDue: Bool = false
         
@@ -48,12 +48,6 @@ class ExamModeViewModel: ObservableObject {
     //Get updatedFlashcards
     func getUpdatedFlashcards() -> [Flashcard] {
         updatedFlashcards
-    }
-    
-    //Toggle ExamMode (while user still inside practice)
-    func turnOffExamMode() {
-        self.isExamMode = false
-        print(isExamMode)
     }
     
     //Set the translation width of a flashcard
@@ -117,8 +111,10 @@ class ExamModeViewModel: ObservableObject {
             flashcardVM.flashcard
         }
         
-        let dateOfCompletion = self.getSortedFlashcards(databaseFlashcards)
-            .last?.previousDate ?? 0
+        let dateOfCompletion = databaseFlashcards.sorted {
+            $0.previousDate ?? 0 <= $1.previousDate ?? 0
+        }
+        .last?.previousDate ?? 0
 
         /*
         let sortedDbFlashcards: [Flashcard] = self.getSortedFlashcards(databaseFlashcards)
@@ -207,7 +203,7 @@ class ExamModeViewModel: ObservableObject {
         print("There are \(cardViewModelsDue.count) cards due for study")
         return cardViewModelsDue
     }
-    
+
     
     
     

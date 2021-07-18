@@ -17,8 +17,11 @@ class PracticeModeViewModel: ObservableObject {
     @Published var swipeLeft = 0
     @Published var swipeRight = 0
     
+    @Published var isTesting = true
+    
     //MARK: SR Algo
     @Published var flipStatuses: [String: Bool]
+    private(set) var distancesTravelled: [String: CGFloat] = [String: CGFloat]()
 
     
     var count: Int {

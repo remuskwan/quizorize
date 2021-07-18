@@ -24,7 +24,7 @@ struct DeckView: View {
     @State private var deleteDeckConfirm = false
     
     //Temp, delete after
-    @State private var toggle = false
+    @State private var isExamMode = false
     
     @State private var carouselLocation = 0
     
@@ -124,7 +124,7 @@ struct DeckView: View {
 
         }
         .onDisappear {
-            self.deckViewModel.toggleExamMode()
+            //self.deckViewModel.toggleExamMode()
         }
     }
     
@@ -152,8 +152,9 @@ struct DeckView: View {
                     Spacer()
                 }
                 
+                /*
                 HStack(spacing: 0) {
-                    Toggle(isOn: self.$deckViewModel.deck.isExamMode, label: {
+                    Toggle(isOn: self.$isExamMode, label: {
                         Text("Exam Mode")
                             .font(.body.bold())
                     })
@@ -168,6 +169,7 @@ struct DeckView: View {
                     Spacer()
                         .frame(minWidth: geo.size.width * 0.55)
                 }
+                */
 
             }
             .padding()
@@ -230,20 +232,11 @@ struct DeckView: View {
     
     func practiceContent() -> some View {
         var practiceFlashcards = [FlashcardViewModel]()
-        let isExamMode = deckViewModel.deck.isExamMode
-        let timeAsOfRightNow = Date().timeIntervalSince1970
+        let isExamMode = self.isExamMode
         let databaseFlashcardViewModels = flashcardListViewModel.flashcardViewModels
 
-        if isExamMode {
-            let cardsTobeAdded = flashcardListViewModel.flashcardViewModels
-                .filter { flashcardVM in
-                    flashcardVM.flashcard.nextDate ?? 0 <= timeAsOfRightNow
-                }
-            practiceFlashcards.append(contentsOf: cardsTobeAdded)
-        } else {
-            practiceFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
-        }
-        
+        practiceFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
+
         /*
         practiceFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
         practiceFlashcards.map { flashcardVM in
