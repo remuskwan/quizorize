@@ -20,18 +20,15 @@ struct ExamModeViewModel {
         self.timeIntervalAsOfClick = timeIntervalAsOfClick
     }
     
-    private(set) var updatedFlashcards: [Flashcard] //Should only have flashcards that are updated
+    private(set) var updatedFlashcards: [Flashcard]
+    private(set) var finalisedFlashcards: [Flashcard] = [] //Should only have flashcards that are updated
     private var flashcardGrader: FlashcardGrader
     
     private let timeIntervalAsOfClick: TimeInterval
 
     //MARK: Intent(s)
     
-    //Get updatedFlashcards
-    func getUpdatedFlashcards() -> [Flashcard] {
-        updatedFlashcards
-    }
-    
+
     mutating func addAndUpdateFailed(_ currentFlashcard: Flashcard) {
         let updatedFlashcard = self.flashcardGrader.gradeFlashcard(flashcard: currentFlashcard, grade: ExamModeViewModel.Grade.fail, currentDateTime: self.timeIntervalAsOfClick)
         
@@ -62,6 +59,17 @@ struct ExamModeViewModel {
     
     mutating func insert(_ flashcard: Flashcard, at index: Int) {
         self.updatedFlashcards.insert(flashcard, at: index)
+    }
+    
+    //update the current amount of flashcards needed to be tested
+    mutating func pushToFinalisedFlashcards() {
+        let flashcardsToBePushed = updatedFlashcards
+            .filter { flashcard in
+                flashcard.nextDate ?? 0 > self.timeIntervalAsOfClick
+            }
+        
+        self.finalisedFlashcards.append(contentsOf: flashcardsToBePushed)
+        self.updatedFlashcards.removeAll(where: {flashcardsToBePushed.contains($0)})
     }
     
     

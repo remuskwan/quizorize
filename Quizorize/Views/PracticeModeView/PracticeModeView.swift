@@ -27,7 +27,7 @@ struct PracticeModeView: View {
     @State private var isSpacedRepetitionOn: Bool = false
     
     //To update DB
-    var didFinishDeck: (_ updatedFlashcards: [Flashcard], _ score: Double) -> Void
+    var didFinishDeck: (_ updatedFlashcards: [Flashcard], _ score: Double, _ reminderTime: TimeInterval) -> Void
     
     var body: some View {
         NavigationView {
@@ -122,8 +122,8 @@ struct PracticeModeView: View {
                                         }
                                     })
                                     .alert(isPresented: $showingEndTestAlert, content: {
-                                        Alert(title: Text("Are you sure you want to end this test?"),
-                                              message: Text("Test progress will not be saved."),
+                                        Alert(title: Text("Are you sure you want to end this practice?"),
+                                              message: Text("Spaced repetition progress will not be saved."),
                                               primaryButton: .cancel(),
                                               secondaryButton: .default(Text("End Test")) {
                                                 self.practiceModeViewModel.reset()
@@ -134,18 +134,16 @@ struct PracticeModeView: View {
                             else {
                                 //Put Exam Summary here.
                                 summaryView
-                                    /*
                                     .onAppear {
-                                        if examModeVM.isExamMode {
-                                            didFinishDeck(examModeVM.getUpdatedFlashcards(), correctCount / totalQuestionsAnswered)
-                                        }
+                                        self.practiceModeViewModel.pushToFinalisedFlashcards()
                                     }
-                                    */
                                     .toolbar(content: {
                                         ToolbarItem(placement: .navigationBarLeading) {
                                             Button {
+                                                self.practiceModeViewModel.reset()
                                                 if self.practiceModeViewModel.isSpacedRepetitionOn {
-                                                    didFinishDeck(self.practiceModeViewModel.actualPracticeFlashcards, correctCount / totalQuestionsAnswered)
+                                                    print(correctCount / totalQuestionsAnswered)
+                                                    didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, correctCount / totalQuestionsAnswered, self.practiceModeViewModel.getNotificationTimeInterval())
                                                     
                                                 }
                                                 presentationMode.wrappedValue.dismiss()
@@ -210,18 +208,18 @@ struct PracticeModeView: View {
                             .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.4)
                             .padding()
                             .onAppear {
+                                print("previous practice score is \(prevExamScore)")
                                 self.progressValue = (correctCount / totalQuestionsAnswered).isNaN ? self.prevExamScore : (correctCount / totalQuestionsAnswered)
                             }
                         
+                        Text("Date of Completion: \(practiceModeViewModel.dateOfCompletionInString())")
+                            .padding()
+                        
+                        Text("Next Study Date: \(practiceModeViewModel.earliestDateInString())")
+                            .padding()
+                        
 
-                        if practiceModeViewModel.isSpacedRepetitionOn {
-                            
-                            Text("Date of Completion: \(practiceModeViewModel.dateOfCompletionInString())")
-                                .padding()
-                            
-                            Text("Next Study Date: \(practiceModeViewModel.earliestDateInString())")
-                                .padding()
-                            if practiceModeViewModel.intervalIsZero() {
+                        if practiceModeViewModel.isSpacedRepetitionOn && practiceModeViewModel.intervalIsZero() {
                                 Text("Looks like you need to study more 🤓")
                                     .padding()
                                 
@@ -233,18 +231,20 @@ struct PracticeModeView: View {
                                         .font(.headline)
                                         .frame(width: geometry.size.width * 0.8, height: 32)
                                 })
-                            }
                         }
-                        else if !practiceModeViewModel.isSpacedRepetitionOn {
+                        else {
                             
                             Text("You have finished the deck!")
-                             Button {
-                                self.practiceModeViewModel.reset()
-                             } label: {
-                             Text("Reset")
-                             .font(.headline)
-                             .frame(width: geometry.size.width * 0.8, height: 32)
-                             }
+                            
+                            if !practiceModeViewModel.isSpacedRepetitionOn {
+                                Button {
+                                   self.practiceModeViewModel.reset()
+                                } label: {
+                                Text("Reset")
+                                .font(.headline)
+                                .frame(width: geometry.size.width * 0.8, height: 32)
+                                }
+                            }
                         }
                         
                         Spacer()

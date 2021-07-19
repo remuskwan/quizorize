@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DeckView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var reminderViewModel: ReminderViewModel
     @ObservedObject var deckListViewModel: DeckListViewModel
     @ObservedObject var deckViewModel: DeckViewModel
     @ObservedObject var flashcardListViewModel: FlashcardListViewModel
@@ -141,11 +142,6 @@ struct DeckView: View {
                 }
                 */
                 HStack {
-                    Text("Username")
-                        .font(.title2.bold())
-                    
-                    Divider()
-
                     Text("\(flashcardListViewModel.flashcardViewModels.count) flashcards")
                         .font(.title2.bold())
                     
@@ -244,7 +240,7 @@ struct DeckView: View {
         
         
         
-        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, score in
+        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, score, reminderTime in
             
             let sortedUpdatedFlashcards = updatedFlashcards.sorted {
                 $0.nextDate! < $1.nextDate!
@@ -252,6 +248,7 @@ struct DeckView: View {
             
             self.deckViewModel.updateFlashcards(sortedUpdatedFlashcards)
             self.deckViewModel.updatePrevExamScore(score)
+            self.reminderViewModel.sendReminderNotif(deckTitle: self.deckViewModel.deck.title, reminderTime: reminderTime)
         }
     }
     

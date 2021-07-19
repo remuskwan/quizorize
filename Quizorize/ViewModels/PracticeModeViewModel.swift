@@ -17,10 +17,12 @@ class PracticeModeViewModel: ObservableObject {
     @Published var swipeLeft = 0
     @Published var swipeRight = 0
     
-    @Published var isTesting = true
+    var isTesting: Bool {
+        self.counter < self.count
+    }
     
     //MARK: SR Algo variables
-    @Published var isSpacedRepetitionOn: Bool = true
+    @Published var isSpacedRepetitionOn: Bool = false
     @Published var flipStatuses: [String: Bool]
     private(set) var distancesTravelled: [String: CGFloat] = [String: CGFloat]()
     
@@ -46,15 +48,38 @@ class PracticeModeViewModel: ObservableObject {
         }
     }
     
+    var finalisedFlashcards: [Flashcard] {
+        spacedRepetitionModel.finalisedFlashcards
+    }
+    
     private var yetToFinishQuizzingPublisher: AnyPublisher<Bool, Never> {
-        $counter
+            $counter
             .debounce(for: 0.2, scheduler: RunLoop.main)
-            .removeDuplicates()
             .map { counter in
-                !(counter == self.count)
+                print("flashcard count is \(self.count)")
+                return counter < self.spacedRepetitionModel.updatedFlashcards.count
             }
             .eraseToAnyPublisher()
     }
+
+    /*
+    private var choosingReminderPublisher: AnyPublisher<Bool, Never> {
+        $isSpacedRepetitionOn
+            .debounce(for: 0.2, scheduler: RunLoop.main)
+            .map { _ in
+                self.counter < self.count
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private var isTestingPublisher: AnyPublisher<Bool, Never> {
+        Publishers.CombineLatest(yetToFinishQuizzingPublisher, choosingReminderPublisher)
+            .map { yetToFinishQuiz, choosingReminder in
+                
+            }
+            .eraseToAnyPublisher()
+    }
+    */
     
     private var cancellableSet = Set<AnyCancellable>()
     
@@ -82,10 +107,12 @@ class PracticeModeViewModel: ObservableObject {
             flipStatuses[practiceFlashcard.id] = false
         }
         
+        /*
         self.yetToFinishQuizzingPublisher
             .receive(on: RunLoop.main)
             .assign(to: \.isTesting, on: self)
             .store(in: &cancellableSet)
+        */
     }
     
 
@@ -108,7 +135,7 @@ class PracticeModeViewModel: ObservableObject {
     //MARK: SR Algo functions
     //Helper to get the earliest date for user's next study
     private func getEarliestNextDateInIntervals() -> TimeInterval {
-        let sortedUpdatedFlashcards = ExamModeViewModel.getSortedFlashcards(self.spacedRepetitionModel.updatedFlashcards)
+        let sortedUpdatedFlashcards = ExamModeViewModel.getSortedFlashcards(self.spacedRepetitionModel.finalisedFlashcards)
 
         let sortedDBFlashcards = ExamModeViewModel.getSortedFlashcards(self.practiceFlashcards
                                                                     .map { flashcardVM in
@@ -162,9 +189,18 @@ class PracticeModeViewModel: ObservableObject {
         return dateFormatter.string(from: earliestDate)
     }
     
+    func getNotificationTimeInterval() -> TimeInterval {
+        let nextDateInIntervals = self.getEarliestNextDateInIntervals()
+        print(nextDateInIntervals > timeIntervalAsOfClick ? "Notifications working fine!" : "nextDate is earlier than the date now")
+        let differenceInIntervalsFromNow = nextDateInIntervals - self.timeIntervalAsOfClick
+        let differenceInIntervalsButSetToFourPM = floor(differenceInIntervalsFromNow / 86400) * 86400 + 57600
+        
+        return differenceInIntervalsButSetToFourPM
+    }
+
     //Helper to get earliest date for user's date of completion
     private func getDateOfCompletionInIntervals() -> TimeInterval {
-        let sortedUpdatedFlashcards = ExamModeViewModel.getSortedFlashcards(self.spacedRepetitionModel.updatedFlashcards)
+        let sortedUpdatedFlashcards = ExamModeViewModel.getSortedFlashcards(self.spacedRepetitionModel.finalisedFlashcards)
 
         let sortedDBFlashcards = ExamModeViewModel.getSortedFlashcards(self.practiceFlashcards
                                                                     .map { flashcardVM in
@@ -202,6 +238,7 @@ class PracticeModeViewModel: ObservableObject {
         return dateOfCompletion
     }
     
+
     func dateOfCompletionInString() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -215,6 +252,7 @@ class PracticeModeViewModel: ObservableObject {
         return dateFormatter.string(from: dateOfCompletion)
     }
     
+
     func intervalIsZero() -> Bool {
         self.spacedRepetitionModel.intervalIsZero()
     }
@@ -227,6 +265,10 @@ class PracticeModeViewModel: ObservableObject {
         self.spacedRepetitionModel.addAndUpdatePassed(flashcard)
     }
     
+    func pushToFinalisedFlashcards() {
+        self.spacedRepetitionModel.pushToFinalisedFlashcards()
+    }
+    
     func reset() {
         self.counter = 0
         self.flipStatuses = self.flipStatuses.mapValues { values in
@@ -234,6 +276,7 @@ class PracticeModeViewModel: ObservableObject {
         }
         self.distancesTravelled = [String: CGFloat]()
         
+        //self.pushToFinalisedFlashcards()
         self.shuffle()
     }
     
