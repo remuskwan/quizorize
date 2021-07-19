@@ -9,13 +9,10 @@ import SwiftUI
 
 struct LaunchView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-//    @StateObject var deckListViewModel = DeckListViewModel()
-//    @StateObject var profileViewModel = ProfileViewModel()
 
     var body: some View {
         ZStack {
             if authViewModel.signedIn {
-//                NavigationLink(destination: DecksView(), isActive: $viewModel.signedIn) {EmptyView()}
                 HomeView()
             } else {
                 Launch()	
@@ -23,10 +20,6 @@ struct LaunchView: View {
         }
         .onAppear {
             authViewModel.signedIn = authViewModel.isSignedIn
-//            if let user = authViewModel.user {
-//                deckListViewModel.userId = user.uid
-//                profileViewModel.userId = user.uid
-//            }
         }
     }
 }
@@ -61,7 +54,7 @@ struct Launch: View {
                         Text("Get Started.")
                             .font(.headline)
                             .foregroundColor(.white)
-                            .frame(width: 250, height: 50)
+                            .frame(width: 250, height: 45)
                             .background(Color.accentColor)
                             .cornerRadius(5)
                             .padding()

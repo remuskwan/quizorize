@@ -10,13 +10,13 @@ import SwiftUI
 struct TestModeView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var reminderViewModel: ReminderViewModel
+    
     @ObservedObject var testModeViewModel: TestModeViewModel
+    @ObservedObject var deckViewModel: DeckViewModel
     
     @State private var showingTest = false
     @State private var showingEndTestAlert = false
     @State private var progressValue = 0.0
-    
-    let deckTitle: String
     
     var body: some View {
         NavigationView {
@@ -25,7 +25,7 @@ struct TestModeView: View {
                     VStack {
                         if !self.showingTest {
                             List {
-                                if testModeViewModel.hasTakenTest {
+                                if deckViewModel.deck.testModePrevScore != nil {
                                     Section {
                                         HStack {
                                             SummaryProgressBar(progress: $progressValue)
@@ -33,14 +33,9 @@ struct TestModeView: View {
                                                 .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.4)
                                                 .padding()
                                                 .onAppear {
-                                                    self.progressValue = testModeViewModel.latestScore
+                                                    self.progressValue = deckViewModel.deck.testModePrevScore ?? 0.0
                                                 }
-                                                .listRowBackground(Color.clear)
-//                                            Text("Last\nScore")
-//                                                .headline()
-//                                                .padding()
                                         }
-                                        
                                     }
                                 }
                                 
@@ -79,7 +74,7 @@ struct TestModeView: View {
                                 }
                             })
                         } else {
-                            TestView(testModeViewModel: testModeViewModel)
+                            TestView(testModeViewModel: testModeViewModel, deckViewModel: deckViewModel)
                                 .toolbar(content: {
                                     ToolbarItem(placement: .navigationBarLeading) {
                                         Button {
@@ -89,8 +84,9 @@ struct TestModeView: View {
                                                 self.testModeViewModel.setNextReminderTime()
                                                 let reminderTime = testModeViewModel.nextReminderTime
                                                 if reminderTime != 0 {
-                                                    reminderViewModel.sendReminderNotif(deckTitle: self.deckTitle, reminderTime: reminderTime)
+                                                    reminderViewModel.sendReminderNotif(deckTitle: deckViewModel.deck.title, reminderTime: reminderTime)
                                                 }
+                                                self.testModeViewModel.setLatestScore(deckViewModel.deck)
                                                 self.testModeViewModel.reset()
                                                 presentationMode.wrappedValue.dismiss()
                                             }
@@ -192,6 +188,7 @@ struct TestView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @ObservedObject var testModeViewModel: TestModeViewModel
+    @ObservedObject var deckViewModel: DeckViewModel
     
     @State private var answer = ""
     
@@ -209,17 +206,18 @@ struct TestView: View {
                             Written(testModeViewModel: testModeViewModel)
                         } else if testModeViewModel.currentType == "TF" {
                             TrueFalse(testModeViewModel: testModeViewModel)
+//                                .frame(height: geometry.size.height * 0.4)
                         } else if testModeViewModel.currentType == "MCQ" {
                             MultipleChoice(testModeViewModel: testModeViewModel)
+                                .frame(height: geometry.size.height * 0.4)
+                                .padding(24)
                         }
                     } else {
-                        TestModeSummaryView(testModeViewModel: testModeViewModel)
+                        TestModeSummaryView(testModeViewModel: testModeViewModel, deckViewModel: deckViewModel)
                     }
                 }
             }
         }
-        
-        
     }
 }
 
@@ -264,7 +262,6 @@ struct TestModeSnapCarousel: View {
                                     }
                             }
                         }
-                        
                     }
                     .foregroundColor(.primary)
                     .background(Color.white)
@@ -317,32 +314,10 @@ struct TestModeCarousel<Items : View> : View {
 
         var calcOffset = Float(activeOffset)
         
-//        if (calcOffset != Float(nextOffset)) {
-//            calcOffset = Float(activeOffset) + UIState.screenDrag
-//        }
-        
         return HStack(alignment: .center, spacing: spacing) {
             items
         }
         .offset(x: CGFloat(calcOffset), y: 0)
-//        .gesture(DragGesture().updating($isDetectingLongPress) { currentState, gestureState, transaction in
-//            self.UIState.screenDrag = Float(currentState.translation.width)
-//
-//        }.onEnded { value in
-//            self.UIState.screenDrag = 0
-//
-//            if (value.translation.width < -50) {
-//                self.UIState.activeCard = self.UIState.activeCard + 1
-//                let impactMed = UIImpactFeedbackGenerator(style: .medium)
-//                impactMed.impactOccurred()
-//            }
-//
-//            if (value.translation.width > 50) {
-//                self.UIState.activeCard = self.UIState.activeCard - 1
-//                let impactMed = UIImpactFeedbackGenerator(style: .medium)
-//                impactMed.impactOccurred()
-//            }
-//        })
     }
 }
 
@@ -444,7 +419,8 @@ struct TrueFalse: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
+            VStack {
+                Spacer()
                 HStack {
                     Spacer()
                     Button("True") {
@@ -468,8 +444,7 @@ struct TrueFalse: View {
                     Spacer()
                 }
                 .frame(height: geometry.size.height * 0.2)
-                .padding()
-                //
+                Spacer()
             }
         }
     }
@@ -479,14 +454,11 @@ struct TestModeButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-            //                .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.05, alignment: .center)
             .font(.headline)
             .foregroundColor(.white)
             .background(RoundedRectangle(cornerRadius: 5)
                             .fill(configuration.isPressed ? Color(hex: "15CDA8") : Color.accentColor))
             .padding()
-        
-        
     }
 }
 
@@ -494,25 +466,41 @@ struct MultipleChoice: View {
     @ObservedObject var testModeViewModel: TestModeViewModel
     
     var body: some View {
-        VStack {
-            ForEach(testModeViewModel.mcqOptions, id: \.self) { option in
-                Button(action: {
-                    self.testModeViewModel.submitAnswer(option)
-                    let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                    impactMed.impactOccurred()
-                }, label: {
-                    Text("\(option)")
-                })
-                .padding()
+        GeometryReader { geometry in
+            VStack {
+                Spacer()
+                ForEach(testModeViewModel.mcqOptions, id: \.self) { option in
+                    Button(action: {
+                        self.testModeViewModel.submitAnswer(option)
+                        let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                        impactMed.impactOccurred()
+                    }, label: {
+                        Text("\(option)")
+                            .padding()
+                    })
+                    .buttonStyle(MultipleChoiceButtonStyle())
+                    .padding(.vertical, 4)
+                    .frame(height: geometry.size.height * 0.2)
+                }
+                
+            }
+            .onAppear {
+                self.testModeViewModel.setMCQOptions()
             }
         }
-        .onAppear {
-            self.testModeViewModel.setMCQOptions()
-        }
+        
     }
 }
 
-
+struct MultipleChoiceButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
+            .foregroundColor(.primary)
+            .background(RoundedRectangle(cornerRadius: 5)
+                            .strokeBorder(configuration.isPressed ? Color(hex: "15CDA8") : Color.accentColor, lineWidth: 2))
+    }
+}
 
 //struct TestModeView_Previews: PreviewProvider {
 //    static var previews: some View {

@@ -70,13 +70,13 @@
 		166B1E962670B45A00D3922B /* FlashcardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E952670B45900D3922B /* FlashcardRepository.swift */; };
 		166B1E972670B45A00D3922B /* FlashcardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E952670B45900D3922B /* FlashcardRepository.swift */; };
 		166B1E982670B45A00D3922B /* FlashcardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166B1E952670B45900D3922B /* FlashcardRepository.swift */; };
+		1681C3AE26A5B72700EB964D /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1681C3AD26A5B72700EB964D /* CustomButtonStyle.swift */; };
 		16AB3E5F2692386B00B9DF86 /* TestModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AB3E5E2692386B00B9DF86 /* TestModeView.swift */; };
 		16AB3E61269245DD00B9DF86 /* TestModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AB3E60269245DD00B9DF86 /* TestModeViewModel.swift */; };
 		16AB3E632694B4ED00B9DF86 /* FirstResponderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AB3E622694B4ED00B9DF86 /* FirstResponderTextField.swift */; };
 		16AB3E652695FC7700B9DF86 /* TestModeSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AB3E642695FC7700B9DF86 /* TestModeSummaryView.swift */; };
 		16AB3E67269ED17100B9DF86 /* ReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AB3E66269ED17100B9DF86 /* ReminderViewModel.swift */; };
 		16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285EC2656EB020068AB95 /* QuizorizeApp.swift */; };
-		16C285EF2656EB020068AB95 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285EE2656EB020068AB95 /* ContentView.swift */; };
 		16C285F12656EB030068AB95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16C285F02656EB030068AB95 /* Assets.xcassets */; };
 		16C285F42656EB030068AB95 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16C285F32656EB030068AB95 /* Preview Assets.xcassets */; };
 		16C285F62656EB030068AB95 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285F52656EB030068AB95 /* Persistence.swift */; };
@@ -155,6 +155,7 @@
 		166B1E892666575300D3922B /* Flashcard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flashcard.swift; sourceTree = "<group>"; };
 		166B1E8D266F8B9800D3922B /* DeckListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckListViewModel.swift; sourceTree = "<group>"; };
 		166B1E952670B45900D3922B /* FlashcardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardRepository.swift; sourceTree = "<group>"; };
+		1681C3AD26A5B72700EB964D /* CustomButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyle.swift; sourceTree = "<group>"; };
 		16AB3E5E2692386B00B9DF86 /* TestModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestModeView.swift; sourceTree = "<group>"; };
 		16AB3E60269245DD00B9DF86 /* TestModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestModeViewModel.swift; sourceTree = "<group>"; };
 		16AB3E622694B4ED00B9DF86 /* FirstResponderTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstResponderTextField.swift; sourceTree = "<group>"; };
@@ -162,7 +163,6 @@
 		16AB3E66269ED17100B9DF86 /* ReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewModel.swift; sourceTree = "<group>"; };
 		16C285E92656EB020068AB95 /* Quizorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C285EC2656EB020068AB95 /* QuizorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeApp.swift; sourceTree = "<group>"; };
-		16C285EE2656EB020068AB95 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		16C285F02656EB030068AB95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		16C285F32656EB030068AB95 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		16C285F52656EB030068AB95 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -242,7 +242,6 @@
 				16E701CC267656A700A1E55D /* Auth */,
 				7700BC5D266F6352004C5C82 /* PracticeModeView */,
 				77541625266A046900BE8273 /* DeckCreation */,
-				16C285EE2656EB020068AB95 /* ContentView.swift */,
 				162792EB265AD1240073718F /* HomeView.swift */,
 				16279300265BFF7B0073718F /* LaunchView.swift */,
 				162793562660F7450073718F /* ProfileView.swift */,
@@ -258,6 +257,7 @@
 				77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */,
 				16279329265C1D840073718F /* Helper.swift */,
 				162792F0265ADDC90073718F /* TextFieldClearButton.swift */,
+				1681C3AD26A5B72700EB964D /* CustomButtonStyle.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -779,7 +779,6 @@
 				16279301265BFF7B0073718F /* LaunchView.swift in Sources */,
 				16AB3E67269ED17100B9DF86 /* ReminderViewModel.swift in Sources */,
 				16C285F62656EB030068AB95 /* Persistence.swift in Sources */,
-				16C285EF2656EB020068AB95 /* ContentView.swift in Sources */,
 				162792E8265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				162792F1265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
 				7700BC5F266F6375004C5C82 /* PracticeModeFlashCard.swift in Sources */,
@@ -795,6 +794,7 @@
 				7700BC6926710470004C5C82 /* FlashcardGradeModel.swift in Sources */,
 				77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */,
 				166B1E8E266F8B9800D3922B /* DeckListViewModel.swift in Sources */,
+				1681C3AE26A5B72700EB964D /* CustomButtonStyle.swift in Sources */,
 				16E701CE2677AD6E00A1E55D /* DeckViewModel.swift in Sources */,
 				16E701DE2682265300A1E55D /* CustomNavigationView.swift in Sources */,
 				166B1E7D26656A8E00D3922B /* SearchView.swift in Sources */,

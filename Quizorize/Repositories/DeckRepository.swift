@@ -85,9 +85,18 @@ class DeckRepository: ObservableObject {
         guard let documentId = deck.id else { return }
         do {
             try db.collection(primaryPath).document(self.uId)
-                .collection(subPath).document(documentId).setData(from: deck)
+                .collection(subPath).document(documentId).setData(from: deck, merge: true)
         } catch {
             fatalError("Updating deck failed")
         }
+    }
+    
+    func updateTestPrevScore(deck: Deck, testModePrevScore: Double) {
+        guard let documentId = deck.id else { return }
+        
+        db.collection(primaryPath).document(self.uId)
+            .collection(subPath).document(documentId).updateData([
+                "testModePrevScore": testModePrevScore
+            ])
     }
 }

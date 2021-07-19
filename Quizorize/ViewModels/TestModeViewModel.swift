@@ -9,7 +9,9 @@ import Foundation
 import Combine
 
 class TestModeViewModel: ObservableObject {
-    @Published var flashcardRepository: FlashcardRepository
+    private var deckRepository = DeckRepository()
+    private var flashcardRepository: FlashcardRepository
+    
     @Published var testFlashcards = [FlashcardViewModel]()
     
     @Published var counter = 0
@@ -26,9 +28,6 @@ class TestModeViewModel: ObservableObject {
     
     @Published var tfOption = ""
     @Published var mcqOptions = [String]()
-    
-    @Published var latestScore = 0.0
-    @Published var hasTakenTest = false
     
     @Published var spacedRepetitionOn = true
     @Published var reminderType = ReminderType.never
@@ -126,9 +125,13 @@ class TestModeViewModel: ObservableObject {
         self.tfOption = tfOptions.randomElement()?.flashcard.answer ?? ""
     }
     
-    func setLatestScore() {
-        self.latestScore = Double(self.correct) / Double(self.count)
-        self.hasTakenTest = true
+    func setLatestScore(_ deck: Deck) {
+        deckRepository.updateTestPrevScore(deck: deck, testModePrevScore: calculateScore())
+    }
+    
+    
+    func calculateScore() -> Double {
+        Double(self.correct) / Double(self.count)
     }
     
     func setNextReminderTime() {
