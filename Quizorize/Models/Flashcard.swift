@@ -23,9 +23,9 @@ struct Flashcard: Identifiable, Codable, Equatable {
     var nextDate: TimeInterval?
 
     static func ==(lhs: Flashcard, rhs: Flashcard) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id && lhs.dateAdded == rhs.dateAdded
     }
-    
+
     
 //    enum FlashCardAge: String, Codable {
 //        case new

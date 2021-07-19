@@ -11,7 +11,7 @@ import SwiftUI
 struct CarouselView: View {
     
     @GestureState private var dragState = DragState.inactive
-    @State var carouselLocation = 0
+    @Binding var carouselLocation: Int
     
     var itemHeight:CGFloat
     @ObservedObject var flashcardListVM: FlashcardListViewModel
@@ -28,9 +28,11 @@ struct CarouselView: View {
         let dragThreshold:CGFloat = 200
         if (drag.predictedEndTranslation.width > dragThreshold || drag.translation.width > dragThreshold) && carouselLocation != 0{
             carouselLocation =  carouselLocation - 1
+            print(carouselLocation)
         } else if ((drag.predictedEndTranslation.width) < (-1 * dragThreshold) || (drag.translation.width) < (-1 * dragThreshold)) && carouselLocation != flashcardListVM.flashcardViewModels.count - 1
         {
             carouselLocation =  carouselLocation + 1
+            print(carouselLocation)
         }
     }
     
@@ -245,7 +247,7 @@ struct Fancy3DotsIndexView: View {
         HStack(spacing: circleSpacing) {
             ForEach(flashcardListVM.flashcardViewModels) { flashcard in // 1
                 let index = flashcardListVM.flashcardViewModels.firstIndex(where: {$0.id == flashcard.id})!
-                
+
                 if shouldShowIndex(index) {
                     Circle()
                         .fill(currentIndex == index ? primaryColor : secondaryColor) // 2

@@ -9,6 +9,7 @@ import Foundation
 import UserNotifications
 
 
+
 //MARK: Protocol for Spaced repetition algo
 //Grade a 'Flashcard' with grade and time
 //Parameters:
@@ -16,12 +17,9 @@ import UserNotifications
 // - grade: Grade(enum)
 // -currentDateTime: TimeInterval
 // - Returns gradedCard: Flashcard
-protocol SREngine {
-    func gradeFlashcard(flashcard: Flashcard, grade: Grade, currentDateTime: TimeInterval) -> Flashcard
-    
-}
 
-public struct FlashcardGrader: SREngine {
+/*
+struct FlashcardGrader: SREngine {
     private let maxQuality = 2
     private let easinessFactor = 1.3
     
@@ -137,3 +135,4 @@ public enum Grade: Int, CustomStringConvertible {
         }
     }
 }
+*/
