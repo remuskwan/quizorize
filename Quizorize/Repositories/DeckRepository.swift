@@ -45,7 +45,7 @@ class DeckRepository: ObservableObject {
                                 if let err = err {
                                     print("Error updating Deck")
                                 } else {
-                                    print("Flashcard successfully updated")
+                                    print("Deck successfully updated")
                                 }
                             }
                             

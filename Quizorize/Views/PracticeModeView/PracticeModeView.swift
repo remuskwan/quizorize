@@ -141,8 +141,9 @@ struct PracticeModeView: View {
                                         ToolbarItem(placement: .navigationBarLeading) {
                                             Button {
                                                 self.practiceModeViewModel.reset()
-                                                if self.practiceModeViewModel.isSpacedRepetitionOn {
-                                                    print(correctCount / totalQuestionsAnswered)
+                                                if self.practiceModeViewModel.isSpacedRepetitionOn && !self.practiceModeViewModel.finalisedFlashcards.isEmpty {
+                                                    print("Current score is \(correctCount / totalQuestionsAnswered)")
+                                                    
                                                     didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, correctCount / totalQuestionsAnswered, self.practiceModeViewModel.getNotificationTimeInterval())
                                                     
                                                 }
