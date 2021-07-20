@@ -24,8 +24,10 @@ struct PracticeModeView: View {
     
     @State private var showingTest = false
     @State private var showingEndTestAlert = false
-    @State private var isSpacedRepetitionOn: Bool = false
+    @State private var showHint = false
     
+    
+
     //To update DB
     var didFinishDeck: (_ updatedFlashcards: [Flashcard], _ score: Double, _ reminderTime: TimeInterval) -> Void
     
@@ -80,7 +82,8 @@ struct PracticeModeView: View {
                                     .listRowBackground(Color.accentColor)
                                 }
                                 
-                                Section(header: Text("Reminders")) {
+
+                                Section(header: Text("Reminders"), footer: Text("Let Quizorize plan your next studying date! (Toggle On/Off to switch)").font(.footnote.bold())) {
                                     Toggle(isOn: $practiceModeViewModel.isSpacedRepetitionOn, label: {
                                         Text("Spaced Repetition")
                                     })
@@ -98,8 +101,12 @@ struct PracticeModeView: View {
                                     }
                                 }
                                 ToolbarItem(placement: .navigationBarTrailing) {
-                                    Image(systemName: "questionmark.circle")
-                                        .frame(width: 24, height: 24)
+                                    Button {
+                                        self.showHint = true
+                                    } label: {
+                                        Image(systemName: "questionmark.circle")
+                                            .frame(width: 24, height: 24)
+                                    }
                                 }
                             })
                         } else {
@@ -173,6 +180,28 @@ struct PracticeModeView: View {
                             .offset(y: -300) //Not sure how to dynamically adjust this, giving fixed value for now
                     }
                 }
+                .sheet(isPresented: self.$showHint) {
+                    PracticeHintView()
+                }
+                
+            }
+        }
+    }
+    
+    var practiceModeView: some View {
+        VStack {
+            if practiceModeViewModel.isTesting {
+                Text("\(practiceModeViewModel.counter) / \(practiceModeViewModel.count)")
+                
+                //testView
+                testView
+            }
+            else {
+                //Put Exam Summary here.
+                summaryView
+                    .onAppear {
+                        self.practiceModeViewModel.pushToFinalisedFlashcards()
+                    }
             }
         }
     }
@@ -236,6 +265,7 @@ struct PracticeModeView: View {
                         else {
                             
                             Text("You have finished the deck!")
+                                .padding()
                             
                             if !practiceModeViewModel.isSpacedRepetitionOn {
                                 Button {
@@ -245,6 +275,11 @@ struct PracticeModeView: View {
                                 .font(.headline)
                                 .frame(width: geometry.size.width * 0.8, height: 32)
                                 }
+                            }
+                            
+                            if practiceModeViewModel.isSpacedRepetitionOn {
+                                Text("(Flashcards will be shown on the study date at 4PM)")
+                                    
                             }
                         }
                         

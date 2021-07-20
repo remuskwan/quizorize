@@ -113,6 +113,7 @@ struct DeckCreationView: View {
                     }
                   })
             .textFieldStyle(CustomTextFieldStyle(isFieldTapped: $isDeckTitleTapped, captionTitle: StringConstants.title, imageName: "title"))
+            .autocapitalization(UITextAutocapitalizationType.words)
 
     }
     

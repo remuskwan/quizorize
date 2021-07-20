@@ -89,8 +89,8 @@ class PracticeModeViewModel: ObservableObject {
         self.counter = 0
 
         self.flipStatuses = [String: Bool]()
-        
-        let timeIntervalAsOfClick = Date().timeIntervalSince1970
+        let timeIntervalAsOfClick = floor(Date().timeIntervalSince1970 / 86400) * 86400 + 57600 //set to 4pm
+        //let timeIntervalAsOfClick = Date().timeIntervalSince1970
         self.timeIntervalAsOfClick = timeIntervalAsOfClick
         
         let flashcardsDue = practiceFlashcards.map { flashcardVM in
@@ -158,7 +158,9 @@ class PracticeModeViewModel: ObservableObject {
             earliestDate = earliestDBDate
             print(Date(timeIntervalSince1970: earliestDate))
         } else {
-            
+            if earliestDate == 0 {
+                earliestDate = self.timeIntervalAsOfClick
+            }
         }
         
         return earliestDate
@@ -220,7 +222,9 @@ class PracticeModeViewModel: ObservableObject {
         } else if let latestDBDate = sortedDBFlashcards.last?.previousDate {
             dateOfCompletion = latestDBDate
         } else {
-            
+            if dateOfCompletion == 0 { //means that this is the first round of testing by the user
+                dateOfCompletion = self.timeIntervalAsOfClick
+            }
         }
         
         /*
