@@ -104,8 +104,6 @@ struct DeckCreationView: View {
     }
     
     var deckTitleView: some View {
-        
-        
         TextField(StringConstants.titlePlaceholder, text: $deckCreationVM.deckTitle,
                   onEditingChanged: { edit in
                     withAnimation(.easeIn(duration: DrawingConstants.easeInDuration)) {
@@ -113,7 +111,6 @@ struct DeckCreationView: View {
                     }
                   })
             .textFieldStyle(CustomTextFieldStyle(isFieldTapped: $isDeckTitleTapped, captionTitle: StringConstants.title, imageName: "title"))
-            .autocapitalization(UITextAutocapitalizationType.words)
 
     }
     
@@ -226,7 +223,7 @@ struct CustomTextFieldStyle: TextFieldStyle {
 
                 configuration
                     .disableAutocorrection(true)
-                    .autocapitalization(.none)
+//                    .autocapitalization(.none)
             }
             .font(.body)
 

@@ -49,8 +49,6 @@ struct TestModeSummaryView: View {
                     })
                     Spacer()
                 }
-//                .navigationTitle("Test Results")
-//                .navigationBarTitleDisplayMode(.inline)
                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
             }
         }
@@ -74,8 +72,12 @@ struct SummaryProgressBar: View {
                 .foregroundColor(.accentColor)
                 .rotationEffect(Angle(degrees: 270.0))
                 .animation(.linear(duration: 0.7))
-            Text(String(format: "%.0f%%", min(self.progress, 1.0) * 100.0))
+            VStack {
+                Text(String(format: "%.0f%%", min(self.progress, 1.0) * 100.0))
                 .font(.largeTitle.bold())
+                Text("LAST SCORE")
+                    .font(.footnote)
+            }
         }
     }
 }

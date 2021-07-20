@@ -73,6 +73,7 @@ struct Search: View {
                     }
                 }
             }
+            
         }
         .padding(.horizontal, 12)
     }

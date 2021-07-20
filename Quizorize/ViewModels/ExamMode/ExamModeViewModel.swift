@@ -226,24 +226,6 @@ struct ExamModeViewModel {
         return cardViewModelsDue
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     //Engine to run the algo
     struct FlashcardGrader {
         private let maxQuality = 2

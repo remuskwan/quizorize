@@ -117,13 +117,6 @@ struct Login : View {
                         }
                         
                         Group {
-//                            NavigationLink(
-//                                destination: RecoverPasswordView(),
-//                                label: {
-//                                    Text("Forgot password?")
-//                                        .font(.caption)
-//                                })
-//                                .padding(.vertical, 10)
                             Button(action: {
                                 showRecoverPassword.toggle()
                             }, label: {
@@ -166,26 +159,12 @@ struct Login : View {
                     destination: RegisterView(),
                     label: {
                         Text("Register")
-                        //                            .foregroundColor(.purple)
                     })
                     .padding(.horizontal, 6)
             }
             
             .padding()
         }
-//        .navigationBarBackButtonHidden(true)
-//        .toolbar {
-//            ToolbarItem(placement: .navigationBarLeading) {
-//                Button(action: {
-//                    self.presentationMode.wrappedValue.dismiss()
-//                }, label: {
-//                    Image(systemName: "chevron.left")
-//                        .font(.headline)
-//                })
-//                .frame(maxWidth: .infinity, alignment: .leading)
-//                .padding()
-//            }
-//        }
         .padding(.horizontal, 20)
     }
         
@@ -217,14 +196,10 @@ struct SignInButton: View {
 
 struct SignInWithGoogle: View {
     @EnvironmentObject var viewModel: AuthViewModel
-//    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         Button(action: {
             viewModel.signIn(with: .signInWithGoogle)
-//            if viewModel.signedIn {
-//                presentationMode.wrappedValue.dismiss()
-//            }
         }, label: {
             HStack {
                 Image("google")
@@ -236,12 +211,12 @@ struct SignInWithGoogle: View {
                     .foregroundColor(.primary)
             }
             .padding(12)
-            .frame(width: 280, height: 45, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            .frame(width: 280, height: 45, alignment: .center)
             
         })
         .background(RoundedRectangle(cornerRadius: 5)
-                        .strokeBorder(Color.primary, lineWidth: 1))
-//        NavigationLink(destination: DecksView(), isActive: $viewModel.signedIn) {EmptyView()}
+                        .strokeBorder(Color.primary, lineWidth: 1)
+                        .background(Color.white.cornerRadius(5)))
     }
 }
 
