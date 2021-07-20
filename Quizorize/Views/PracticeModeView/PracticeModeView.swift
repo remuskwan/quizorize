@@ -83,7 +83,13 @@ struct PracticeModeView: View {
                                 }
                                 
 
-                                Section(header: Text("Reminders"), footer: Text("Let Quizorize plan your next studying date! (Toggle On/Off to switch)").font(.footnote.bold())) {
+                                Section(header:
+                                            Text("Reminders"),
+                                        footer:
+                                            VStack(alignment: .center) {
+                                              Text("Let Quizorize plan your next studying date!").font(.footnote)
+                                            })
+                                             {
                                     Toggle(isOn: $practiceModeViewModel.isSpacedRepetitionOn, label: {
                                         Text("Spaced Repetition")
                                     })
@@ -110,6 +116,8 @@ struct PracticeModeView: View {
                                 }
                             })
                         } else {
+                            practiceModeView
+                            /*
                             if practiceModeViewModel.isTesting {
                                 Text("\(practiceModeViewModel.counter) / \(practiceModeViewModel.count)")
                                 
@@ -165,6 +173,7 @@ struct PracticeModeView: View {
                                         }
                                     })
                             }
+                            */
                         }
                     }
                     /*
@@ -195,6 +204,41 @@ struct PracticeModeView: View {
                 
                 //testView
                 testView
+                    .toolbar(content: {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button {
+                                self.showingEndTestAlert = true
+                                //presentationMode.wrappedValue.dismiss()
+                            } label: {
+                                Image(systemName: "multiply")
+                            }
+                        }
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                self.showHint = true
+                            } label: {
+                                Image(systemName: "questionmark.circle")
+                                    .frame(width: 24, height: 24)
+                            }
+                        }
+                    })
+                    .alert(isPresented: $showingEndTestAlert, content: {
+                        Alert(title: Text("Are you sure you want to end this practice?"),
+                              message: Text("Spaced Repetition results from this round of flashcards will NOT be saved."),
+                              primaryButton: .cancel(),
+                              secondaryButton: .default(Text("End Test")) {
+                                presentationMode.wrappedValue.dismiss()
+                                if self.practiceModeViewModel.isSpacedRepetitionOn && !self.practiceModeViewModel.changedFinalisedFlashcards.isEmpty {
+                                    print("Current score is \(correctCount / totalQuestionsAnswered)")
+                                    
+                                    didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, correctCount / totalQuestionsAnswered, self.practiceModeViewModel.getNotificationTimeInterval())
+                                    
+                                    print("Deck and flashcards successfully updated")
+                                    
+                                }
+                                self.practiceModeViewModel.reset()
+                              })
+                    })
             }
             else {
                 //Put Exam Summary here.
@@ -202,6 +246,30 @@ struct PracticeModeView: View {
                     .onAppear {
                         self.practiceModeViewModel.pushToFinalisedFlashcards()
                     }
+                    .toolbar(content: {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button {
+                                self.practiceModeViewModel.reset()
+                                if self.practiceModeViewModel.isSpacedRepetitionOn && !self.practiceModeViewModel.changedFinalisedFlashcards.isEmpty {
+                                    print("Current score is \(correctCount / totalQuestionsAnswered)")
+                                    
+                                    didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, correctCount / totalQuestionsAnswered, self.practiceModeViewModel.getNotificationTimeInterval())
+                                    
+                                }
+                                presentationMode.wrappedValue.dismiss()
+                            } label: {
+                                Image(systemName: "multiply")
+                            }
+                        }
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                self.showHint = true
+                            } label: {
+                                Image(systemName: "questionmark.circle")
+                                    .frame(width: 24, height: 24)
+                            }
+                        }
+                    })
             }
         }
     }

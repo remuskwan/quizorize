@@ -52,6 +52,10 @@ class PracticeModeViewModel: ObservableObject {
         spacedRepetitionModel.finalisedFlashcards
     }
     
+    var changedFinalisedFlashcards: [Flashcard] {
+        spacedRepetitionModel.changedFinalisedFlashcards
+    }
+    
     private var yetToFinishQuizzingPublisher: AnyPublisher<Bool, Never> {
             $counter
             .debounce(for: 0.2, scheduler: RunLoop.main)

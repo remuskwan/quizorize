@@ -87,6 +87,12 @@ struct ExamModeViewModel {
             $0.nextDate ?? 0 <= $1.nextDate ?? 0
         }
     }
+    
+    var changedFinalisedFlashcards: [Flashcard] {
+        self.finalisedFlashcards.filter { flashcard in
+            self.updatedFlashcards.contains(where: { $0.nextDate ?? 0 != flashcard.nextDate ?? 0})
+        }
+    }
     /*
     //Helper for Date in String
     private func getEarliestNextDate() -> Date {
