@@ -129,10 +129,13 @@ class AuthViewModel : NSObject, ObservableObject {
     }
     
     func signOut() {
+        user = nil //Test to see if this will work
         GIDSignIn.sharedInstance()?.signOut()
         
         do {
             try auth.signOut()
+            print(auth.currentUser?.displayName)
+            print(auth.currentUser)
             self.signedIn = false
         } catch let signOutError as NSError {
             print(signOutError.localizedDescription)
@@ -297,23 +300,6 @@ class AuthViewModel : NSObject, ObservableObject {
         }
     }
     
-    //MARK: Return false if user does not have a displayName yet
-    /*
-    @Published private var userDoesNotHaveDisplayName = true
-    
-    func checkIfUserHasDisplayName() -> Bool {
-        if let displayName = user?.displayName {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    func toggleUserDisplayNameExistence() {
-        userDoesNotHaveDisplayName.toggle()
-    }
-    */
-
 }
 
 extension AuthViewModel: GIDSignInDelegate {

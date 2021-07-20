@@ -51,7 +51,7 @@ final class FlashcardRepository: ObservableObject {
                             if let err = err {
                                 print("Error updating Flashcard")
                             } else {
-                                print("Flashcard successfully updated")
+                                print("Flashcard successfully updatedd")
                             }
                         }
                         
@@ -88,7 +88,15 @@ final class FlashcardRepository: ObservableObject {
         do {
             try db.collection(path).document(self.uId)
                 .collection(subPath).document(self.deckId)
-                .collection(subPath2).document(documentId).setData(from: flashcard)
+                .collection(subPath2).document(documentId).updateData([
+                    "prompt": flashcard.prompt,
+                    "answer": flashcard.answer,
+                    "repetition": flashcard.repetition,
+                    "interval": flashcard.interval,
+                    "easinessFactor": flashcard.easinessFactor,
+                    "previousDate": flashcard.previousDate,
+                    "nextDate": flashcard.nextDate
+                ])
         } catch {
             fatalError("Updating deck failed")
         }
