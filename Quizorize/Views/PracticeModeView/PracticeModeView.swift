@@ -144,14 +144,17 @@ struct PracticeModeView: View {
         VStack {
             if practiceModeViewModel.isTesting {
                 Text("\(practiceModeViewModel.counter) / \(practiceModeViewModel.count)")
-                
+
                 //testView
                 testView
                     .toolbar(content: {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button {
-                                self.showingEndTestAlert = true
-                                //presentationMode.wrappedValue.dismiss()
+                                if self.practiceModeViewModel.isSpacedRepetitionOn {
+                                    self.showingEndTestAlert = true
+                                } else {
+                                    presentationMode.wrappedValue.dismiss()
+                                }
                             } label: {
                                 Image(systemName: "multiply")
                             }
@@ -242,9 +245,9 @@ struct PracticeModeView: View {
                 GeometryReader { geometry in
                     VStack {
                         Spacer()
-                        Text("Your Latest Score")
+                        Text(practiceModeViewModel.isSpacedRepetitionOn ? "Your aggregate score for all rounds" : "Your Latest Score")
                             .font(.title.bold())
-                        
+
                         SummaryProgressBar(progress: $progressValue)
                             .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.4)
                             .padding()
@@ -253,12 +256,14 @@ struct PracticeModeView: View {
                                 self.progressValue = (correctCount / totalQuestionsAnswered).isNaN ? self.prevExamScore : (correctCount / totalQuestionsAnswered)
                             }
                         
-                        Text("Date of Completion: \(practiceModeViewModel.dateOfCompletionInString())")
-                            .padding()
-                        
-                        Text("Next Study Date: \(practiceModeViewModel.earliestDateInString())")
-                            .padding()
-                        
+                        if practiceModeViewModel.isSpacedRepetitionOn {
+                            Text("Date of Completion: \(practiceModeViewModel.dateOfCompletionInString())")
+                                .padding()
+                            
+                            Text("Next Study Date: \(practiceModeViewModel.earliestDateInString())")
+                                .padding()
+                        }
+
 
                         if practiceModeViewModel.isSpacedRepetitionOn && practiceModeViewModel.intervalIsZero() {
                                 Text("Looks like you need to study more 🤓")
@@ -281,6 +286,10 @@ struct PracticeModeView: View {
                             if !practiceModeViewModel.isSpacedRepetitionOn {
                                 Button {
                                    self.practiceModeViewModel.reset()
+                                    if practiceModeViewModel.isSpacedRepetitionOn {
+                                        self.correctCount = 0
+                                        self.totalQuestionsAnswered = 0
+                                    }
                                 } label: {
                                 Text("Reset")
                                 .font(.headline)

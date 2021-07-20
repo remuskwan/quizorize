@@ -90,7 +90,7 @@ struct ExamModeViewModel {
     
     var changedFinalisedFlashcards: [Flashcard] {
         self.finalisedFlashcards.filter { flashcard in
-            self.updatedFlashcards.contains(where: { $0.nextDate ?? 0 != flashcard.nextDate ?? 0})
+            flashcard.nextDate ?? 0 > self.timeIntervalAsOfClick
         }
     }
     /*
