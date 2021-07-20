@@ -15,10 +15,17 @@ struct Flashcard: Identifiable, Codable, Equatable {
 //    var flashCardAge: FlashCardAge
     var dateAdded: Date = Date()
     
+    //MARK: SR Algo vars
+    var repetition = 0
+    var interval = 0
+    var easinessFactor = 2.5
+    var previousDate: TimeInterval?
+    var nextDate: TimeInterval?
+
     static func ==(lhs: Flashcard, rhs: Flashcard) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id && lhs.dateAdded == rhs.dateAdded
     }
-    
+
     
 //    enum FlashCardAge: String, Codable {
 //        case new

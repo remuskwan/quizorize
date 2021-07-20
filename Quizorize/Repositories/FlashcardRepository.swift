@@ -38,7 +38,25 @@ final class FlashcardRepository: ObservableObject {
             }
             if let querySnapshot = querySnapshot {
                 self.flashcards = querySnapshot.documents.compactMap({ document in
-                    try? document.data(as: Flashcard.self)
+                    if let flashcard = try? document.data(as: Flashcard.self) {
+                        return flashcard
+                    } else {
+                        document.reference.updateData([
+                            "repetition": 0,
+                            "interval": 0,
+                            "easinessFactor": 2.5,
+                            "previousDate": nil,
+                            "nextDate": nil
+                        ]) { err in
+                            if let err = err {
+                                print("Error updating Flashcard")
+                            } else {
+                                print("Flashcard successfully updatedd")
+                            }
+                        }
+                        
+                        return try? document.data(as: Flashcard.self)
+                    }
                 })
             }
         }
@@ -70,7 +88,15 @@ final class FlashcardRepository: ObservableObject {
         do {
             try db.collection(path).document(self.uId)
                 .collection(subPath).document(self.deckId)
-                .collection(subPath2).document(documentId).setData(from: flashcard)
+                .collection(subPath2).document(documentId).updateData([
+                    "prompt": flashcard.prompt,
+                    "answer": flashcard.answer,
+                    "repetition": flashcard.repetition,
+                    "interval": flashcard.interval,
+                    "easinessFactor": flashcard.easinessFactor,
+                    "previousDate": flashcard.previousDate,
+                    "nextDate": flashcard.nextDate
+                ])
         } catch {
             fatalError("Updating deck failed")
         }

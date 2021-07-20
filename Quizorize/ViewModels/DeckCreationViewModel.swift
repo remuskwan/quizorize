@@ -12,8 +12,12 @@ class DeckCreationViewModel: ObservableObject {
     
     
     init() {
-        self.model = DeckCreationModel(minimumNumberOfCards: 2)
+        //self.model = DeckCreationModel(minimumNumberOfCards: 2)
         self.deckTitle = ""
+        
+        self.flashcards = []
+        self.flashcards.append(EmptyFlashcard(id: UUID().uuidString, dateAdded: Date()))
+        self.flashcards.append(EmptyFlashcard(id: UUID().uuidString, dateAdded: Date()))
     }
     
     init(flashcardListVM: FlashcardListViewModel, deckVM: DeckViewModel) {
@@ -22,34 +26,41 @@ class DeckCreationViewModel: ObservableObject {
                 flashcardVM.flashcard
             }
             .map { flashcard in
-                DeckCreationModel.EmptyFlashcard(id: flashcard.id!, prompt: flashcard.prompt, answer: flashcard.answer, dateAdded: flashcard.dateAdded)
+                /*DeckCreationModel.*/EmptyFlashcard(id: flashcard.id!, prompt: flashcard.prompt, answer: flashcard.answer, dateAdded: flashcard.dateAdded)
             }
         
         let deckTitle = deckVM.deck.title
         
         self.deckTitle = deckTitle
+        self.flashcards = flashcards
         
-        self.model = DeckCreationModel(flashcards, deckTitle)
+        //self.model = DeckCreationModel(flashcards, deckTitle)
+
     }
     
     //MARK: Interpret(s) from Model
-    @Published private var model: DeckCreationModel
-    
+    //@Published private var model: DeckCreationModel
+
     @Published var alertMessage = ""
     
     @Published var isNotValid = false
     
     @Published var deckTitle: String
+    
+    @Published var flashcards: [EmptyFlashcard]
 
+    /*
     var flashcards: [DeckCreationModel.EmptyFlashcard] {
         model.flashcards
     }
-    
+    */
+
     func hasDeckTitleEmpty() -> Bool {
         return self.deckTitle == ""
     }
     
     func hasAnyFieldsEmpty() -> Bool {
+        print(flashcards)
         for flashcard in flashcards {
             if flashcard.prompt == "" || flashcard.answer == "" {
                 return true
@@ -67,23 +78,59 @@ class DeckCreationViewModel: ObservableObject {
     //MARK: Intent(s) from View
     
     func addFlashcard() {
-        model.addFlashcard()
+        flashcards.append(EmptyFlashcard(id: UUID().uuidString, dateAdded: Date()))
+        //model.addFlashcard()
     }
     
-    func removeFields(at index: IndexSet) {
-        model.removeFields(at: index)
+    func removeFields(at indexSet: IndexSet) {
+        //model.removeFields(at: indexSet)
+
+        flashcards.remove(atOffsets: indexSet)
     }
     
     func editPromptWith(string: String, at index: Int) {
-        model.editPromptWith(string, at: index)
+        //model.editPromptWith(string, at: index)
+        flashcards[index].prompt = string
     }
     
     func editAnswerWith(string: String, at index: Int) {
-        model.editAnswerWith(string, at: index)
+        //model.editAnswerWith(string, at: index)
+        flashcards[index].answer = string
     }
     
     func getFinalisedFlashcards() -> [Flashcard] {
-        model.getFinaliseFlashcards()
+        //model.getFinaliseFlashcards()
+        let finalFlashcards = self.flashcards
+            .map { flashcard in
+                Flashcard(id: flashcard.id, prompt: flashcard.prompt, answer: flashcard.answer, dateAdded: flashcard.dateAdded, repetition: flashcard.repetition, interval: flashcard.interval, easinessFactor: flashcard.easinessFactor, previousDate: flashcard.previousDate, nextDate: flashcard.nextDate)
+            }
+        
+        return finalFlashcards
+    }
+    
+    struct EmptyFlashcard: Identifiable, Equatable {
+        private struct Initialisers {
+            static let promptInit = ""
+            static let answerInit = ""
+        }
+        
+        var id: String
+        var prompt = Initialisers.promptInit
+        var answer = Initialisers.answerInit
+        var dateAdded: Date
+        
+        //MARK: SR Algo vars
+        var repetition = 0
+        var interval = 0
+        var easinessFactor = 2.5
+        var previousDate: TimeInterval?
+        var nextDate: TimeInterval?
+
+        
+        static func ==(lhs: EmptyFlashcard, rhs: EmptyFlashcard) -> Bool {
+            lhs.id == rhs.id
+        }
+        
     }
     
 }

@@ -13,6 +13,11 @@ struct Deck: Identifiable, Codable {
     var title: String
     var isFavorite: Bool = false
     var dateCreated: Date = Date()
+    
+    //MARK: SR Algo
+    var isExamMode: Bool = false
+    var testModePrevScore: Double? = nil
+    var examModePrevScore: Double = 0
 }
 
 #if DEBUG

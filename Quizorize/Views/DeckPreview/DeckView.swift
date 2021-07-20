@@ -8,38 +8,43 @@
 import SwiftUI
 
 struct DeckView: View {
-    
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var reminderViewModel: ReminderViewModel
     @ObservedObject var deckListViewModel: DeckListViewModel
     @ObservedObject var deckViewModel: DeckViewModel
     @ObservedObject var flashcardListViewModel: FlashcardListViewModel
-    
+    @ObservedObject var testModeViewModel: TestModeViewModel
+
     @State private var page = 0
     @State private var action: Int? = 0
     
     @State private var showingEditDeck = false
     @State private var showPracticeModeView = false
+    @State private var showTestModeView = false
     @State private var showDeckOptions = false
     @State private var deleteDeckConfirm = false
     
+    //Temp, delete after
+    @State private var isExamMode = false
+    
+    @State private var carouselLocation = 0
+    
     var body: some View {
         GeometryReader { geoProxy in
-            VStack {
-                
-                GeometryReader { carouselGProxy in
-                    Carousel(width: UIScreen.main.bounds.width, page: $page, height: carouselGProxy.frame(in: .global).height, flashcardListViewModel: flashcardListViewModel)
-                }
-                    .frame(height: geoProxy.size.height * 0.7)
-                
+            VStack(spacing: 0) {
                 generalInfo
-                    .frame(height: geoProxy.size.height * 0.15)
+                    .frame(height: UIScreen.main.bounds.height * 0.15)
                 
+                CarouselView(carouselLocation: self.$carouselLocation, width: geoProxy.size.width * 0.85, itemHeight: UIScreen.main.bounds.height * 0.30, flashcardListVM: flashcardListViewModel)
+
+//                Spacer()
                 buttons
-                
+                    .frame(height: UIScreen.main.bounds.height * 0.20)
+
                 Spacer()
                 
             }
-            .navigationTitle(deckViewModel.deck.title)
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitle("")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -49,15 +54,16 @@ struct DeckView: View {
                     }
                 }
             }
-            .fullScreenCover(isPresented: $showPracticeModeView, content: coverContent)
+            .fullScreenCover(isPresented: $showPracticeModeView, content: practiceContent)
+            .fullScreenCover(isPresented: $showTestModeView, content: testContent)
             .actionSheet(isPresented: $showDeckOptions, content: {
                 ActionSheet(title: Text(""), message: Text(""), buttons: [
-                        .default(Text("Edit Deck")) { self.showingEditDeck = true },
-                        .destructive(Text("Delete Deck").foregroundColor(Color.red)) {
-                            self.deleteDeckConfirm.toggle()
-                        },
-                        .cancel()
-                    ])
+                    .default(Text("Edit Deck")) { self.showingEditDeck = true },
+                    .destructive(Text("Delete Deck").foregroundColor(Color.red)) {
+                        self.deleteDeckConfirm.toggle()
+                    },
+                    .cancel()
+                ])
                 
             })
             .alert(isPresented: $deleteDeckConfirm, content: {
@@ -67,88 +73,86 @@ struct DeckView: View {
             })
             .sheet(isPresented: $showingEditDeck) {
                 DeckCreationView(deckListViewModel: self.deckListViewModel, deckVM: self.deckViewModel, flashcardListVM: self.flashcardListViewModel) { deck, flashcards in
-                    
-                    //Update the new flashcards
-                    flashcards
-                        .filter { flashcard in
-                            flashcardListViewModel.flashcardViewModels
-                                .map { flashcardVM in
-                                    flashcardVM.flashcard
-                                }
-                                .contains(where: {$0 != flashcard})
+                   
+                    //Add the new flashcards
+                    let newFlashcards = flashcards.filter { flashcard in
+                        let existingFlashcards = flashcardListViewModel
+                            .flashcardViewModels
+                            .map { flashcardVM in
+                                return flashcardVM.flashcard
+                            }
+                        
+                        return !existingFlashcards.contains(flashcard)
                         }
-                        .forEach { flashcard in
-                            flashcardListViewModel.add(flashcard)
-                        }
+
+                    print("\(newFlashcards.count) created")
+                    deckViewModel.addFlashcards(newFlashcards)
                     
                     //Edit the existing flashcards
-                    flashcards
+                    let editedFlashcards = flashcards
                         .filter { flashcard in
                             flashcardListViewModel.flashcardViewModels
                                 .map { flashcardVM in
                                     flashcardVM.flashcard
                                 }
-                                .contains(where: {$0 == flashcard && $0.prompt != flashcard.prompt && $0.answer != flashcard.answer})
-                        }
-                        .forEach { flashcard in
-                            flashcardListViewModel.update(flashcard)
+                                .contains(where: {$0.id == flashcard.id
+                                            && $0.dateAdded == flashcard.dateAdded
+                                            && ($0.prompt != flashcard.prompt || $0.answer != flashcard.answer)})
                         }
                     
+                    print("\(editedFlashcards.count) updated")
+                    deckViewModel.updateFlashcards(editedFlashcards)
+
                     //Remove flashcards
-                    flashcardListViewModel.flashcardViewModels
+                    let deletedFlashcards = flashcardListViewModel.flashcardViewModels
                         .map { flashcardVM in
                             flashcardVM.flashcard
                         }
                         .filter { currentFlashcard in
-                            flashcards
-                                .contains(where: {$0 != currentFlashcard})
+                            !flashcards
+                                .contains(currentFlashcard)
                         }
-                        .forEach { deletedFlashcard in
-                            flashcardListViewModel.remove(deletedFlashcard)
-                        }
-
+                    
+                    print("\(deletedFlashcards.count) deleted")
+                    deckViewModel.deleteFlashcards(deletedFlashcards)
+                    
+                    self.carouselLocation = 0
+                    print("Carousel location is now\(carouselLocation)")
                 }
             }
-            
+
+        }
+        .onDisappear {
+            //self.deckViewModel.toggleExamMode()
         }
     }
     
     var generalInfo: some View {
         VStack {
-            HStack {
-                Text(deckViewModel.deck.title)
-                    .font(.title)
-                
-                Spacer()
-                
-            }
-            
-            HStack {
-                Text("Username")
-                    .font(.body)
-                
-                Divider()
-                
-                Text("\(flashcardListViewModel.flashcardViewModels.count) flashcards")
-                
-                Spacer()
-            }
+            Text(deckViewModel.deck.title)
+                .font(.largeTitle.bold())
+            Spacer()
+            Text("\(flashcardListViewModel.flashcardViewModels.count) flashcards")
+                .font(.title2)
+                .padding(.vertical)
         }
+//        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
         .padding()
     }
     
     var buttons: some View {
         GeometryReader { buttonGProxy in
-            HStack {
-                Spacer()
+            
+            HStack(spacing: 0) {
+                //Spacer()
                 
                 Button {
-                    showPracticeModeView.toggle()
+                    self.showPracticeModeView.toggle()
                 } label: {
                     VStack {
                         Spacer()
                         
-                        Image("testmode")
+                        Image("practice")
                             .resizable()
                             .scaledToFit()
                         Text("Practice")
@@ -157,32 +161,191 @@ struct DeckView: View {
                         Spacer()
                     }
                 }
-                .frame(width: buttonGProxy.size.width * ButtonConstants.buttonRatio)
                 .buttonStyle(PreviewButtonStyle())
+                .padding(.horizontal)
+                .frame(width: buttonGProxy.size.width / ButtonConstants.buttonCount, height: buttonGProxy.size.height / ButtonConstants.buttonCount , alignment: .center)
 
+                Button {
+                    testModeViewModel.questionCount = testModeViewModel.count
+                    self.showTestModeView.toggle()
+                } label: {
+                    VStack {
+                        Spacer()
+                        
+                        Image("testmode")
+                            .resizable()
+                            .scaledToFit()
+                        Text("Test")
+                            .font(.body.bold())
+                        
+                        Spacer()
+                    }
+                }
+                .buttonStyle(PreviewButtonStyle())
+                .padding(.horizontal)
+                .frame(width: buttonGProxy.size.width / ButtonConstants.buttonCount, height: buttonGProxy.size.height / ButtonConstants.buttonCount , alignment: .center)
 
-                Spacer()
+                //Spacer()
             }
-
+            
         }
     }
     
     private struct ButtonConstants {
-        static let buttonRatio: CGFloat = 0.45
+        static let buttonCount: CGFloat = 2 //MARK: Change this with more buttons
     }
     
-    func coverContent() -> some View {
+    func practiceContent() -> some View {
         var practiceFlashcards = [FlashcardViewModel]()
-        
+
         practiceFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
-        print(practiceFlashcards)
+
+        /*
+        practiceFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
         practiceFlashcards.map { flashcardVM in
             flashcardVM.flipped = false
         }
-        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards))
+        */
+        
+        
+        
+        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, score, reminderTime in
+            
+            let sortedUpdatedFlashcards = updatedFlashcards.sorted {
+                $0.nextDate! < $1.nextDate!
+            }
+            
+            self.deckViewModel.updateFlashcards(sortedUpdatedFlashcards)
+            self.deckViewModel.updatePrevExamScore(score)
+            self.reminderViewModel.sendReminderNotif(deckTitle: self.deckViewModel.deck.title, reminderTime: reminderTime)
+        }
+    }
+    
+    func testContent() -> some View {
+        TestModeView(testModeViewModel: testModeViewModel, deckViewModel: deckViewModel)
     }
 }
 
+
+struct PreviewFlashcard: View, Animatable {
+    var index: Int
+
+    
+    var width: CGFloat
+    var height: CGFloat
+    var flashcardVM: FlashcardViewModel
+    @State var isFlipped = false
+    
+    var body: some View {
+        let flipDegrees = isFlipped ? 180.0 : 0.0
+        
+        VStack(spacing: 0) {
+            ZStack {
+                let shape = RoundedRectangle(cornerRadius: DrawingConstants.bgCornerRadius)
+                
+                if flipDegrees < 90 {
+                    shape.fill().foregroundColor(.accentColor)
+                        .shadow(color: DrawingConstants.shadowColor, radius: DrawingConstants.shadowRadius, x: DrawingConstants.shadowX, y: DrawingConstants.shadowY)
+                    Text(flashcardVM.flashcard.prompt)
+                        .foregroundColor(DrawingConstants.notFlippedTextColor)
+                        .font(.body.bold())
+                        .opacity(flipDegrees < 90 ? 1 : 0)
+                        .padding()
+                    
+                } else {
+                    shape.fill().foregroundColor(.white)
+                        .shadow(color: DrawingConstants.shadowColor, radius: DrawingConstants.shadowRadius, x: DrawingConstants.shadowX, y: DrawingConstants.flippedShadowY)
+                    Text(flashcardVM.flashcard.answer).rotation3DEffect(Angle.degrees(180), axis: (1, 0, 0))
+                        .font(.body.bold())
+                        .opacity(flipDegrees < 90 ? 0 : 1)
+                        .padding()
+                }
+            }
+            .lineLimit(nil)
+            .rotation3DEffect(Angle.degrees(flipDegrees), axis: (1, 0, 0))
+            .onTapGesture {
+                withAnimation(.spring()) {
+                    isFlipped.toggle()
+                }
+            }
+            .animation(.spring())
+        }
+        .frame(width: self.width, height: self.height)
+        .animation(.interpolatingSpring(stiffness: 300.0, damping: 30.0, initialVelocity: 10.0))
+        
+    }
+    
+    private struct DrawingConstants {
+        static let notFlippedTextColor: Color = .white
+        static let flippedTextColor: Color = .black
+        static let backgroundColor: Color = .white
+        static let bgCornerRadius: CGFloat = 10
+        
+        static let shadowColor: Color = Color.black.opacity(0.2)
+        static let shadowRadius: CGFloat = 3
+        static let shadowX: CGFloat = 0
+        static let shadowY: CGFloat = 3
+        
+        static let flippedShadowY: CGFloat = -3
+    }
+}
+
+
+
+//MARK: ButtonStyle for Preview
+struct PreviewButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        
+        GeometryReader { geoProxy in
+            ZStack(alignment: .center) {
+                configuration.label
+                    .foregroundColor(configuration.isPressed ? DrawingConstants.tappedColor : DrawingConstants.notTappedColor)
+            }
+            /*
+            .background(RoundedRectangle(cornerRadius: DrawingConstants.rectCornerRadius)
+                            .fill(Color.white)
+                            .frame(height: geoProxy.size.height * 0.95)
+                            .offset(x: 0, y: -2)
+            )
+            */
+            .padding(5)
+            .frame(width: geoProxy.size.width, height: geoProxy.size.height, alignment: .center)
+            .background(RoundedRectangle(cornerRadius: DrawingConstants.rectCornerRadius)
+                            .fill(Color.white)
+                            .shadow(color: configuration.isPressed ? DrawingConstants.bgShadowColorAfterTap : DrawingConstants.bgShadowColorBeforeTap, radius: DrawingConstants.bgShadowRadius, x: DrawingConstants.bgShadowX, y: DrawingConstants.bgShadowY)
+            )
+
+        }
+        
+    }
+    
+    private struct DrawingConstants {
+        static let notTappedColor: Color = .black
+        static let notTappedBgColor: Color = Color(hex: "FF7BBF")
+        static let tappedColor: Color = Color(hex: "15CDA8")
+        
+        static let rectCornerRadius: CGFloat = 10
+        static let offsetX: CGFloat = 0
+        static let offsetY: CGFloat = 3
+        
+        static let bgShadowColorBeforeTap: Color = .accentColor.opacity(0.4)
+        static let bgShadowColorAfterTap: Color = Color(hex: "15CDA8").opacity(0.7)
+        
+        static let bgShadowRadius: CGFloat = 3
+        static let bgShadowX: CGFloat = 0
+        static let bgShadowY: CGFloat = 3
+        
+    }
+}
+
+
+//struct DeckView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DeckView()
+//    }
+//}
+
+/*
 struct Carousel: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
         Carousel.Coordinator(parent1: self)
@@ -220,7 +383,7 @@ struct Carousel: UIViewRepresentable {
         DispatchQueue.main.async {
             uiView.contentSize = CGSize(width: width * CGFloat(flashcardListViewModel.flashcardViewModels.count), height: 1.0)
         }
-
+        
     }
     
     class Coordinator: NSObject, UIScrollViewDelegate {
@@ -239,7 +402,9 @@ struct Carousel: UIViewRepresentable {
         }
     }
 }
+*/
 
+/*
 struct PreviewList: View {
     
     @ObservedObject var flashcardListViewModel: FlashcardListViewModel
@@ -247,161 +412,29 @@ struct PreviewList: View {
     
     var body: some View {
         GeometryReader { fullView in
+            //Replace with HStack(spacing: 0) for reverting to original
             HStack(spacing: 0) {
                 
                 ForEach(flashcardListViewModel.flashcardViewModels) { flashcard in
-                    PreviewFlashcard(page: $page,
+                    PreviewFlashcard(
                                      index: flashcardListViewModel.flashcardViewModels.firstIndex(where: {$0.id == flashcard.id})!,
-                                     width: UIScreen.main.bounds.width,
+                        width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height,
                                      flashcardVM: flashcard
                     )
-                    .aspectRatio(2/3, contentMode: .fit)
-                    .frame(height: fullView.size.height * 0.75)
+                    .aspectRatio(3/2, contentMode: .fit)
+                    .frame(height: fullView.size.height * Dimensions.cardFrameRatio)
+
+
                 }
             }
         }
     }
-}
-
-struct PreviewFlashcard: View, Animatable {
-    @Binding var page: Int
-    var index: Int
     
-    
-    var width: CGFloat
-    var flashcardVM: FlashcardViewModel
-    @State var isFlipped = false
-    
-    var body: some View {
-        let flipDegrees = isFlipped ? 180.0 : 0.0
+    private struct Dimensions {
+        static let stackHPadding: CGFloat = 20
+        static let cardWidthRatio: CGFloat = 0.6
         
-        VStack {
-            ZStack {
-                let shape = RoundedRectangle(cornerRadius: DrawingConstants.bgCornerRadius)
-                
-                if flipDegrees < 90 {
-                    //logic here (for card before flip)
-                    shape.fill().foregroundColor(.accentColor)
-                        .shadow(color: DrawingConstants.shadowColor, radius: DrawingConstants.shadowRadius, x: DrawingConstants.shadowX, y: DrawingConstants.shadowY)
-                    Text(flashcardVM.flashcard.prompt)
-                        .foregroundColor(DrawingConstants.notFlippedTextColor)
-                        .font(.body.bold())
-                        .opacity(flipDegrees < 90 ? 1 : 0)
-                        .padding()
-                    
-                } else {
-                    //logic here for card after flip
-                    shape.fill().foregroundColor(.white)
-                        .shadow(color: DrawingConstants.shadowColor, radius: DrawingConstants.shadowRadius, x: DrawingConstants.shadowX, y: DrawingConstants.shadowY)
-                    Text(flashcardVM.flashcard.answer).rotation3DEffect(Angle.degrees(180), axis: (0, 1, 0))
-                        .font(.body.bold())
-                        .opacity(flipDegrees < 90 ? 0 : 1)
-                        .padding()
-                }
-            }
-            .lineLimit(nil)
-            .rotation3DEffect(Angle.degrees(flipDegrees), axis: (0, 1, 0))
-            .onTapGesture {
-                withAnimation(.spring()) {
-                    isFlipped.toggle()
-                }
-            }
-            .padding()
-            .padding(.vertical, self.page == self.index ? 0 : 25)
-            .padding(.horizontal, self.page == self.index ? 0 : 25)
-            .animation(.spring())
-        }
-        .frame(width: self.width)
-    }
-    
-    private struct DrawingConstants {
-        static let notFlippedTextColor: Color = .white
-        static let flippedTextColor: Color = .black
-        static let backgroundColor: Color = .white
-        static let bgCornerRadius: CGFloat = 10
-        
-        static let shadowColor: Color = Color.black.opacity(0.2)
-        static let shadowRadius: CGFloat = 3
-        static let shadowX: CGFloat = 0
-        static let shadowY: CGFloat = 3
+        static let cardFrameRatio: CGFloat = 0.75
     }
 }
-
-
-//MARK: PageControl functionality (doesn't seem to be working)
-struct PageControl: UIViewRepresentable {
-
-    @ObservedObject var flashcardListVM: FlashcardListViewModel
-    
-    @Binding var page: Int
-    
-    func makeUIView(context: Context) -> UIPageControl {
-        let view = UIPageControl()
-        view.currentPageIndicatorTintColor = .black
-        view.pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
-        view.numberOfPages = flashcardListVM.flashcardViewModels.count
-        
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIPageControl, context: Context) {
-        //Updating PageControl here whenever page changes
-        DispatchQueue.main.async {
-            uiView.currentPage = self.page
-        }
-    }
-}
-
-
-
-
-//MARK: ButtonStyle for Preview
-struct PreviewButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        
-        GeometryReader { geoProxy in
-            ZStack(alignment: .leading) {
-                configuration.label
-                    .foregroundColor(configuration.isPressed ? DrawingConstants.tappedColor : DrawingConstants.notTappedColor)
-                    .frame(width: geoProxy.size.width, height: geoProxy.size.height)
-            }
-            .background(RoundedRectangle(cornerRadius: DrawingConstants.rectCornerRadius)
-                            .fill(Color.white)
-                            .frame(height: geoProxy.size.height * 0.95)
-                            .offset(x: 0, y: -2)
-                            )
-            .background(RoundedRectangle(cornerRadius: DrawingConstants.rectCornerRadius)
-                            .fill(configuration.isPressed ? DrawingConstants.tappedColor : DrawingConstants.notTappedBgColor)
-                            .shadow(color: configuration.isPressed ? DrawingConstants.bgShadowColorAfterTap : DrawingConstants.bgShadowColorBeforeTap, radius: DrawingConstants.bgShadowRadius, x: DrawingConstants.bgShadowX, y: DrawingConstants.bgShadowY)
-                            .frame(height: geoProxy.size.height)
-                            )
-
-        }
-
-    }
-    
-    private struct DrawingConstants {
-        static let notTappedColor: Color = .black
-        static let notTappedBgColor: Color = Color(hex: "FF7BBF")
-        static let tappedColor: Color = Color(hex: "15CDA8")
-        
-        static let rectCornerRadius: CGFloat = 10
-        static let offsetX: CGFloat = 0
-        static let offsetY: CGFloat = 3
-        
-        static let bgShadowColorBeforeTap: Color = .black.opacity(0.4)
-        static let bgShadowColorAfterTap: Color = .black.opacity(0.7)
-        
-        static let bgShadowRadius: CGFloat = 3
-        static let bgShadowX: CGFloat = 0
-        static let bgShadowY: CGFloat = 3
-        
-    }
-}
-
-
-//struct DeckView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DeckView()
-//    }
-//}
+ */

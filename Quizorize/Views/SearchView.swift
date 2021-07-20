@@ -45,7 +45,8 @@ struct Search: View {
                     //TODO: Drag and drop into folders using onLongPressGesture
                     VStack {
                         NavigationLink(
-                            destination: DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: FlashcardListViewModel(deckVM.deck)),
+                            //TODO: Pass down TMVM and FLVM from home
+                            destination: DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: FlashcardListViewModel(deckVM.deck), testModeViewModel: TestModeViewModel(deckVM.deck)),
                             label: {
                             Image("deck1")
                                 .resizable()
@@ -72,6 +73,7 @@ struct Search: View {
                     }
                 }
             }
+            
         }
         .padding(.horizontal, 12)
     }

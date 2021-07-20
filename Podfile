@@ -19,8 +19,13 @@ target 'Quizorize' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'Firebase/Messaging'
   pod 'GoogleSignIn'
+  
+  pod 'PromisesSwift'
 
+  pod 'lottie-ios'
+  
   target 'QuizorizeTests' do
     inherit! :search_paths
     # Pods for testing

@@ -111,3 +111,60 @@ enum EmailVerificationError: AuthError {
         }
     }
 }
+
+enum UpdateProfileError: AuthError {
+    case emailInUseByDifferentProvider(provider: String)
+//    case requiresRecentLogin
+    case unknown
+    
+    var errorDescription: String? {
+        switch self {
+        case .emailInUseByDifferentProvider:
+            return "Email or password cannot be changed"
+//        case .requiresRecentLogin:
+//            return "Account created using different provider"
+        default:
+            return "Unknown error"
+        }
+    }
+    
+    var failureReason: String? {
+        switch self {
+        case .emailInUseByDifferentProvider(let provider):
+            return "Your email or password cannot be changed as your account was created with \(provider)."
+        default:
+            return "Unknown error occured"
+        }
+    }
+}
+
+enum ValidateCredentialError: AuthError {
+    case emailPoorlyFormatted
+    case passwordPoorlyFormatted
+    case passwordsDoNotMatch
+    case unknown
+    
+    var errorDescription: String? {
+        switch self {
+        case .emailPoorlyFormatted:
+            return "Email poorly formatted"
+        case .passwordPoorlyFormatted:
+            return "Password poorly formatted"
+        case .passwordsDoNotMatch:
+            return "Passwords do not match"
+        default:
+            return "Unknown error"
+        }
+    }
+    
+    var failureReason: String? {
+        switch self {
+        case .emailPoorlyFormatted:
+            return "Enter a valid email address."
+        case .passwordPoorlyFormatted:
+            return "Passwords must be between 8 and 15 characters and contain at least one number and one capital letter."
+        default:
+            return "Unknown error"
+        }
+    }
+}

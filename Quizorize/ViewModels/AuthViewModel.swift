@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
-import CryptoKit
 import FirebaseAuth
 import GoogleSignIn
 import FirebaseFirestore
+import Promises
 
 class AuthViewModel : NSObject, ObservableObject {
     let auth = Auth.auth()
@@ -17,13 +17,14 @@ class AuthViewModel : NSObject, ObservableObject {
     private var userRepository = UserRepository()
     
     @Published var signedIn = false
-    @Published var user = Auth.auth().currentUser
     @Published private(set) var activeError: LocalizedError?
+    @Published var userEmail = ""
+    
     
     @State var currentNonce:String?
     
     var isSignedIn: Bool {
-        return user != nil
+        return auth.currentUser != nil
     }
     
     var isPresentingAlert: Binding<Bool> {
@@ -35,15 +36,19 @@ class AuthViewModel : NSObject, ObservableObject {
         })
     }
     
-    enum SignInMethod {
-        case signInWithEmail(email: String, password: String)
-        case signInWithGoogle
-    }
-    
     override init() {
         super.init()
         
         GIDSignIn.sharedInstance().delegate = self
+    }
+    
+    func setUserEmail() {
+        self.userEmail = auth.currentUser?.email ?? ""
+    }
+    
+    enum SignInMethod {
+        case signInWithEmail(email: String, password: String)
+        case signInWithGoogle
     }
     
     func signIn(with signInMethod: SignInMethod) {
@@ -81,11 +86,6 @@ class AuthViewModel : NSObject, ObservableObject {
         if GIDSignIn.sharedInstance().currentUser == nil {
             GIDSignIn.sharedInstance()?.presentingViewController = UIApplication.shared.windows.first?.rootViewController
             GIDSignIn.sharedInstance()?.signIn()
-//            Auth.auth().addStateDidChangeListener { auth, user in
-//                if let user = user {
-//                    user.
-//                }
-//            }
         }
     }
     
@@ -99,7 +99,7 @@ class AuthViewModel : NSObject, ObservableObject {
                 }
                 return
             }
-            let changeRequest = self?.user?.createProfileChangeRequest()
+            let changeRequest = self?.auth.currentUser?.createProfileChangeRequest()
             changeRequest?.displayName = displayName
             changeRequest?.commitChanges(completion: { error in
                 guard error == nil else {
@@ -126,7 +126,6 @@ class AuthViewModel : NSObject, ObservableObject {
                 self.userRepository.addData(User(id: user.uid, email: email, displayName: displayName))
             }
         }
-//        print(self.user?.uid)
     }
     
     func signOut() {
@@ -134,6 +133,8 @@ class AuthViewModel : NSObject, ObservableObject {
         
         do {
             try auth.signOut()
+            print(auth.currentUser?.displayName)
+            print(auth.currentUser)
             self.signedIn = false
         } catch let signOutError as NSError {
             print(signOutError.localizedDescription)
@@ -153,17 +154,11 @@ class AuthViewModel : NSObject, ObservableObject {
     
     private func handleErrors(error: Error?, email: String) {
         let errorCode = AuthErrorCode(rawValue: (error as NSError?)!.code)
+        print(errorCode)
         switch errorCode {
         case .wrongPassword:
             //fetch sign in methods previously used for provided email address
-            auth.fetchSignInMethods(forEmail: email) { result, error in
-                guard result == nil, error == nil else {
-                    //if result is not empty and there is no error, set the activeError to emailInUseByDifferentProvider
-                    return self.activeError = SignInError.wrongProvider(provider: result![0])	
-                }
-                //else set activeError to wrongPassword
-                self.activeError = SignInError.wrongPassword
-            }
+            self.activeError = SignInError.wrongPassword
         case .invalidEmail:
             self.activeError = SignInError.invalidEmail
         case .emailAlreadyInUse:
@@ -176,16 +171,78 @@ class AuthViewModel : NSObject, ObservableObject {
                 //else set activeError to emailAlreadyInUse
                 self.activeError = SignUpError.emailAlreadyInUse
             }
+        
         case .userNotFound:
             self.activeError = EmailVerificationError.userNotFound
-        case .tooManyRequests:
-            self.activeError = EmailVerificationError.tooManyRequests	
+//        case .tooManyRequests:
+//            self.activeError = EmailVerificationError.tooManyRequests
+//        case .requiresRecentLogin:
+//            self.activeError = UpdateProfileError.requiresRecentLogin
+        case .credentialAlreadyInUse:
+            if let updatedCredential = (error as NSError?)!.userInfo[AuthErrorUserInfoUpdatedCredentialKey] as? OAuthCredential {
+                print("Signing in using updated credential")
+                Auth.auth().signIn(with: updatedCredential) { result, error in
+                    if let user = result?.user {
+                        self.signedIn = true
+                    }
+                }
+            }
         default:
             self.activeError = SignInError.unknown
         }
     }
+    
+    private func handleErrors(error: Error?) {
+        let errorCode = AuthErrorCode(rawValue: (error as NSError?)!.code)
+        print(errorCode)
+        switch errorCode {
+        case .wrongPassword:
+            //fetch sign in methods previously used for provided email address
+            self.activeError = SignInError.wrongPassword
+        case .invalidEmail:
+            self.activeError = SignInError.invalidEmail
+        case .userNotFound:
+            self.activeError = EmailVerificationError.userNotFound
+//        case .tooManyRequests:
+//            self.activeError = EmailVerificationError.tooManyRequests
+//        case .requiresRecentLogin:
+//            self.activeError = UpdateProfileError.requiresRecentLogin
+        case .credentialAlreadyInUse:
+            if let updatedCredential = (error as NSError?)!.userInfo[AuthErrorUserInfoUpdatedCredentialKey] as? OAuthCredential {
+                print("Signing in using updated credential")
+                Auth.auth().signIn(with: updatedCredential) { result, error in
+                    if let user = result?.user {
+                        self.signedIn = true
+                    }
+                }
+            }
+        default:
+            self.activeError = SignInError.unknown
+        }
+    }
+    
+    func canChangeCredentials() -> Promise<Bool> {
+        return Promise<Bool>(on: .global(qos: .background)) { fulfill, reject in
+            self.auth.fetchSignInMethods(forEmail: self.auth.currentUser?.email ?? "") { result, error in
+                if let error = error {
+                    reject(error)
+                }
+                if result != nil {
+                    if let result = result {
+                        if result.contains("apple.com") || result.contains("google.com") {
+                            self.activeError = UpdateProfileError.emailInUseByDifferentProvider(provider: result[0])
+                            fulfill(false)
+                        } else {
+                            fulfill(true)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     func updateProfile(user: User) {
-        let changeRequest = self.user?.createProfileChangeRequest()
+        let changeRequest = self.auth.currentUser?.createProfileChangeRequest()
         changeRequest?.displayName = user.displayName
         changeRequest?.commitChanges { error in
             guard error == nil else {
@@ -193,14 +250,57 @@ class AuthViewModel : NSObject, ObservableObject {
             }
         }
     }
-    func updateEmail(email: String) {
-        self.user?.updateEmail(to: email) { error in
-            guard error == nil else {
-                return print((error?.localizedDescription)!)
+    func updateEmail(email: String) -> Promise<Bool> {
+        return Promise<Bool>(on: .global(qos: .background)) { fulfill, reject in
+            let fieldTest = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
+            if fieldTest.evaluate(with: email) {
+                self.auth.currentUser?.updateEmail(to: email) { error in
+                    if let error = error {
+                        self.handleErrors(error: error, email: email)
+                        reject(error)
+                    } else {
+                        fulfill(true)
+                    }
+                }
+            } else {
+                self.activeError = ValidateCredentialError.emailPoorlyFormatted
             }
         }
     }
-
+    
+    func updatePassword(password: String) {
+        auth.currentUser?.updatePassword(to: password, completion: { error in
+            if let error = error {
+                self.handleErrors(error: error)
+                print(error.localizedDescription)
+            }
+        })
+    }
+    
+    func verifyPassword(_ password: String) -> Promise<Bool> {
+        return Promise<Bool>(on: .global(qos: .background)) { fulfill, reject in
+            let email = self.auth.currentUser?.email ?? ""
+            let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+            self.auth.currentUser?.reauthenticate(with: credential, completion: { _, error in
+                if let error = error {
+                    self.handleErrors(error: error, email: email)
+                    reject(error)
+                } else {
+                    fulfill(true)
+                }
+            })
+        }
+    }
+    
+    func validatePasswordInput(password: String, confirmPassword: String) {
+        let fieldTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*\\d)(?=.*[A-Z]).{8,15}$")
+        if !fieldTest.evaluate(with: password) {
+            self.activeError = ValidateCredentialError.passwordsDoNotMatch
+        } else if password != confirmPassword {
+            self.activeError = ValidateCredentialError.passwordsDoNotMatch
+        }
+    }
+    
 }
 
 extension AuthViewModel: GIDSignInDelegate {
@@ -210,7 +310,7 @@ extension AuthViewModel: GIDSignInDelegate {
             return
         }
         let credential = GoogleAuthProvider.credential(withIDToken: user.authentication.idToken, accessToken: user.authentication.accessToken)
-        Auth.auth().signIn(with: credential) { result, error in
+        auth.signIn(with: credential) { result, error in
             if let error = error, (error as NSError).code == AuthErrorCode.credentialAlreadyInUse.rawValue {
                 print("The user you're trying to sign in with has already been linked")
                 if let updatedCredential = (error as NSError).userInfo[AuthErrorUserInfoUpdatedCredentialKey] as? OAuthCredential {
