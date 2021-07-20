@@ -13,77 +13,101 @@ struct ProfileView: View {
     @ObservedObject var profileViewModel: ProfileViewModel
     
     @State private var showVerifyPasswordView = false
+    @State private var showUpdatePassword = false
     
     var body: some View {
         NavigationView {
-            Form {
-//                Section {
-//                    NavigationLink(destination: EditProfileView()) {
-//                        HStack {
-//                            Image(systemName: "camera")
-//                                .background(Circle()
-//                                                .fill(Color.offWhite)
-//                                                .frame(width: 50, height: 50))
-//                                .frame(width: 20, height: 20)
-//                                .padding()
-//                            Text(authViewModel.user?.displayName ?? "")
-//                                .font(.title)
-//                                .padding()
-//                        }
-//                    }
-//                    
-//                }
-                Section(header: Text("Settings")) {
-                    Button(action: {
-                        authViewModel
-                            .canChangeCredentials()
-                            .then { success in
-                                if success {
-                                    showVerifyPasswordView.toggle()
-                                }
-                            }
-                            .catch { error in
-                                print(error.localizedDescription)
-                            }
-                        
-                        
-                    }, label: {
-                        HStack {
-//                            Image(systemName: "envelope")
-//                                .foregroundColor(.primary)
-                            Text("Email")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Text(authViewModel.userEmail)
-                                .foregroundColor(.secondary)
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.secondary)
-                        }
-                        
+            ZStack {
+                NavigationLink(
+                    destination: ChangePasswordView(),
+                    isActive: $showUpdatePassword,
+                    label: {
+                        EmptyView()
                     })
-                    .onAppear {
-                        authViewModel.setUserEmail()
+                Form {
+                    //                Section {
+                    //                    NavigationLink(destination: EditProfileView()) {
+                    //                        HStack {
+                    //                            Image(systemName: "camera")
+                    //                                .background(Circle()
+                    //                                                .fill(Color.offWhite)
+                    //                                                .frame(width: 50, height: 50))
+                    //                                .frame(width: 20, height: 20)
+                    //                                .padding()
+                    //                            Text(authViewModel.user?.displayName ?? "")
+                    //                                .font(.title)
+                    //                                .padding()
+                    //                        }
+                    //                    }
+                    //
+                    //                }
+                    Section(header: Text("Settings")) {
+                        Button(action: {
+                            authViewModel
+                                .canChangeCredentials()
+                                .then { success in
+                                    if success {
+                                        showVerifyPasswordView.toggle()
+                                    }
+                                }
+                                .catch { error in
+                                    print(error.localizedDescription)
+                                }
+                            
+                            
+                        }, label: {
+                            HStack {
+                                Text("Email")
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Text(authViewModel.userEmail)
+                                    .foregroundColor(.secondary)
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.secondary)
+                                    .font(.caption)
+                            }
+                        })
+                        .onAppear {
+                            authViewModel.setUserEmail()
+                        }
+                        Button(action: {
+                            authViewModel
+                                .canChangeCredentials()
+                                .then { success in
+                                    if success {
+                                        showUpdatePassword.toggle()
+                                    }
+                                }
+                                .catch { error in
+                                    print(error.localizedDescription)
+                                }
+                        }, label: {
+                            HStack {
+                                Text("Password")
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.secondary)
+                                    .font(.caption)
+                            }
+                            
+                        })
                     }
                     .alert(isPresented: authViewModel.isPresentingAlert) {
                         Alert(localizedError: authViewModel.activeError!)
                     }
-                    NavigationLink(
-                        destination: ChangePasswordView(),
-                        label: {
-                            Text("Password")
-                        })
+                    Section{
+                        SignOutButton()
+                    }
                 }
-                Section{
-                    SignOutButton()
-                }
+                .fullScreenCover(isPresented: $showVerifyPasswordView, onDismiss: {
+                    authViewModel.setUserEmail()
+                }, content: {
+                    VerifyPasswordView()
+                        .environmentObject(authViewModel)
+                })
+                .navigationTitle("Profile")
             }
-            .fullScreenCover(isPresented: $showVerifyPasswordView, onDismiss: {
-                authViewModel.setUserEmail()
-            }, content: {
-                VerifyPasswordView()
-                    .environmentObject(authViewModel)
-            })
-            .navigationTitle("Profile")
         }
     }
 }
@@ -256,8 +280,15 @@ struct ChangeEmailView: View {
                 Spacer()
                 Button(action: {
                     authViewModel.updateEmail(email: email)
-                    authViewModel.setUserEmail()
-                    presentationMode.wrappedValue.dismiss()
+                        .then { success in
+                            if success {
+                                authViewModel.setUserEmail()
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                        }
+                        .catch { error in
+                            print(error)
+                        }
                 }, label: {
                     Text("Change email address")
                 })

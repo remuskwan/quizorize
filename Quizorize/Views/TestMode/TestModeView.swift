@@ -56,9 +56,6 @@ struct TestModeView: View {
                                 }
                                 TestModeOptions(testModeViewModel: testModeViewModel)
                             }
-                            .onAppear {
-                                testModeViewModel.questionCount = testModeViewModel.count
-                            }
                             .listStyle(InsetGroupedListStyle())
                             .toolbar(content: {
                                 ToolbarItem(placement: .navigationBarLeading) {
@@ -67,10 +64,6 @@ struct TestModeView: View {
                                     } label: {
                                         Image(systemName: "multiply")
                                     }
-                                }
-                                ToolbarItem(placement: .navigationBarTrailing) {
-                                    Image(systemName: "questionmark.circle")
-                                        .frame(width: 24, height: 24)
                                 }
                             })
                         } else {
@@ -93,10 +86,6 @@ struct TestModeView: View {
                                         } label: {
                                             Image(systemName: "multiply")
                                         }
-                                    }
-                                    ToolbarItem(placement: .navigationBarTrailing) {
-                                        Image(systemName: "questionmark.circle")
-                                            .frame(width: 24, height: 24)
                                     }
                                 })
                                 .alert(isPresented: $showingEndTestAlert, content: {
@@ -124,18 +113,17 @@ struct TestModeOptions: View {
     @State private var showAlert = false
     
     var body: some View {
-        Section(header: Text("General")) {
-            Picker("Question Count", selection: $testModeViewModel.questionCount) {
-                ForEach(1 ..< testModeViewModel.count + 1, id: \.self) {
-                    Text("\($0)")
-                }
-            }
-            Toggle(isOn: $isInstEvalOn, label: {
-                Text("Instant Evaluation")
-            })
-            .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
-        }
-        
+//        Section(header: Text("General")) {
+//            Picker("Question Count", selection: $testModeViewModel.questionCount) {
+//                ForEach(1 ..< testModeViewModel.count + 1, id: \.self) {
+//                    Text("\($0)")
+//                }
+//            }
+//            Toggle(isOn: $isInstEvalOn, label: {
+//                Text("Instant Evaluation")
+//            })
+//            .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
+//        }
         Section(header: Text("Question types")) {
             Toggle(isOn: $testModeViewModel.isTrueFalse, label: {
                 Text("True or false")
@@ -154,18 +142,18 @@ struct TestModeOptions: View {
         }
         
         Section(header: Text("Reminders")) {
-            Toggle(isOn: $isSpacedRepetitionOn, label: {
-                Text("Spaced Repetition")
-            })
-            .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
-            
-            if !isSpacedRepetitionOn {
+//            Toggle(isOn: $isSpacedRepetitionOn, label: {
+//                Text("Spaced Repetition")
+//            })
+//            .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
+//
+//            if !isSpacedRepetitionOn {
                 Picker("Remind Me", selection: $testModeViewModel.reminderType) {
                     ForEach(ReminderType.allCases, id: \.self) {
                         Text($0.rawValue)
                     }
                 }
-            }
+//            }
             
         }
 //        .alert(isPresented: testModeViewModel.isTrueFalse && testModeViewModel.isMCQ && testModeViewModel.isTrueFalse, content: {

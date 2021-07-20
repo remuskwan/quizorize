@@ -129,7 +129,6 @@ class AuthViewModel : NSObject, ObservableObject {
     }
     
     func signOut() {
-        user = nil //Test to see if this will work
         GIDSignIn.sharedInstance()?.signOut()
         
         do {
@@ -251,20 +250,22 @@ class AuthViewModel : NSObject, ObservableObject {
             }
         }
     }
-    func updateEmail(email: String) {
-        let fieldTest = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
-        if fieldTest.evaluate(with: email) {
-            auth.currentUser?.updateEmail(to: email) { error in
-                guard error == nil else {
-                    print((error?.localizedDescription)!)
-                    self.handleErrors(error: error, email: email)
-                    return
+    func updateEmail(email: String) -> Promise<Bool> {
+        return Promise<Bool>(on: .global(qos: .background)) { fulfill, reject in
+            let fieldTest = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
+            if fieldTest.evaluate(with: email) {
+                self.auth.currentUser?.updateEmail(to: email) { error in
+                    if let error = error {
+                        self.handleErrors(error: error, email: email)
+                        reject(error)
+                    } else {
+                        fulfill(true)
+                    }
                 }
+            } else {
+                self.activeError = ValidateCredentialError.emailPoorlyFormatted
             }
-        } else {
-            self.activeError = ValidateCredentialError.emailPoorlyFormatted
         }
-        
     }
     
     func updatePassword(password: String) {

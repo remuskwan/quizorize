@@ -24,6 +24,7 @@ struct TestModeSummaryView: View {
                         .onAppear {
                             self.progressValue = testModeViewModel.calculateScore()
                         }
+                        
                     if testModeViewModel.correct != testModeViewModel.count {
                         Text("Keep studying!")
                             .font(.title)

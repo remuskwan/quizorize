@@ -120,7 +120,7 @@ enum UpdateProfileError: AuthError {
     var errorDescription: String? {
         switch self {
         case .emailInUseByDifferentProvider:
-            return "Email cannot be changed"
+            return "Email or password cannot be changed"
 //        case .requiresRecentLogin:
 //            return "Account created using different provider"
         default:
@@ -131,7 +131,7 @@ enum UpdateProfileError: AuthError {
     var failureReason: String? {
         switch self {
         case .emailInUseByDifferentProvider(let provider):
-            return "Your email cannot be changed as your account was created with \(provider)."
+            return "Your email or password cannot be changed as your account was created with \(provider)."
         default:
             return "Unknown error occured"
         }

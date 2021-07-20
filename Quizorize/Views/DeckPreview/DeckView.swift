@@ -198,6 +198,7 @@ struct DeckView: View {
                 .frame(width: buttonGProxy.size.width / ButtonConstants.buttonCount, height: buttonGProxy.size.height / ButtonConstants.buttonCount , alignment: .center)
 
                 Button {
+                    testModeViewModel.questionCount = testModeViewModel.count
                     self.showTestModeView.toggle()
                 } label: {
                     VStack {
