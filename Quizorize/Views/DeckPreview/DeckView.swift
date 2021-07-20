@@ -35,7 +35,7 @@ struct DeckView: View {
                 generalInfo
                     .frame(height: UIScreen.main.bounds.height * 0.15)
                 
-                CarouselView(carouselLocation: self.$carouselLocation, itemHeight: UIScreen.main.bounds.height * 0.30, flashcardListVM: flashcardListViewModel)
+                CarouselView(carouselLocation: self.$carouselLocation, width: geoProxy.size.width * 0.85, itemHeight: UIScreen.main.bounds.height * 0.30, flashcardListVM: flashcardListViewModel)
 
 //                Spacer()
                 

@@ -117,63 +117,6 @@ struct PracticeModeView: View {
                             })
                         } else {
                             practiceModeView
-                            /*
-                            if practiceModeViewModel.isTesting {
-                                Text("\(practiceModeViewModel.counter) / \(practiceModeViewModel.count)")
-                                
-                                //testView
-                                testView
-                                    .toolbar(content: {
-                                        ToolbarItem(placement: .navigationBarLeading) {
-                                            Button {
-                                                presentationMode.wrappedValue.dismiss()
-                                            } label: {
-                                                Image(systemName: "multiply")
-                                            }
-                                        }
-                                        ToolbarItem(placement: .navigationBarTrailing) {
-                                            Image(systemName: "questionmark.circle")
-                                                .frame(width: 24, height: 24)
-                                        }
-                                    })
-                                    .alert(isPresented: $showingEndTestAlert, content: {
-                                        Alert(title: Text("Are you sure you want to end this practice?"),
-                                              message: Text("Spaced repetition progress will not be saved."),
-                                              primaryButton: .cancel(),
-                                              secondaryButton: .default(Text("End Test")) {
-                                                self.practiceModeViewModel.reset()
-                                                presentationMode.wrappedValue.dismiss()
-                                              })
-                                    })
-                            }
-                            else {
-                                //Put Exam Summary here.
-                                summaryView
-                                    .onAppear {
-                                        self.practiceModeViewModel.pushToFinalisedFlashcards()
-                                    }
-                                    .toolbar(content: {
-                                        ToolbarItem(placement: .navigationBarLeading) {
-                                            Button {
-                                                self.practiceModeViewModel.reset()
-                                                if self.practiceModeViewModel.isSpacedRepetitionOn && !self.practiceModeViewModel.finalisedFlashcards.isEmpty {
-                                                    print("Current score is \(correctCount / totalQuestionsAnswered)")
-                                                    
-                                                    didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, correctCount / totalQuestionsAnswered, self.practiceModeViewModel.getNotificationTimeInterval())
-                                                    
-                                                }
-                                                presentationMode.wrappedValue.dismiss()
-                                            } label: {
-                                                Image(systemName: "multiply")
-                                            }
-                                        }
-                                        ToolbarItem(placement: .navigationBarTrailing) {
-                                            Image(systemName: "questionmark.circle")
-                                                .frame(width: 24, height: 24)
-                                        }
-                                    })
-                            }
-                            */
                         }
                     }
                     /*
@@ -201,14 +144,17 @@ struct PracticeModeView: View {
         VStack {
             if practiceModeViewModel.isTesting {
                 Text("\(practiceModeViewModel.counter) / \(practiceModeViewModel.count)")
-                
+
                 //testView
                 testView
                     .toolbar(content: {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button {
-                                self.showingEndTestAlert = true
-                                //presentationMode.wrappedValue.dismiss()
+                                if self.practiceModeViewModel.isSpacedRepetitionOn {
+                                    self.showingEndTestAlert = true
+                                } else {
+                                    presentationMode.wrappedValue.dismiss()
+                                }
                             } label: {
                                 Image(systemName: "multiply")
                             }
@@ -299,9 +245,9 @@ struct PracticeModeView: View {
                 GeometryReader { geometry in
                     VStack {
                         Spacer()
-                        Text("Your Latest Score")
+                        Text(practiceModeViewModel.isSpacedRepetitionOn ? "Your aggregate score for all rounds" : "Your Latest Score")
                             .font(.title.bold())
-                        
+
                         SummaryProgressBar(progress: $progressValue)
                             .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.4)
                             .padding()
@@ -310,12 +256,14 @@ struct PracticeModeView: View {
                                 self.progressValue = (correctCount / totalQuestionsAnswered).isNaN ? self.prevExamScore : (correctCount / totalQuestionsAnswered)
                             }
                         
-                        Text("Date of Completion: \(practiceModeViewModel.dateOfCompletionInString())")
-                            .padding()
-                        
-                        Text("Next Study Date: \(practiceModeViewModel.earliestDateInString())")
-                            .padding()
-                        
+                        if practiceModeViewModel.isSpacedRepetitionOn {
+                            Text("Date of Completion: \(practiceModeViewModel.dateOfCompletionInString())")
+                                .padding()
+                            
+                            Text("Next Study Date: \(practiceModeViewModel.earliestDateInString())")
+                                .padding()
+                        }
+
 
                         if practiceModeViewModel.isSpacedRepetitionOn && practiceModeViewModel.intervalIsZero() {
                                 Text("Looks like you need to study more 🤓")
@@ -338,6 +286,10 @@ struct PracticeModeView: View {
                             if !practiceModeViewModel.isSpacedRepetitionOn {
                                 Button {
                                    self.practiceModeViewModel.reset()
+                                    if practiceModeViewModel.isSpacedRepetitionOn {
+                                        self.correctCount = 0
+                                        self.totalQuestionsAnswered = 0
+                                    }
                                 } label: {
                                 Text("Reset")
                                 .font(.headline)
@@ -455,49 +407,6 @@ struct FlashcardListView: View {
                                 })
                         )
                 }
-                /*
-                 } else {
-                 VStack {
-                 /*
-                 */
-                 if let _ = self.examModeVM {
-                 VStack {
-                 Text("Congratulations!")
-                 .font(.title2.bold())
-                 .padding()
-                 Text("You have finished your deck for today")
-                 Text("To memorize the cards in this deck better, come back on:")
-                 
-                 Text(self.examModeVM!.nextDate())
-                 .bold()
-                 Button("Reset") {
-                 resetCards()
-                 }
-                 .padding()
-                 }
-                 } else {
-                 Text("Congraluations")
-                 .font(.title2.bold())
-                 
-                 Text("You're done!")
-                 .padding()
-                 Button("Reset") {
-                 resetCards()
-                 }
-                 .padding()
-                 
-                 }
-                 }
-                 .font(.body)
-                 .frame(width: 300, height: 400, alignment: .center)
-                 .background(
-                 RoundedRectangle(cornerRadius: 10)
-                 .foregroundColor(Color.white)
-                 .shadow(radius: 2)
-                 .frame(width: 300, height: 400)
-                 )
-                 }
-                 */
             }
             Spacer()
             

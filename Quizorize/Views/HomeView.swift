@@ -367,7 +367,6 @@ struct DeckListDeckView: View {
                 .opacity(flashcardListViewModel.hasCardsDue ? 1 : 0)
             }
         }
-        
     }
 }
 
