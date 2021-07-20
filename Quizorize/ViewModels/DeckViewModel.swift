@@ -8,7 +8,6 @@
 import Foundation
 import FirebaseFirestore
 import Combine
-import SwiftUI
 
 class DeckViewModel: ObservableObject, Identifiable {
     private var deckRepository = DeckRepository()
@@ -47,5 +46,11 @@ class DeckViewModel: ObservableObject, Identifiable {
             .compactMap { $0.id }
             .assign(to: \.id, on: self)
             .store(in: &cancellables)
+    }
+    
+    func getDateCreated() -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter.string(from: deck.dateCreated)
     }
 }

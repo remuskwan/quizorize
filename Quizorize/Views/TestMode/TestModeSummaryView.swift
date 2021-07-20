@@ -9,6 +9,8 @@ import SwiftUI
 
 struct TestModeSummaryView: View {
     @ObservedObject var testModeViewModel: TestModeViewModel
+    @ObservedObject var deckViewModel: DeckViewModel
+    
     @State private var progressValue = 0.0
     
     var body: some View {
@@ -20,9 +22,9 @@ struct TestModeSummaryView: View {
                         .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.4)
                         .padding()
                         .onAppear {
-                            self.testModeViewModel.setLatestScore()
-                            self.progressValue = testModeViewModel.latestScore
+                            self.progressValue = testModeViewModel.calculateScore()
                         }
+                        
                     if testModeViewModel.correct != testModeViewModel.count {
                         Text("Keep studying!")
                             .font(.title)
@@ -38,6 +40,7 @@ struct TestModeSummaryView: View {
                     }
                     
                     Button(action: {
+                        self.testModeViewModel.setLatestScore(deckViewModel.deck)
                         testModeViewModel.reset()
                     }, label: {
                         Text("Retake")

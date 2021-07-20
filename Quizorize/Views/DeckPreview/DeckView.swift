@@ -32,13 +32,15 @@ struct DeckView: View {
     var body: some View {
         GeometryReader { geoProxy in
             VStack(spacing: 0) {
+                generalInfo
+                    .frame(height: UIScreen.main.bounds.height * 0.15)
                 
                 CarouselView(carouselLocation: self.$carouselLocation, width: geoProxy.size.width * 0.85, itemHeight: UIScreen.main.bounds.height * 0.30, flashcardListVM: flashcardListViewModel)
 
-                Spacer()
+//                Spacer()
                 
-                generalInfo
-                    .frame(height: UIScreen.main.bounds.height * 0.15)
+                
+                
                 
                 buttons
                     .frame(height: UIScreen.main.bounds.height * 0.20)
@@ -46,7 +48,7 @@ struct DeckView: View {
                 Spacer()
                 
             }
-            .navigationBarTitle(deckViewModel.deck.title, displayMode: .large)
+            .navigationBarTitle("")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -130,46 +132,16 @@ struct DeckView: View {
     }
     
     var generalInfo: some View {
-        GeometryReader { geo in
-            VStack {
-                /*
-                HStack {
-                    Text(deckViewModel.deck.title)
-                        .font(.largeTitle.bold())
-                    
-                    Spacer()
-                    
-                }
-                */
-                HStack {
-                    Text("\(flashcardListViewModel.flashcardViewModels.count) flashcards")
-                        .font(.title2.bold())
-                    
-                    Spacer()
-                }
-                
-                /*
-                HStack(spacing: 0) {
-                    Toggle(isOn: self.$isExamMode, label: {
-                        Text("Exam Mode")
-                            .font(.body.bold())
-                    })
-                    /*
-                    .onChange(of: deckViewModel.deck.isExamMode) { value in
-                        deckViewModel.toggleExamMode()
-                        print(value)
-                    }
-                    */
-                    .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
-
-                    Spacer()
-                        .frame(minWidth: geo.size.width * 0.55)
-                }
-                */
-
-            }
-            .padding()
+        VStack {
+            Text(deckViewModel.deck.title)
+                .font(.largeTitle.bold())
+            Spacer()
+            Text("\(flashcardListViewModel.flashcardViewModels.count) flashcards")
+                .font(.title2)
+                .padding(.vertical)
         }
+//        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+        .padding()
     }
     
     var buttons: some View {
@@ -184,7 +156,7 @@ struct DeckView: View {
                     VStack {
                         Spacer()
                         
-                        Image("testmode")
+                        Image("practice")
                             .resizable()
                             .scaledToFit()
                         Text("Practice")
@@ -198,6 +170,7 @@ struct DeckView: View {
                 .frame(width: buttonGProxy.size.width / ButtonConstants.buttonCount, height: buttonGProxy.size.height / ButtonConstants.buttonCount , alignment: .center)
 
                 Button {
+                    testModeViewModel.questionCount = testModeViewModel.count
                     self.showTestModeView.toggle()
                 } label: {
                     VStack {
@@ -253,7 +226,7 @@ struct DeckView: View {
     }
     
     func testContent() -> some View {
-        TestModeView(testModeViewModel: testModeViewModel, deckTitle: deckViewModel.deck.title)
+        TestModeView(testModeViewModel: testModeViewModel, deckViewModel: deckViewModel)
     }
 }
 
