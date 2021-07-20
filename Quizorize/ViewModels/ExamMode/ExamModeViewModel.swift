@@ -14,6 +14,7 @@ struct ExamModeViewModel {
     
     init(timeIntervalAsOfClick: TimeInterval, updatedFlashcards: [Flashcard]) {
 
+        self.finalisedFlashcards = updatedFlashcards
         self.updatedFlashcards = updatedFlashcards
         self.flashcardGrader = FlashcardGrader()
 
@@ -21,7 +22,7 @@ struct ExamModeViewModel {
     }
     
     private(set) var updatedFlashcards: [Flashcard]
-    private(set) var finalisedFlashcards: [Flashcard] = [] //Should only have flashcards that are updated
+    private(set) var finalisedFlashcards: [Flashcard] //Should only have flashcards that are updated
     private var flashcardGrader: FlashcardGrader
     
     private let timeIntervalAsOfClick: TimeInterval
@@ -68,6 +69,9 @@ struct ExamModeViewModel {
                 flashcard.nextDate ?? 0 > self.timeIntervalAsOfClick
             }
         
+        self.finalisedFlashcards.removeAll(where: {finalisedFlashcard in
+                                            flashcardsToBePushed.contains(where: { pushedFlashcard in
+                                                                            pushedFlashcard.id == finalisedFlashcard.id})})
         self.finalisedFlashcards.append(contentsOf: flashcardsToBePushed)
         self.updatedFlashcards.removeAll(where: {flashcardsToBePushed.contains($0)})
     }
@@ -81,6 +85,12 @@ struct ExamModeViewModel {
     static func getSortedFlashcards(_ flashcards: [Flashcard]) -> [Flashcard] {
         flashcards.sorted {
             $0.nextDate ?? 0 <= $1.nextDate ?? 0
+        }
+    }
+    
+    var changedFinalisedFlashcards: [Flashcard] {
+        self.finalisedFlashcards.filter { flashcard in
+            self.updatedFlashcards.contains(where: { $0.nextDate ?? 0 != flashcard.nextDate ?? 0})
         }
     }
     /*

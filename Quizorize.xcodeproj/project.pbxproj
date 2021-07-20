@@ -102,10 +102,10 @@
 		7700BC652670FE75004C5C82 /* SREngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7700BC642670FE75004C5C82 /* SREngine.swift */; };
 		7700BC6926710470004C5C82 /* FlashcardGradeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7700BC6826710470004C5C82 /* FlashcardGradeModel.swift */; };
 		7719A791267325E600B0A102 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7719A790267325E600B0A102 /* Cardify.swift */; };
+		772D84C326A691B8004A6E5F /* PracticeHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772D84C226A691B8004A6E5F /* PracticeHintView.swift */; };
 		774D5912267A548A00D8A786 /* DeckCreationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774D5911267A548A00D8A786 /* DeckCreationModel.swift */; };
 		77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77541626266A047B00BE8273 /* DeckCreationView.swift */; };
 		77575E45269AB809001B5AA3 /* ExamModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77575E44269AB809001B5AA3 /* ExamModeViewModel.swift */; };
-		7758850C269C87BC009B2AC0 /* ExamModeSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7758850B269C87BC009B2AC0 /* ExamModeSummaryView.swift */; };
 		7783963B266D08330024293B /* DeckCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7783963A266D08330024293B /* DeckCreationViewModel.swift */; };
 		778DF3E626959BFA00C2D549 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778DF3E526959BFA00C2D549 /* CarouselView.swift */; };
 		77AB03AF2663C669009F4982 /* TouchDownUpEventModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */; };
@@ -196,10 +196,10 @@
 		7700BC642670FE75004C5C82 /* SREngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SREngine.swift; sourceTree = "<group>"; };
 		7700BC6826710470004C5C82 /* FlashcardGradeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardGradeModel.swift; sourceTree = "<group>"; };
 		7719A790267325E600B0A102 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
+		772D84C226A691B8004A6E5F /* PracticeHintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeHintView.swift; sourceTree = "<group>"; };
 		774D5911267A548A00D8A786 /* DeckCreationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationModel.swift; sourceTree = "<group>"; };
 		77541626266A047B00BE8273 /* DeckCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationView.swift; sourceTree = "<group>"; };
 		77575E44269AB809001B5AA3 /* ExamModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamModeViewModel.swift; sourceTree = "<group>"; };
-		7758850B269C87BC009B2AC0 /* ExamModeSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamModeSummaryView.swift; sourceTree = "<group>"; };
 		7783963A266D08330024293B /* DeckCreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationViewModel.swift; sourceTree = "<group>"; };
 		778DF3E526959BFA00C2D549 /* CarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		77AB03AE2663C669009F4982 /* TouchDownUpEventModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TouchDownUpEventModifier.swift; path = Quizorize/Views/TouchDownUpEventModifier.swift; sourceTree = SOURCE_ROOT; };
@@ -452,7 +452,7 @@
 			children = (
 				7700BC5E266F6375004C5C82 /* PracticeModeFlashCard.swift */,
 				16E701DB2681CDCD00A1E55D /* PracticeModeView.swift */,
-				7758850B269C87BC009B2AC0 /* ExamModeSummaryView.swift */,
+				772D84C226A691B8004A6E5F /* PracticeHintView.swift */,
 			);
 			path = PracticeModeView;
 			sourceTree = "<group>";
@@ -811,7 +811,6 @@
 				166B1E8E266F8B9800D3922B /* DeckListViewModel.swift in Sources */,
 				16E701CE2677AD6E00A1E55D /* DeckViewModel.swift in Sources */,
 				16E701DE2682265300A1E55D /* CustomNavigationView.swift in Sources */,
-				7758850C269C87BC009B2AC0 /* ExamModeSummaryView.swift in Sources */,
 				166B1E7D26656A8E00D3922B /* SearchView.swift in Sources */,
 				16C2861F2656EC7A0068AB95 /* RegisterView.swift in Sources */,
 				16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */,
@@ -828,6 +827,7 @@
 				774D5912267A548A00D8A786 /* DeckCreationModel.swift in Sources */,
 				7700BC41266F57B0004C5C82 /* DeckCreationFlashCard.swift in Sources */,
 				166B1E962670B45A00D3922B /* FlashcardRepository.swift in Sources */,
+				772D84C326A691B8004A6E5F /* PracticeHintView.swift in Sources */,
 				16C285ED2656EB020068AB95 /* QuizorizeApp.swift in Sources */,
 				166B1E712663FF6200D3922B /* SharedWebCredential.swift in Sources */,
 				16E701DC2681CDCF00A1E55D /* PracticeModeView.swift in Sources */,

@@ -21,6 +21,28 @@ class FlashcardListViewModel: ObservableObject {
     }
     
     @Published var counter = 0
+    
+    //MARK: SR Algo
+    
+    var hasCardsDue: Bool {
+        !self.flashcardViewModels.map { flashcardVM in
+            flashcardVM.flashcard
+        }
+        .filter { flashcard in
+            flashcard.repetition > 0 && flashcard.nextDate ?? 0 <= Date().timeIntervalSince1970
+        }
+        .isEmpty
+    }
+    
+    var badgeNumber: Int {
+        self.flashcardViewModels.map { flashcardVM in
+            flashcardVM.flashcard
+        }
+        .filter { flashcard in
+            flashcard.repetition > 0 && flashcard.nextDate ?? 0 <= Date().timeIntervalSince1970
+        }
+        .count
+    }
 
     init(_ deck: Deck) {
         self.flashcardRepository = FlashcardRepository(deck)

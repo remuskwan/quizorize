@@ -78,9 +78,9 @@ struct DeckListView: View {
                                         destination:
                                             DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: flashcardListViewModel, testModeViewModel: testModeViewModel),
                                         label: {
-                                        Image("deck1")
-                                            .resizable()
-                                            .frame(width: 110, height: 110)
+                                            Image("deck1")
+                                                .resizable()
+                                                .frame(width: 110, height: 110)
                                     })
 
                                     Button {
@@ -310,6 +310,34 @@ struct NewButton: View {
             }
 //            CreateDeck(deckListViewModel: DeckListViewModel(), flashcardViewModel: FlashcardViewModel())
         })
+    }
+}
+
+struct DeckListDeckView: View {
+    
+    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
+    
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .bottomLeading) {
+                Image("deck1")
+                    .resizable()
+                    .frame(width: 110, height: 110)
+                
+                ZStack {
+                    Circle()
+                        .foregroundColor(.red)
+                    
+                    Text("\(flashcardListViewModel.badgeNumber)")
+                        .foregroundColor(.white)
+                        .font(Font.system(size: 12))
+                }
+                .frame(width: 20, height: 20)
+                .offset(x: (( 2 * 1) - 1) * (geometry.size.width / (2 * 1) ), y: -30)
+                .opacity(flashcardListViewModel.hasCardsDue ? 1 : 0)
+            }
+        }
+        
     }
 }
 
