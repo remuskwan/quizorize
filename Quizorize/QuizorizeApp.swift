@@ -13,11 +13,7 @@ import UIKit
 @main
 struct QuizorizeApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
-//    let persistenceController = PersistenceController.shared
-//    init() {
-//        setupAuthentication()
-//    }
+
     var body: some Scene {
         WindowGroup {
 //            ContentView()
@@ -82,9 +78,7 @@ extension QuizorizeApp {
 
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        
         let dataDict: [String: String] = ["token": fcmToken ?? ""]
-        
         print(dataDict)
     }
     

@@ -25,14 +25,12 @@ struct LoginView: View {
 //    }
 //}
 struct Login : View {
-//    @Environment(\.colorScheme) var colorScheme
-//    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewModel: AuthViewModel
     
     @State private var email: String = ""
     @State private var password: String = ""
     @State var isHidden = true
-    
+    @State private var showRecoverPassword = false
 
     var body: some View {
         VStack {
@@ -117,16 +115,27 @@ struct Login : View {
                             }
                             .padding(.vertical, 4)
                         }
-
+                        
                         Group {
-                            NavigationLink(
-                                destination: RecoverPasswordView(),
-                                label: {
-                                    Text("Forgot password?")
-                                        .font(.caption)
-                                })
-                                .padding(.vertical, 10)
+//                            NavigationLink(
+//                                destination: RecoverPasswordView(),
+//                                label: {
+//                                    Text("Forgot password?")
+//                                        .font(.caption)
+//                                })
+//                                .padding(.vertical, 10)
+                            Button(action: {
+                                showRecoverPassword.toggle()
+                            }, label: {
+                                Text("Forgot password?")
+                                    .font(.caption)
+                            })
+                            .fullScreenCover(isPresented: $showRecoverPassword, content: {
+                                RecoverPasswordView()
+                            })
+                            .padding(.vertical, 10)
                         }
+                        
                         SignInButton(email: email, password: password)
                         
                         Divider()
@@ -144,14 +153,12 @@ struct Login : View {
                             
                             SignInWithGoogle()
                         }
-                        }
-                        
-                        Spacer()
                     }
+                    
+                    Spacer()
                 }
             }
-            .padding(.horizontal, 20)
-            
+            Spacer()
             HStack(spacing: 0) {
                 Text("Don't have an account?")
                     .foregroundColor(.primary)
@@ -159,13 +166,13 @@ struct Login : View {
                     destination: RegisterView(),
                     label: {
                         Text("Register")
-//                            .foregroundColor(.purple)
+                        //                            .foregroundColor(.purple)
                     })
                     .padding(.horizontal, 6)
             }
+            
             .padding()
         }
-//        .navigationBarHidden(true)
 //        .navigationBarBackButtonHidden(true)
 //        .toolbar {
 //            ToolbarItem(placement: .navigationBarLeading) {
@@ -179,11 +186,13 @@ struct Login : View {
 //                .padding()
 //            }
 //        }
+        .padding(.horizontal, 20)
+    }
+        
 }
 
 struct SignInButton: View {
     @EnvironmentObject var viewModel: AuthViewModel
-//    @Environment(\.presentationMode) var presentationMode
     let email: String
     let password: String
     
@@ -194,30 +203,15 @@ struct SignInButton: View {
     var body: some View {
         Button(action: {
             viewModel.signIn(with: .signInWithEmail(email: email, password: password))
-//            if viewModel.signedIn {
-//                presentationMode.wrappedValue.dismiss()
-//            }
         }, label: {
             Text("Sign in")
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .frame(height: 50)
-                .font(.headline)
-                .foregroundColor(.white)
-                .background(Color.accentColor)
-                .cornerRadius(5)
         })
+        .buttonStyle(AuthButtonStyle())
         .opacity(isDisabled ? 0.6 : 1)
         .disabled(isDisabled)
         .alert(isPresented: viewModel.isPresentingAlert) {
-            //TODO
-//            if viewModel.activeError! as SignUpError {
-//
-//            }
             Alert(localizedError: viewModel.activeError!)
         }
-        .frame(width: 280, height: 45, alignment: .center)
-        //        .padding(.vertical, 24)
-//        NavigationLink(destination: DecksView(), isActive: $viewModel.signedIn) {EmptyView()}
     }
 }
 

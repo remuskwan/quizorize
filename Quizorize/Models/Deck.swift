@@ -16,6 +16,7 @@ struct Deck: Identifiable, Codable {
     
     //MARK: SR Algo
     var isExamMode: Bool = false
+    var testModePrevScore: Double? = nil
     var examModePrevScore: Double = 0
 }
 
