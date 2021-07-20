@@ -56,6 +56,7 @@ struct PracticeHintView: View {
                 } label: {
                     Text("Ok got it!")
                         .foregroundColor(DrawingConstants.buttonTextColor)
+                        .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
