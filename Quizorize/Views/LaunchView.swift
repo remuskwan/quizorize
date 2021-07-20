@@ -25,26 +25,19 @@ struct LaunchView: View {
 }
 
 struct Launch: View {
-    @EnvironmentObject var viewModel: AuthViewModel
-    
     var body: some View {
         
         NavigationView {
             VStack {
                 Spacer()
                 
-                HStack {
-                    Image("flashcard")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 100, height: 100, alignment: .topLeading)
-                    
-                    Text("Quizorize")
-                        .font(.title3)
-                }
+                Text("Quizorize")
+                    .font(.custom("GlacialIndifference-Bold", size: 52))
+                    .padding()
+               
                 
                 Text("Study Hard, Study Smart.")
-                    .font(.title3)
+                    .font(.custom("GlacialIndifference-Regular", size: 24))
                 
                 Spacer()
                 
