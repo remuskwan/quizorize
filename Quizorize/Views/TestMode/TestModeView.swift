@@ -37,6 +37,7 @@ struct TestModeView: View {
                                                 }
                                         }
                                     }
+                                    .listRowBackground(Color.offWhite)
                                 }
                                 
                                 Section {
@@ -141,7 +142,7 @@ struct TestModeOptions: View {
             .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
         }
         
-        Section(header: Text("Reminders")) {
+        Section(header: Text("Reminders"), footer: Text("Let Quizorize remind you when its time to take the test again")) {
 //            Toggle(isOn: $isSpacedRepetitionOn, label: {
 //                Text("Spaced Repetition")
 //            })
@@ -164,12 +165,12 @@ struct TestModeOptions: View {
 
 enum ReminderType: String, CaseIterable {
     case never = "Never"
-    case oneDay = "Every day"
-    case threeDays = "Every 3 days"
-    case fiveDays = "Every 5 days"
-    case oneWeek = "Every week"
-    case twoWeeks = "Every 2 weeks"
-    case oneMonth = "Every month"
+    case oneDay = "Tommorow"
+    case threeDays = "In 3 days"
+    case fiveDays = "In 5 days"
+    case oneWeek = "Next week"
+    case twoWeeks = "In 2 weeks"
+    case oneMonth = "Next month"
 }
 
 struct TestView: View {

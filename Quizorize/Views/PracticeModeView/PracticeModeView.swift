@@ -247,6 +247,7 @@ struct PracticeModeView: View {
                         Spacer()
                         Text(practiceModeViewModel.isSpacedRepetitionOn ? "Your aggregate score for all rounds" : "Your Latest Score")
                             .font(.title.bold())
+                            .multilineTextAlignment(.center)
 
                         SummaryProgressBar(progress: $progressValue)
                             .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.4)
@@ -503,70 +504,60 @@ struct FlashcardView: View {
     }
 }
 
-struct SummaryCardView: View {
-    var body: some View {
-        Text("You're done!")
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(Color.white)
-                    .shadow(radius: 2))
-    }
-}
-
-struct OptionsSheet<Content: View>: View {
-    let content: Content
-    @Binding var showingOptionsSheet: Bool
-    @Binding var dismissOptionsSheet: Bool
-    let height: CGFloat
-    
-    init(showingOptionsSheet: Binding<Bool>, dismissOptionsSheet: Binding<Bool>, height: CGFloat, @ViewBuilder content: () -> Content) {
-        self.height = height
-        _showingOptionsSheet = showingOptionsSheet
-        _dismissOptionsSheet = dismissOptionsSheet
-        self.content = content()
-    }
-    
-    var body: some View {
-        ZStack {
-            GeometryReader { _ in
-                EmptyView()
-                
-            }
-            .background(Color.red.opacity(0.3))
-            .opacity(showingOptionsSheet ? 1 : 0)
-            .animation(.easeIn)
-            .onTapGesture {
-                dismissOptionsSheet.toggle()
-            }
-            VStack {
-                Spacer()
-                VStack {
-                    content
-                    Button("Dismiss") {
-                        dismissOptionsSheet.toggle()
-                    }
-                }
-            }
-            .background(Color.white)
-            .frame(height: self.height)
-            .offset(y: dismissOptionsSheet && showingOptionsSheet ? 0 : 300)
-            .animation(.default.delay(0.2))
-        }
-        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-    }
-}
-
-struct BlurView: UIViewRepresentable {
-    var style: UIBlurEffect.Style
-    
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        let view = UIVisualEffectView(effect: UIBlurEffect(style: style))
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
-    }
-}
+//struct OptionsSheet<Content: View>: View {
+//    let content: Content
+//    @Binding var showingOptionsSheet: Bool
+//    @Binding var dismissOptionsSheet: Bool
+//    let height: CGFloat
+//
+//    init(showingOptionsSheet: Binding<Bool>, dismissOptionsSheet: Binding<Bool>, height: CGFloat, @ViewBuilder content: () -> Content) {
+//        self.height = height
+//        _showingOptionsSheet = showingOptionsSheet
+//        _dismissOptionsSheet = dismissOptionsSheet
+//        self.content = content()
+//    }
+//
+//    var body: some View {
+//        ZStack {
+//            GeometryReader { _ in
+//                EmptyView()
+//
+//            }
+//            .background(Color.red.opacity(0.3))
+//            .opacity(showingOptionsSheet ? 1 : 0)
+//            .animation(.easeIn)
+//            .onTapGesture {
+//                dismissOptionsSheet.toggle()
+//            }
+//            VStack {
+//                Spacer()
+//                VStack {
+//                    content
+//                    Button("Dismiss") {
+//                        dismissOptionsSheet.toggle()
+//                    }
+//                }
+//            }
+//            .background(Color.white)
+//            .frame(height: self.height)
+//            .offset(y: dismissOptionsSheet && showingOptionsSheet ? 0 : 300)
+//            .animation(.default.delay(0.2))
+//        }
+//        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+//    }
+//}
+//
+//struct BlurView: UIViewRepresentable {
+//    var style: UIBlurEffect.Style
+//
+//    func makeUIView(context: Context) -> UIVisualEffectView {
+//        let view = UIVisualEffectView(effect: UIBlurEffect(style: style))
+//        return view
+//    }
+//
+//    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+//    }
+//}
 
 //MARK: Fading view
 struct ShowHelp: View {

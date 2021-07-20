@@ -87,8 +87,6 @@ struct DeckListView: View {
                                                         dash: [3]
                                                     )
                                                 )
-                                            //                                                            .frame(width: 90, height: 110)
-                                            //                                                            .frame(width: geometry.size.width * 0.2, height: geometry.size.height * 0.2)
                                         }
                                         .frame(width: geometry.size.width * 0.25
                                                , height: geometry.size.width * 0.3)
@@ -152,52 +150,10 @@ struct DeckListView: View {
                                             }))
                                         })
                                         .sheet(isPresented: $showingEditDeck) {
-                                            DeckCreationView(deckListViewModel: self.deckListViewModel, deckVM: deckVM, flashcardListVM: flashcardListViewModel) { deck, flashcards in
-                                                
-                                                //Update the new flashcards
-                                                flashcards
-                                                    .filter { flashcard in
-                                                        flashcardListViewModel.flashcardViewModels
-                                                            .map { flashcardVM in
-                                                                flashcardVM.flashcard
-                                                            }
-                                                            .contains(where: {$0 != flashcard})
-                                                    }
-                                                    .forEach { flashcard in
-                                                        flashcardListViewModel.add(flashcard)
-                                                    }
-                                                
-                                                //Edit the existing flashcards
-                                                flashcards
-                                                    .filter { flashcard in
-                                                        flashcardListViewModel.flashcardViewModels
-                                                            .map { flashcardVM in
-                                                                flashcardVM.flashcard
-                                                            }
-                                                            .contains(where: {$0 == flashcard && $0.prompt != flashcard.prompt && $0.answer != flashcard.answer})
-                                                    }
-                                                    .forEach { flashcard in
-                                                        flashcardListViewModel.update(flashcard)
-                                                    }
-                                                
-                                                //Remove flashcards
-                                                flashcardListViewModel.flashcardViewModels
-                                                    .map { flashcardVM in
-                                                        flashcardVM.flashcard
-                                                    }
-                                                    .filter { currentFlashcard in
-                                                        flashcards
-                                                            .contains(where: {$0 != currentFlashcard})
-                                                    }
-                                                    .forEach { deletedFlashcard in
-                                                        flashcardListViewModel.remove(deletedFlashcard)
-                                                    }
-                                                
-                                            }
+                                            EditDeckView(deckViewModel: deckVM, deckListViewModel: deckListViewModel, flashcardListViewModel: flashcardListViewModel)
                                         }
                                         Text(deckVM.getDateCreated())
                                             .font(.caption2.weight(.light))
-//                                            .padding(2)
                                         Spacer()
                                     }
                                 }
@@ -287,61 +243,63 @@ enum SortBy: String, CaseIterable {
     case type = "Type"
 }
 
-//struct NewButton: View {
-//    @ObservedObject var deckListViewModel: DeckListViewModel
-//    @State private var showingActionSheet = false
-//    @State private var showingCreateDeck = false
-//    var body: some View {
-//        VStack {
-//            Button(action: {
-//                showingActionSheet.toggle()
-//                let impactLight = UIImpactFeedbackGenerator(style: .light)
-//                impactLight.impactOccurred()
-//            }, label: {
-//                GeometryReader { geometry in
-//                    VStack {
-//                        ZStack {
-//                            Image(systemName: "plus")
-//                                .background(RoundedRectangle(cornerRadius: 5)
-//                                                .strokeBorder(
-//                                                    style: StrokeStyle(
-//                                                        lineWidth: 2,
-//                                                        dash: [3]
-//                                                    )
-//                                                )
-//                                                .frame(width: geometry.size.width * 0.2, height: geometry.size.height * 0.2)
-//                                )
-//    //                        RoundedRectangle(cornerRadius: 5)
-//    //                            .strokeBorder(
-//    //                                style: StrokeStyle(
-//    //                                    lineWidth: 2,
-//    //                                    dash: [3]
-//    //                                )
-//    //                            )
-//    //                            .frame(width: 90, height: 110)
-//                        }
-//                        Text("New")
-//                            .font(.footnote)
-//                    }
-//                }
-//
-//            })
-//
-//        }
-//        .actionSheet(isPresented: $showingActionSheet) {
-//            ActionSheet(title: Text(""), message: Text(""), buttons: [
-//                .default(Text("Deck")) {self.showingCreateDeck = true},
-//                .cancel()
-//            ])
-//        }
-//        .sheet(isPresented: $showingCreateDeck, content: {
-//            DeckCreationView(deckListViewModel: deckListViewModel) { deck, flashcards in
-//                deckListViewModel.add(deck: deck, flashcards: flashcards)
-//            }
-////            CreateDeck(deckListViewModel: DeckListViewModel(), flashcardViewModel: FlashcardViewModel())
-//        })
-//    }
-//}
+struct EditDeckView: View {
+    @ObservedObject var deckViewModel: DeckViewModel
+    @ObservedObject var deckListViewModel: DeckListViewModel
+    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
+    
+    @State private var carouselLocation = 0
+    
+    var body: some View {
+        DeckCreationView(deckListViewModel: self.deckListViewModel, deckVM: self.deckViewModel, flashcardListVM: self.flashcardListViewModel) { deck, flashcards in
+           
+            //Add the new flashcards
+            let newFlashcards = flashcards.filter { flashcard in
+                let existingFlashcards = flashcardListViewModel
+                    .flashcardViewModels
+                    .map { flashcardVM in
+                        return flashcardVM.flashcard
+                    }
+                
+                return !existingFlashcards.contains(flashcard)
+                }
+
+            print("\(newFlashcards.count) created")
+            deckViewModel.addFlashcards(newFlashcards)
+            
+            //Edit the existing flashcards
+            let editedFlashcards = flashcards
+                .filter { flashcard in
+                    flashcardListViewModel.flashcardViewModels
+                        .map { flashcardVM in
+                            flashcardVM.flashcard
+                        }
+                        .contains(where: {$0.id == flashcard.id
+                                    && $0.dateAdded == flashcard.dateAdded
+                                    && ($0.prompt != flashcard.prompt || $0.answer != flashcard.answer)})
+                }
+            
+            print("\(editedFlashcards.count) updated")
+            deckViewModel.updateFlashcards(editedFlashcards)
+
+            //Remove flashcards
+            let deletedFlashcards = flashcardListViewModel.flashcardViewModels
+                .map { flashcardVM in
+                    flashcardVM.flashcard
+                }
+                .filter { currentFlashcard in
+                    !flashcards
+                        .contains(currentFlashcard)
+                }
+            
+            print("\(deletedFlashcards.count) deleted")
+            deckViewModel.deleteFlashcards(deletedFlashcards)
+            
+            self.carouselLocation = 0
+            print("Carousel location is now\(carouselLocation)")
+        }
+    }
+}
 
 struct DeckListDeckView: View {
     
