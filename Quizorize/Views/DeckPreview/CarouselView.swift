@@ -13,11 +13,13 @@ struct CarouselView: View {
     @GestureState private var dragState = DragState.inactive
     @Binding var carouselLocation: Int
     
+    var width: CGFloat // width of each view
+    
     var itemHeight:CGFloat
     @ObservedObject var flashcardListVM: FlashcardListViewModel
     
     private struct Dimensions {
-        static let width: CGFloat = 350
+        //static let width: CGFloat = 350
         
         static let heightOffset: CGFloat = 50 //For the adjacent view
     }
@@ -56,7 +58,7 @@ struct CarouselView: View {
                         VStack{
                             //Spacer()
                             
-                            PreviewFlashcard(index: i, width: Dimensions.width, height: self.getHeight(i), flashcardVM: flashcard)
+                            PreviewFlashcard(index: i, width: self.width, height: self.getHeight(i), flashcardVM: flashcard)
                                 //Text("\(i)")
                                 /*
                                  .animation(.interpolatingSpring(stiffness: Dimensions.width.0, damping: 30.0, initialVelocity: 10.0))
@@ -140,7 +142,7 @@ struct CarouselView: View {
         if i == relativeLoc() {
             return self.dragState.translation.width
         } else {
-            return self.dragState.translation.width + (indexInCGFloat * (Dimensions.width + 20))
+            return self.dragState.translation.width + (indexInCGFloat * (self.width + 20))
         }
         
         //This sets up the central offset

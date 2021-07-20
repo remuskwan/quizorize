@@ -33,7 +33,7 @@ struct DeckView: View {
         GeometryReader { geoProxy in
             VStack(spacing: 0) {
                 
-                CarouselView(carouselLocation: self.$carouselLocation, itemHeight: UIScreen.main.bounds.height * 0.30, flashcardListVM: flashcardListViewModel)
+                CarouselView(carouselLocation: self.$carouselLocation, width: geoProxy.size.width * 0.85, itemHeight: UIScreen.main.bounds.height * 0.30, flashcardListVM: flashcardListViewModel)
 
                 Spacer()
                 
