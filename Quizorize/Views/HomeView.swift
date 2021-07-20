@@ -72,47 +72,45 @@ struct DeckListView: View {
                                 columns: layout,
                                 spacing: 20
                             ) {
-                                VStack {
-//                                    NewButton(deckListViewModel: deckListViewModel)
-                                    
-                                    Button(action: {
-                                        showingActionSheet.toggle()
-                                        let impactLight = UIImpactFeedbackGenerator(style: .light)
-                                        impactLight.impactOccurred()
-                                    }, label: {
-                                        
-                                        VStack {
-                                            ZStack {
-                                                Image(systemName: "plus")
-                                                RoundedRectangle(cornerRadius: 5)
-                                                    .strokeBorder(
-                                                        style: StrokeStyle(
-                                                            lineWidth: 2,
-                                                            dash: [3]
-                                                        )
+                                Button(action: {
+                                    showingActionSheet.toggle()
+                                    let impactLight = UIImpactFeedbackGenerator(style: .light)
+                                    impactLight.impactOccurred()
+                                }, label: {
+                                    VStack {
+                                        ZStack {
+                                            Image(systemName: "plus")
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .strokeBorder(
+                                                    style: StrokeStyle(
+                                                        lineWidth: 2,
+                                                        dash: [3]
                                                     )
-                                                //                                                            .frame(width: 90, height: 110)
-                                                //                                                            .frame(width: geometry.size.width * 0.2, height: geometry.size.height * 0.2)
-                                            }
-                                            .frame(width: geometry.size.width * 0.25
-                                                   , height: geometry.size.width * 0.3)
-                                            Text("New")
-                                                .font(.footnote)
+                                                )
+                                            //                                                            .frame(width: 90, height: 110)
+                                            //                                                            .frame(width: geometry.size.width * 0.2, height: geometry.size.height * 0.2)
                                         }
-                                    })
-                                    .actionSheet(isPresented: $showingActionSheet) {
-                                        ActionSheet(title: Text(""), message: Text(""), buttons: [
-                                            .default(Text("Deck")) {self.showingCreateDeck = true},
-                                            .cancel()
-                                        ])
+                                        .frame(width: geometry.size.width * 0.25
+                                               , height: geometry.size.width * 0.3)
+                                        Text("New")
+                                            .font(.footnote)
+                                        Spacer()
                                     }
-                                    .sheet(isPresented: $showingCreateDeck, content: {
-                                        DeckCreationView(deckListViewModel: deckListViewModel) { deck, flashcards in
-                                            deckListViewModel.add(deck: deck, flashcards: flashcards)
-                                        }
-                                    })
-                                    Spacer()
+                                    
+                                })
+                                .actionSheet(isPresented: $showingActionSheet) {
+                                    ActionSheet(title: Text(""), message: Text(""), buttons: [
+                                        .default(Text("Deck")) {self.showingCreateDeck = true},
+                                        .cancel()
+                                    ])
                                 }
+                                .sheet(isPresented: $showingCreateDeck, content: {
+                                    DeckCreationView(deckListViewModel: deckListViewModel) { deck, flashcards in
+                                        deckListViewModel.add(deck: deck, flashcards: flashcards)
+                                    }
+                                    
+                                })
+                                    
                                 ForEach(deckListViewModel.sortDeckVMs(self.selectedSortBy)) { deckVM in
                                     let deck = deckVM.deck
                                     let flashcardListViewModel = FlashcardListViewModel(deck)
@@ -344,6 +342,34 @@ enum SortBy: String, CaseIterable {
 //        })
 //    }
 //}
+
+struct DeckListDeckView: View {
+    
+    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
+    
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .bottomLeading) {
+                Image("deck1")
+                    .resizable()
+                    .frame(width: 110, height: 110)
+                
+                ZStack {
+                    Circle()
+                        .foregroundColor(.red)
+                    
+                    Text("\(flashcardListViewModel.badgeNumber)")
+                        .foregroundColor(.white)
+                        .font(Font.system(size: 12))
+                }
+                .frame(width: 20, height: 20)
+                .offset(x: (( 2 * 1) - 1) * (geometry.size.width / (2 * 1) ), y: -30)
+                .opacity(flashcardListViewModel.hasCardsDue ? 1 : 0)
+            }
+        }
+        
+    }
+}
 
 //struct DecksView_Previews: PreviewProvider {
 //    @State private var isPresented = false
