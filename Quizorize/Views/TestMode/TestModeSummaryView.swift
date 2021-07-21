@@ -17,7 +17,6 @@ struct TestModeSummaryView: View {
         GeometryReader { geometry in
             ZStack {
                 VStack {
-                    Spacer()
                     SummaryProgressBar(progress: $progressValue)
                         .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.4)
                         .padding()
@@ -38,15 +37,16 @@ struct TestModeSummaryView: View {
                         Text("You aced the test!")
                             .padding()
                     }
-                    
+                    Spacer()
                     Button(action: {
                         testModeViewModel.reset()
                     }, label: {
                         Text("Retake")
                             .font(.headline)
-                            .frame(width: geometry.size.width * 0.8, height: 32)
                     })
-                    Spacer()
+                    .buttonStyle(TestModeButtonStyle())
+                    .frame(width: geometry.size.width - 40)
+                    .padding()
                 }
                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
             }
