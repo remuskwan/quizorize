@@ -29,11 +29,12 @@ class TestModeViewModel: ObservableObject {
     @Published var tfOption = ""
     @Published var mcqOptions = [String]()
     
+    @Published var latestScore: Double? = nil
+    
 //    @Published var spacedRepetitionOn = true
     @Published var reminderType = ReminderType.never
     @Published var nextReminderTime: TimeInterval = 0.0
     
-    var latestScore = 0.0
     private var cancellables = Set<AnyCancellable>()
     
     var count: Int {
@@ -127,10 +128,10 @@ class TestModeViewModel: ObservableObject {
     }
     
     func setLatestScore(_ deck: Deck) {
+        guard let latestScore = self.latestScore else { return }
         deckRepository.updateTestPrevScore(deck: deck, testModePrevScore: latestScore)
     }
-    
-    
+
     func calculateScore() -> Double {
         let score = Double(self.correct) / Double(self.count)
         self.latestScore = score
