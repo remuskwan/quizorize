@@ -96,7 +96,9 @@ struct TestModeView: View {
                                           message: Text("Test progress will not be saved."),
                                           primaryButton: .cancel(),
                                           secondaryButton: .default(Text("End Test")) {
-                                            self.testModeViewModel.setLatestScore(deckViewModel.deck)
+                                            if testModeViewModel.latestScore != nil {
+                                                self.testModeViewModel.setLatestScore(deckViewModel.deck)
+                                            }
                                             self.testModeViewModel.reset()
                                             presentationMode.wrappedValue.dismiss()
                                           })
@@ -132,16 +134,19 @@ struct TestModeOptions: View {
             Toggle(isOn: $testModeViewModel.isTrueFalse, label: {
                 Text("True or false")
             })
+            .disabled((!testModeViewModel.isWritten && !testModeViewModel.isMCQ) ? true : false)
             .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
             
             Toggle(isOn: $testModeViewModel.isMCQ, label: {
                 Text("Multiple choice")
             })
+            .disabled((!testModeViewModel.isWritten && !testModeViewModel.isTrueFalse) ? true : false)
             .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
             
             Toggle(isOn: $testModeViewModel.isWritten, label: {
                 Text("Written")
             })
+            .disabled((!testModeViewModel.isTrueFalse && !testModeViewModel.isMCQ) ? true : false)
             .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
         }
         
@@ -198,7 +203,6 @@ struct TestView: View {
                             Written(testModeViewModel: testModeViewModel)
                         } else if testModeViewModel.currentType == "TF" {
                             TrueFalse(testModeViewModel: testModeViewModel)
-//                                .frame(height: geometry.size.height * 0.4)
                         } else if testModeViewModel.currentType == "MCQ" {
                             MultipleChoice(testModeViewModel: testModeViewModel)
                                 .frame(height: geometry.size.height * 0.4)
@@ -431,7 +435,7 @@ struct TrueFalse: View {
                         impactMed.impactOccurred()
                     }
                     .buttonStyle(TestModeButtonStyle())
-                    .frame(width: geometry.size.width * 0.45, height: geometry.size.height * 0.2)
+                    .frame(width: geometry.size.width * 0.45)
                     
                     Spacer()
                 }
@@ -446,11 +450,11 @@ struct TestModeButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            .frame(height: 45)
             .font(.headline)
             .foregroundColor(.white)
             .background(RoundedRectangle(cornerRadius: 5)
                             .fill(configuration.isPressed ? Color(hex: "15CDA8") : Color.accentColor))
-            .padding()
     }
 }
 
