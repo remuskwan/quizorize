@@ -10,9 +10,9 @@ import SwiftUI
 struct PracticeHintView: View {
     @Environment(\.presentationMode) var presentationMode
     
-    let generalPracticeHints: [AnyView] = [AnyView(HintRowView(textTitle: "Tap the card", textContent: "View the reverse side", image: "arrow.2.squarepath", imageColor: .accentColor)), AnyView(HintRowView(textTitle: "Swipe left", textContent: "View the reverse side", image: "arrowshape.turn.up.left.fill", imageColor: .orange)), AnyView(HintRowView(textTitle: "Swipe Right", textContent: "Mark the card as correct", image: "arrowshape.turn.up.right.fill", imageColor: .green))]
+    let generalPracticeHints: [AnyView] = [AnyView(HintRowView(textTitle: "Tap the card", textContent: "View reverse side", image: "arrow.2.squarepath", imageColor: .accentColor)), AnyView(HintRowView(textTitle: "Swipe left", textContent: "Mark card as incorrect", image: "arrowshape.turn.up.left.fill", imageColor: .orange)), AnyView(HintRowView(textTitle: "Swipe Right", textContent: "Mark card as correct", image: "arrowshape.turn.up.right.fill", imageColor: .green))]
     
-    let spacedRepetitionHints: [AnyView] = [AnyView(HintRowView(textTitle: "Complete each round", textContent: "Reach the summary before stopping to save your progress", image: "externaldrive.fill.badge.timemachine", imageColor: Color(hex: "15CDA8"))), AnyView(HintRowView(textTitle: "Open Quizorize on the next study date", textContent: "Study on Quizorize's next planned algorithm-based date!", image: "deskclock.fill", imageColor: .accentColor))]
+    let spacedRepetitionHints: [AnyView] = [AnyView(HintRowView(textTitle: "Complete each round", textContent: "Reach the end before stopping to save your progress", image: "externaldrive.fill.badge.timemachine", imageColor: Color(hex: "15CDA8"))), AnyView(HintRowView(textTitle: "Open Quizorize on the next study date", textContent: "Study on Quizorize's next planned date!", image: "deskclock.fill", imageColor: .accentColor))]
     
     @AppStorage("showTip") var showTip: Bool = true
     @State private var showEndTipAlert: Bool = false
