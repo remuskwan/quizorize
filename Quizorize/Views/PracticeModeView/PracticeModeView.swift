@@ -36,38 +36,6 @@ struct PracticeModeView: View {
             GeometryReader { geometry in
                 ZStack {
                     VStack {
-                        /*
-                         HStack {
-                         Button {
-                         /*
-                         if self.examModeVM.isExamMode && examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards) {
-                         didFinishDeck(examModeVM.getUpdatedFlashcards(), correctCount / totalQuestionsAnswered)
-                         }
-                         */
-                         presentationMode.wrappedValue.dismiss()
-                         resetCards()
-                         } label: {
-                         Image(systemName: "multiply")
-                         }
-                         .frame(width: 24, height: 24)
-                         .padding()
-                         Spacer()
-                         Text("\(practiceModeViewModel.counter) / \(examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards) ? examModeVM.cardsDue : practiceModeViewModel.count)")
-                         Spacer()
-                         //                        Button(action: {
-                         //                            showOptionsSheet.toggle()
-                         //                            dismissOptionsSheet.toggle()
-                         //                        }, label: {
-                         //                            Image(systemName: "questionmark.circle")
-                         //                                .frame(width: 24, height: 24)
-                         //                                .padding()
-                         //                        })
-                         Image(systemName: "questionmark.circle")
-                         .frame(width: 24, height: 24)
-                         .padding()
-                         }
-                         */
-
                         if !self.showingTest {
                             List {
                                 Section {
