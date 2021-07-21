@@ -183,11 +183,19 @@ struct ChangePasswordView: View {
                     authViewModel.verifyPassword(currentPassword)
                         .then { success in
                             if success {
-                                if newPassword == confirmPassword {
-                                    authViewModel.updatePassword(password: newPassword)
-                                    presentationMode.wrappedValue.dismiss()
-                                }
+                                authViewModel.updatePassword(password: newPassword, confirmPassword: confirmPassword)
+                                    .then { success in
+                                        if success {
+                                            presentationMode.wrappedValue.dismiss()
+                                        }
+                                    }
+                                    .catch { error in
+                                        print(error.localizedDescription)
+                                    }
                             }
+                        }
+                        .catch { error in
+                            print(error.localizedDescription)
                         }
                 }
             }
