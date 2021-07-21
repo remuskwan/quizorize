@@ -163,6 +163,8 @@ enum ValidateCredentialError: AuthError {
             return "Enter a valid email address."
         case .passwordPoorlyFormatted:
             return "Passwords must be between 8 and 15 characters and contain at least one number and one capital letter."
+        case .passwordsDoNotMatch:
+            return "New password does not match Confirm password. Please try again."
         default:
             return "Unknown error"
         }
