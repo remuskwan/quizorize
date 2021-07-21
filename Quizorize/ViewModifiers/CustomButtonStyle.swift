@@ -14,7 +14,9 @@ struct AuthButtonStyle: ButtonStyle {
             .frame(height: 45)
             .font(.headline)
             .foregroundColor(.white)
-            .background(Color.accentColor)
+//            .background(configuration.isPressed ? Color(hex: "15CDA8") : Color.accentColor)
+            .background(Color.accentColor
+                            .opacity(configuration.isPressed ? 0.3 : 1))
             .cornerRadius(5)
     }
 }

@@ -28,16 +28,18 @@ struct TestModeView: View {
                                 if deckViewModel.deck.testModePrevScore != nil {
                                     Section {
                                         HStack {
+                                            Spacer()
                                             SummaryProgressBar(progress: $progressValue)
-                                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                                                 .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.4)
                                                 .padding()
                                                 .onAppear {
                                                     self.progressValue = deckViewModel.deck.testModePrevScore ?? 0.0
                                                 }
+                                            Spacer()
                                         }
                                     }
-                                    .listRowBackground(Color.offWhite)
+                                    .listRowBackground(Color(UIColor.systemGroupedBackground))
+                                    
                                 }
                                 
                                 Section {
@@ -94,6 +96,7 @@ struct TestModeView: View {
                                           message: Text("Test progress will not be saved."),
                                           primaryButton: .cancel(),
                                           secondaryButton: .default(Text("End Test")) {
+                                            self.testModeViewModel.setLatestScore(deckViewModel.deck)
                                             self.testModeViewModel.reset()
                                             presentationMode.wrappedValue.dismiss()
                                           })
@@ -464,8 +467,13 @@ struct MultipleChoice: View {
                         let impactMed = UIImpactFeedbackGenerator(style: .medium)
                         impactMed.impactOccurred()
                     }, label: {
-                        Text("\(option)")
-                            .padding()
+//                        ZStack {
+//                            RoundedRectangle(cornerRadius: 5)
+//                                .fill(Color.clear)
+//
+                            Text("\(option)")
+                                .padding()
+//                        }
                     })
                     .buttonStyle(MultipleChoiceButtonStyle())
                     .padding(.vertical, 4)
