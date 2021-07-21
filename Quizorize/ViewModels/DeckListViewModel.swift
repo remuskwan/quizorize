@@ -27,6 +27,7 @@ class DeckListViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+
     func add(deck: Deck, flashcards: [Flashcard]) {
         deckRepository.addData(deck: deck, flashcards: flashcards)
     }
@@ -55,4 +56,11 @@ class DeckListViewModel: ObservableObject {
             }
         }
     }
+}
+
+struct UserDefaultKeys {
+    static let practiceScores = "practiceScores"
+    static let testScores = "testScores"
+    
+    static let showTipsOnLaunch = "showTipsOnLaunch"
 }
