@@ -28,11 +28,8 @@ struct HomeView: View {
 struct DeckListView: View {
     @ObservedObject var deckListViewModel: DeckListViewModel
 
-    @State private var showingEditDeck = false
     @State private var selectedSortBy = SortBy.date
     @State private var showActivitySheet = false
-    @State private var showDeckOptions = false
-    @State private var deleteDeckConfirm = false
     @State private var showingActionSheet = false
     @State private var showingCreateDeck = false
     @State private var showListView = false
@@ -47,24 +44,24 @@ struct DeckListView: View {
                 VStack {
                     Divider()
                         .padding(.horizontal)
-                    HStack {
-                        Spacer()
-                        Picker("Sort By: ", selection: $selectedSortBy) {
-                            ForEach(SortBy.allCases, id: \.self) {
-                                Text($0.rawValue)
-                            }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .frame(width: 200, height: 20, alignment: .center)
-                        Spacer()
-                        //                        Button(action: {
-                        //                            self.showListView.toggle()
-                        //                        }, label: {
-                        //                            Image(systemName: "list.dash")
-                        //                        })
-                    }
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 12)
+//                    HStack {
+//                        Spacer()
+//                        Picker("Sort By: ", selection: $selectedSortBy) {
+//                            ForEach(SortBy.allCases, id: \.self) {
+//                                Text($0.rawValue)
+//                            }
+//                        }
+//                        .pickerStyle(SegmentedPickerStyle())
+//                        .frame(width: 200, height: 20, alignment: .center)
+//                        Spacer()
+//                        Button(action: {
+//                            self.showListView.toggle()
+//                        }, label: {
+//                            Image(systemName: "list.dash")
+//                        })
+//                    }
+//                    .padding(.vertical, 10)
+//                    .padding(.horizontal, 12)
                     
                     if !self.showListView {
                         GeometryReader { geometry in
@@ -109,53 +106,19 @@ struct DeckListView: View {
                                     
                                 })
                                     
-                                ForEach(deckListViewModel.sortDeckVMs(self.selectedSortBy)) { deckVM in
+                                ForEach(deckListViewModel.deckViewModels) { deckVM in
                                     let deck = deckVM.deck
                                     let flashcardListViewModel = FlashcardListViewModel(deck)
                                     let testModeViewModel = TestModeViewModel(deck)
                                     
-                                    VStack {
-                                        NavigationLink(
-                                            destination:
-                                                DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: flashcardListViewModel, testModeViewModel: testModeViewModel),
-                                            label: {
-                                                Image("deck1")
-                                                    .resizable()
-                                            })
-                                            .frame(width: geometry.size.width * 0.3, height: geometry.size.width * 0.3)
-//                                            .frame(minWidth: 80, idealWidth: 110)
-//                                            .frame(minHeight: 80, idealHeight: 110)
-                                        Button {
-                                            showDeckOptions.toggle()
-                                        } label: {
-                                            HStack(spacing: 2) {
-                                                Text(deck.title)
-                                                    .font(.footnote)
-                                                Image(systemName: "chevron.down")
-                                                    .font(.system(size: 8))
-                                            }
-                                        }
-                                        .actionSheet(isPresented: $showDeckOptions, content: {
-                                            ActionSheet(title: Text(""), message: Text(""), buttons: [
-                                                .default(Text("Edit Deck")) { self.showingEditDeck = true },
-                                                .destructive(Text("Delete Deck").foregroundColor(Color.red)) {
-                                                    self.deleteDeckConfirm.toggle()
-                                                },
-                                                .cancel()
-                                            ])
-                                        })
-                                        .alert(isPresented: $deleteDeckConfirm, content: {
-                                            Alert(title: Text("Are you sure you want to delete this deck?"), message: nil, primaryButton: .cancel(), secondaryButton:.destructive(Text("Delete"), action: {
-                                                deckListViewModel.remove(deck)
-                                            }))
-                                        })
-                                        .sheet(isPresented: $showingEditDeck) {
-                                            EditDeckView(deckViewModel: deckVM, deckListViewModel: deckListViewModel, flashcardListViewModel: flashcardListViewModel)
-                                        }
-                                        Text(deckVM.getDateCreated())
-                                            .font(.caption2.weight(.light))
-                                        Spacer()
-                                    }
+                                    DeckIconView(
+                                        deckVM: deckVM,
+                                        deckListViewModel: deckListViewModel,
+                                        flashcardListViewModel: flashcardListViewModel,
+                                        testModeViewModel: testModeViewModel, deck: deck,
+                                        width: geometry.size.width * 0.3,
+                                        height: geometry.size.width * 0.3
+                                    )
                                 }
                             }
                             .padding(12)
@@ -236,6 +199,64 @@ struct DeckListView: View {
 //        }
 //    }
 //}
+
+struct DeckIconView: View {
+    @ObservedObject var deckVM: DeckViewModel
+    @ObservedObject var deckListViewModel: DeckListViewModel
+    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
+    @ObservedObject var testModeViewModel: TestModeViewModel
+    
+    @State private var showDeckOptions = false
+    @State private var deleteDeckConfirm = false
+    @State private var showingEditDeck = false
+    
+    let deck: Deck
+    let width: CGFloat?
+    let height: CGFloat?
+    
+    var body: some View {
+        VStack {
+            NavigationLink(
+                destination:
+                    DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: flashcardListViewModel, testModeViewModel: testModeViewModel),
+                label: {
+                    Image("deck1")
+                        .resizable()
+                })
+                .frame(width: width, height: height)
+            Button {
+                showDeckOptions.toggle()
+            } label: {
+                HStack(spacing: 2) {
+                    Text(deck.title)
+                        .font(.footnote)
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 8))
+                }
+            }
+            .actionSheet(isPresented: $showDeckOptions, content: {
+                ActionSheet(title: Text(""), message: Text(""), buttons: [
+                    .default(Text("Edit Deck")) { self.showingEditDeck = true },
+                    .destructive(Text("Delete Deck").foregroundColor(Color.red)) {
+                        self.deleteDeckConfirm.toggle()
+                    },
+                    .cancel()
+                ])
+            })
+            .alert(isPresented: $deleteDeckConfirm, content: {
+                Alert(title: Text("Are you sure you want to delete this deck?"), message: nil, primaryButton: .cancel(), secondaryButton:.destructive(Text("Delete"), action: {
+                    deckListViewModel.remove(deck)
+                }))
+            })
+            .sheet(isPresented: $showingEditDeck) {
+                EditDeckView(deckViewModel: deckVM, deckListViewModel: deckListViewModel, flashcardListViewModel: flashcardListViewModel)
+            }
+            Text(deckVM.getDateCreated())
+                .font(.caption2.weight(.light))
+            Spacer()
+        }
+    }
+}
 
 enum SortBy: String, CaseIterable {
     case date = "Date"

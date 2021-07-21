@@ -31,8 +31,6 @@ struct Search: View {
     @ObservedObject var deckListViewModel: DeckListViewModel
     
     @Binding var filteredItems: [DeckViewModel]
-    @State private var showActivitySheet = false
-    @State private var showDeckOptions = false
     
     let layout = [
         GridItem(.adaptive(minimum: 120))
@@ -40,38 +38,24 @@ struct Search: View {
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: layout, spacing: 20) {
-                ForEach(filteredItems) { deckVM in
-                    //TODO: Drag and drop into folders using onLongPressGesture
-                    VStack {
-                        NavigationLink(
-                            //TODO: Pass down TMVM and FLVM from home
-                            destination: DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: FlashcardListViewModel(deckVM.deck), testModeViewModel: TestModeViewModel(deckVM.deck)),
-                            label: {
-                            Image("deck1")
-                                .resizable()
-                                .frame(width: 100, height: 100)
-                        })
-
-                        Button {
-                            showDeckOptions.toggle()
-                        } label: {
-                            HStack {
-                                Text(deckVM.deck.title)
-                                    .font(.caption)
-                                Image(systemName: "chevron.down")
-                                    .font(.caption2)
-                            }
-                        }
-                        .actionSheet(isPresented: $showDeckOptions, content: {
-                            ActionSheet(title: Text(""), message: Text(""), buttons: [
-                                .default(Text("Edit deck")) { deckListViewModel.update(deckVM.deck) },
-                                .destructive(Text("Delete deck").foregroundColor(Color.red)) { deckListViewModel.remove(deckVM.deck) },
-                                .cancel()
-                            ])
-                        })
+            GeometryReader { geometry in
+                LazyVGrid(columns: layout, spacing: 20) {
+                    ForEach(filteredItems) { deckVM in
+                        let deck = deckVM.deck
+                        let flashcardListViewModel = FlashcardListViewModel(deck)
+                        let testModeViewModel = TestModeViewModel(deck)
+                        
+                        DeckIconView(
+                            deckVM: deckVM,
+                            deckListViewModel: deckListViewModel,
+                            flashcardListViewModel: flashcardListViewModel,
+                            testModeViewModel: testModeViewModel, deck: deck,
+                            width: geometry.size.width * 0.3,
+                            height: geometry.size.width * 0.3
+                        )
                     }
                 }
+                
             }
             
         }
