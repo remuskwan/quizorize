@@ -30,7 +30,7 @@ struct DeckListView: View {
 
     @State private var selectedSortBy = SortBy.date
     @State private var showActivitySheet = false
-    @State private var showingActionSheet = false
+//    @State private var showingActionSheet = false
     @State private var showingCreateDeck = false
     @State private var showListView = false
 
@@ -70,7 +70,7 @@ struct DeckListView: View {
                                 spacing: 20
                             ) {
                                 Button(action: {
-                                    showingActionSheet.toggle()
+                                    showingCreateDeck.toggle()
                                     let impactLight = UIImpactFeedbackGenerator(style: .light)
                                     impactLight.impactOccurred()
                                 }, label: {
@@ -93,12 +93,12 @@ struct DeckListView: View {
                                     }
                                     
                                 })
-                                .actionSheet(isPresented: $showingActionSheet) {
-                                    ActionSheet(title: Text(""), message: Text(""), buttons: [
-                                        .default(Text("Deck")) {self.showingCreateDeck = true},
-                                        .cancel()
-                                    ])
-                                }
+//                                .actionSheet(isPresented: $showingActionSheet) {
+//                                    ActionSheet(title: Text(""), message: Text(""), buttons: [
+//                                        .default(Text("Deck")) {self.showingCreateDeck = true},
+//                                        .cancel()
+//                                    ])
+//                                }
                                 .sheet(isPresented: $showingCreateDeck, content: {
                                     DeckCreationView(deckListViewModel: deckListViewModel) { deck, flashcards in
                                         deckListViewModel.add(deck: deck, flashcards: flashcards)
