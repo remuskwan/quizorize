@@ -23,7 +23,7 @@ struct DeckView: View {
     @State private var showTestModeView = false
     @State private var showDeckOptions = false
     @State private var deleteDeckConfirm = false
-    
+
     //Temp, delete after
     @State private var isExamMode = false
     
@@ -122,9 +122,6 @@ struct DeckView: View {
             }
 
         }
-        .onDisappear {
-            //self.deckViewModel.toggleExamMode()
-        }
     }
     
     var generalInfo: some View {
@@ -209,14 +206,14 @@ struct DeckView: View {
         
         
         
-        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, score, reminderTime in
+        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, reminderTime in
             
             let sortedUpdatedFlashcards = updatedFlashcards.sorted {
                 $0.nextDate! < $1.nextDate!
             }
             
             self.deckViewModel.updateFlashcards(sortedUpdatedFlashcards)
-            self.deckViewModel.updatePrevExamScore(score)
+            //self.deckViewModel.updatePrevExamScore(score)
             self.reminderViewModel.sendReminderNotif(deckTitle: self.deckViewModel.deck.title, reminderTime: reminderTime)
         }
     }

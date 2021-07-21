@@ -21,6 +21,7 @@ class PracticeModeViewModel: ObservableObject {
         self.counter < self.count
     }
     
+
     //MARK: SR Algo variables
     @Published var isSpacedRepetitionOn: Bool = false
     @Published var flipStatuses: [String: Bool]
@@ -48,14 +49,17 @@ class PracticeModeViewModel: ObservableObject {
         }
     }
     
+    //Final set of flashcards to be pushed to database
     var finalisedFlashcards: [Flashcard] {
         spacedRepetitionModel.finalisedFlashcards
     }
     
+    //Current set of flashcards to display date
     var changedFinalisedFlashcards: [Flashcard] {
         spacedRepetitionModel.changedFinalisedFlashcards
     }
     
+
     private var yetToFinishQuizzingPublisher: AnyPublisher<Bool, Never> {
             $counter
             .debounce(for: 0.2, scheduler: RunLoop.main)

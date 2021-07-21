@@ -21,21 +21,54 @@ struct PracticeModeView: View {
     @State private var totalQuestionsAnswered = 0.0
     @State var prevExamScore: Double
     
-    
     @State private var showingTest = false
     @State private var showingEndTestAlert = false
     @State private var showHint = false
     
-    
+    //Saved preferences locally
+    @AppStorage("showTip") var showTip: Bool = true
+    @AppStorage("practiceScore") var practiceScore: Double = 0.0
 
     //To update DB
-    var didFinishDeck: (_ updatedFlashcards: [Flashcard], _ score: Double, _ reminderTime: TimeInterval) -> Void
+    var didFinishDeck: (_ updatedFlashcards: [Flashcard], _ reminderTime: TimeInterval) -> Void
     
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
                 ZStack {
                     VStack {
+                        /*
+                         HStack {
+                         Button {
+                         /*
+                         if self.examModeVM.isExamMode && examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards) {
+                         didFinishDeck(examModeVM.getUpdatedFlashcards(), correctCount / totalQuestionsAnswered)
+                         }
+                         */
+                         presentationMode.wrappedValue.dismiss()
+                         resetCards()
+                         } label: {
+                         Image(systemName: "multiply")
+                         }
+                         .frame(width: 24, height: 24)
+                         .padding()
+                         Spacer()
+                         Text("\(practiceModeViewModel.counter) / \(examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards) ? examModeVM.cardsDue : practiceModeViewModel.count)")
+                         Spacer()
+                         //                        Button(action: {
+                         //                            showOptionsSheet.toggle()
+                         //                            dismissOptionsSheet.toggle()
+                         //                        }, label: {
+                         //                            Image(systemName: "questionmark.circle")
+                         //                                .frame(width: 24, height: 24)
+                         //                                .padding()
+                         //                        })
+                         Image(systemName: "questionmark.circle")
+                         .frame(width: 24, height: 24)
+                         .padding()
+                         }
+                         */
+
                         if !self.showingTest {
                             List {
                                 Section {
@@ -49,7 +82,6 @@ struct PracticeModeView: View {
                                     .frame(width: geometry.size.width * 0.8, height: 45)
                                     .listRowBackground(Color.accentColor)
                                 }
-                                
 
                                 Section(header:
                                             Text("Reminders"),
@@ -85,6 +117,11 @@ struct PracticeModeView: View {
                             })
                         } else {
                             practiceModeView
+                                .onAppear {
+                                    if self.showTip {
+                                        self.showHint = true
+                                    }
+                                }
                         }
                     }
                     /*
@@ -145,7 +182,9 @@ struct PracticeModeView: View {
                                 if self.practiceModeViewModel.isSpacedRepetitionOn && !self.practiceModeViewModel.changedFinalisedFlashcards.isEmpty {
                                     print("Current score is \(correctCount / totalQuestionsAnswered)")
                                     
-                                    didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, correctCount / totalQuestionsAnswered, self.practiceModeViewModel.getNotificationTimeInterval())
+                                    didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, self.practiceModeViewModel.getNotificationTimeInterval())
+                                    
+                                    self.practiceScore = correctCount / totalQuestionsAnswered
                                     
                                     print("Deck and flashcards successfully updated")
                                     
@@ -167,7 +206,9 @@ struct PracticeModeView: View {
                                 if self.practiceModeViewModel.isSpacedRepetitionOn && !self.practiceModeViewModel.changedFinalisedFlashcards.isEmpty {
                                     print("Current score is \(correctCount / totalQuestionsAnswered)")
                                     
-                                    didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, correctCount / totalQuestionsAnswered, self.practiceModeViewModel.getNotificationTimeInterval())
+                                    didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, self.practiceModeViewModel.getNotificationTimeInterval())
+                                    
+                                    self.practiceScore = correctCount / totalQuestionsAnswered
                                     
                                 }
                                 presentationMode.wrappedValue.dismiss()
@@ -222,7 +263,7 @@ struct PracticeModeView: View {
                             .padding()
                             .onAppear {
                                 print("previous practice score is \(prevExamScore)")
-                                self.progressValue = (correctCount / totalQuestionsAnswered).isNaN ? self.prevExamScore : (correctCount / totalQuestionsAnswered)
+                                self.progressValue = (correctCount / totalQuestionsAnswered).isNaN ? self.practiceScore : (correctCount / totalQuestionsAnswered)
                             }
                         
                         if practiceModeViewModel.isSpacedRepetitionOn {
