@@ -40,7 +40,6 @@ struct TestModeSummaryView: View {
                     }
                     
                     Button(action: {
-                        self.testModeViewModel.setLatestScore(deckViewModel.deck)
                         testModeViewModel.reset()
                     }, label: {
                         Text("Retake")
