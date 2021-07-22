@@ -192,7 +192,7 @@ struct HintRowView: View {
                     Text(textTitle)
                         .font(.title2.bold())
                         .lineLimit(nil)
-
+                    Spacer()
                     Text(textContent)
                         .font(.body)
                         .lineLimit(nil)

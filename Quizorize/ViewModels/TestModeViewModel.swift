@@ -104,14 +104,17 @@ class TestModeViewModel: ObservableObject {
             .randomElement() ?? ""
     }
     
-    func setQuestionCount() {
-        self.testFlashcards = Array(self.testFlashcards.shuffled()[..<self.questionCount])
-    }
+//    func setQuestionCount() {
+//        self.testFlashcards = Array(self.testFlashcards.shuffled()[..<self.questionCount])
+//    }
     
     func setMCQOptions() {
         var mcqOptions: [FlashcardViewModel] = []
         mcqOptions.append(contentsOf: testFlashcards)
-        mcqOptions.remove(at: activeCard) //remove correct answer
+        let activeCardIndex = mcqOptions.firstIndex { flashcardVM in
+            flashcardVM.flashcard == testFlashcards[activeCard].flashcard
+        }
+        mcqOptions.remove(at: activeCardIndex!) //remove correct answer
         mcqOptions = Array(mcqOptions.shuffled().prefix(3)) //pick 3 incorrect answers
         mcqOptions.append(testFlashcards[activeCard]) //add correct answer
         self.mcqOptions = mcqOptions.shuffled().map { flashcardVM in
@@ -143,7 +146,6 @@ class TestModeViewModel: ObservableObject {
             self.nextReminderTime = 0
         } else if self.reminderType == ReminderType.oneDay {
             self.nextReminderTime = 86400
-//            self.nextReminderTime = 5
         } else if self.reminderType == ReminderType.threeDays {
             self.nextReminderTime = 259200
         } else if self.reminderType == ReminderType.fiveDays {
