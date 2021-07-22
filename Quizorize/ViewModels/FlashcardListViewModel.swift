@@ -64,19 +64,6 @@ class FlashcardListViewModel: ObservableObject {
     init(_ deck: Deck) {
         self.flashcardRepository = FlashcardRepository(deck)
         
-        /*
-        flashcardRepository.$flashcards
-            .map { flashcards in  
-                flashcards.map(FlashcardViewModel.init)
-            }
-            .assign(to: \.flashcardViewModels, on: self)
-            .store(in: &cancellables)
-
-        self.flashcardViewModels.sort { flashcardVM1, flashcardVM2 in
-            flashcardVM1.flashcard.dateAdded < flashcardVM2.flashcard.dateAdded
-        }
-        */
-
         sortFlashcard
             .receive(on: RunLoop.main)
             .assign(to: \.flashcardViewModels, on: self)
