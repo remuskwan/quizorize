@@ -206,14 +206,14 @@ struct DeckView: View {
         
         
         
-        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, reminderTime in
+        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, score, reminderTime in
             
             let sortedUpdatedFlashcards = updatedFlashcards.sorted {
                 $0.nextDate! < $1.nextDate!
             }
             
             self.deckViewModel.updateFlashcards(sortedUpdatedFlashcards)
-            //self.deckViewModel.updatePrevExamScore(score)
+            self.deckViewModel.updatePrevExamScore(score)
             self.reminderViewModel.sendReminderNotif(deckTitle: self.deckViewModel.deck.title, reminderTime: reminderTime)
         }
     }
