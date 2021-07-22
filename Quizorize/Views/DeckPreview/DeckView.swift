@@ -37,13 +37,13 @@ struct DeckView: View {
                 
                 CarouselView(carouselLocation: self.$carouselLocation, width: geoProxy.size.width * 0.85, itemHeight: UIScreen.main.bounds.height * 0.30, flashcardListVM: flashcardListViewModel)
 
-//                Spacer()
-                buttons
-                    .frame(height: UIScreen.main.bounds.height * 0.20)
-
                 Spacer()
                 
+                buttons
+                    .frame(height: UIScreen.main.bounds.height * 0.20)
+                    .padding(.vertical)
             }
+            
             .navigationBarTitle("")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -119,6 +119,7 @@ struct DeckView: View {
                     self.carouselLocation = 0
                     print("Carousel location is now\(carouselLocation)")
                 }
+                
             }
 
         }
@@ -206,15 +207,15 @@ struct DeckView: View {
         
         
         
-        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, reminderTime in
+        return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, score, reminderTime in
             
             let sortedUpdatedFlashcards = updatedFlashcards.sorted {
                 $0.nextDate! < $1.nextDate!
             }
             
             self.deckViewModel.updateFlashcards(sortedUpdatedFlashcards)
-            //self.deckViewModel.updatePrevExamScore(score)
-            self.reminderViewModel.sendReminderNotif(deckTitle: self.deckViewModel.deck.title, reminderTime: reminderTime)
+            self.deckViewModel.updatePrevExamScore(score)
+            self.reminderViewModel.sendReminderNotif(deckTitle: self.deckViewModel.deck.title, reminderTime: reminderTime, type: .practice)
         }
     }
     

@@ -23,52 +23,23 @@ struct PracticeModeView: View {
     
     @State private var showingTest = false
     @State private var showingEndTestAlert = false
+    
     @State private var showHint = false
+    @State private var showEndTipAlert: Bool = false
+    
+    @State private var showSpacedRepetitionTips = false
     
     //Saved preferences locally
     @AppStorage("showTip") var showTip: Bool = true
-    @AppStorage("practiceScore") var practiceScore: Double = 0.0
 
     //To update DB
-    var didFinishDeck: (_ updatedFlashcards: [Flashcard], _ reminderTime: TimeInterval) -> Void
+    var didFinishDeck: (_ updatedFlashcards: [Flashcard], _ score: Double, _ reminderTime: TimeInterval) -> Void
     
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
                 ZStack {
                     VStack {
-                        /*
-                         HStack {
-                         Button {
-                         /*
-                         if self.examModeVM.isExamMode && examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards) {
-                         didFinishDeck(examModeVM.getUpdatedFlashcards(), correctCount / totalQuestionsAnswered)
-                         }
-                         */
-                         presentationMode.wrappedValue.dismiss()
-                         resetCards()
-                         } label: {
-                         Image(systemName: "multiply")
-                         }
-                         .frame(width: 24, height: 24)
-                         .padding()
-                         Spacer()
-                         Text("\(practiceModeViewModel.counter) / \(examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards) ? examModeVM.cardsDue : practiceModeViewModel.count)")
-                         Spacer()
-                         //                        Button(action: {
-                         //                            showOptionsSheet.toggle()
-                         //                            dismissOptionsSheet.toggle()
-                         //                        }, label: {
-                         //                            Image(systemName: "questionmark.circle")
-                         //                                .frame(width: 24, height: 24)
-                         //                                .padding()
-                         //                        })
-                         Image(systemName: "questionmark.circle")
-                         .frame(width: 24, height: 24)
-                         .padding()
-                         }
-                         */
-
                         if !self.showingTest {
                             List {
                                 Section {
@@ -86,9 +57,17 @@ struct PracticeModeView: View {
                                 Section(header:
                                             Text("Reminders"),
                                         footer:
-                                            VStack(alignment: .center) {
-                                              Text("Let Quizorize plan your next studying date!").font(.footnote)
-                                            })
+                                            HStack(spacing: 0) {
+                                                Text("Let Quizorize plan your next practice date.")
+                                                Button {
+                                                    self.showSpacedRepetitionTips = true
+                                                } label: {
+                                                    Text(" Learn More")
+//                                                        .underline()
+                                                }
+                                            }
+                                            
+                                            )
                                              {
                                     Toggle(isOn: $practiceModeViewModel.isSpacedRepetitionOn, label: {
                                         Text("Spaced Repetition")
@@ -124,13 +103,6 @@ struct PracticeModeView: View {
                                 }
                         }
                     }
-                    /*
-                    //                OptionsSheet(showingOptionsSheet: $showOptionsSheet, dismissOptionsSheet: $dismissOptionsSheet, height: geometry.size.height * 0.8) {
-                    //                    OptionsSheetContent()
-                    //                        .padding()
-                    //                }
-                    */
-                    
                     if showingNotice {
                         ShowHelp(showingNotice: $showingNotice)
                             .animation(.easeInOut(duration: 1))
@@ -139,6 +111,25 @@ struct PracticeModeView: View {
                 }
                 .sheet(isPresented: self.$showHint) {
                     PracticeHintView()
+                        .onDisappear {
+                            if self.showTip {
+                                self.showEndTipAlert = true
+                            }
+                        }
+                }
+                .alert(isPresented: self.$showEndTipAlert) {
+                    Alert(title: Text("Do you still want this tip to show up everytime you practice a deck?"),
+                          primaryButton: .default(Text("No")) {
+                            self.showTip = false
+                            self.presentationMode.wrappedValue.dismiss()
+                          },
+                          secondaryButton: .default(Text("Yes")) {
+                            self.showTip = true
+                            self.presentationMode.wrappedValue.dismiss()
+                          })
+                }
+                .sheet(isPresented: self.$showSpacedRepetitionTips) {
+                    SpacedRepetitionView()
                 }
                 
             }
@@ -182,10 +173,8 @@ struct PracticeModeView: View {
                                 if self.practiceModeViewModel.isSpacedRepetitionOn && !self.practiceModeViewModel.changedFinalisedFlashcards.isEmpty {
                                     print("Current score is \(correctCount / totalQuestionsAnswered)")
                                     
-                                    didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, self.practiceModeViewModel.getNotificationTimeInterval())
-                                    
-                                    self.practiceScore = correctCount / totalQuestionsAnswered
-                                    
+                                    didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, self.correctCount / self.totalQuestionsAnswered, self.practiceModeViewModel.getNotificationTimeInterval())
+
                                     print("Deck and flashcards successfully updated")
                                     
                                 }
@@ -206,10 +195,7 @@ struct PracticeModeView: View {
                                 if self.practiceModeViewModel.isSpacedRepetitionOn && !self.practiceModeViewModel.changedFinalisedFlashcards.isEmpty {
                                     print("Current score is \(correctCount / totalQuestionsAnswered)")
                                     
-                                    didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, self.practiceModeViewModel.getNotificationTimeInterval())
-                                    
-                                    self.practiceScore = correctCount / totalQuestionsAnswered
-                                    
+                                    didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, self.correctCount / self.totalQuestionsAnswered, self.practiceModeViewModel.getNotificationTimeInterval())
                                 }
                                 presentationMode.wrappedValue.dismiss()
                             } label: {
@@ -263,7 +249,7 @@ struct PracticeModeView: View {
                             .padding()
                             .onAppear {
                                 print("previous practice score is \(prevExamScore)")
-                                self.progressValue = (correctCount / totalQuestionsAnswered).isNaN ? self.practiceScore : (correctCount / totalQuestionsAnswered)
+                                self.progressValue = (correctCount / totalQuestionsAnswered).isNaN ? self.prevExamScore : (correctCount / totalQuestionsAnswered)
                             }
                         
                         if practiceModeViewModel.isSpacedRepetitionOn {

@@ -72,7 +72,6 @@ struct DeckCreationView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        //TODO: Add flashcards to deck
                         isNotValid = deckCreationVM.hasAnyFieldsEmpty() || deckCreationVM.hasDeckTitleEmpty() || deckCreationVM.hasLessThanTwoCards()
                         if isNotValid {
                             return
@@ -80,10 +79,6 @@ struct DeckCreationView: View {
                         let flashcards: [Flashcard] = deckCreationVM.getFinalisedFlashcards()
                         let deck = Deck(title: deckCreationVM.deckTitle)
                         didCreateDeck(deck, flashcards)
-//                        guard let deckId = deck.id else { return }
-//                        flashcards.forEach { flashcard in
-//                            flashcardListViewModel.add(flashcard, deckId: deckId)
-//                        }
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text(createOrEdit)
@@ -99,7 +94,6 @@ struct DeckCreationView: View {
                     return Alert(title: Text(StringConstants.alertTitle), message: Text(StringConstants.alertMissingField), dismissButton: .default(Text(StringConstants.alertDismissMessage)))
                 }
             }
-            //            .navigationBarColor(UIColor(Color.accentColor), textColor: UIColor(Color.white))
         }
     }
     

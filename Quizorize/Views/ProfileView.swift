@@ -223,7 +223,7 @@ struct VerifyPasswordView: View {
         NavigationView {
             GeometryReader { geometry in
                 VStack {
-                    Text("Verify your password")
+                    Text("Verify password")
                         .font(.largeTitle.bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 24)

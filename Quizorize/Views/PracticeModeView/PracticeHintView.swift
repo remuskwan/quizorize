@@ -11,11 +11,10 @@ struct PracticeHintView: View {
     @Environment(\.presentationMode) var presentationMode
     
     let generalPracticeHints: [AnyView] = [AnyView(HintRowView(textTitle: "Tap the card", textContent: "View reverse side", image: "arrow.2.squarepath", imageColor: .accentColor)), AnyView(HintRowView(textTitle: "Swipe left", textContent: "Mark card as incorrect", image: "arrowshape.turn.up.left.fill", imageColor: .orange)), AnyView(HintRowView(textTitle: "Swipe Right", textContent: "Mark card as correct", image: "arrowshape.turn.up.right.fill", imageColor: .green))]
-    
+
     let spacedRepetitionHints: [AnyView] = [AnyView(HintRowView(textTitle: "Complete each round", textContent: "Reach the end before stopping to save your progress", image: "externaldrive.fill.badge.timemachine", imageColor: Color(hex: "15CDA8"))), AnyView(HintRowView(textTitle: "Open Quizorize on the next study date", textContent: "Study on Quizorize's next planned date!", image: "deskclock.fill", imageColor: .accentColor))]
     
     @AppStorage("showTip") var showTip: Bool = true
-    @State private var showEndTipAlert: Bool = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -45,7 +44,7 @@ struct PracticeHintView: View {
                         .frame(height: geometry.size.height * 0.1)
                     
                     //Paste HintPageViews inside Carousel here
-                    CarouselTemplateView(width: geometry.size.width, itemHeight: geometry.size.height, views: [
+                    CarouselTemplateView(width: geometry.size.width, itemHeight: geometry.size.height, heightRatio: 0.62, views: [
                         AnyView(HintPageView(height: geometry.size.height, width: geometry.size.width, views: generalPracticeHints)),
                         AnyView(HintPageView(height: geometry.size.height, width: geometry.size.width, views: spacedRepetitionHints))
                     ])
@@ -84,13 +83,9 @@ struct PracticeHintView: View {
                     //.frame(height: geometry.size.height * 0.2)
                 
                 Button {
-                    if showTip {
-                        self.showEndTipAlert = true
-                    } else {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
+                    self.presentationMode.wrappedValue.dismiss()
                 } label: {
-                    Text("Ok got it!")
+                    Text("OK got it!")
                         .foregroundColor(DrawingConstants.buttonTextColor)
                         .font(.headline)
                         .frame(maxWidth: .infinity)
@@ -98,21 +93,9 @@ struct PracticeHintView: View {
                         .background(RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
                                         .fill(Color.accentColor))
                         .padding()
-                        //.border(Color.green)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .alert(isPresented: $showEndTipAlert) {
-                Alert(title: Text("Do you still want this tip to show up everytime you practice a deck?"),
-                      primaryButton: .default(Text("No")) {
-                        self.showTip = false
-                        self.presentationMode.wrappedValue.dismiss()
-                      },
-                      secondaryButton: .default(Text("Yes")) {
-                        self.showTip = true
-                        self.presentationMode.wrappedValue.dismiss()
-                      })
-            }
         }
         
     }
@@ -125,7 +108,7 @@ struct PracticeHintView: View {
     private struct DrawingConstants {
         
         static let buttonTextColor: Color = .white
-        static let cornerRadius: CGFloat = 10
+        static let cornerRadius: CGFloat = 5
         
         static let hintRowHeight: CGFloat = 0.1
         static let hintRowWidth: CGFloat = 0.8
