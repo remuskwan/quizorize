@@ -35,6 +35,12 @@
 		16285C7A26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7B26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
 		16285C7C26593426003EE017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16285C7926593426003EE017 /* GoogleService-Info.plist */; };
+		164F0A0C26A9CEFB00B88375 /* work.json in Resources */ = {isa = PBXBuildFile; fileRef = 164F0A0B26A9CEFB00B88375 /* work.json */; };
+		164F0A0E26A9D3D400B88375 /* study.json in Resources */ = {isa = PBXBuildFile; fileRef = 164F0A0D26A9D3D400B88375 /* study.json */; };
+		164F0A1026A9D8ED00B88375 /* target.json in Resources */ = {isa = PBXBuildFile; fileRef = 164F0A0F26A9D8ED00B88375 /* target.json */; };
+		164F0A1226A9DC9500B88375 /* timer.json in Resources */ = {isa = PBXBuildFile; fileRef = 164F0A1126A9DC9500B88375 /* timer.json */; };
+		164F0A1426A9E49200B88375 /* calendar-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 164F0A1326A9E49200B88375 /* calendar-success.json */; };
+		164F0A1626A9FE8D00B88375 /* practice.json in Resources */ = {isa = PBXBuildFile; fileRef = 164F0A1526A9FE8D00B88375 /* practice.json */; };
 		166783EB26827E93003C859B /* PracticeModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166783EA26827E93003C859B /* PracticeModeViewModel.swift */; };
 		166783ED2685DD16003C859B /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166783EC2685DD15003C859B /* ProfileViewModel.swift */; };
 		166783F6268618DA003C859B /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166783F2268618DA003C859B /* DeckView.swift */; };
@@ -83,8 +89,6 @@
 		16C285F12656EB030068AB95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16C285F02656EB030068AB95 /* Assets.xcassets */; };
 		16C285F42656EB030068AB95 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16C285F32656EB030068AB95 /* Preview Assets.xcassets */; };
 		16C285F62656EB030068AB95 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C285F52656EB030068AB95 /* Persistence.swift */; };
-		16C286042656EB040068AB95 /* QuizorizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C286032656EB040068AB95 /* QuizorizeTests.swift */; };
-		16C2860F2656EB040068AB95 /* QuizorizeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2860E2656EB040068AB95 /* QuizorizeUITests.swift */; };
 		16C2861D2656EC6C0068AB95 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2861C2656EC6C0068AB95 /* LoginView.swift */; };
 		16C2861F2656EC7A0068AB95 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2861E2656EC7A0068AB95 /* RegisterView.swift */; };
 		16E701CB2676316D00A1E55D /* FlashcardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E701CA2676316D00A1E55D /* FlashcardViewModel.swift */; };
@@ -150,6 +154,12 @@
 		1627933E265EA1520073718F /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		162793562660F7450073718F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		16285C7926593426003EE017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		164F0A0B26A9CEFB00B88375 /* work.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = work.json; sourceTree = "<group>"; };
+		164F0A0D26A9D3D400B88375 /* study.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = study.json; sourceTree = "<group>"; };
+		164F0A0F26A9D8ED00B88375 /* target.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = target.json; sourceTree = "<group>"; };
+		164F0A1126A9DC9500B88375 /* timer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = timer.json; sourceTree = "<group>"; };
+		164F0A1326A9E49200B88375 /* calendar-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "calendar-success.json"; sourceTree = "<group>"; };
+		164F0A1526A9FE8D00B88375 /* practice.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = practice.json; sourceTree = "<group>"; };
 		166783EA26827E93003C859B /* PracticeModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeModeViewModel.swift; sourceTree = "<group>"; };
 		166783EC2685DD15003C859B /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		166783F2268618DA003C859B /* DeckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
@@ -181,11 +191,7 @@
 		16C285F52656EB030068AB95 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		16C285FA2656EB030068AB95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16C285FF2656EB040068AB95 /* QuizorizeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuizorizeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		16C286032656EB040068AB95 /* QuizorizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeTests.swift; sourceTree = "<group>"; };
-		16C286052656EB040068AB95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16C2860A2656EB040068AB95 /* QuizorizeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuizorizeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		16C2860E2656EB040068AB95 /* QuizorizeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizorizeUITests.swift; sourceTree = "<group>"; };
-		16C286102656EB040068AB95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16C2861C2656EC6C0068AB95 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		16C2861E2656EC7A0068AB95 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		16E701CA2676316D00A1E55D /* FlashcardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardViewModel.swift; sourceTree = "<group>"; };
@@ -397,8 +403,6 @@
 			isa = PBXGroup;
 			children = (
 				16C285EB2656EB020068AB95 /* Quizorize */,
-				16C286022656EB040068AB95 /* QuizorizeTests */,
-				16C2860D2656EB040068AB95 /* QuizorizeUITests */,
 				16C285EA2656EB020068AB95 /* Products */,
 				AE61C6CA4550C0CAD8DA44B6 /* Pods */,
 				96FE5971BEA6BB1A38867E24 /* Frameworks */,
@@ -430,7 +434,7 @@
 				16285C7826593193003EE017 /* ViewModels */,
 				16C285EC2656EB020068AB95 /* QuizorizeApp.swift */,
 				16C285F02656EB030068AB95 /* Assets.xcassets */,
-				772D84CA26A92C50004A6E5F /* Practice Lottie */,
+				772D84CA26A92C50004A6E5F /* Lottie */,
 				16C285F52656EB030068AB95 /* Persistence.swift */,
 				16C285FA2656EB030068AB95 /* Info.plist */,
 				16285C7926593426003EE017 /* GoogleService-Info.plist */,
@@ -446,24 +450,6 @@
 				16C285F32656EB030068AB95 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		16C286022656EB040068AB95 /* QuizorizeTests */ = {
-			isa = PBXGroup;
-			children = (
-				16C286032656EB040068AB95 /* QuizorizeTests.swift */,
-				16C286052656EB040068AB95 /* Info.plist */,
-			);
-			path = QuizorizeTests;
-			sourceTree = "<group>";
-		};
-		16C2860D2656EB040068AB95 /* QuizorizeUITests */ = {
-			isa = PBXGroup;
-			children = (
-				16C2860E2656EB040068AB95 /* QuizorizeUITests.swift */,
-				16C286102656EB040068AB95 /* Info.plist */,
-			);
-			path = QuizorizeUITests;
 			sourceTree = "<group>";
 		};
 		16E701CC267656A700A1E55D /* Auth */ = {
@@ -488,13 +474,19 @@
 			path = PracticeModeView;
 			sourceTree = "<group>";
 		};
-		772D84CA26A92C50004A6E5F /* Practice Lottie */ = {
+		772D84CA26A92C50004A6E5F /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				164F0A1526A9FE8D00B88375 /* practice.json */,
+				164F0A1326A9E49200B88375 /* calendar-success.json */,
+				164F0A1126A9DC9500B88375 /* timer.json */,
+				164F0A0F26A9D8ED00B88375 /* target.json */,
+				164F0A0D26A9D3D400B88375 /* study.json */,
+				164F0A0B26A9CEFB00B88375 /* work.json */,
 				772D84D126A93776004A6E5F /* statistics.json */,
 				772D84CB26A92C50004A6E5F /* calendar.json */,
 			);
-			path = "Practice Lottie";
+			path = Lottie;
 			sourceTree = "<group>";
 		};
 		77541625266A046900BE8273 /* DeckCreation */ = {
@@ -658,11 +650,17 @@
 				1681C3B326A756AA00EB964D /* GlacialIndifference-Bold.otf in Resources */,
 				16C285F42656EB030068AB95 /* Preview Assets.xcassets in Resources */,
 				772D84D226A93776004A6E5F /* statistics.json in Resources */,
+				164F0A0E26A9D3D400B88375 /* study.json in Resources */,
 				1681C3B426A756AA00EB964D /* GlacialIndifference-Italic.otf in Resources */,
+				164F0A0C26A9CEFB00B88375 /* work.json in Resources */,
+				164F0A1426A9E49200B88375 /* calendar-success.json in Resources */,
 				772D84CC26A92C50004A6E5F /* calendar.json in Resources */,
 				16C285F12656EB030068AB95 /* Assets.xcassets in Resources */,
 				1681C3B526A756AA00EB964D /* GlacialIndifference-Regular.otf in Resources */,
 				16285C7A26593426003EE017 /* GoogleService-Info.plist in Resources */,
+				164F0A1026A9D8ED00B88375 /* target.json in Resources */,
+				164F0A1626A9FE8D00B88375 /* practice.json in Resources */,
+				164F0A1226A9DC9500B88375 /* timer.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -906,7 +904,6 @@
 				162792E9265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				16279302265BFF7B0073718F /* LaunchView.swift in Sources */,
 				162792F2265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
-				16C286042656EB040068AB95 /* QuizorizeTests.swift in Sources */,
 				162792ED265AD1240073718F /* HomeView.swift in Sources */,
 				16279340265EA1520073718F /* AuthError.swift in Sources */,
 				166B1E6E2663FF2700D3922B /* Keychain.swift in Sources */,
@@ -932,7 +929,6 @@
 				162792EA265A61DA0073718F /* AuthViewModel.swift in Sources */,
 				16279303265BFF7B0073718F /* LaunchView.swift in Sources */,
 				162792F3265ADDC90073718F /* TextFieldClearButton.swift in Sources */,
-				16C2860F2656EB040068AB95 /* QuizorizeUITests.swift in Sources */,
 				162792EE265AD1240073718F /* HomeView.swift in Sources */,
 				16279341265EA1530073718F /* AuthError.swift in Sources */,
 				166B1E6F2663FF2700D3922B /* Keychain.swift in Sources */,

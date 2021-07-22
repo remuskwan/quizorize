@@ -13,7 +13,7 @@ struct SpacedRepetitionView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            VStack(alignment: . center) {
+            VStack(alignment: .center) {
                 grayRectangleTopView
                     .frame(width: geometry.size.width * DrawingConstants.pullerWidth, height: geometry.size.height * DrawingConstants.pullerHeight)
                     .padding()
@@ -25,11 +25,18 @@ struct SpacedRepetitionView: View {
 //                    .frame(height: geometry.size.height * 0.1)
 
                 //Insert the two views here
-                CarouselTemplateView(width: geometry.size.width, itemHeight: geometry.size.height, heightRatio: 0.7, views: [
-                    AnyView(LottieStatisticsView(width: geometry.size.width, height: geometry.size.height)),
-                    AnyView(LottieCalendarView(width: geometry.size.width, height: geometry.size.height))
-                ])
+//                CarouselTemplateView(width: geometry.size.width, itemHeight: geometry.size.height, heightRatio: 0.7, views: [
+//                    AnyView(LottieStatisticsView(width: geometry.size.width, height: geometry.size.height)),
+//                    AnyView(LottieCalendarView(width: geometry.size.width, height: geometry.size.height))
+//                ])
 
+                TabView {
+                    LottieStatisticsView(width: geometry.size.width, height: geometry.size.height)
+                    LottieCalendarView(width: geometry.size.width, height: geometry.size.height)
+                }
+                .tabViewStyle(PageTabViewStyle())
+                .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+                
                 Spacer()
                 
                 Button {
@@ -42,9 +49,10 @@ struct SpacedRepetitionView: View {
                         .padding()
                         .background(RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
                                         .fill(Color.accentColor))
-                        .padding()
+                        .padding(.vertical)
                 }
             }
+            .padding(.horizontal, 20)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
@@ -66,47 +74,62 @@ struct SpacedRepetitionView: View {
 
 //MARK: Calendar Lottie View
 struct LottieCalendarView: View {
+    @State private var isPlaying = false
     var width: CGFloat //should be width of the whole screen
     
     var height: CGFloat //should be height of the whole screen
     
     var body: some View {
         VStack(alignment: .center) {
-            LottieView(filename: "calendar")
-                .frame(width: self.width, height: self.height * 0.5)
-
+            LottieView(filename: "calendar", isPlaying: isPlaying)
+                .frame(width: self.width, height: self.height * 0.4)
             HStack(alignment: .center, spacing: 0) {
                 Text("Using an algorithm based on 'Ebbinghaus curve of forgetting', Quizorize will analyse how often you need to study") +
 
                 Text(" each flashcard")
-                    .font(.body.bold()) +
+                    .font(.title3.bold()) +
                     
                 Text(" and remind you to study when it's time.")
             }
-            .font(.body)
-            .lineLimit(nil)
-            .fixedSize(horizontal: false, vertical: true)
-            .padding(.horizontal)
+            .font(.title3)
+            .multilineTextAlignment(.center)
+//            .lineLimit(nil)
+//            .fixedSize(horizontal: false, vertical: true)
+//            .padding(.horizontal)
+        }
+        .onAppear {
+            isPlaying = true
+        }
+        .onDisappear {
+            isPlaying = false
         }
     }
 }
 
 struct LottieStatisticsView: View {
+    @State private var isPlaying = false
     var width: CGFloat
     
     var height: CGFloat
     
     var body: some View {
         VStack(alignment: .center) {
-            LottieView(filename: "statistics")
-                .frame(width: self.width, height: self.height * 0.5)
-
-            HStack(alignment: .center, spacing: 0) {
-                Text("Finish quizzing all the flashcards in one round before leaving to save your progress.")
-            }
-            .font(.body)
-            .lineLimit(nil)
-            .fixedSize(horizontal: false, vertical: true)
+            LottieView(filename: "statistics", isPlaying: isPlaying)
+                .frame(width: self.width * 0.9, height: self.height * 0.4)
+//            HStack(alignment: .center, spacing: 0) {
+//
+//            }
+            Text("Finish quizzing all the flashcards in one round before leaving to save your progress.")
+            .font(.title2)
+            .multilineTextAlignment(.center)
+//            .lineLimit(nil)
+//            .fixedSize(horizontal: false, vertical: true)
+        }
+        .onAppear {
+            isPlaying = true
+        }
+        .onDisappear {
+            isPlaying = false
         }
     }
 }

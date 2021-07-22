@@ -46,7 +46,10 @@ struct TestModeView: View {
                                     Button(action: {
                                         testModeViewModel.setQuestionTypes()
                                         testModeViewModel.setCurrentType()
-                                        testModeViewModel.setQuestionCount()
+//                                        testModeViewModel.setQuestionCount()
+                                        if testModeViewModel.isMCQ {
+                                            testModeViewModel.setMCQOptions()
+                                        }
                                         self.showingTest.toggle()
                                     }, label: {
                                         Text("Start Test")
@@ -470,6 +473,7 @@ struct MultipleChoice: View {
                         self.testModeViewModel.submitAnswer(option)
                         let impactMed = UIImpactFeedbackGenerator(style: .medium)
                         impactMed.impactOccurred()
+                        self.testModeViewModel.setMCQOptions()
                     }, label: {
 //                        ZStack {
 //                            RoundedRectangle(cornerRadius: 5)
@@ -485,9 +489,9 @@ struct MultipleChoice: View {
                 }
                 
             }
-            .onAppear {
-                self.testModeViewModel.setMCQOptions()
-            }
+//            .onAppear {
+//                self.testModeViewModel.setMCQOptions()
+//            }
         }
         
     }
