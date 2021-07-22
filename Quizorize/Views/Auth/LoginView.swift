@@ -195,6 +195,7 @@ struct SignInButton: View {
 }
 
 struct SignInWithGoogle: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
@@ -208,7 +209,7 @@ struct SignInWithGoogle: View {
                     .frame(width: 20, height: 20, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 Text("Sign in with Google")
                     .font(.system(size: 17))
-                    .foregroundColor(.primary)
+                    .foregroundColor(colorScheme == .dark ? .black : .primary)
             }
             .padding(12)
             .frame(width: 280, height: 45, alignment: .center)

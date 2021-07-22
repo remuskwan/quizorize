@@ -213,10 +213,9 @@ struct CustomTextFieldStyle: TextFieldStyle {
                     .resizable()
                     .scaledToFit()
                     .frame(height: DrawingConstants.fieldImageHeight)
-                    
-
+                
                 configuration
-                    .disableAutocorrection(true)
+//                    .disableAutocorrection(true)
 //                    .autocapitalization(.none)
             }
             .font(.body)
