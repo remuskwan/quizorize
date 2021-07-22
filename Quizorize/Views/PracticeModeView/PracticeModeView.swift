@@ -58,12 +58,12 @@ struct PracticeModeView: View {
                                             Text("Reminders"),
                                         footer:
                                             HStack(spacing: 0) {
-                                                Text("Let Quizorize plan your next study date!")
+                                                Text("Let Quizorize plan your next practice date.")
                                                 Button {
                                                     self.showSpacedRepetitionTips = true
                                                 } label: {
                                                     Text(" Learn More")
-                                                        .underline()
+//                                                        .underline()
                                                 }
                                             }
                                             

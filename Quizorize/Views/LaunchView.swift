@@ -45,13 +45,16 @@ struct Launch: View {
                     destination: LoginView(),
                     label: {
                         Text("Get Started.")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(width: 250, height: 45)
-                            .background(Color.accentColor)
-                            .cornerRadius(5)
-                            .padding()
+//                            .font(.headline)
+//                            .foregroundColor(.white)
+//                            .frame(width: 250, height: 45)
+//                            .background(Color.accentColor)
+//                            .cornerRadius(5)
+//                            .padding()
                     })
+                    .buttonStyle(AuthButtonStyle())
+                    .padding(.vertical)
+                    .padding(.horizontal, 20)
             }
         }
     }

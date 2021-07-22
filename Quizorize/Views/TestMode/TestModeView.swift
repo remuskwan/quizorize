@@ -80,7 +80,7 @@ struct TestModeView: View {
                                                 self.testModeViewModel.setNextReminderTime()
                                                 let reminderTime = testModeViewModel.nextReminderTime
                                                 if reminderTime != 0 {
-                                                    reminderViewModel.sendReminderNotif(deckTitle: deckViewModel.deck.title, reminderTime: reminderTime)
+                                                    reminderViewModel.sendReminderNotif(deckTitle: deckViewModel.deck.title, reminderTime: reminderTime, type: .test)
                                                 }
                                                 self.testModeViewModel.setLatestScore(deckViewModel.deck)
                                                 self.testModeViewModel.reset()
@@ -150,7 +150,7 @@ struct TestModeOptions: View {
             .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
         }
         
-        Section(header: Text("Reminders"), footer: Text("Let Quizorize remind you when its time to take the test again")) {
+        Section(header: Text("Reminders"), footer: Text("Let Quizorize plan your next test date.")) {
 //            Toggle(isOn: $isSpacedRepetitionOn, label: {
 //                Text("Spaced Repetition")
 //            })

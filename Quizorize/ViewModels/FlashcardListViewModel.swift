@@ -52,10 +52,14 @@ class FlashcardListViewModel: ObservableObject {
             }
             .assign(to: \.flashcardViewModels, on: self)
             .store(in: &cancellables)
-        self.flashcardViewModels.sort { flashcardVM1, flashcardVM2 in
-            flashcardVM1.flashcard.dateAdded < flashcardVM2.flashcard.dateAdded
-        }
-            
+    }
+    
+    func sortFlashcardsByDate() {
+        self.flashcardViewModels.sort { $0.flashcard.dateAdded < $1.flashcard.dateAdded }
+    }
+    
+    func sortFlashcardsByPrompt() {
+        self.flashcardViewModels.sort { $0.flashcard.prompt.lowercased() < $1.flashcard.prompt.lowercased() }
     }
     
     func add(_ flashcard: Flashcard) {

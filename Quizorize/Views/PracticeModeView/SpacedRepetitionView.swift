@@ -19,15 +19,15 @@ struct SpacedRepetitionView: View {
                     .padding()
                 
                 Text("What is Spaced Repetition?")
-                    .font(.title.bold())
+                    .font(geometry.size.width > 420 ? .title.bold() : .title2.bold())
                 
-                Spacer()
-                    .frame(height: geometry.size.height * 0.1)
+//                Spacer()
+//                    .frame(height: geometry.size.height * 0.1)
 
                 //Insert the two views here
                 CarouselTemplateView(width: geometry.size.width, itemHeight: geometry.size.height, heightRatio: 0.7, views: [
-                    AnyView(StatisticsView(width: geometry.size.width, height: geometry.size.height)),
-                    AnyView(CalendarView(width: geometry.size.width, height: geometry.size.height))
+                    AnyView(LottieStatisticsView(width: geometry.size.width, height: geometry.size.height)),
+                    AnyView(LottieCalendarView(width: geometry.size.width, height: geometry.size.height))
                 ])
 
                 Spacer()
@@ -35,7 +35,7 @@ struct SpacedRepetitionView: View {
                 Button {
                     self.presentationMode.wrappedValue.dismiss()
                 } label: {
-                    Text("Ok got it!")
+                    Text("OK got it!")
                         .foregroundColor(DrawingConstants.buttonTextColor)
                         .font(.headline)
                         .frame(maxWidth: .infinity)
@@ -44,7 +44,6 @@ struct SpacedRepetitionView: View {
                                         .fill(Color.accentColor))
                         .padding()
                 }
-                
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
@@ -56,7 +55,7 @@ struct SpacedRepetitionView: View {
     }
     
     private struct DrawingConstants {
-        static let cornerRadius: CGFloat = 10
+        static let cornerRadius: CGFloat = 5
         
         static let pullerHeight: CGFloat = 0.007
         static let pullerWidth: CGFloat = 0.4
@@ -66,7 +65,7 @@ struct SpacedRepetitionView: View {
 }
 
 //MARK: Calendar Lottie View
-struct CalendarView: View {
+struct LottieCalendarView: View {
     var width: CGFloat //should be width of the whole screen
     
     var height: CGFloat //should be height of the whole screen
@@ -79,7 +78,7 @@ struct CalendarView: View {
             HStack(alignment: .center, spacing: 0) {
                 Text("Using an algorithm based on 'Ebbinghaus curve of forgetting', Quizorize will analyse how often you need to study") +
 
-                Text(" EACH flashcard")
+                Text(" each flashcard")
                     .font(.body.bold()) +
                     
                 Text(" and remind you to study when it's time.")
@@ -92,7 +91,7 @@ struct CalendarView: View {
     }
 }
 
-struct StatisticsView: View {
+struct LottieStatisticsView: View {
     var width: CGFloat
     
     var height: CGFloat
@@ -103,7 +102,7 @@ struct StatisticsView: View {
                 .frame(width: self.width, height: self.height * 0.5)
 
             HStack(alignment: .center, spacing: 0) {
-                Text("Finish quizzing all the flashcards in one round before leaving to save your progress")
+                Text("Finish quizzing all the flashcards in one round before leaving to save your progress.")
             }
             .font(.body)
             .lineLimit(nil)
