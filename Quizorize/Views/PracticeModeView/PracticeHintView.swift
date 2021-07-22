@@ -10,12 +10,11 @@ import SwiftUI
 struct PracticeHintView: View {
     @Environment(\.presentationMode) var presentationMode
     
-    let generalPracticeHints: [AnyView] = [AnyView(HintRowView(textTitle: "Tap the card", textContent: "View the reverse side", image: "arrow.2.squarepath", imageColor: .accentColor)), AnyView(HintRowView(textTitle: "Swipe left", textContent: "View the reverse side", image: "arrowshape.turn.up.left.fill", imageColor: .orange)), AnyView(HintRowView(textTitle: "Swipe Right", textContent: "Mark the card as correct", image: "arrowshape.turn.up.right.fill", imageColor: .green))]
+    let generalPracticeHints: [AnyView] = [AnyView(HintRowView(textTitle: "Tap the card", textContent: "View the reverse side", image: "arrow.2.squarepath", imageColor: .accentColor)), AnyView(HintRowView(textTitle: "Swipe left", textContent: "Mark the card as incorrect", image: "arrowshape.turn.up.left.fill", imageColor: .orange)), AnyView(HintRowView(textTitle: "Swipe Right", textContent: "Mark the card as correct", image: "arrowshape.turn.up.right.fill", imageColor: .green))]
     
     let spacedRepetitionHints: [AnyView] = [AnyView(HintRowView(textTitle: "Complete each round", textContent: "Reach the summary before stopping to save your progress", image: "externaldrive.fill.badge.timemachine", imageColor: Color(hex: "15CDA8"))), AnyView(HintRowView(textTitle: "Open Quizorize on the next study date", textContent: "Study on Quizorize's next planned algorithm-based date!", image: "deskclock.fill", imageColor: .accentColor))]
     
     @AppStorage("showTip") var showTip: Bool = true
-    @State private var showEndTipAlert: Bool = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -84,11 +83,7 @@ struct PracticeHintView: View {
                     //.frame(height: geometry.size.height * 0.2)
                 
                 Button {
-                    if showTip {
-                        self.showEndTipAlert = true
-                    } else {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
+                    self.presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("Ok got it!")
                         .foregroundColor(DrawingConstants.buttonTextColor)
@@ -102,17 +97,6 @@ struct PracticeHintView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .alert(isPresented: $showEndTipAlert) {
-                Alert(title: Text("Do you still want this tip to show up everytime you practice a deck?"),
-                      primaryButton: .default(Text("No")) {
-                        self.showTip = false
-                        self.presentationMode.wrappedValue.dismiss()
-                      },
-                      secondaryButton: .default(Text("Yes")) {
-                        self.showTip = true
-                        self.presentationMode.wrappedValue.dismiss()
-                      })
-            }
         }
         
     }

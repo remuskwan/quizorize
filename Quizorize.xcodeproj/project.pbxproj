@@ -107,6 +107,8 @@
 		7719A791267325E600B0A102 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7719A790267325E600B0A102 /* Cardify.swift */; };
 		772D84C326A691B8004A6E5F /* PracticeHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772D84C226A691B8004A6E5F /* PracticeHintView.swift */; };
 		772D84C726A7FB4D004A6E5F /* CarouselTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772D84C626A7FB4C004A6E5F /* CarouselTemplateView.swift */; };
+		772D84C926A92830004A6E5F /* PracticeLottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772D84C826A9282F004A6E5F /* PracticeLottieView.swift */; };
+		772D84CC26A92C50004A6E5F /* calendar.json in Resources */ = {isa = PBXBuildFile; fileRef = 772D84CB26A92C50004A6E5F /* calendar.json */; };
 		774D5912267A548A00D8A786 /* DeckCreationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774D5911267A548A00D8A786 /* DeckCreationModel.swift */; };
 		77541627266A047B00BE8273 /* DeckCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77541626266A047B00BE8273 /* DeckCreationView.swift */; };
 		77575E45269AB809001B5AA3 /* ExamModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77575E44269AB809001B5AA3 /* ExamModeViewModel.swift */; };
@@ -205,6 +207,8 @@
 		7719A790267325E600B0A102 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		772D84C226A691B8004A6E5F /* PracticeHintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeHintView.swift; sourceTree = "<group>"; };
 		772D84C626A7FB4C004A6E5F /* CarouselTemplateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselTemplateView.swift; sourceTree = "<group>"; };
+		772D84C826A9282F004A6E5F /* PracticeLottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeLottieView.swift; sourceTree = "<group>"; };
+		772D84CB26A92C50004A6E5F /* calendar.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = calendar.json; sourceTree = "<group>"; };
 		774D5911267A548A00D8A786 /* DeckCreationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationModel.swift; sourceTree = "<group>"; };
 		77541626266A047B00BE8273 /* DeckCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCreationView.swift; sourceTree = "<group>"; };
 		77575E44269AB809001B5AA3 /* ExamModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamModeViewModel.swift; sourceTree = "<group>"; };
@@ -421,6 +425,7 @@
 				16285C7826593193003EE017 /* ViewModels */,
 				16C285EC2656EB020068AB95 /* QuizorizeApp.swift */,
 				16C285F02656EB030068AB95 /* Assets.xcassets */,
+				772D84CA26A92C50004A6E5F /* Practice Lottie */,
 				16C285F52656EB030068AB95 /* Persistence.swift */,
 				16C285FA2656EB030068AB95 /* Info.plist */,
 				16285C7926593426003EE017 /* GoogleService-Info.plist */,
@@ -473,8 +478,17 @@
 				772D84C626A7FB4C004A6E5F /* CarouselTemplateView.swift */,
 				16E701DB2681CDCD00A1E55D /* PracticeModeView.swift */,
 				772D84C226A691B8004A6E5F /* PracticeHintView.swift */,
+				772D84C826A9282F004A6E5F /* PracticeLottieView.swift */,
 			);
 			path = PracticeModeView;
+			sourceTree = "<group>";
+		};
+		772D84CA26A92C50004A6E5F /* Practice Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				772D84CB26A92C50004A6E5F /* calendar.json */,
+			);
+			path = "Practice Lottie";
 			sourceTree = "<group>";
 		};
 		77541625266A046900BE8273 /* DeckCreation */ = {
@@ -638,6 +652,7 @@
 				1681C3B326A756AA00EB964D /* GlacialIndifference-Bold.otf in Resources */,
 				16C285F42656EB030068AB95 /* Preview Assets.xcassets in Resources */,
 				1681C3B426A756AA00EB964D /* GlacialIndifference-Italic.otf in Resources */,
+				772D84CC26A92C50004A6E5F /* calendar.json in Resources */,
 				16C285F12656EB030068AB95 /* Assets.xcassets in Resources */,
 				1681C3B526A756AA00EB964D /* GlacialIndifference-Regular.otf in Resources */,
 				16285C7A26593426003EE017 /* GoogleService-Info.plist in Resources */,
@@ -840,6 +855,7 @@
 				16AB3E632694B4ED00B9DF86 /* FirstResponderTextField.swift in Sources */,
 				166B1E792663FF9600D3922B /* UserDataKeychain.swift in Sources */,
 				7700BC652670FE75004C5C82 /* SREngine.swift in Sources */,
+				772D84C926A92830004A6E5F /* PracticeLottieView.swift in Sources */,
 				7783963B266D08330024293B /* DeckCreationViewModel.swift in Sources */,
 				16AB3E652695FC7700B9DF86 /* TestModeSummaryView.swift in Sources */,
 				77AB03AF2663C669009F4982 /* TouchDownUpEventModifier.swift in Sources */,
