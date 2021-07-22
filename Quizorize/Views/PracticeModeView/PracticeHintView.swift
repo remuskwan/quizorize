@@ -10,9 +10,9 @@ import SwiftUI
 struct PracticeHintView: View {
     @Environment(\.presentationMode) var presentationMode
     
-    let generalPracticeHints: [AnyView] = [AnyView(HintRowView(textTitle: "Tap the card", textContent: "View the reverse side", image: "arrow.2.squarepath", imageColor: .accentColor)), AnyView(HintRowView(textTitle: "Swipe left", textContent: "Mark the card as incorrect", image: "arrowshape.turn.up.left.fill", imageColor: .orange)), AnyView(HintRowView(textTitle: "Swipe Right", textContent: "Mark the card as correct", image: "arrowshape.turn.up.right.fill", imageColor: .green))]
-    
-    let spacedRepetitionHints: [AnyView] = [AnyView(HintRowView(textTitle: "Complete each round", textContent: "Reach the summary before stopping to save your progress", image: "externaldrive.fill.badge.timemachine", imageColor: Color(hex: "15CDA8"))), AnyView(HintRowView(textTitle: "Open Quizorize on the next study date", textContent: "Study on Quizorize's next planned algorithm-based date!", image: "deskclock.fill", imageColor: .accentColor))]
+    let generalPracticeHints: [AnyView] = [AnyView(HintRowView(textTitle: "Tap the card", textContent: "View reverse side", image: "arrow.2.squarepath", imageColor: .accentColor)), AnyView(HintRowView(textTitle: "Swipe left", textContent: "Mark card as incorrect", image: "arrowshape.turn.up.left.fill", imageColor: .orange)), AnyView(HintRowView(textTitle: "Swipe Right", textContent: "Mark card as correct", image: "arrowshape.turn.up.right.fill", imageColor: .green))]
+
+    let spacedRepetitionHints: [AnyView] = [AnyView(HintRowView(textTitle: "Complete each round", textContent: "Reach the end before stopping to save your progress", image: "externaldrive.fill.badge.timemachine", imageColor: Color(hex: "15CDA8"))), AnyView(HintRowView(textTitle: "Open Quizorize on the next study date", textContent: "Study on Quizorize's next planned date!", image: "deskclock.fill", imageColor: .accentColor))]
     
     @AppStorage("showTip") var showTip: Bool = true
 
@@ -44,7 +44,7 @@ struct PracticeHintView: View {
                         .frame(height: geometry.size.height * 0.1)
                     
                     //Paste HintPageViews inside Carousel here
-                    CarouselTemplateView(width: geometry.size.width, itemHeight: geometry.size.height, views: [
+                    CarouselTemplateView(width: geometry.size.width, itemHeight: geometry.size.height, heightRatio: 0.62, views: [
                         AnyView(HintPageView(height: geometry.size.height, width: geometry.size.width, views: generalPracticeHints)),
                         AnyView(HintPageView(height: geometry.size.height, width: geometry.size.width, views: spacedRepetitionHints))
                     ])

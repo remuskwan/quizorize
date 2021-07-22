@@ -41,7 +41,7 @@ struct ProfileView: View {
                     //                    }
                     //
                     //                }
-                    Section(header: Text("Settings")) {
+                    Section {
                         Button(action: {
                             authViewModel
                                 .canChangeCredentials()
@@ -96,6 +96,12 @@ struct ProfileView: View {
                     .alert(isPresented: authViewModel.isPresentingAlert) {
                         Alert(localizedError: authViewModel.activeError!)
                     }
+//                    Section {
+//                        Toggle(isOn: /*@START_MENU_TOKEN@*/.constant(true)/*@END_MENU_TOKEN@*/, label: {
+//                            Text("Push Notifications")
+//                        })
+//                    }
+                    
                     Section{
                         SignOutButton()
                     }
@@ -111,15 +117,15 @@ struct ProfileView: View {
         }
     }
 }
-struct EditProfileView: View {
-    var body: some View {
-        VStack {
-            
-        }
-        .navigationTitle("Edit Profile")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-}
+//struct EditProfileView: View {
+//    var body: some View {
+//        VStack {
+//
+//        }
+//        .navigationTitle("Edit Profile")
+//        .navigationBarTitleDisplayMode(.inline)
+//    }
+//}
 
 struct ChangePasswordView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
@@ -183,11 +189,19 @@ struct ChangePasswordView: View {
                     authViewModel.verifyPassword(currentPassword)
                         .then { success in
                             if success {
-                                if newPassword == confirmPassword {
-                                    authViewModel.updatePassword(password: newPassword)
-                                    presentationMode.wrappedValue.dismiss()
-                                }
+                                authViewModel.updatePassword(password: newPassword, confirmPassword: confirmPassword)
+                                    .then { success in
+                                        if success {
+                                            presentationMode.wrappedValue.dismiss()
+                                        }
+                                    }
+                                    .catch { error in
+                                        print(error.localizedDescription)
+                                    }
                             }
+                        }
+                        .catch { error in
+                            print(error.localizedDescription)
                         }
                 }
             }

@@ -27,6 +27,8 @@ struct PracticeModeView: View {
     @State private var showHint = false
     @State private var showEndTipAlert: Bool = false
     
+    @State private var showSpacedRepetitionTips = false
+    
     //Saved preferences locally
     @AppStorage("showTip") var showTip: Bool = true
 
@@ -42,7 +44,6 @@ struct PracticeModeView: View {
                             List {
                                 Section {
                                     Button {
-                                        print(Color.purple.hexaRGB ?? "Error color")
                                         self.showingTest = true
                                     } label: {
                                         Text("Start Practice")
@@ -59,7 +60,7 @@ struct PracticeModeView: View {
                                             HStack(spacing: 0) {
                                                 Text("Let Quizorize plan your next study date!")
                                                 Button {
-                                                    
+                                                    self.showSpacedRepetitionTips = true
                                                 } label: {
                                                     Text(" Learn More")
                                                         .underline()
@@ -116,7 +117,7 @@ struct PracticeModeView: View {
                             }
                         }
                 }
-                .alert(isPresented: $showEndTipAlert) {
+                .alert(isPresented: self.$showEndTipAlert) {
                     Alert(title: Text("Do you still want this tip to show up everytime you practice a deck?"),
                           primaryButton: .default(Text("No")) {
                             self.showTip = false
@@ -126,6 +127,9 @@ struct PracticeModeView: View {
                             self.showTip = true
                             self.presentationMode.wrappedValue.dismiss()
                           })
+                }
+                .sheet(isPresented: self.$showSpacedRepetitionTips) {
+                    SpacedRepetitionView()
                 }
                 
             }

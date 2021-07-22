@@ -268,13 +268,26 @@ class AuthViewModel : NSObject, ObservableObject {
         }
     }
     
-    func updatePassword(password: String) {
-        auth.currentUser?.updatePassword(to: password, completion: { error in
-            if let error = error {
-                self.handleErrors(error: error)
-                print(error.localizedDescription)
+    func updatePassword(password: String, confirmPassword: String) -> Promise<Bool> {
+        return Promise<Bool>(on: .global(qos: .background)) { fulfill, reject in
+            let fieldTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*\\d)(?=.*[A-Z]).{8,15}$")
+            if !fieldTest.evaluate(with: password) {
+                self.activeError = ValidateCredentialError.passwordPoorlyFormatted
+                print("Password poorly formatted.")
+            } else if password != confirmPassword {
+                self.activeError = ValidateCredentialError.passwordsDoNotMatch
+                print("Passwords don't match.")
+            } else {
+                self.auth.currentUser?.updatePassword(to: password, completion: { error in
+                    if let error = error {
+                        self.handleErrors(error: error)
+                        reject(error)
+                    } else {
+                        fulfill(true)
+                    }
+                })
             }
-        })
+        }
     }
     
     func verifyPassword(_ password: String) -> Promise<Bool> {
@@ -291,16 +304,6 @@ class AuthViewModel : NSObject, ObservableObject {
             })
         }
     }
-    
-    func validatePasswordInput(password: String, confirmPassword: String) {
-        let fieldTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*\\d)(?=.*[A-Z]).{8,15}$")
-        if !fieldTest.evaluate(with: password) {
-            self.activeError = ValidateCredentialError.passwordsDoNotMatch
-        } else if password != confirmPassword {
-            self.activeError = ValidateCredentialError.passwordsDoNotMatch
-        }
-    }
-    
 }
 
 extension AuthViewModel: GIDSignInDelegate {

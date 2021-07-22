@@ -30,7 +30,7 @@ struct DeckListView: View {
 
     @State private var selectedSortBy = SortBy.date
     @State private var showActivitySheet = false
-    @State private var showingActionSheet = false
+//    @State private var showingActionSheet = false
     @State private var showingCreateDeck = false
     @State private var showListView = false
 
@@ -70,7 +70,7 @@ struct DeckListView: View {
                                 spacing: 20
                             ) {
                                 Button(action: {
-                                    showingActionSheet.toggle()
+                                    showingCreateDeck.toggle()
                                     let impactLight = UIImpactFeedbackGenerator(style: .light)
                                     impactLight.impactOccurred()
                                 }, label: {
@@ -93,12 +93,12 @@ struct DeckListView: View {
                                     }
                                     
                                 })
-                                .actionSheet(isPresented: $showingActionSheet) {
-                                    ActionSheet(title: Text(""), message: Text(""), buttons: [
-                                        .default(Text("Deck")) {self.showingCreateDeck = true},
-                                        .cancel()
-                                    ])
-                                }
+//                                .actionSheet(isPresented: $showingActionSheet) {
+//                                    ActionSheet(title: Text(""), message: Text(""), buttons: [
+//                                        .default(Text("Deck")) {self.showingCreateDeck = true},
+//                                        .cancel()
+//                                    ])
+//                                }
                                 .sheet(isPresented: $showingCreateDeck, content: {
                                     DeckCreationView(deckListViewModel: deckListViewModel) { deck, flashcards in
                                         deckListViewModel.add(deck: deck, flashcards: flashcards)
@@ -106,7 +106,7 @@ struct DeckListView: View {
                                     
                                 })
                                     
-                                ForEach(deckListViewModel.deckViewModels) { deckVM in
+                                ForEach(deckListViewModel.sortDeckVMs(SortBy.date)) { deckVM in
                                     let deck = deckVM.deck
                                     let flashcardListViewModel = FlashcardListViewModel(deck)
                                     let testModeViewModel = TestModeViewModel(deck)
@@ -322,32 +322,32 @@ struct EditDeckView: View {
     }
 }
 
-struct DeckListDeckView: View {
-    
-    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
-    
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .bottomLeading) {
-                Image("deck1")
-                    .resizable()
-                    .frame(width: 110, height: 110)
-                
-                ZStack {
-                    Circle()
-                        .foregroundColor(.red)
-                    
-                    Text("\(flashcardListViewModel.badgeNumber)")
-                        .foregroundColor(.white)
-                        .font(Font.system(size: 12))
-                }
-                .frame(width: 20, height: 20)
-                .offset(x: (( 2 * 1) - 1) * (geometry.size.width / (2 * 1) ), y: -30)
-                .opacity(flashcardListViewModel.hasCardsDue ? 1 : 0)
-            }
-        }
-    }
-}
+//struct DeckListDeckView: View {
+//
+//    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
+//
+//    var body: some View {
+//        GeometryReader { geometry in
+//            ZStack(alignment: .bottomLeading) {
+//                Image("deck1")
+//                    .resizable()
+//                    .frame(width: 110, height: 110)
+//
+//                ZStack {
+//                    Circle()
+//                        .foregroundColor(.red)
+//
+//                    Text("\(flashcardListViewModel.badgeNumber)")
+//                        .foregroundColor(.white)
+//                        .font(Font.system(size: 12))
+//                }
+//                .frame(width: 20, height: 20)
+//                .offset(x: (( 2 * 1) - 1) * (geometry.size.width / (2 * 1) ), y: -30)
+//                .opacity(flashcardListViewModel.hasCardsDue ? 1 : 0)
+//            }
+//        }
+//    }
+//}
 
 //struct DecksView_Previews: PreviewProvider {
 //    @State private var isPresented = false
