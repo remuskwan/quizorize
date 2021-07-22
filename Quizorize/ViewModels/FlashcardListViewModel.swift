@@ -43,19 +43,31 @@ class FlashcardListViewModel: ObservableObject {
         }
         .count
     }
-
-    init(_ deck: Deck) {
-        self.flashcardRepository = FlashcardRepository(deck)
+    
+    var sortFlashcard: AnyPublisher<[FlashcardViewModel], Never> {
         flashcardRepository.$flashcards
-            .map { flashcards in  
+            .map { flashcards in
                 flashcards.map(FlashcardViewModel.init)
             }
+            .map { flashcardVMs in
+                let newOrder = flashcardVMs.sorted { flashcardVM1, flashcardVM2 in
+                    flashcardVM1.flashcard.dateAdded < flashcardVM2.flashcard.dateAdded
+                }
+                
+                return newOrder
+            }
+            .eraseToAnyPublisher()
+            
+    }
+
+    
+    init(_ deck: Deck) {
+        self.flashcardRepository = FlashcardRepository(deck)
+        
+        sortFlashcard
+            .receive(on: RunLoop.main)
             .assign(to: \.flashcardViewModels, on: self)
             .store(in: &cancellables)
-        self.flashcardViewModels.sort { flashcardVM1, flashcardVM2 in
-            flashcardVM1.flashcard.dateAdded < flashcardVM2.flashcard.dateAdded
-        }
-            
     }
     
     func add(_ flashcard: Flashcard) {
