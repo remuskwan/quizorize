@@ -15,6 +15,7 @@ struct CarouselTemplateView: View {
     
     var width: CGFloat // width of each view
     var itemHeight: CGFloat //Height of the entire screen
+    var heightRatio: CGFloat //quick fix for drawing PageControl correctly for both PracticeHint and SR Hint
     
     var views: [AnyView]
 
@@ -71,8 +72,8 @@ struct CarouselTemplateView: View {
                 //Spacer()
             }
             VStack{
-                Spacer().frame(height:itemHeight * 0.62)
-                Fancy3DotsIndexTemplateView(numberOfPages: 2,
+                Spacer().frame(height:itemHeight * self.heightRatio)
+                Fancy3DotsIndexTemplateView(numberOfPages: views.count,
                                     currentIndex: carouselLocation)
                     .animation(.default)
                     .scaleEffect(0.7)
