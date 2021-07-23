@@ -33,7 +33,8 @@ struct DeckListView: View {
 //    @State private var showingActionSheet = false
     @State private var showingCreateDeck = false
     @State private var showListView = false
-
+    @State var isNavBarHidden = false
+    
     let layout = [
         GridItem(.adaptive(minimum: 120))
     ]
@@ -115,7 +116,9 @@ struct DeckListView: View {
                                         deckVM: deckVM,
                                         deckListViewModel: deckListViewModel,
                                         flashcardListViewModel: flashcardListViewModel,
-                                        testModeViewModel: testModeViewModel, deck: deck,
+                                        testModeViewModel: testModeViewModel,
+                                        isNavBarHidden: self.$isNavBarHidden,
+                                        deck: deck,
                                         width: geometry.size.width * 0.3,
                                         height: geometry.size.width * 0.3
                                     )
@@ -166,6 +169,9 @@ struct DeckListView: View {
             }
             .navigationTitle("Decks")
             .navigationBarBackButtonHidden(true)
+            .onAppear {
+                self.isNavBarHidden = false
+            }
 //            .toolbar {
 //                ToolbarItem {
 //                    Button {
@@ -210,6 +216,8 @@ struct DeckIconView: View {
     @State private var deleteDeckConfirm = false
     @State private var showingEditDeck = false
     
+    @Binding var isNavBarHidden: Bool
+    
     let deck: Deck
     let width: CGFloat?
     let height: CGFloat?
@@ -218,7 +226,7 @@ struct DeckIconView: View {
         VStack {
             NavigationLink(
                 destination:
-                    DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: flashcardListViewModel, testModeViewModel: testModeViewModel),
+                    DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: flashcardListViewModel, testModeViewModel: testModeViewModel, isNavBarHidden: self.$isNavBarHidden),
                 label: {
                     Image("deck1")
                         .resizable()

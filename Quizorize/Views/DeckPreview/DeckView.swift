@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct DeckView: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var reminderViewModel: ReminderViewModel
+    
     @ObservedObject var deckListViewModel: DeckListViewModel
     @ObservedObject var deckViewModel: DeckViewModel
     @ObservedObject var flashcardListViewModel: FlashcardListViewModel
@@ -29,9 +32,29 @@ struct DeckView: View {
     
     @State private var carouselLocation = 0
     
+    @Binding var isNavBarHidden: Bool
+    
     var body: some View {
         GeometryReader { geoProxy in
             VStack(spacing: 0) {
+                HStack {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Image(systemName: "chevron.left")
+                            .font(.title3)
+                            .foregroundColor(.accentColor)
+                    })
+                    Spacer()
+                    Button {
+                        self.showDeckOptions.toggle()
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .font(.title3)
+                            .foregroundColor(.accentColor)
+                    }
+                }
+                .padding()
                 generalInfo
                     .frame(height: UIScreen.main.bounds.height * 0.15)
                 
@@ -43,8 +66,12 @@ struct DeckView: View {
                     .frame(height: UIScreen.main.bounds.height * 0.20)
                     .padding(.vertical)
             }
-            
             .navigationBarTitle("")
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
+            .onAppear {
+                self.isNavBarHidden = true
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -142,8 +169,6 @@ struct DeckView: View {
         GeometryReader { buttonGProxy in
             
             HStack(spacing: 0) {
-                //Spacer()
-                
                 Button {
                     self.showPracticeModeView.toggle()
                 } label: {
@@ -197,15 +222,6 @@ struct DeckView: View {
         var practiceFlashcards = [FlashcardViewModel]()
 
         practiceFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
-
-        /*
-        practiceFlashcards.append(contentsOf: flashcardListViewModel.flashcardViewModels)
-        practiceFlashcards.map { flashcardVM in
-            flashcardVM.flipped = false
-        }
-        */
-        
-        
         
         return PracticeModeView(practiceModeViewModel: PracticeModeViewModel(practiceFlashcards), prevExamScore: deckViewModel.deck.examModePrevScore) { updatedFlashcards, score, reminderTime in
             
@@ -228,7 +244,6 @@ struct DeckView: View {
 struct PreviewFlashcard: View, Animatable {
     var index: Int
 
-    
     var width: CGFloat
     var height: CGFloat
     var flashcardVM: FlashcardViewModel
@@ -336,103 +351,8 @@ struct PreviewButtonStyle: ButtonStyle {
     }
 }
 
-
 //struct DeckView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        DeckView()
 //    }
 //}
-
-/*
-struct Carousel: UIViewRepresentable {
-    func makeCoordinator() -> Coordinator {
-        Carousel.Coordinator(parent1: self)
-    }
-    var width: CGFloat
-    @Binding var page: Int
-    var height: CGFloat
-    
-    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
-    
-    func makeUIView(context: Context) -> UIScrollView {
-        
-        let total = width * CGFloat(flashcardListViewModel.flashcardViewModels.count)
-        let view = UIScrollView()
-        view.isPagingEnabled = true
-        view.contentSize = CGSize(width: total, height: 1.0)
-        view.bounces = true
-        view.showsVerticalScrollIndicator = false
-        view.showsHorizontalScrollIndicator = false
-        view.delegate = context.coordinator
-        
-        //Embedding swiftUI View into UIView
-        
-        let view1 = UIHostingController(rootView: PreviewList(flashcardListViewModel: flashcardListViewModel, page: $page))
-        view1.view.frame = CGRect(x: 0, y: 0, width: total, height: self.height)
-        
-        view1.view.backgroundColor = .clear
-        
-        view.addSubview(view1.view)
-        
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIScrollView, context: Context) {
-        DispatchQueue.main.async {
-            uiView.contentSize = CGSize(width: width * CGFloat(flashcardListViewModel.flashcardViewModels.count), height: 1.0)
-        }
-        
-    }
-    
-    class Coordinator: NSObject, UIScrollViewDelegate {
-        var parent: Carousel
-        
-        init(parent1: Carousel) {
-            parent = parent1
-        }
-        
-        func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-            let page = Int(scrollView.contentOffset.x / UIScreen.main.bounds.width)
-            
-            print(page)
-            
-            self.parent.page = page
-        }
-    }
-}
-*/
-
-/*
-struct PreviewList: View {
-    
-    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
-    @Binding var page: Int
-    
-    var body: some View {
-        GeometryReader { fullView in
-            //Replace with HStack(spacing: 0) for reverting to original
-            HStack(spacing: 0) {
-                
-                ForEach(flashcardListViewModel.flashcardViewModels) { flashcard in
-                    PreviewFlashcard(
-                                     index: flashcardListViewModel.flashcardViewModels.firstIndex(where: {$0.id == flashcard.id})!,
-                        width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height,
-                                     flashcardVM: flashcard
-                    )
-                    .aspectRatio(3/2, contentMode: .fit)
-                    .frame(height: fullView.size.height * Dimensions.cardFrameRatio)
-
-
-                }
-            }
-        }
-    }
-    
-    private struct Dimensions {
-        static let stackHPadding: CGFloat = 20
-        static let cardWidthRatio: CGFloat = 0.6
-        
-        static let cardFrameRatio: CGFloat = 0.75
-    }
-}
- */
