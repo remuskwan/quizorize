@@ -22,11 +22,14 @@ struct CustomNavigationView: UIViewControllerRepresentable {
     var onSearch: (String) -> ()
     var onCancel: () -> ()
     
-    init(view: AnyView, placeHolder: String? = "Search", largeTitle: Bool? = true, title: String, onSearch: @escaping (String) -> (), onCancel: @escaping () -> ()) {
+    var isHidden: Bool
+    
+    init(view: AnyView, placeHolder: String? = "Search", largeTitle: Bool? = true, title: String, isHidden: Bool? = false, onSearch: @escaping (String) -> (), onCancel: @escaping () -> ()) {
         self.title = title
         self.largeTitle = largeTitle!
         self.placeHolder = placeHolder!
         self.view = view
+        self.isHidden = isHidden!
         self.onSearch = onSearch
         self.onCancel = onCancel
     }
@@ -55,6 +58,11 @@ struct CustomNavigationView: UIViewControllerRepresentable {
         uiViewController.navigationBar.topItem?.title = title
         uiViewController.navigationBar.topItem?.searchController?.searchBar.placeholder = placeHolder
         uiViewController.navigationBar.prefersLargeTitles = largeTitle
+        if isHidden {
+            uiViewController.navigationBar.isHidden = true
+        } else {
+            uiViewController.navigationBar.isHidden = false
+        }
     }
     
     class Coordinator: NSObject, UISearchBarDelegate {
