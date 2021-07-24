@@ -157,19 +157,32 @@ class AuthViewModel : NSObject, ObservableObject {
         print(errorCode)
         switch errorCode {
         case .wrongPassword:
-            //fetch sign in methods previously used for provided email address
-            self.activeError = SignInError.wrongPassword
+            auth.fetchSignInMethods(forEmail: email) { result, error in
+                if error == nil {
+                    if let result = result {
+                        if result.contains("apple.com") || result.contains("google.com") {
+                            self.activeError = SignInError.wrongProvider(provider: result[0])
+                        } else {
+                            self.activeError = SignInError.wrongPassword
+                        }
+                    }
+                }
+            }
+//            self.activeError = SignInError.wrongPassword
         case .invalidEmail:
             self.activeError = SignInError.invalidEmail
         case .emailAlreadyInUse:
             //fetch sign in methods previously used for provided email address
             auth.fetchSignInMethods(forEmail: email) { result, error in
-                guard result == nil, error == nil else {
-                    //if result is not empty and there is no error, set the activeError to emailInUseByDifferentProvider
-                    return self.activeError = SignUpError.emailInUseByDifferentProvider(provider: result![0])
+                if error == nil {
+                    if let result = result {
+                        if result.contains("apple.com") || result.contains("google.com") {
+                            self.activeError = SignUpError.emailInUseByDifferentProvider(provider: result[0])
+                        } else {
+                            self.activeError = SignUpError.emailAlreadyInUse
+                        }
+                    }
                 }
-                //else set activeError to emailAlreadyInUse
-                self.activeError = SignUpError.emailAlreadyInUse
             }
         
         case .userNotFound:
