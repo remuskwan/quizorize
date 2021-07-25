@@ -45,11 +45,14 @@ struct DeckCreationView: View {
         NavigationView {
             GeometryReader { geometry in
                 VStack {
-                    
+
                     deckTitleView
                         .padding()
+                    
 
                     Divider()
+                    
+                    EditButton()
                     
                     flashcardView()
                         .frame(minHeight: geometry.size.height * DimensionConstants.flashcardViewRatio)

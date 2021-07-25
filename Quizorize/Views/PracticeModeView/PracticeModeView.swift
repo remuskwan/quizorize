@@ -147,6 +147,7 @@ struct PracticeModeView: View {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button {
                                 if self.practiceModeViewModel.isSpacedRepetitionOn {
+                                    //presentationMode.wrappedValue.dismiss()
                                     self.showingEndTestAlert = true
                                 } else {
                                     presentationMode.wrappedValue.dismiss()
