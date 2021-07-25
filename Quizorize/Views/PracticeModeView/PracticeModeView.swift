@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+//MARK: struct for alerts in practice mode
+enum PracticeAlert {
+    case tip, endTest
+}
+
 struct PracticeModeView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var reminderVM: ReminderViewModel
@@ -22,11 +27,18 @@ struct PracticeModeView: View {
     @State var prevExamScore: Double
     
     @State private var showingTest = false
-    @State private var showingEndTestAlert = false
-    
+
     @State private var showHint = false
-    @State private var showEndTipAlert: Bool = false
     
+    //@State private var showingEndTestAlert = false
+    //@State private var showEndTipAlert = false
+    
+    @State private var autoPopUp = false
+    
+    @State private var showAlert = false
+    @State private var activeAlert: PracticeAlert = .endTest
+    
+
     @State private var showSpacedRepetitionTips = false
     
     //Saved preferences locally
@@ -61,6 +73,7 @@ struct PracticeModeView: View {
                                                 Text("Let Quizorize plan your next practice date.")
                                                 Button {
                                                     self.showSpacedRepetitionTips = true
+                                                    print("showing spaced repetition is \(self.showSpacedRepetitionTips)")
                                                 } label: {
                                                     Text(" Learn More")
 //                                                        .underline()
@@ -87,6 +100,7 @@ struct PracticeModeView: View {
                                 }
                                 ToolbarItem(placement: .navigationBarTrailing) {
                                     Button {
+                                        self.autoPopUp = false
                                         self.showHint = true
                                     } label: {
                                         Image(systemName: "questionmark.circle")
@@ -98,9 +112,12 @@ struct PracticeModeView: View {
                             practiceModeView
                                 .onAppear {
                                     if self.showTip {
+                                        self.autoPopUp = true
                                         self.showHint = true
                                     }
                                 }
+                                
+                            
                         }
                     }
                     if showingNotice {
@@ -112,25 +129,48 @@ struct PracticeModeView: View {
                 .sheet(isPresented: self.$showHint) {
                     PracticeHintView()
                         .onDisappear {
-                            if self.showTip {
-                                self.showEndTipAlert = true
+                            if self.showTip && self.autoPopUp {
+                                self.activeAlert = .tip
+                                self.showAlert = true
                             }
                         }
-                }
-                .alert(isPresented: self.$showEndTipAlert) {
-                    Alert(title: Text("Do you still want this tip to show up everytime you practice a deck?"),
-                          primaryButton: .default(Text("No")) {
-                            self.showTip = false
-                            self.presentationMode.wrappedValue.dismiss()
-                          },
-                          secondaryButton: .default(Text("Yes")) {
-                            self.showTip = true
-                            self.presentationMode.wrappedValue.dismiss()
-                          })
+                        
+                    
                 }
                 .sheet(isPresented: self.$showSpacedRepetitionTips) {
                     SpacedRepetitionView()
                 }
+                .alert(isPresented: self.$showAlert) { //If there are multiple alerts, use an enum to prevent any overlapping
+                    switch activeAlert {
+                    case .endTest:
+                        return Alert(title: Text("Are you sure you want to end this practice?"),
+                                  message: Text("Spaced Repetition results from this round of flashcards will NOT be saved."),
+                                  primaryButton: .cancel(Text("Stay")),
+                                  secondaryButton: .default(Text("End Test")) {
+                                    presentationMode.wrappedValue.dismiss()
+                                    if self.practiceModeViewModel.isSpacedRepetitionOn && !self.practiceModeViewModel.changedFinalisedFlashcards.isEmpty {
+                                        print("Current score is \(correctCount / totalQuestionsAnswered)")
+                                        
+                                        didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, self.correctCount / self.totalQuestionsAnswered, self.practiceModeViewModel.getNotificationTimeInterval())
+
+                                        print("Deck and flashcards successfully updated")
+                                        
+                                    }
+                                    self.practiceModeViewModel.reset()
+                                  })
+                    case .tip:
+                        return Alert(title: Text("Do you still want this tip to show up everytime you practice a deck?"),
+                                  primaryButton: .default(Text("No")) {
+                                    self.showTip = false
+                                    //self.presentationMode.wrappedValue.dismiss()
+                                  },
+                                  secondaryButton: .default(Text("Yes")) {
+                                    self.showTip = true
+                                    //self.presentationMode.wrappedValue.dismiss()
+                                  })
+                    }
+                }
+                
                 
             }
         }
@@ -147,7 +187,10 @@ struct PracticeModeView: View {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button {
                                 if self.practiceModeViewModel.isSpacedRepetitionOn {
-                                    self.showingEndTestAlert = true
+                                    //presentationMode.wrappedValue.dismiss()
+                                    //self.showingEndTestAlert = true
+                                    self.activeAlert = .endTest
+                                    self.showAlert = true
                                 } else {
                                     presentationMode.wrappedValue.dismiss()
                                 }
@@ -157,29 +200,13 @@ struct PracticeModeView: View {
                         }
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button {
+                                self.autoPopUp = false
                                 self.showHint = true
                             } label: {
                                 Image(systemName: "questionmark.circle")
                                     .frame(width: 24, height: 24)
                             }
                         }
-                    })
-                    .alert(isPresented: $showingEndTestAlert, content: {
-                        Alert(title: Text("Are you sure you want to end this practice?"),
-                              message: Text("Spaced Repetition results from this round of flashcards will NOT be saved."),
-                              primaryButton: .cancel(),
-                              secondaryButton: .default(Text("End Test")) {
-                                presentationMode.wrappedValue.dismiss()
-                                if self.practiceModeViewModel.isSpacedRepetitionOn && !self.practiceModeViewModel.changedFinalisedFlashcards.isEmpty {
-                                    print("Current score is \(correctCount / totalQuestionsAnswered)")
-                                    
-                                    didFinishDeck(self.practiceModeViewModel.finalisedFlashcards, self.correctCount / self.totalQuestionsAnswered, self.practiceModeViewModel.getNotificationTimeInterval())
-
-                                    print("Deck and flashcards successfully updated")
-                                    
-                                }
-                                self.practiceModeViewModel.reset()
-                              })
                     })
             }
             else {
@@ -204,6 +231,7 @@ struct PracticeModeView: View {
                         }
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button {
+                                self.autoPopUp = false
                                 self.showHint = true
                             } label: {
                                 Image(systemName: "questionmark.circle")

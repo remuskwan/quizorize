@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+//MARK: types of alerts for DeckCreation
+enum DeckCreationAlert {
+    case deckTitleEmpty, lessThanTwo, hasAnyFieldsEmpty, cancel
+}
+
 struct DeckCreationView: View {
     
     init(deckListViewModel: DeckListViewModel, didCreateDeck: @escaping (_ deck: Deck, _ flashcards: [Flashcard]) -> Void) {
@@ -23,7 +28,7 @@ struct DeckCreationView: View {
         self.deckCreationVM = DeckCreationViewModel(flashcardListVM: flashcardListVM, deckVM: deckVM)
         self.didCreateDeck = didCreateDeck
         
-        self.createOrEdit = "Edit"
+        self.createOrEdit = "Finish"
         self.pageTitle = "Edit Deck"
     }
 
@@ -34,8 +39,9 @@ struct DeckCreationView: View {
     
     @State private var deckTitle = ""
     @State private var isDeckTitleTapped = false
-    @State private var isNotValid = false
-    
+
+    @State private var showAlert = false
+    @State private var activeAlert: DeckCreationAlert = .cancel
     
     var createOrEdit: String
     var pageTitle: String
@@ -45,11 +51,14 @@ struct DeckCreationView: View {
         NavigationView {
             GeometryReader { geometry in
                 VStack {
-                    
+
                     deckTitleView
                         .padding()
+                    
 
                     Divider()
+                    
+                    EditButton()
                     
                     flashcardView()
                         .frame(minHeight: geometry.size.height * DimensionConstants.flashcardViewRatio)
@@ -65,34 +74,79 @@ struct DeckCreationView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        presentationMode.wrappedValue.dismiss()
+                        self.activeAlert = .cancel
+                        self.showAlert = true
+                        //presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text("Cancel")
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        isNotValid = deckCreationVM.hasAnyFieldsEmpty() || deckCreationVM.hasDeckTitleEmpty() || deckCreationVM.hasLessThanTwoCards()
-                        if isNotValid {
+                        if deckCreationVM.hasDeckTitleEmpty() {
+                            self.activeAlert = .deckTitleEmpty
+                            self.showAlert = true
                             return
+                        } else if deckCreationVM.hasAnyFieldsEmpty() {
+                            self.activeAlert = .hasAnyFieldsEmpty
+                            self.showAlert = true
+                        } else if deckCreationVM.hasLessThanTwoCards() {
+                            self.activeAlert = .lessThanTwo
+                            self.showAlert = true
                         }
                         let flashcards: [Flashcard] = deckCreationVM.getFinalisedFlashcards()
                         let deck = Deck(title: deckCreationVM.deckTitle)
                         didCreateDeck(deck, flashcards)
-                        presentationMode.wrappedValue.dismiss()
+                        self.presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text(createOrEdit)
                     }
                 }
             }
-            .alert(isPresented: $isNotValid) {
+            .alert(isPresented: $showAlert) {
+                /*
                 if (deckCreationVM.hasDeckTitleEmpty()) {
-                    return Alert(title: Text(StringConstants.alertTitle), message: Text(StringConstants.alertDeckTitleNotFound), dismissButton: .default(Text(StringConstants.alertDismissMessage)))
+                    print(deckCreationVM.hasDeckTitleEmpty())
+                    self.activeAlert = .deckTitleEmpty
                 } else if (deckCreationVM.hasLessThanTwoCards()) {
-                    return Alert(title: Text(StringConstants.alertTitle), message: Text(StringConstants.alertLessThanTwoCard), dismissButton: .default(Text(StringConstants.alertDismissMessage)))
+                    print(deckCreationVM.hasLessThanTwoCards())
+                    self.activeAlert = .lessThanTwo
+                } else if (deckCreationVM.hasAnyFieldsEmpty()) {
+                    print(deckCreationVM.hasAnyFieldsEmpty())
+                    self.activeAlert = .missingField
                 } else {
-                    return Alert(title: Text(StringConstants.alertTitle), message: Text(StringConstants.alertMissingField), dismissButton: .default(Text(StringConstants.alertDismissMessage)))
+                    self.activeAlert = .final
                 }
+                */
+               
+                switch self.activeAlert {
+                case .deckTitleEmpty:
+                    return Alert(title: Text(StringConstants.reqNotMetAlertTitle),
+                                 message: Text(StringConstants.alertDeckTitleNotFound)
+                                    ,
+                                 dismissButton: .cancel(Text("Ok"))
+                                 )
+                case .hasAnyFieldsEmpty:
+                    return Alert(title: Text(StringConstants.reqNotMetAlertTitle),
+                                 message: Text(StringConstants.alertMissingField),
+                                 dismissButton: .cancel(Text("Ok"))
+                    )
+                
+                case .lessThanTwo:
+                    return Alert(title: Text(StringConstants.reqNotMetAlertTitle),
+                                 message: Text(StringConstants.alertLessThanTwoCard),
+                                 dismissButton: .cancel(Text("Ok"))
+                    )
+                    
+                case .cancel:
+                    return Alert(title: Text(StringConstants.cancelAlertTitle),
+                                 message: Text(StringConstants.cancelAlertMessage),
+                                 primaryButton: .cancel(Text("Stay")),
+                                 secondaryButton: .default(Text("Leave")) {
+                                    self.presentationMode.wrappedValue.dismiss()
+                                 })
+                }
+                
             }
         }
     }
@@ -188,12 +242,15 @@ struct DeckCreationView: View {
         
         static let titlePlaceholder = "Subject, chapter, unit"
         
-        static let alertTitle = "Important!"
+        static let cancelAlertTitle = "Note"
+        static let cancelAlertMessage = "You will lose all edits made to this deck"
+        
+        static let reqNotMetAlertTitle = "Error"
+        static let alertTitle = "Error!"
         static let alertMissingField = "You must fill up all fields in your deck"
         static let alertLessThanTwoCard = "You must create a minimum of two flashcards."
         static let alertDeckTitleNotFound = "You must have a deck title."
         static let alertDismissMessage = "Got it!"
-        
     }
 }
 

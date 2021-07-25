@@ -44,6 +44,7 @@ class FlashcardListViewModel: ObservableObject {
         .count
     }
     
+    
     var sortFlashcard: AnyPublisher<[FlashcardViewModel], Never> {
         flashcardRepository.$flashcards
             .map { flashcards in
