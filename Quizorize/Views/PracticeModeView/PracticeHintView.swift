@@ -85,7 +85,7 @@ struct PracticeHintView: View {
                 Button {
                     self.presentationMode.wrappedValue.dismiss()
                 } label: {
-                    Text("Ok got it!")
+                    Text("OK got it!")
                         .foregroundColor(DrawingConstants.buttonTextColor)
                         .font(.headline)
                         .frame(maxWidth: .infinity)
@@ -93,7 +93,6 @@ struct PracticeHintView: View {
                         .background(RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
                                         .fill(Color.accentColor))
                         .padding()
-                        //.border(Color.green)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -109,7 +108,7 @@ struct PracticeHintView: View {
     private struct DrawingConstants {
         
         static let buttonTextColor: Color = .white
-        static let cornerRadius: CGFloat = 10
+        static let cornerRadius: CGFloat = 5
         
         static let hintRowHeight: CGFloat = 0.1
         static let hintRowWidth: CGFloat = 0.8
@@ -193,7 +192,7 @@ struct HintRowView: View {
                     Text(textTitle)
                         .font(.title2.bold())
                         .lineLimit(nil)
-
+                    Spacer()
                     Text(textContent)
                         .font(.body)
                         .lineLimit(nil)
