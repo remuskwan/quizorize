@@ -78,7 +78,7 @@ struct LottieCalendarView: View {
     var width: CGFloat //should be width of the whole screen
     
     var height: CGFloat //should be height of the whole screen
-    
+
     var body: some View {
         VStack(alignment: .center) {
             LottieView(filename: "calendar", isPlaying: isPlaying)
