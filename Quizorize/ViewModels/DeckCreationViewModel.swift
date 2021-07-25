@@ -10,14 +10,18 @@ import Combine
 
 class DeckCreationViewModel: ObservableObject {
     
-    
+    private var cancellableSet = Set<AnyCancellable>()
+
     init() {
         //self.model = DeckCreationModel(minimumNumberOfCards: 2)
         self.deckTitle = ""
+        self.isEditMode = false
         
         self.flashcards = []
         self.flashcards.append(EmptyFlashcard(id: UUID().uuidString, dateAdded: Date()))
         self.flashcards.append(EmptyFlashcard(id: UUID().uuidString, dateAdded: Date()))
+       
+
     }
     
     init(flashcardListVM: FlashcardListViewModel, deckVM: DeckViewModel) {
@@ -34,6 +38,9 @@ class DeckCreationViewModel: ObservableObject {
         self.deckTitle = deckTitle
         self.flashcards = flashcards
         
+        self.isEditMode = true
+        
+
         //self.model = DeckCreationModel(flashcards, deckTitle)
 
     }
@@ -48,6 +55,76 @@ class DeckCreationViewModel: ObservableObject {
     @Published var deckTitle: String
     
     @Published var flashcards: [EmptyFlashcard]
+    
+    //MARK: For Alerts
+    var requirementsNotMet: Bool {
+        self.hasAnyFieldsEmpty() || self.hasDeckTitleEmpty() || self.hasLessThanTwoCards()
+    }
+    
+    @Published var requirementsNotMetMessage: String = ""
+
+    let isEditMode: Bool
+    
+    private var deckTitleEmptyPubliser: AnyPublisher<Bool, Never> {
+        $deckTitle
+            .map { deckTitle in
+                deckTitle == ""
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private var anyFieldEmptyPublisher: AnyPublisher<Bool, Never> {
+        $flashcards
+            .map { flashcards in
+                let anyFieldEmpty = !flashcards.map { flashcard in
+                    flashcard.prompt == "" || flashcard.answer == ""
+                }
+                .isEmpty
+                
+                return anyFieldEmpty
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private var hasLessThanTwoFlashcardsPublisher: AnyPublisher<Bool, Never> {
+        $flashcards
+            .map { flashcards in
+                flashcards.count < 2
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var requirementsNotMetPublisher: AnyPublisher<Bool, Never> {
+        Publishers.CombineLatest3(deckTitleEmptyPubliser, anyFieldEmptyPublisher, hasLessThanTwoFlashcardsPublisher)
+            .map { deckTitleEmpty, anyFieldEmpty, hasLessThanTwo in
+                deckTitleEmpty || anyFieldEmpty || hasLessThanTwo
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var requirementsNotMetMessagePublisher: AnyPublisher<String, Never> {
+        Publishers.CombineLatest3(deckTitleEmptyPubliser, anyFieldEmptyPublisher, hasLessThanTwoFlashcardsPublisher)
+            .map { deckTitleEmpty, anyFieldEmpty, hasLessThanTwo in
+                var message = """
+                    """
+                if (deckTitleEmpty || anyFieldEmpty || hasLessThanTwo) {
+                    if (deckTitleEmpty) {
+                        message = message + "You must have a deck title."
+                    }
+                    
+                    if (anyFieldEmpty) {
+                        message = message + "You must fill up all fields in your deck."
+                    }
+                    
+                    if (hasLessThanTwo) {
+                        message = message + "You must create a minimum of two flashcards."
+                    }
+                }
+
+                return message
+            }
+            .eraseToAnyPublisher()
+    }
 
     /*
     var flashcards: [DeckCreationModel.EmptyFlashcard] {
@@ -73,7 +150,7 @@ class DeckCreationViewModel: ObservableObject {
     func hasLessThanTwoCards() -> Bool {
         flashcards.count < 2
     }
-    
+
     
     //MARK: Intent(s) from View
     

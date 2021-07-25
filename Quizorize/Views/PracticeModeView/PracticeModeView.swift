@@ -145,7 +145,7 @@ struct PracticeModeView: View {
                     case .endTest:
                         return Alert(title: Text("Are you sure you want to end this practice?"),
                                   message: Text("Spaced Repetition results from this round of flashcards will NOT be saved."),
-                                  primaryButton: .cancel(),
+                                  primaryButton: .cancel(Text("Stay")),
                                   secondaryButton: .default(Text("End Test")) {
                                     presentationMode.wrappedValue.dismiss()
                                     if self.practiceModeViewModel.isSpacedRepetitionOn && !self.practiceModeViewModel.changedFinalisedFlashcards.isEmpty {
