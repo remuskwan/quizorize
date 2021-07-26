@@ -10,9 +10,8 @@ This iOS application is targeted towards students aged 14 and above that wishes 
 
 Try the latest build of Quizorize by accessing this [link](https://testflight.apple.com/join/spPWRuor) on your iOS device.
 
-Requirements: iPhone, iPad or iPod Touch running iOS 14.5 and later.
-
-Recommended (for the best experience): iPhone or iPod Touch in Light Mode.
+- Requirements: iPhone, iPad or iPod Touch running iOS 14.5 and later.
+- Recommended (for the best experience): iPhone or iPod Touch in Light Mode.
 
 ### Local Test (on your Mac)
 
@@ -38,62 +37,52 @@ You can refer to our walkthrough video which shows the steps above [here](https:
 
 Open, the workspace file 'Quizorize.xcworkspace' to view the code and run its build.
 
-Requirements: Mac running macOS 11 BigSur, [Xcode 12](https://developer.apple.com/xcode/)
+- Requirements: Mac running macOS 11 BigSur, [Xcode 12](https://developer.apple.com/xcode/)
 
 ## Video Demo
-Please visit our video demo on Youtube [here](https://youtu.be/EOlAkFIuFTw).
+Please visit our video demo on Youtube [here](https://youtu.be/sXS6djPETjo).
 
 ## Documentation
 
-[Milestone II](https://docs.google.com/document/d/1BBVJUarCBF2qy_ZWbH6zZka4ebhrtTBtQnHnmGUuizE/edit?ts=60afa18d).
-Milestone III.
+- [Milestone II](https://docs.google.com/document/d/1BBVJUarCBF2qy_ZWbH6zZka4ebhrtTBtQnHnmGUuizE/edit?ts=60afa18d).
+- [Milestone III](https://drive.google.com/file/d/1kCAel8p73suCHbitY-f7qAOhN-XV4efW/view?usp=sharing).
 
-## Launching the App
+## Walkthrough
+### Launching the App
 
 1. On the home screen of your iOS device, tap the app icon.
 2. You will be presented with the Launch Screen of our app.
 3. Pressing "Get Started." will bring you to the login page.
 
-
-<p align="left"><img src="public/ReadMeMedia/startView.png" width="25%"/></p>
-
-## User Login
+### User Login
 1. Enter your email address and password to login. You may also sign in using your Apple or Google account.
 2. You can click on 'Register' to create an account if you do not have one.
 3. After successful login, you will be presented with the Homepage of our app.
 
-<img src = "public/ReadMeMedia/loginDemo.gif" width ="90%" /> 
-
-## Registration
+### Registration
 1. Enter your particulars into the text fields provided.
 2. Ensure that the validity checks of the fields are met.
 3. Create account.
 
-<img src = "public/ReadMeMedia/registerDemo.gif" width ="90%" /> 
-
-## Homepage ("Decks screen")
+### Homepage ("Decks screen")
 1. Houses user-created decks, which can be accessed from any of the user's devices on which they are logged-in
 2. Users can create new decks by tapping the "New" icon.
 3. Users can access a deck's preview screen by tapping on its icon.
 4. Users can edit a deck or delete a deck by tapping on its title.
 5. Tapping the bell icon on the top left of the page will bring up the Activity page, which is currently work-in-progress. It will house the user's notifications and reminders to revise their decks according to the spaced repetition algorithm.
 
-## Deck Creation
+### Deck Creation
 1. Tap "New" to create a new deck.
 2. Enter the deck's title and the flashcards' prompts and answers. Each deck must contain a minimum of two flashcards. 
 3. Swipe left on a flashcard to remove it from the deck.
 4. Tap "Create" to finish creating the deck.
 
-<img src = "public/ReadMeMedia/SimulatorScreenDeckCreation.gif" width ="25%" /> 
-
-## Deck Preview
+### Deck Preview
 1. The deck's flashcards are displayed in a carousel. 
 2. Tap a flashcard to flip it (prompt on the front, answer on the back).
 3. Swipe left and right to navigate between flashcards.
 
-<img src = "public/ReadMeMedia/SimulatorScreenDeckPreview.gif" width ="25%" /> 
-
-## Practice Mode
+### Practice Mode
 1. Tap "Practice" in Preview to access Practice Mode.
 2. Practice Mode can be configured based on whether the user wants to be reminded to practice the deck again, at a time determined using the app's Spaced Repetition algorithm
 3. The deck of flashcards are displayed as an interactive deck.
@@ -104,9 +93,7 @@ Milestone III.
 8. If Spaced Repetition reminders were turned on, the user is instructed to practice a second time. Afterwhich, the app calculates the next study date for the user and sends them a push notification on that date.
 9. Tap the "X" in the top left corner to exit Practice mode.
 
-<img src = "public/ReadMeMedia/SimulatorScreenDeckPractice.gif" width ="25%" /> 
-
-## Test Mode
+### Test Mode
 1. Tap "Test" in Preview to access Test Mode.
 2. Test Mode can be configured based on the user's desired question types (True or false, Multiple choice and Written) and whether they want to be reminded to take the test again.
 3. Tap "Start Test" to start Test Mode.
@@ -117,21 +104,19 @@ Milestone III.
 8. Tap the "X" in the top left corner to exit Test mode.
 9. If Reminders were turned on, a push notification will be sent to the user at their chosen time.
 
-## Search
+### Search
 1. Tap the "Search" icon in the tab bar to access the Search page.
 2. Enter a deck's title into the search field to search for a deck.
 3. Tap on the deck's icon to view its preview screen.
 
-<img src = "public/ReadMeMedia/SimulatorScreenDeckSearch.gif" width ="25%" /> 
-
-## Profile
+### Profile
 1. User can change their email or password.
 2. Pressing "Sign out" will sign the user out of their account and bring them back to the Launch Screen.
 
-## Future
+### Future
 1. Favoriting decks and flashcards (for ease-of-access)
-2. Level and achievement system
-3. Leaderboard system
+2. Downloading other users' decks and sharing user-created decks
+3. More customisations for Practice Mode and Test Mode
 
 ## Known Bugs
 1. If you are running Quizorize on a simulator from Xcode, the secure fields (Password and Confirm password) will sometimes show 'Strong Password'.
