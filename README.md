@@ -42,6 +42,9 @@ Open, the workspace file 'Quizorize.xcworkspace' to view the code and run its bu
 ## Video Demo
 Please visit our video demo on Youtube [here](https://youtu.be/sXS6djPETjo).
 
+## Feedback
+Send us feedback by filling up this [form](https://docs.google.com/forms/d/e/1FAIpQLScE6TVuMshB5MyogD6qiQD17Y-CY2A9yma9gqXCGB55hzkW3Q/viewform?usp=sf_link) or send us an email at quizorizecontact@gmail.com.
+
 ## Documentation
 
 - [Milestone II](https://docs.google.com/document/d/1BBVJUarCBF2qy_ZWbH6zZka4ebhrtTBtQnHnmGUuizE/edit?ts=60afa18d).
