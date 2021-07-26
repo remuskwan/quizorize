@@ -47,7 +47,7 @@ Send us feedback by filling up this [form](https://docs.google.com/forms/d/e/1FA
 
 ## Documentation
 
-- [Milestone II](https://docs.google.com/document/d/1BBVJUarCBF2qy_ZWbH6zZka4ebhrtTBtQnHnmGUuizE/edit?ts=60afa18d)
+- [Milestone II](https://drive.google.com/file/d/15BATuqWFOS_q953uF5l2FVC_HN50TZbW/view?usp=sharing)
 - [Milestone III](https://drive.google.com/file/d/1kCAel8p73suCHbitY-f7qAOhN-XV4efW/view?usp=sharing)
 
 ## Walkthrough
