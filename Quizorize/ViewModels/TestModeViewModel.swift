@@ -31,7 +31,6 @@ class TestModeViewModel: ObservableObject {
     
     @Published var latestScore: Double? = nil
     
-//    @Published var spacedRepetitionOn = true
     @Published var reminderType = ReminderType.never
     @Published var nextReminderTime: TimeInterval = 0.0
     

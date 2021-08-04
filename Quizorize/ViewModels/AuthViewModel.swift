@@ -70,11 +70,6 @@ class AuthViewModel : NSObject, ObservableObject {
                 return
                     //TODO: update credential
             }
-//            if let result = result {
-//                guard result.user.isEmailVerified else {
-//                    self?.activeError = SignUpError.userNotVerified
-//                    return
-//                }
             DispatchQueue.main.async {
                 self?.signedIn = true
             }
@@ -107,22 +102,12 @@ class AuthViewModel : NSObject, ObservableObject {
                     return
                 }
             })
-            
             DispatchQueue.main.async {
                 self?.signedIn = true
             }
         }
         auth.addStateDidChangeListener { _, user in
             if let user = user {
-//                if !user.isEmailVerified {
-//                    self.activeError = SignUpError.userNotVerified
-//                    user.sendEmailVerification { error in
-//                        guard let error = error else {
-//                            return
-//                        }
-//                        self.handleErrors(error: error, email: email)
-//                    }
-//                }
                 self.userRepository.addData(User(id: user.uid, email: email, displayName: displayName))
             }
         }
@@ -133,8 +118,6 @@ class AuthViewModel : NSObject, ObservableObject {
         
         do {
             try auth.signOut()
-            print(auth.currentUser?.displayName)
-            print(auth.currentUser)
             self.signedIn = false
         } catch let signOutError as NSError {
             print(signOutError.localizedDescription)
@@ -154,7 +137,6 @@ class AuthViewModel : NSObject, ObservableObject {
     
     private func handleErrors(error: Error?, email: String) {
         let errorCode = AuthErrorCode(rawValue: (error as NSError?)!.code)
-        print(errorCode)
         switch errorCode {
         case .wrongPassword:
             auth.fetchSignInMethods(forEmail: email) { result, error in
@@ -187,8 +169,8 @@ class AuthViewModel : NSObject, ObservableObject {
         
         case .userNotFound:
             self.activeError = EmailVerificationError.userNotFound
-//        case .tooManyRequests:
-//            self.activeError = EmailVerificationError.tooManyRequests
+        case .tooManyRequests:
+            self.activeError = EmailVerificationError.tooManyRequests
 //        case .requiresRecentLogin:
 //            self.activeError = UpdateProfileError.requiresRecentLogin
         case .credentialAlreadyInUse:

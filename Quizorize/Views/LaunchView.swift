@@ -35,11 +35,6 @@ struct Launch: View {
                         .font(.custom("GlacialIndifference-Bold", size: 52))
                         .padding()
         
-//                    Text("Study Hard, Study Smart.")
-//                        .font(.custom("GlacialIndifference-Regular", size: 24))
-//
-//                    Spacer()
-                    
                     TabView {
                         LottieStudyView(width: geometry.size.width, height: geometry.size.height)
                         LottiePracticeView(width: geometry.size.width, height: geometry.size.height)
@@ -49,7 +44,6 @@ struct Launch: View {
                     .tabViewStyle(PageTabViewStyle())
                     .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
 
-                    
                     NavigationLink(
                         destination: LoginView(),
                         label: {
