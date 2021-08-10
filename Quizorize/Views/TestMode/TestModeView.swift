@@ -46,7 +46,6 @@ struct TestModeView: View {
                                     Button(action: {
                                         testModeViewModel.setQuestionTypes()
                                         testModeViewModel.setCurrentType()
-//                                        testModeViewModel.setQuestionCount()
                                         if testModeViewModel.isMCQ {
                                             testModeViewModel.setMCQOptions()
                                         }
@@ -122,17 +121,6 @@ struct TestModeOptions: View {
     @State private var showAlert = false
     
     var body: some View {
-//        Section(header: Text("General")) {
-//            Picker("Question Count", selection: $testModeViewModel.questionCount) {
-//                ForEach(1 ..< testModeViewModel.count + 1, id: \.self) {
-//                    Text("\($0)")
-//                }
-//            }
-//            Toggle(isOn: $isInstEvalOn, label: {
-//                Text("Instant Evaluation")
-//            })
-//            .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
-//        }
         Section(header: Text("Question types")) {
             Toggle(isOn: $testModeViewModel.isTrueFalse, label: {
                 Text("True or false")
@@ -154,23 +142,12 @@ struct TestModeOptions: View {
         }
         
         Section(header: Text("Reminders"), footer: Text("Let Quizorize plan your next test date.")) {
-//            Toggle(isOn: $isSpacedRepetitionOn, label: {
-//                Text("Spaced Repetition")
-//            })
-//            .toggleStyle(SwitchToggleStyle(tint: Color(hex: "15CDA8")))
-//
-//            if !isSpacedRepetitionOn {
-                Picker("Remind Me", selection: $testModeViewModel.reminderType) {
-                    ForEach(ReminderType.allCases, id: \.self) {
-                        Text($0.rawValue)
-                    }
+            Picker("Remind Me", selection: $testModeViewModel.reminderType) {
+                ForEach(ReminderType.allCases, id: \.self) {
+                    Text($0.rawValue)
                 }
-//            }
-            
+            }
         }
-//        .alert(isPresented: testModeViewModel.isTrueFalse && testModeViewModel.isMCQ && testModeViewModel.isTrueFalse, content: {
-//            /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Content@*/Alert(title: Text("Alert"))/*@END_MENU_TOKEN@*/
-//        })
     }
 }
 
@@ -364,12 +341,6 @@ struct Item<Content: View>: View {
     }
 }
 
-//struct AdvancedOptions: View {
-//    var body: some View {
-//        Text("Advanced Options")
-//    }
-//}
-
 struct Written: View {
     @ObservedObject var testModeViewModel: TestModeViewModel
     
@@ -377,7 +348,6 @@ struct Written: View {
     
     var body: some View {
         HStack {
-//            FirstResponderTextField(text: $answerEntered, placeholder: "Type your answer...")
             TextField("Type your answer...", text: $answerEntered)
             Spacer()
             if self.answerEntered == "" {
@@ -475,13 +445,8 @@ struct MultipleChoice: View {
                         impactMed.impactOccurred()
                         self.testModeViewModel.setMCQOptions()
                     }, label: {
-//                        ZStack {
-//                            RoundedRectangle(cornerRadius: 5)
-//                                .fill(Color.clear)
-//
-                            Text("\(option)")
-                                .padding()
-//                        }
+                        Text("\(option)")
+                            .padding()
                     })
                     .buttonStyle(MultipleChoiceButtonStyle())
                     .padding(.vertical, 4)
@@ -489,9 +454,6 @@ struct MultipleChoice: View {
                 }
                 
             }
-//            .onAppear {
-//                self.testModeViewModel.setMCQOptions()
-//            }
         }
         
     }
@@ -506,9 +468,3 @@ struct MultipleChoiceButtonStyle: ButtonStyle {
                             .strokeBorder(configuration.isPressed ? Color(hex: "15CDA8") : Color.accentColor, lineWidth: 2))
     }
 }
-
-//struct TestModeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TestModeView()
-//    }
-//}

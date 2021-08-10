@@ -25,22 +25,6 @@ struct ProfileView: View {
                         EmptyView()
                     })
                 Form {
-                    //                Section {
-                    //                    NavigationLink(destination: EditProfileView()) {
-                    //                        HStack {
-                    //                            Image(systemName: "camera")
-                    //                                .background(Circle()
-                    //                                                .fill(Color.offWhite)
-                    //                                                .frame(width: 50, height: 50))
-                    //                                .frame(width: 20, height: 20)
-                    //                                .padding()
-                    //                            Text(authViewModel.user?.displayName ?? "")
-                    //                                .font(.title)
-                    //                                .padding()
-                    //                        }
-                    //                    }
-                    //
-                    //                }
                     Section {
                         Button(action: {
                             authViewModel
@@ -96,12 +80,6 @@ struct ProfileView: View {
                     .alert(isPresented: authViewModel.isPresentingAlert) {
                         Alert(localizedError: authViewModel.activeError!)
                     }
-//                    Section {
-//                        Toggle(isOn: /*@START_MENU_TOKEN@*/.constant(true)/*@END_MENU_TOKEN@*/, label: {
-//                            Text("Push Notifications")
-//                        })
-//                    }
-                    
                     Section{
                         SignOutButton()
                     }
@@ -117,15 +95,6 @@ struct ProfileView: View {
         }
     }
 }
-//struct EditProfileView: View {
-//    var body: some View {
-//        VStack {
-//
-//        }
-//        .navigationTitle("Edit Profile")
-//        .navigationBarTitleDisplayMode(.inline)
-//    }
-//}
 
 struct ChangePasswordView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
@@ -404,9 +373,3 @@ struct SignOutButton: View {
         })
     }
 }
-
-//struct ProfileView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ProfileView()
-//    }
-//}

@@ -80,9 +80,3 @@ struct SummaryProgressBar: View {
         }
     }
 }
-
-//struct TestModeSummaryView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TestModeSummaryView()
-//    }
-//}

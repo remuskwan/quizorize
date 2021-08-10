@@ -30,7 +30,6 @@ struct DeckListView: View {
 
     @State private var selectedSortBy = SortBy.date
     @State private var showActivitySheet = false
-//    @State private var showingActionSheet = false
     @State private var showingCreateDeck = false
     @State private var showListView = false
     @State var isNavBarHidden = false
@@ -45,24 +44,6 @@ struct DeckListView: View {
                 VStack {
                     Divider()
                         .padding(.horizontal)
-//                    HStack {
-//                        Spacer()
-//                        Picker("Sort By: ", selection: $selectedSortBy) {
-//                            ForEach(SortBy.allCases, id: \.self) {
-//                                Text($0.rawValue)
-//                            }
-//                        }
-//                        .pickerStyle(SegmentedPickerStyle())
-//                        .frame(width: 200, height: 20, alignment: .center)
-//                        Spacer()
-//                        Button(action: {
-//                            self.showListView.toggle()
-//                        }, label: {
-//                            Image(systemName: "list.dash")
-//                        })
-//                    }
-//                    .padding(.vertical, 10)
-//                    .padding(.horizontal, 12)
                     
                     if !self.showListView {
                         GeometryReader { geometry in
@@ -94,12 +75,6 @@ struct DeckListView: View {
                                     }
                                     
                                 })
-//                                .actionSheet(isPresented: $showingActionSheet) {
-//                                    ActionSheet(title: Text(""), message: Text(""), buttons: [
-//                                        .default(Text("Deck")) {self.showingCreateDeck = true},
-//                                        .cancel()
-//                                    ])
-//                                }
                                 .sheet(isPresented: $showingCreateDeck, content: {
                                     DeckCreationView(deckListViewModel: deckListViewModel) { deck, flashcards in
                                         deckListViewModel.add(deck: deck, flashcards: flashcards)
@@ -127,43 +102,6 @@ struct DeckListView: View {
                             .padding(12)
                         }
                     }
-//                    else {
-//                        List {
-//                            NewButton(deckListViewModel: deckListViewModel)
-//                            ForEach(deckListViewModel.sortDeckVMs(self.selectedSortBy)) { deckVM in
-//                                let deck = deckVM.deck
-//                                let flashcardListViewModel = FlashcardListViewModel(deck)
-//                                let testModeViewModel = TestModeViewModel(deck)
-//
-//                                NavigationLink(
-//                                    destination:
-//                                        DeckView(deckListViewModel: deckListViewModel, deckViewModel: deckVM, flashcardListViewModel: flashcardListViewModel, testModeViewModel: testModeViewModel),
-//                                    label: {
-//                                        HStack {
-//                                            Image("deck1")
-//                                                .resizable()
-//                                                .frame(width: 110, height: 110)
-//                                                .padding()
-//                                            VStack {
-//                                                Text(deck.title)
-//                                            }
-//                                            Spacer()
-//
-//                                            Button {
-//                                                showDeckOptions.toggle()
-//                                            } label: {
-//                                                HStack {
-//                                                    Image(systemName: "chevron.down")
-//                                                }
-//                                            }
-//
-//                                        }
-//                                    })
-//
-//                            }
-//                        }
-//                    }
-                    
                 }
                 
             }
@@ -172,39 +110,9 @@ struct DeckListView: View {
             .onAppear {
                 self.isNavBarHidden = false
             }
-//            .toolbar {
-//                ToolbarItem {
-//                    Button {
-//                        showActivitySheet.toggle()
-//                    } label: {
-//                        Image(systemName: "bell")
-//                    }
-//                }
-//            }
-//            .sheet(isPresented: $showActivitySheet) {
-//                ActivityView()
-//            }
-            
-            
-            /*
-            .textFieldAlert(isPresented: $userDoesNotHaveDisplayName) { () -> TextFieldAlert in
-                TextFieldAlert(title: "Create Display Name", message: "Welcome to Quizorize! Please enter your display name below", text: $displayName)
-            }
-            */
         }
     }
 }
-
-//struct ActivityView: View {
-//    var body: some View {
-//        NavigationView {
-//            VStack {
-//            }
-//                .navigationTitle("Activity")
-//                .navigationBarTitleDisplayMode(.inline)
-//        }
-//    }
-//}
 
 struct DeckIconView: View {
     @ObservedObject var deckVM: DeckViewModel
@@ -330,38 +238,9 @@ struct EditDeckView: View {
     }
 }
 
-//struct DeckListDeckView: View {
-//
-//    @ObservedObject var flashcardListViewModel: FlashcardListViewModel
-//
-//    var body: some View {
-//        GeometryReader { geometry in
-//            ZStack(alignment: .bottomLeading) {
-//                Image("deck1")
-//                    .resizable()
-//                    .frame(width: 110, height: 110)
-//
-//                ZStack {
-//                    Circle()
-//                        .foregroundColor(.red)
-//
-//                    Text("\(flashcardListViewModel.badgeNumber)")
-//                        .foregroundColor(.white)
-//                        .font(Font.system(size: 12))
-//                }
-//                .frame(width: 20, height: 20)
-//                .offset(x: (( 2 * 1) - 1) * (geometry.size.width / (2 * 1) ), y: -30)
-//                .opacity(flashcardListViewModel.hasCardsDue ? 1 : 0)
-//            }
-//        }
-//    }
-//}
-
-//struct DecksView_Previews: PreviewProvider {
-//    @State private var isPresented = false
-//    @State private var isBlurred = false
-//
-//    static var previews: some View {
-//        HomeView()
-//    }
-//}
+struct DecksView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView()
+            .environmentObject(AuthViewModel())
+    }
+}
