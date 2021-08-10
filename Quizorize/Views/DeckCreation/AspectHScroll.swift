@@ -36,11 +36,3 @@ struct AspectHScroll<Item, ItemView>: View where ItemView: View, Item: Identifia
         }
     }
 }
-
-/*
-struct AspectHScroll_Previews: PreviewProvider {
-    static var previews: some View {
-        AspectHScroll()
-    }
-}
-*/

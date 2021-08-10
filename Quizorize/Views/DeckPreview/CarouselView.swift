@@ -19,8 +19,6 @@ struct CarouselView: View {
     @ObservedObject var flashcardListVM: FlashcardListViewModel
     
     private struct Dimensions {
-        //static let width: CGFloat = 350
-        
         static let heightOffset: CGFloat = 50 //For the adjacent view
     }
     
@@ -42,13 +40,6 @@ struct CarouselView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            //            VStack{
-            //                Text("\(dragState.translation.width)")
-            //                Text("Carousel Location = \(carouselLocation)")
-            //                Text("Relative Location = \(relativeLoc())")
-            //                Text("\(relativeLoc()) / \(flashcardListVM.flashcardViewModels.count-1)")
-            //                Spacer()
-            //            }
             VStack{
                 
                 ZStack{
@@ -56,24 +47,12 @@ struct CarouselView: View {
                         let i = flashcardListVM.flashcardViewModels.firstIndex(where: {$0.id == flashcard.id})!
                         
                         VStack{
-                            //Spacer()
-                            
                             PreviewFlashcard(index: i, width: self.width, height: self.getHeight(i), flashcardVM: flashcard)
-                                //Text("\(i)")
-                                /*
-                                 .animation(.interpolatingSpring(stiffness: Dimensions.width.0, damping: 30.0, initialVelocity: 10.0))
-                                 .background(Color.white)
-                                 .cornerRadius(10)
-                                 .shadow(radius: 3)
-                                 */
-                                
-                                
                                 .opacity(self.getOpacity(i))
                                 .animation(.interpolatingSpring(stiffness: 300.0, damping: 30.0, initialVelocity: 10.0))
                                 .offset(x: self.getOffset(i))
                                 .animation(.interpolatingSpring(stiffness: 300.0, damping: 30.0, initialVelocity: 10.0))
                                 .padding(.vertical)
-                            //Spacer()
                         }
                     }
                     
@@ -86,8 +65,6 @@ struct CarouselView: View {
                         .onEnded(onDragEnded)
                     
                 )
-                
-                //Spacer()
             }
             VStack{
                 Spacer().frame(height:itemHeight + 30)
@@ -95,10 +72,6 @@ struct CarouselView: View {
                                     currentIndex: carouselLocation)
                     .animation(.default)
                     .scaleEffect(0.7)
-                /*
-                 Text("\(relativeLoc() + 1)/\(flashcardListVM.flashcardViewModels.count)").padding()
-                 */
-                
                 Spacer()
             }
         }
@@ -144,80 +117,6 @@ struct CarouselView: View {
         } else {
             return self.dragState.translation.width + (indexInCGFloat * (self.width + 20))
         }
-        
-        //This sets up the central offset
-        /*
-         if (i) == relativeLoc()
-         {
-         //Set offset of cental
-         return self.dragState.translation.width
-         }
-         //These set up the offset +/- 1
-         else if
-         (i) == relativeLoc() + 1
-         ||
-         (relativeLoc() == flashcardListVM.flashcardViewModels.count - 1 && i == 0)
-         {
-         //Set offset +1
-         return self.dragState.translation.width + (300 + 20)
-         }
-         else if
-         (i) == relativeLoc() - 1
-         ||
-         (relativeLoc() == 0 && (i) == flashcardListVM.flashcardViewModels.count - 1)
-         {
-         //Set offset -1
-         return self.dragState.translation.width - (300 + 20)
-         }
-         //These set up the offset +/- 2
-         else if
-         (i) == relativeLoc() + 2
-         ||
-         (relativeLoc() == flashcardListVM.flashcardViewModels.count-1 && i == 1)
-         ||
-         (relativeLoc() == flashcardListVM.flashcardViewModels.count-2 && i == 0)
-         {
-         return self.dragState.translation.width + (2*(300 + 20))
-         }
-         else if
-         (i) == relativeLoc() - 2
-         ||
-         (relativeLoc() == 1 && i == flashcardListVM.flashcardViewModels.count-1)
-         ||
-         (relativeLoc() == 0 && i == flashcardListVM.flashcardViewModels.count-2)
-         {
-         //Set offset -2
-         return self.dragState.translation.width - (2*(300 + 20))
-         }
-         //These set up the offset +/- 3
-         else if
-         (i) == relativeLoc() + 3
-         ||
-         (relativeLoc() == flashcardListVM.flashcardViewModels.count-1 && i == 2)
-         ||
-         (relativeLoc() == flashcardListVM.flashcardViewModels.count-2 && i == 1)
-         ||
-         (relativeLoc() == flashcardListVM.flashcardViewModels.count-3 && i == 0)
-         {
-         return self.dragState.translation.width + (3*(300 + 20))
-         }
-         else if
-         (i) == relativeLoc() - 3
-         ||
-         (relativeLoc() == 2 && i == flashcardListVM.flashcardViewModels.count-1)
-         ||
-         (relativeLoc() == 1 && i == flashcardListVM.flashcardViewModels.count-2)
-         ||
-         (relativeLoc() == 0 && i == flashcardListVM.flashcardViewModels.count-3)
-         {
-         //Set offset -2
-         return self.dragState.translation.width - (3*(300 + 20))
-         }
-         //This is the remainder
-         else {
-         return 10000
-         }
-         */
     }
     
     
@@ -228,7 +127,6 @@ struct Fancy3DotsIndexView: View {
     
     @ObservedObject var flashcardListVM: FlashcardListViewModel
     // MARK: - Public Properties
-    //let numberOfPages: Int
     let currentIndex: Int
     
     

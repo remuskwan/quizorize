@@ -11,8 +11,7 @@ struct RecoverPasswordView : View {
     @EnvironmentObject var viewModel: AuthViewModel
     @Environment(\.presentationMode) var presentationMode
     @State var email = ""
-//    @State var isEditing = false
-    
+
     var isDisabled: Bool {
         return email.isEmpty
     }
@@ -61,16 +60,6 @@ struct RecoverPasswordView : View {
                 .font(.headline)
                 .padding()
             }
-//            .navigationBarTitle("Reset password")
-//            .toolbar(content: {
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    Button(action: {
-//                        presentationMode.wrappedValue.dismiss()
-//                    }, label: {
-//                        Text("Cancel")
-//                    })
-//                }
-//            })
             .padding(.horizontal, 20)
         }
     }

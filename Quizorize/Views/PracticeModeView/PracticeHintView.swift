@@ -19,12 +19,6 @@ struct PracticeHintView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .center) {
-                /*
-                RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
-                    .fill(Color.gray)
-                    .frame(width: geometry.size.width * DrawingConstants.pullerWidth, height: geometry.size.height * DrawingConstants.pullerHeight)
-                    .padding()
-                */
                 grayRectangleTopView
                     .frame(width: geometry.size.width * DrawingConstants.pullerWidth, height: geometry.size.height * DrawingConstants.pullerHeight)
                     .padding()
@@ -37,9 +31,7 @@ struct PracticeHintView: View {
 
                 //HintRowViews
                 VStack(alignment: .leading) {
-                //ScrollView {
-                    //Spacer()
-                     //   .frame(height: geometry.size.height * 0.1)
+
                     Spacer()
                         .frame(height: geometry.size.height * 0.1)
                     
@@ -49,39 +41,11 @@ struct PracticeHintView: View {
                         AnyView(HintPageView(height: geometry.size.height, width: geometry.size.width, views: spacedRepetitionHints))
                     ])
                     
-                    /*
-                    HintRowView(textTitle: "Tap the card", textContent: "View the reverse side", image: "arrow.2.squarepath", imageColor: .accentColor)
-                        .padding()
-                        .frame(width: geometry.size.width * DrawingConstants.hintRowWidth, height: geometry.size.height * DrawingConstants.hintRowHeight)
-                        //.border(Color.green)
-                    
-                    Spacer()
-                        .frame(height: geometry.size.height * 0.1)
-                    
-                    
-                    HintRowView(textTitle: "Swipe left", textContent: "Mark the card as incorrect", image: "arrowshape.turn.up.left.fill", imageColor: .orange)
-                        .padding()
-                        .frame(width: geometry.size.width * DrawingConstants.hintRowWidth, height: geometry.size.height * DrawingConstants.hintRowHeight)
-                        //.border(Color.green)
-                    
-                    Spacer()
-                        .frame(height: geometry.size.height * 0.1)
-                    
-                    HintRowView(textTitle: "Swipe Right", textContent: "Mark the card as correct", image: "arrowshape.turn.up.right.fill", imageColor: .green)
-                        .padding()
-                        .frame(width: geometry.size.width * DrawingConstants.hintRowWidth, height: geometry.size.height * DrawingConstants.hintRowHeight)
-                        //.border(Color.green)
-                    
-                    Spacer()
-                        .frame(height: geometry.size.height * 0.1)
-                    */
-                    
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height * 0.7)
                 
                 Spacer()
-                    //.frame(height: geometry.size.height * 0.2)
-                
+
                 Button {
                     self.presentationMode.wrappedValue.dismiss()
                 } label: {
@@ -125,10 +89,6 @@ struct HintPageView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-        //ScrollView {
-            //Spacer()
-             //   .frame(height: geometry.size.height * 0.1)
-            
             ForEach(0..<views.count) { i in
                 views[i]
                     .padding(.vertical)
@@ -137,30 +97,6 @@ struct HintPageView: View {
                 Spacer()
                     .frame(height: self.height * 0.1)
             }
-
-            /*
-            HintRowView(textTitle: "Tap the card", textContent: "View the reverse side", image: "arrow.2.squarepath", imageColor: .accentColor)
-                .padding()
-                .frame(width: self.width * DrawingConstants.hintRowWidth, height: self.height * DrawingConstants.hintRowHeight)
-                //.border(Color.green)
-            
-            Spacer()
-                .frame(height: self.height * 0.1)
-            
-            
-            HintRowView(textTitle: "Swipe left", textContent: "Mark the card as incorrect", image: "arrowshape.turn.up.left.fill", imageColor: .orange)
-                .padding()
-                .frame(width: self.width * DrawingConstants.hintRowWidth, height: self.height * DrawingConstants.hintRowHeight)
-                //.border(Color.green)
-            
-            Spacer()
-                .frame(height: self.height * 0.1)
-            
-            HintRowView(textTitle: "Swipe Right", textContent: "Mark the card as correct", image: "arrowshape.turn.up.right.fill", imageColor: .green)
-                .padding()
-                .frame(width: self.width * DrawingConstants.hintRowWidth, height: self.height * DrawingConstants.hintRowHeight)
-                //.border(Color.green)
-            */
         }
     }
     

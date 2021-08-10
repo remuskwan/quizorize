@@ -69,25 +69,6 @@ class PracticeModeViewModel: ObservableObject {
             }
             .eraseToAnyPublisher()
     }
-
-    /*
-    private var choosingReminderPublisher: AnyPublisher<Bool, Never> {
-        $isSpacedRepetitionOn
-            .debounce(for: 0.2, scheduler: RunLoop.main)
-            .map { _ in
-                self.counter < self.count
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    private var isTestingPublisher: AnyPublisher<Bool, Never> {
-        Publishers.CombineLatest(yetToFinishQuizzingPublisher, choosingReminderPublisher)
-            .map { yetToFinishQuiz, choosingReminder in
-                
-            }
-            .eraseToAnyPublisher()
-    }
-    */
     
     private var cancellableSet = Set<AnyCancellable>()
     
@@ -114,13 +95,6 @@ class PracticeModeViewModel: ObservableObject {
         practiceFlashcards.forEach { practiceFlashcard in
             flipStatuses[practiceFlashcard.id] = false
         }
-        
-        /*
-        self.yetToFinishQuizzingPublisher
-            .receive(on: RunLoop.main)
-            .assign(to: \.isTesting, on: self)
-            .store(in: &cancellableSet)
-        */
     }
     
 
@@ -172,18 +146,6 @@ class PracticeModeViewModel: ObservableObject {
         }
         
         return earliestDate
-
-        /*
-        let earliestDBDateInIntervals = self.practiceFlashcards
-            .map { flashcardVM in
-                flashcardVM.flashcard
-            }
-            .sorted {
-                $0.nextDate ?? 0 <= $1.nextDate ?? 0
-            }
-            .first?
-            .nextDate ?? 0
-        */
     }
     
     func earliestDateInString() -> String {
@@ -235,18 +197,6 @@ class PracticeModeViewModel: ObservableObject {
             }
         }
         
-        /*
-        let dateOfCompletionInINtervals = self.practiceFlashcards
-            .map { flashcardVM in
-                flashcardVM.flashcard
-            }
-            .sorted {
-                $0.previousDate ?? 0 <= $1.previousDate ?? 0
-            }
-            .last?
-            .previousDate ?? 0
-        */
-        
         return dateOfCompletion
     }
     
@@ -291,22 +241,6 @@ class PracticeModeViewModel: ObservableObject {
         //self.pushToFinalisedFlashcards()
         self.shuffle()
     }
-    
-    
-    /*
-    func toggleFail(of uuid: String) {
-        failOrPass[uuid] = false
-    }
-    
-    func togglePass(of uuid: String) {
-        failOrPass[uuid] = true
-    }
-    
-    func toggleNil(of uuid: String) {
-        failOrPass[uuid] = nil
-    }
-     */
-    
    
     //MARK: Display Functions
     

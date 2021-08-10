@@ -150,7 +150,6 @@ class AuthViewModel : NSObject, ObservableObject {
                     }
                 }
             }
-//            self.activeError = SignInError.wrongPassword
         case .invalidEmail:
             self.activeError = SignInError.invalidEmail
         case .emailAlreadyInUse:
@@ -171,8 +170,6 @@ class AuthViewModel : NSObject, ObservableObject {
             self.activeError = EmailVerificationError.userNotFound
         case .tooManyRequests:
             self.activeError = EmailVerificationError.tooManyRequests
-//        case .requiresRecentLogin:
-//            self.activeError = UpdateProfileError.requiresRecentLogin
         case .credentialAlreadyInUse:
             if let updatedCredential = (error as NSError?)!.userInfo[AuthErrorUserInfoUpdatedCredentialKey] as? OAuthCredential {
                 print("Signing in using updated credential")
@@ -198,10 +195,8 @@ class AuthViewModel : NSObject, ObservableObject {
             self.activeError = SignInError.invalidEmail
         case .userNotFound:
             self.activeError = EmailVerificationError.userNotFound
-//        case .tooManyRequests:
-//            self.activeError = EmailVerificationError.tooManyRequests
-//        case .requiresRecentLogin:
-//            self.activeError = UpdateProfileError.requiresRecentLogin
+        case .tooManyRequests:
+            self.activeError = EmailVerificationError.tooManyRequests
         case .credentialAlreadyInUse:
             if let updatedCredential = (error as NSError?)!.userInfo[AuthErrorUserInfoUpdatedCredentialKey] as? OAuthCredential {
                 print("Signing in using updated credential")
@@ -326,7 +321,6 @@ extension AuthViewModel: GIDSignInDelegate {
                 return
             }
             self.signedIn = true
-            //print(result?.user.email)
         }
     }
 }

@@ -161,7 +161,6 @@ struct DeckView: View {
                 .font(.title2)
                 .padding(.vertical)
         }
-//        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
         .padding()
     }
     
@@ -207,8 +206,6 @@ struct DeckView: View {
                 .buttonStyle(PreviewButtonStyle())
                 .padding(.horizontal)
                 .frame(width: buttonGProxy.size.width / ButtonConstants.buttonCount, height: buttonGProxy.size.height / ButtonConstants.buttonCount , alignment: .center)
-
-                //Spacer()
             }
             
         }
@@ -314,13 +311,6 @@ struct PreviewButtonStyle: ButtonStyle {
                 configuration.label
                     .foregroundColor(configuration.isPressed ? DrawingConstants.tappedColor : DrawingConstants.notTappedColor)
             }
-            /*
-            .background(RoundedRectangle(cornerRadius: DrawingConstants.rectCornerRadius)
-                            .fill(Color.white)
-                            .frame(height: geoProxy.size.height * 0.95)
-                            .offset(x: 0, y: -2)
-            )
-            */
             .padding(5)
             .frame(width: geoProxy.size.width, height: geoProxy.size.height, alignment: .center)
             .background(RoundedRectangle(cornerRadius: DrawingConstants.rectCornerRadius)
@@ -350,9 +340,3 @@ struct PreviewButtonStyle: ButtonStyle {
         
     }
 }
-
-//struct DeckView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DeckView()
-//    }
-//}

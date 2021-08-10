@@ -50,11 +50,3 @@ struct PracticeModeFlashCard: View {
         static let fontScale: CGFloat = 0.3
     }
 }
-
-/*
-struct PracticeModeFlashCard_Previews: PreviewProvider {
-    static var previews: some View {
-        PracticeModeFlashCard()
-    }
-}
-*/
