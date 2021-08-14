@@ -18,12 +18,7 @@ struct LoginView: View {
         Login()
     }
 }
-//struct ViewHeightKey: PreferenceKey {
-//    static var defaultValue: CGFloat { 0 }
-//    static func reduce(value: inout Value, nextValue: () -> Value) {
-//        value = value + nextValue()
-//    }
-//}
+
 struct Login : View {
     @EnvironmentObject var viewModel: AuthViewModel
     

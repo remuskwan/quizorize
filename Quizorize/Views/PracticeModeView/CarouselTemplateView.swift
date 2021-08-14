@@ -20,8 +20,6 @@ struct CarouselTemplateView: View {
     var views: [AnyView]
 
     private struct Dimensions {
-        //static let width: CGFloat = 350
-        
         static let heightOffset: CGFloat = 50 //For the adjacent view
     }
     
@@ -43,13 +41,6 @@ struct CarouselTemplateView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            //            VStack{
-            //                Text("\(dragState.translation.width)")
-            //                Text("Carousel Location = \(carouselLocation)")
-            //                Text("Relative Location = \(relativeLoc())")
-            //                Text("\(relativeLoc()) / \(views.count-1)")
-            //                Spacer()
-            //            }
             VStack{
                 
                 ZStack{
@@ -77,10 +68,6 @@ struct CarouselTemplateView: View {
                                     currentIndex: carouselLocation)
                     .animation(.default)
                     .scaleEffect(0.7)
-                /*
-                 Text("\(relativeLoc() + 1)/\(views.count)").padding()
-                 */
-                
                 Spacer()
             }
         }
@@ -126,80 +113,6 @@ struct CarouselTemplateView: View {
         } else {
             return self.dragState.translation.width + (indexInCGFloat * (self.width + 20))
         }
-        
-        //This sets up the central offset
-        /*
-         if (i) == relativeLoc()
-         {
-         //Set offset of cental
-         return self.dragState.translation.width
-         }
-         //These set up the offset +/- 1
-         else if
-         (i) == relativeLoc() + 1
-         ||
-         (relativeLoc() == views.count - 1 && i == 0)
-         {
-         //Set offset +1
-         return self.dragState.translation.width + (300 + 20)
-         }
-         else if
-         (i) == relativeLoc() - 1
-         ||
-         (relativeLoc() == 0 && (i) == views.count - 1)
-         {
-         //Set offset -1
-         return self.dragState.translation.width - (300 + 20)
-         }
-         //These set up the offset +/- 2
-         else if
-         (i) == relativeLoc() + 2
-         ||
-         (relativeLoc() == views.count-1 && i == 1)
-         ||
-         (relativeLoc() == views.count-2 && i == 0)
-         {
-         return self.dragState.translation.width + (2*(300 + 20))
-         }
-         else if
-         (i) == relativeLoc() - 2
-         ||
-         (relativeLoc() == 1 && i == views.count-1)
-         ||
-         (relativeLoc() == 0 && i == views.count-2)
-         {
-         //Set offset -2
-         return self.dragState.translation.width - (2*(300 + 20))
-         }
-         //These set up the offset +/- 3
-         else if
-         (i) == relativeLoc() + 3
-         ||
-         (relativeLoc() == views.count-1 && i == 2)
-         ||
-         (relativeLoc() == views.count-2 && i == 1)
-         ||
-         (relativeLoc() == views.count-3 && i == 0)
-         {
-         return self.dragState.translation.width + (3*(300 + 20))
-         }
-         else if
-         (i) == relativeLoc() - 3
-         ||
-         (relativeLoc() == 2 && i == views.count-1)
-         ||
-         (relativeLoc() == 1 && i == views.count-2)
-         ||
-         (relativeLoc() == 0 && i == views.count-3)
-         {
-         //Set offset -2
-         return self.dragState.translation.width - (3*(300 + 20))
-         }
-         //This is the remainder
-         else {
-         return 10000
-         }
-         */
     }
     
     

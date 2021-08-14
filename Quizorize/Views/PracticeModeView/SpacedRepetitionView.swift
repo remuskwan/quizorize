@@ -20,16 +20,7 @@ struct SpacedRepetitionView: View {
                 
                 Text("What is Spaced Repetition?")
                     .font(geometry.size.width > 420 ? .title.bold() : .title2.bold())
-                
-//                Spacer()
-//                    .frame(height: geometry.size.height * 0.1)
-
-                //Insert the two views here
-//                CarouselTemplateView(width: geometry.size.width, itemHeight: geometry.size.height, heightRatio: 0.7, views: [
-//                    AnyView(LottieStatisticsView(width: geometry.size.width, height: geometry.size.height)),
-//                    AnyView(LottieCalendarView(width: geometry.size.width, height: geometry.size.height))
-//                ])
-
+        
                 TabView {
                     LottieStatisticsView(width: geometry.size.width, height: geometry.size.height)
                     LottieCalendarView(width: geometry.size.width, height: geometry.size.height)
@@ -93,9 +84,6 @@ struct LottieCalendarView: View {
             }
             .font(.title3)
             .multilineTextAlignment(.center)
-//            .lineLimit(nil)
-//            .fixedSize(horizontal: false, vertical: true)
-//            .padding(.horizontal)
         }
         .onAppear {
             isPlaying = true
@@ -116,14 +104,9 @@ struct LottieStatisticsView: View {
         VStack(alignment: .center) {
             LottieView(filename: "statistics", isPlaying: isPlaying)
                 .frame(width: self.width * 0.9, height: self.height * 0.4)
-//            HStack(alignment: .center, spacing: 0) {
-//
-//            }
             Text("Finish quizzing all the flashcards in one round before leaving to save your progress.")
             .font(.title2)
             .multilineTextAlignment(.center)
-//            .lineLimit(nil)
-//            .fixedSize(horizontal: false, vertical: true)
         }
         .onAppear {
             isPlaying = true

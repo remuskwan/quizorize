@@ -97,7 +97,7 @@ enum EmailVerificationError: AuthError {
         case .userNotFound:
             return "Invalid email address"
         case .tooManyRequests:
-            return "Too many requests"
+            return "Too many failed requests"
         }
         
     }
@@ -107,22 +107,19 @@ enum EmailVerificationError: AuthError {
         case .userNotFound:
             return "The email address you entered doesn't exist. Please try again."
         case .tooManyRequests:
-            return "too many requests sent"
+            return "Failed to login too many times. Please try again later."
         }
     }
 }
 
 enum UpdateProfileError: AuthError {
     case emailInUseByDifferentProvider(provider: String)
-//    case requiresRecentLogin
     case unknown
     
     var errorDescription: String? {
         switch self {
         case .emailInUseByDifferentProvider:
             return "Email or password cannot be changed"
-//        case .requiresRecentLogin:
-//            return "Account created using different provider"
         default:
             return "Unknown error"
         }

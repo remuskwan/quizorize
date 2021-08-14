@@ -29,16 +29,12 @@ struct PracticeModeView: View {
     @State private var showingTest = false
 
     @State private var showHint = false
-    
-    //@State private var showingEndTestAlert = false
-    //@State private var showEndTipAlert = false
-    
+ 
     @State private var autoPopUp = false
     
     @State private var showAlert = false
     @State private var activeAlert: PracticeAlert = .endTest
     
-
     @State private var showSpacedRepetitionTips = false
     
     //Saved preferences locally
@@ -76,7 +72,6 @@ struct PracticeModeView: View {
                                                     print("showing spaced repetition is \(self.showSpacedRepetitionTips)")
                                                 } label: {
                                                     Text(" Learn More")
-//                                                        .underline()
                                                 }
                                             }
                                             
@@ -162,11 +157,9 @@ struct PracticeModeView: View {
                         return Alert(title: Text("Do you still want this tip to show up everytime you practice a deck?"),
                                   primaryButton: .default(Text("No")) {
                                     self.showTip = false
-                                    //self.presentationMode.wrappedValue.dismiss()
                                   },
                                   secondaryButton: .default(Text("Yes")) {
                                     self.showTip = true
-                                    //self.presentationMode.wrappedValue.dismiss()
                                   })
                     }
                 }
@@ -187,8 +180,6 @@ struct PracticeModeView: View {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button {
                                 if self.practiceModeViewModel.isSpacedRepetitionOn {
-                                    //presentationMode.wrappedValue.dismiss()
-                                    //self.showingEndTestAlert = true
                                     self.activeAlert = .endTest
                                     self.showAlert = true
                                 } else {
@@ -250,13 +241,6 @@ struct PracticeModeView: View {
                     .frame(width: geometry.size.width * 0.7, alignment: .center)
                 
                 FlashcardListView(practiceModeViewModel: practiceModeViewModel, showingNotice: $showingNotice, correctCount: $correctCount, totalQuestionsAnswered: $totalQuestionsAnswered)
-                
-                /*
-                 if (examModeVM.isExamMode && examModeVM.cardsAreDue(flashcards: practiceModeViewModel.practiceFlashcards)) {
-                 } else {
-                 FlashcardListView(practiceModeViewModel: practiceModeViewModel, showingNotice: $showingNotice, correctCount: $correctCount, totalQuestionsAnswered: $totalQuestionsAnswered)
-                 }
-                 */
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
@@ -294,7 +278,6 @@ struct PracticeModeView: View {
                                     .padding()
                                 
                                 Button(action: {
-                                    //didFinishDeck(examModeVM.getUpdatedFlashcards(), self.examModeVM.getPercentageScore())
                                     self.practiceModeViewModel.reset()
                                 }, label: {
                                     Text("Study Again Now")
@@ -348,7 +331,6 @@ struct FlashcardListView: View {
 
     @Namespace private var animation
     
-    //@State private var cardsMovedBacK: [String: Bool] = [String: Bool]()
     @Binding var showingNotice: Bool
     @Binding var correctCount: Double
     @Binding var totalQuestionsAnswered: Double
@@ -360,7 +342,6 @@ struct FlashcardListView: View {
         VStack {
             Spacer()
             ZStack {
-                //if practiceModeViewModel.counter != practiceModeViewModel.count  {
                 ForEach(practiceModeViewModel.actualPracticeFlashcards) { flashcard in
                     FlashcardView(flashcard: flashcard,
                                   practiceModeViewModel: practiceModeViewModel,

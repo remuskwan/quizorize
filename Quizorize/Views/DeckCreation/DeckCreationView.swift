@@ -104,21 +104,6 @@ struct DeckCreationView: View {
                 }
             }
             .alert(isPresented: $showAlert) {
-                /*
-                if (deckCreationVM.hasDeckTitleEmpty()) {
-                    print(deckCreationVM.hasDeckTitleEmpty())
-                    self.activeAlert = .deckTitleEmpty
-                } else if (deckCreationVM.hasLessThanTwoCards()) {
-                    print(deckCreationVM.hasLessThanTwoCards())
-                    self.activeAlert = .lessThanTwo
-                } else if (deckCreationVM.hasAnyFieldsEmpty()) {
-                    print(deckCreationVM.hasAnyFieldsEmpty())
-                    self.activeAlert = .missingField
-                } else {
-                    self.activeAlert = .final
-                }
-                */
-               
                 switch self.activeAlert {
                 case .deckTitleEmpty:
                     return Alert(title: Text(StringConstants.reqNotMetAlertTitle),
@@ -325,16 +310,3 @@ extension View {
         ModifiedContent(content: self, modifier: ListSeparatorStyle(style: style, colorStyle: colorStyle))
     }
 }
-
-
-
-
-//struct DeckCreationView_Previews: PreviewProvider {
-//    
-//    @State private var isBlurred = false
-//    
-//    static var previews: some View {
-//        DeckCreationView()
-//            .environmentObject(AuthViewModel())
-//    }
-//}

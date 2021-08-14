@@ -16,11 +16,10 @@ struct QuizorizeApp: App {
 
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
             LaunchView()
                 .environmentObject(AuthViewModel())
                 .environmentObject(ReminderViewModel())
+            //
         }
     }
 }
