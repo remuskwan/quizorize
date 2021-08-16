@@ -19,7 +19,6 @@ struct QuizorizeApp: App {
             LaunchView()
                 .environmentObject(AuthViewModel())
                 .environmentObject(ReminderViewModel())
-            //
         }
     }
 }
