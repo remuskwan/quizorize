@@ -1,4 +1,5 @@
 # Quizorize
+![Quizorize Promo](https://res.cloudinary.com/duhult3na/image/upload/v1658242281/quizorize-promo_rsfokz.png)
 ## Overview
 Quizorize is a gamified flashcard iOS application that aims to improve the learning and memorising experience of its users, leveraging on the use of 'Spaced Repetition' and 'Active Recall' studying techniques. 
 
