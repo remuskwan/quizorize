@@ -7,13 +7,6 @@ This iOS application is targeted towards students aged 14 and above that wishes 
 
 ## Getting started
 
-### TestFlight (on iOS devices)
-
-Try the latest build of Quizorize by accessing this [link](https://testflight.apple.com/join/spPWRuor) on your iOS device.
-
-- Requirements: iPhone, iPad or iPod Touch running iOS 14.5 and later.
-- Recommended (for the best experience): iPhone or iPod Touch in Light Mode.
-
 ### Local Test (on your Mac)
 
 1. To run quizorize locally, first clone this repository.
